@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — KNB Web Solution</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f3ef;
+    --ink: #111110;
+    --muted: #6d6c66;
+    --line: #dedcd4;
+    --card: #ffffff;
+    --maxw: 1240px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- NAV (floating glass pill) ---------- */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 0; transition: padding 0.4s var(--ease); }
+  .nav.scrolled { padding: 10px 0; }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px; padding: 0 10px 0 18px; border-radius: 100px;
+    background: rgba(244,243,239,0.45); border: 1px solid transparent;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease), backdrop-filter 0.4s;
+  }
+  .nav.scrolled .nav-inner {
+    background: rgba(255,255,255,0.72); border-color: var(--line);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+  }
+  .logo { display: inline-flex; align-items: center; gap: 11px; font-weight: 700; font-size: 19px; letter-spacing: -0.02em; }
+  .logo .mark {
+    width: 30px; height: 30px; border-radius: 9px; background: var(--ink); color: var(--bg);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;
+    transition: transform 0.4s var(--ease);
+  }
+  .logo:hover .mark { transform: rotate(-8deg) scale(1.06); }
+  .nav-right { display: flex; align-items: center; gap: 6px; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a { font-size: 14.5px; font-weight: 500; padding: 9px 16px; border-radius: 100px; transition: background 0.3s var(--ease); }
+  .nav-links a:hover, .nav-links a.active { background: rgba(17,17,16,0.06); }
+  .nav-cta {
+    position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 9px;
+    background: var(--ink); color: var(--bg); font-size: 14.5px; font-weight: 600;
+    padding: 11px 20px; border-radius: 100px; margin-left: 6px;
+    transition: transform 0.3s var(--ease), background 0.3s;
+  }
+  .nav-cta .dot { width: 7px; height: 7px; border-radius: 50%; background: #6cf09a; animation: dotPulse 1.8s ease-in-out infinite; }
+
+  .burger { display: none; flex-direction: column; gap: 5px; width: 30px; height: 44px; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; }
+  .burger span { display: block; height: 2px; width: 26px; background: var(--ink); border-radius: 2px; transition: transform 0.35s var(--ease), opacity 0.25s; }
+  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu {
+    position: fixed; inset: 0; background: var(--bg); z-index: 99; transform: translateY(-100%);
+    transition: transform 0.55s var(--ease); display: flex; flex-direction: column; justify-content: center; padding: 0 32px; gap: 4px;
+  }
+  .mobile-menu.open { transform: translateY(0); }
+  .mobile-menu a { font-size: clamp(40px, 13vw, 76px); font-weight: 500; letter-spacing: -0.035em; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .mobile-menu .mm-foot { border: none; font-size: 16px; font-weight: 600; color: var(--muted); margin-top: 28px; padding: 0; }
+
+  /* ---------- BUTTON ---------- */
+  .btn {
+    position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--ink); color: var(--bg); padding: 16px 30px; border-radius: 100px;
+    font-weight: 600; font-size: 16px; cursor: pointer; border: none;
+    transition: transform 0.35s var(--ease), background 0.35s, box-shadow 0.35s var(--ease);
+  }
+  .btn::after, .nav-cta::after {
+    content: ""; position: absolute; top: 0; left: -130%; width: 60%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.28), transparent);
+    transform: skewX(-20deg); transition: left 0.65s var(--ease); pointer-events: none;
+  }
+  .btn:hover::after, .nav-cta:hover::after { left: 150%; }
+  .btn:hover { background: #2c2b28; box-shadow: 0 14px 30px rgba(0,0,0,0.20); }
+  .btn:active { transform: scale(0.98); }
+  .btn .dot { position: relative; z-index: 1; width: 8px; height: 8px; border-radius: 50%; background: var(--bg); animation: dotPulse 1.8s ease-in-out infinite; }
+  @keyframes dotPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.7); opacity: 0.55; } }
+
+  /* ---------- CONTACT ---------- */
+  .contact { position: relative; padding: 150px 0 100px; min-height: 100vh; }
+  .contact-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px; opacity: 0.5;
+    mask-image: radial-gradient(ellipse at 50% 20%, #000 35%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 20%, #000 35%, transparent 80%);
+    pointer-events: none; animation: gridDrift 24s linear infinite;
+  }
+  @keyframes gridDrift { to { background-position: 64px 128px; } }
+  .contact .wrap { position: relative; z-index: 2; }
+
+  .label { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: inline-flex; align-items: center; gap: 16px; }
+  .label::before, .label::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; }
+  .contact h1 { font-size: clamp(44px, 8vw, 104px); line-height: 0.96; letter-spacing: -0.04em; font-weight: 500; margin: 20px 0 0; max-width: 14ch; }
+  .contact .lead { font-size: clamp(17px, 1.6vw, 20px); color: var(--muted); max-width: 46ch; margin-top: 22px; }
+
+  .contact-layout { display: grid; grid-template-columns: 1.25fr 0.9fr; gap: 56px; margin-top: 64px; align-items: start; }
+
+  /* form */
+  .form-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 36px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+  .field { margin-bottom: 22px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; }
+  .field input, .field select, .field textarea {
+    width: 100%; font-family: inherit; font-size: 16px; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s;
+  }
+  .field textarea { resize: vertical; min-height: 130px; }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(17,17,16,0.06);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-card .btn { width: 100%; margin-top: 6px; }
+  .form-note { font-size: 13px; color: var(--muted); margin-top: 16px; text-align: center; }
+  .form-success {
+    display: none; text-align: center; padding: 40px 10px;
+  }
+  .form-success.show { display: block; }
+  .form-success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg); display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+  .form-success h3 { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .form-success p { color: var(--muted); margin-top: 10px; }
+
+  /* aside */
+  .info-block { margin-bottom: 38px; }
+  .info-block .k { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
+  .info-block .big { font-size: clamp(20px, 2.4vw, 26px); font-weight: 600; letter-spacing: -0.02em; }
+  .info-mail { border-bottom: 1.5px solid var(--ink); padding-bottom: 3px; transition: opacity 0.3s; display: inline-block; }
+  .info-mail:hover { opacity: 0.6; }
+  .steps { list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 18px; }
+  .steps li { counter-increment: s; display: flex; gap: 16px; align-items: flex-start; }
+  .steps li::before {
+    content: counter(s, decimal-leading-zero); flex: none;
+    width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
+  }
+  .steps .st { font-weight: 600; }
+  .steps .sd { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+  .socials-row { display: flex; gap: 12px; margin-top: 4px; }
+  .socials-row a { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+  .socials-row a:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .reveal { opacity: 0; transform: translateY(36px); }
+
+  /* ---------- FOOTER ---------- */
+  footer { background: var(--ink); color: var(--bg); padding: 80px 0 40px; position: relative; z-index: 2; }
+  .foot-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+  footer .logo { font-size: 40px; letter-spacing: -0.04em; }
+  .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 30px; color: rgba(255,255,255,0.6); font-size: 14px; }
+  .foot-bottom a { border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
+
+  @media (max-width: 860px) {
+    .nav-right { display: none; }
+    .burger { display: flex; }
+    .contact { padding: 120px 0 70px; }
+    .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    .field-row { grid-template-columns: 1fr; }
+    .form-card { padding: 26px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo"><span class="mark">K</span>KNB</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="index.html#projects">Portfolio</a>
+          <a href="contact.html" class="active">Contact</a>
+        </div>
+        <a href="#contactForm" class="nav-cta"><span class="dot"></span>Free audit</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#projects">Portfolio</a>
+    <a href="contact.html">Contact</a>
+    <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="contact-grid-bg"></div>
+    <div class="wrap">
+      <p class="label reveal">Get in touch</p>
+      <h1 class="reveal">Let's build something that works.</h1>
+      <p class="lead reveal">Tell us about your store or website. We'll start with a free audit, then send a clear written proposal — no pressure, no jargon.</p>
+
+      <div class="contact-layout">
+        <!-- FORM -->
+        <div class="form-card reveal" id="contactForm">
+          <form id="auditForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@business.com" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="site">Website or store URL</label>
+              <input type="text" id="site" name="site" placeholder="yourstore.com (optional)">
+            </div>
+            <div class="field">
+              <label for="service">What do you need?</label>
+              <select id="service" name="service">
+                <option>Shopify store revamp</option>
+                <option>New Shopify / ecommerce store</option>
+                <option>WordPress / WooCommerce site</option>
+                <option>Webflow website</option>
+                <option>Business website / redesign</option>
+                <option>Maintenance & support</option>
+                <option>Custom web app</option>
+                <option>Not sure yet — need advice</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">Tell us a bit more</label>
+              <textarea id="message" name="message" placeholder="What are you trying to improve? Any goals, timeline, or examples you like."></textarea>
+            </div>
+            <button type="submit" class="btn"><span class="dot"></span>Request my free audit</button>
+            <p class="form-note">We reply within 1 business day. Your details stay private.</p>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="check">✓</div>
+            <h3>Thanks — message sent!</h3>
+            <p>We'll review your site and get back to you within 1 business day.</p>
+          </div>
+        </div>
+
+        <!-- ASIDE -->
+        <aside>
+          <div class="info-block reveal">
+            <div class="k">Prefer email?</div>
+            <a href="mailto:youremail@gmail.com" class="info-mail big">youremail@gmail.com</a>
+          </div>
+          <div class="info-block reveal">
+            <div class="k">What happens next</div>
+            <ol class="steps">
+              <li><div><div class="st">Free audit</div><div class="sd">We review your site for design, mobile, speed, and conversion fixes.</div></div></li>
+              <li><div><div class="st">Written proposal</div><div class="sd">Clear scope, timeline, deliverables, and payment terms — if it's a good fit.</div></div></li>
+              <li><div><div class="st">Build & launch</div><div class="sd">We design, build, test, and support your store or website to launch.</div></div></li>
+            </ol>
+          </div>
+          <div class="info-block reveal">
+            <div class="k">Find us</div>
+            <div class="socials-row">
+              <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
+              <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 9h3l.5-3.5H14V4c0-1 .3-1.7 1.8-1.7H17V-.8C16.7-.9 15.6-1 14.4-1 11.9-1 10 .5 10 3.3v2.2H7V9h3v12h4V9Z"/></svg></a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div>
+          <div class="logo">KNB</div>
+          <p style="margin-top:16px;max-width:34ch;color:rgba(255,255,255,0.6)">Web design, Shopify revamps, and ongoing support for growing businesses.</p>
+        </div>
+        <a href="mailto:youremail@gmail.com" class="btn"><span class="dot"></span>Get a free audit</a>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 KNB Web Solution. All rights reserved.</span>
+        <a href="index.html">Back to home</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    /* nav scroll bg */
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll); onScroll();
+
+    /* mobile menu */
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => { burger.classList.toggle('open'); menu.classList.toggle('open'); });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); menu.classList.remove('open'); }));
+
+    /* reveal */
+    gsap.utils.toArray('.reveal').forEach((el, i) => {
+      gsap.to(el, { y: 0, opacity: 1, duration: 0.85, ease: 'power3.out', delay: Math.min(i, 6) * 0.06 });
+    });
+
+    /* magnetic buttons */
+    if (!matchMedia('(hover: none)').matches) {
+      document.querySelectorAll('.btn, .nav-cta').forEach((btn) => {
+        const strength = 0.32;
+        const xTo = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
+        const yTo = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
+        btn.addEventListener('mouseenter', () => gsap.to(btn, { scale: 1.04, duration: 0.4, ease: 'power3' }));
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          xTo((e.clientX - (r.left + r.width / 2)) * strength);
+          yTo((e.clientY - (r.top + r.height / 2)) * strength);
+        });
+        btn.addEventListener('mouseleave', () => { xTo(0); yTo(0); gsap.to(btn, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.5)' }); });
+      });
+    }
+
+    /* form submit (front-end only — shows success state) */
+    const form = document.getElementById('auditForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      if (!name.value.trim() || !email.value.trim()) {
+        (!name.value.trim() ? name : email).focus();
+        return;
+      }
+      gsap.to(form, { opacity: 0, y: -10, duration: 0.4, ease: 'power2.in', onComplete: () => {
+        form.style.display = 'none';
+        const s = document.getElementById('formSuccess');
+        s.classList.add('show');
+        gsap.fromTo(s, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+      }});
+    });
+  </script>
+</body>
+</html>
