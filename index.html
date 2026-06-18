@@ -1276,49 +1276,26 @@
             gsap.to(inner, { yPercent: amp, duration: dur, delay, ease: 'sine.inOut', repeat: -1, yoyo: true });
             // gentle tilt sway, slower & offset so it never syncs with the bob
             gsap.to(inner, { rotation: tilt, duration: dur * 1.35, delay: delay + 0.5, ease: 'sine.inOut', repeat: -1, yoyo: true });
-            // dynamic shadow: softer & dropped further as it rises, tighter as it sinks
-            gsap.fromTo(inner,
-              { boxShadow: '0 30px 60px rgba(0,0,0,0.20)' },
-              { boxShadow: '0 54px 84px rgba(0,0,0,0.11)', duration: dur, delay, ease: 'sine.inOut', repeat: -1, yoyo: true });
           });
         });
       }
 
-      /* ---- Hover interaction: fan apart + lift hovered card ---- */
+      /* ---- Hover: hovered card grows + stronger shadow, jumps to the front ---- */
       const stack = document.querySelector('.hero-photos');
-      const spread = { p3: -185, p1: 0, p2: 185 };
-      const fanRot = { p3: -12, p1: 0, p2: 12 };
-
-      const resetCard = (id) => gsap.to(cards[id], {
-        x: layout[id].x, rotation: layout[id].rot, y: 0, scale: 1,
-        duration: 0.6, ease: 'power3.out', overwrite: 'auto'
-      });
-
-      stack.addEventListener('mouseenter', () => {
-        Object.keys(cards).forEach(id => gsap.to(cards[id], {
-          x: spread[id], rotation: fanRot[id],
-          duration: 0.6, ease: 'power3.out', overwrite: 'auto'
-        }));
-      });
-      stack.addEventListener('mouseleave', () => {
-        Object.keys(cards).forEach(id => resetCard(id));
-      });
-
       Object.keys(cards).forEach(id => {
         const el = cards[id];
+        const inner = el.querySelector('.polaroid');
         el.addEventListener('mouseenter', () => {
-          el.style.zIndex = 10;            // pop above siblings
-          gsap.to(el, {
-            y: -34, scale: 1.08, rotation: 0,
-            duration: 0.45, ease: 'power3.out', overwrite: 'auto'
-          });
+          stack.style.zIndex = 50;         // lift the whole stack above the headline (but below the nav)
+          el.style.zIndex = 99999;         // hovered card on top within the stack
+          gsap.to(el, { scale: 1.12, y: -16, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(inner, { boxShadow: '0 55px 95px rgba(0,0,0,0.32)', duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
         });
         el.addEventListener('mouseleave', () => {
-          el.style.zIndex = '';            // restore stacking
-          gsap.to(el, {
-            x: spread[id], rotation: fanRot[id], y: 0, scale: 1,
-            duration: 0.5, ease: 'power3.out', overwrite: 'auto'
-          });
+          stack.style.zIndex = '';         // restore stack below the headline
+          el.style.zIndex = '';            // restore natural stacking
+          gsap.to(el, { scale: 1, y: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(inner, { boxShadow: '0 30px 60px rgba(0,0,0,0.20)', duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
         });
       });
 

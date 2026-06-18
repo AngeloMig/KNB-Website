@@ -209,6 +209,64 @@
       <span class="mq-item">Shopify Revamps</span><img class="mq-logo" src="https://cdn.simpleicons.org/shopify" alt=""><span class="mq-item">Web Design</span><img class="mq-logo" src="https://cdn.simpleicons.org/webflow" alt=""><span class="mq-item">Ecommerce</span><img class="mq-logo" src="https://cdn.simpleicons.org/wordpress" alt=""><span class="mq-item">Shopify Revamps</span><img class="mq-logo" src="https://cdn.simpleicons.org/shopify" alt=""><span class="mq-item">Web Design</span><img class="mq-logo" src="https://cdn.simpleicons.org/webflow" alt=""><span class="mq-item">Ecommerce</span><img class="mq-logo" src="https://cdn.simpleicons.org/wordpress" alt="">
     </div></div>
 
+    <!-- ============ STATS / NUMBER DEMOS ============ -->
+    <div class="page-head" style="margin-top:90px;">
+      <div class="kicker">KNB · Number / stats options</div>
+      <h1>Stat counter animations</h1>
+      <p>Five ways to animate the 3+ / 40+ / 100+ stats. Hit replay to watch them again.</p>
+      <button class="replay" id="statReplay">↻ Replay all</button>
+    </div>
+
+    <!-- 1 odometer -->
+    <section class="group">
+      <div class="group-label"><span class="n">1</span> <span class="vibe">Odometer / rolling digits</span></div>
+      <div class="stats-demo" id="demoOdo">
+        <div class="sd-stat"><div class="sd-num"><span class="odo" data-val="3"></span></div><div class="sd-desc">Years of experience</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="odo" data-val="40"></span></div><div class="sd-desc">Satisfied clients</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="odo" data-val="100"></span></div><div class="sd-desc">Projects delivered</div></div>
+      </div>
+    </section>
+
+    <!-- 2 count-up + bar -->
+    <section class="group">
+      <div class="group-label"><span class="n">2</span> <span class="vibe">Count-up + bar draw</span></div>
+      <div class="stats-demo" id="demoBar">
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="3">0</span><span class="sd-plus">+</span></div><div class="sd-bar"><i data-w="3"></i></div><div class="sd-desc">Years of experience</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="40">0</span><span class="sd-plus">+</span></div><div class="sd-bar"><i data-w="40"></i></div><div class="sd-desc">Satisfied clients</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="100">0</span><span class="sd-plus">+</span></div><div class="sd-bar"><i data-w="100"></i></div><div class="sd-desc">Projects delivered</div></div>
+      </div>
+    </section>
+
+    <!-- 3 oversized + label reveal -->
+    <section class="group">
+      <div class="group-label"><span class="n">3</span> <span class="vibe">Oversized + label reveal</span></div>
+      <div class="stats-demo big" id="demoBig">
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="3">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Years of experience</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="40">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Satisfied clients</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="100">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Projects delivered</div></div>
+      </div>
+    </section>
+
+    <!-- 4 hover-reactive -->
+    <section class="group">
+      <div class="group-label"><span class="n">4</span> <span class="vibe">Hover-reactive</span> <span class="anim">hover a stat to replay</span></div>
+      <div class="stats-demo hoverdemo" id="demoHover">
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="3">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Years of experience</div><div class="sd-hint">Hover to replay →</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="40">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Satisfied clients</div><div class="sd-hint">Hover to replay →</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="100">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Projects delivered</div><div class="sd-hint">Hover to replay →</div></div>
+      </div>
+    </section>
+
+    <!-- 5 pink + pop -->
+    <section class="group">
+      <div class="group-label"><span class="n">5</span> <span class="vibe">Pink "+" accent pop</span></div>
+      <div class="stats-demo plusdemo" id="demoPlus">
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="3">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Years of experience</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="40">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Satisfied clients</div></div>
+        <div class="sd-stat"><div class="sd-num"><span class="numval" data-val="100">0</span><span class="sd-plus">+</span></div><div class="sd-desc">Projects delivered</div></div>
+      </div>
+    </section>
+
     <div class="note" style="margin-top:70px;">
       Tell me which to use — e.g. <strong>"3"</strong> for that headline + animation, or mix and match like <strong>"headline 2, animation 4"</strong>. I'll combine it with the hero's existing load reveal so both play nicely.
     </div>
@@ -319,6 +377,78 @@
         requestAnimationFrame(frame);
       })();
     })();
+
+    /* ===== STATS / NUMBER DEMOS ===== */
+    function countUp(el, target, dur, done) {
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min(1, (now - start) / dur);
+        el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
+        if (p < 1) requestAnimationFrame(tick);
+        else { el.textContent = target; if (done) done(); }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* 1 — odometer */
+    function buildOdo(el) {
+      const val = String(el.dataset.val);
+      el.innerHTML = '';
+      [...val].forEach((ch, i) => {
+        const d = document.createElement('span'); d.className = 'digit'; d.dataset.t = ch;
+        const col = document.createElement('span'); col.className = 'col'; col.style.transitionDelay = (i * 0.1) + 's';
+        for (let n = 0; n <= 9; n++) { const s = document.createElement('span'); s.textContent = n; col.appendChild(s); }
+        d.appendChild(col); el.appendChild(d);
+      });
+      const p = document.createElement('span'); p.className = 'sd-plus'; p.textContent = '+'; el.appendChild(p);
+    }
+    function runOdo() {
+      document.querySelectorAll('#demoOdo .odo').forEach((el) => {
+        el.querySelectorAll('.digit').forEach((d) => {
+          const col = d.querySelector('.col');
+          col.style.transition = 'none'; col.style.transform = 'translateY(0)';
+          void col.offsetWidth;
+          col.style.transition = '';
+          col.style.transform = `translateY(-${d.dataset.t}em)`;
+        });
+      });
+    }
+
+    /* 2 — count-up + bar */
+    function runBar() {
+      document.querySelectorAll('#demoBar .sd-stat').forEach((st) => {
+        const v = st.querySelector('.numval'); countUp(v, +v.dataset.val, 1600);
+        const bar = st.querySelector('.sd-bar i');
+        bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
+        bar.style.transition = ''; bar.style.width = bar.dataset.w + '%';
+      });
+    }
+
+    /* 3 — oversized + label reveal */
+    function runBig() {
+      const c = document.getElementById('demoBig'); c.classList.remove('in');
+      c.querySelectorAll('.numval').forEach((v) => countUp(v, +v.dataset.val, 1600));
+      setTimeout(() => c.classList.add('in'), 700);
+    }
+
+    /* generic stat with optional + pop */
+    function runStat(st, pop) {
+      const v = st.querySelector('.numval'); const plus = st.querySelector('.sd-plus');
+      countUp(v, +v.dataset.val, 1500, () => {
+        if (pop && plus) { plus.classList.remove('pop'); void plus.offsetWidth; plus.classList.add('pop'); }
+      });
+    }
+    function runHover() { document.querySelectorAll('#demoHover .sd-stat').forEach((st) => runStat(st, false)); }
+    function runPlus() { document.querySelectorAll('#demoPlus .sd-stat').forEach((st) => runStat(st, true)); }
+
+    function runAllStats() { runOdo(); runBar(); runBig(); runHover(); runPlus(); }
+
+    document.querySelectorAll('#demoOdo .odo').forEach(buildOdo);
+    document.querySelectorAll('#demoHover .sd-stat').forEach((st) => {
+      st.addEventListener('mouseenter', () => runStat(st, false));
+    });
+    document.getElementById('statReplay').addEventListener('click', runAllStats);
+    setTimeout(runAllStats, 300);
   </script>
 </body>
 </html>
