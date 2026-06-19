@@ -827,6 +827,178 @@
   .who { font-weight: 700; font-size: 18px; }
   .role { color: var(--muted); font-size: 15px; }
 
+  /* ---------- PROCESS ---------- */
+  .process { padding: 100px 0; }
+  .steps4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 60px; }
+  .step { border-top: 1px solid var(--line); padding-top: 24px; }
+  .step .sn { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .step h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-top: 14px; }
+  .step p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.5; }
+  /* shrinking arrow trail (biggest first) with a sequential "timer" pop */
+  .proc-arrows { position: absolute; top: -52px; left: 0; z-index: 1; display: flex; align-items: center; gap: 10px; pointer-events: none; }
+  .proc-arrows svg { flex: none; fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transform-origin: center; animation: arrowSeq 2.4s ease-in-out infinite; }
+  @keyframes arrowSeq { 0%, 28%, 100% { transform: scale(1); } 13% { transform: scale(1.32); } }
+  @media (prefers-reduced-motion: reduce) { .proc-arrows svg { animation: none; } }
+
+  /* ---------- PLANS ---------- */
+  .plans { padding: 100px 0; }
+  .plans-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 56px; }
+  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 30px 26px; display: flex; flex-direction: column; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }
+  .plan:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.10); }
+  .plan.featured { background: var(--ink); color: var(--bg); }
+  .plan .tag-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #27c46e; margin-bottom: 10px; min-height: 14px; }
+  .plan h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .plan .who { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .plan.featured .who { color: rgba(255,255,255,0.6); }
+  .plan ul { list-style: none; margin: 22px 0 26px; display: flex; flex-direction: column; gap: 11px; }
+  .plan li { font-size: 14.5px; color: var(--muted); padding-left: 24px; position: relative; line-height: 1.4; }
+  .plan.featured li { color: rgba(255,255,255,0.82); }
+  .plan li::before { content: "✓"; position: absolute; left: 0; color: #27c46e; font-weight: 700; }
+  .plan .btn { margin-top: auto; width: 100%; }
+  .plan.featured .btn { background: var(--bg); color: var(--ink); }
+  .plan.featured .btn:hover { background: #fff; }
+
+  /* ---------- MAINTENANCE ---------- */
+  .maint { padding: 100px 0; }
+  .maint-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center; }
+  .maint-list { display: flex; flex-direction: column; }
+  .maint-item { display: flex; gap: 18px; align-items: flex-start; padding: 22px 0; border-top: 1px solid var(--line); }
+  .maint-item:last-child { border-bottom: 1px solid var(--line); }
+  .maint-item .mi-k { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 26px; padding-top: 3px; }
+  .maint-item h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+  .maint-item p { color: var(--muted); font-size: 14.5px; margin-top: 4px; line-height: 1.45; }
+
+  /* ---------- WHY KNB ---------- */
+  .why { padding: 100px 0; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+  .why-points { display: grid; gap: 26px; }
+  .why-point { display: flex; gap: 18px; align-items: flex-start; }
+  .why-point .wp-ic { flex: none; width: 44px; height: 44px; border-radius: 12px; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .why-point h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+  .why-point p { color: var(--muted); font-size: 15px; margin-top: 5px; line-height: 1.5; max-width: 44ch; }
+
+  /* ---------- FAQ ---------- */
+  .faq { padding: 100px 0; }
+  .faq-list { max-width: 860px; margin: 50px auto 0; }
+  .faq-item { border-top: 1px solid var(--line); }
+  .faq-item:last-child { border-bottom: 1px solid var(--line); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0; cursor: pointer; font-size: clamp(18px, 2vw, 24px); font-weight: 500; letter-spacing: -0.02em; list-style: none; }
+  .faq-q .ic { flex: none; width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.4s var(--ease), background 0.3s, color 0.3s; font-size: 18px; }
+  .faq-item.open .faq-q .ic { transform: rotate(45deg); background: var(--ink); color: var(--bg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease); }
+  .faq-a p { color: var(--muted); font-size: 16px; line-height: 1.6; padding: 0 60px 26px 0; }
+
+  @media (max-width: 860px) {
+    .steps4 { grid-template-columns: 1fr 1fr; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .maint-grid, .why-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  /* ===== SECTION BACKGROUNDS (preview — easy to remove) ===== */
+  .stats, .services, .process, .projects, .plans, .maint, .why, .logos, .testi, .faq { position: relative; overflow: hidden; }
+  .stats > .wrap, .services > .wrap, .process > .wrap, .projects > .wrap, .plans > .wrap,
+  .maint > .wrap, .why > .wrap, .testi > .wrap, .faq > .wrap { position: relative; z-index: 1; }
+  .logos .logo-marquee { position: relative; z-index: 1; }
+
+  /* #1 alternating tones */
+  .services, .projects, .why, .testi { background: #ece9e1; }
+
+  /* #10 concentric rings — Stats  +  #7 gradient fade at the boundary */
+  .stats::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: repeating-radial-gradient(circle at 86% 50%, transparent 0 47px, rgba(17,17,16,0.05) 47px 48px);
+    -webkit-mask-image: radial-gradient(circle at 86% 50%, #000, transparent 65%);
+    mask-image: radial-gradient(circle at 86% 50%, #000, transparent 65%);
+  }
+  .stats::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: 0; pointer-events: none;
+    background: linear-gradient(to bottom, transparent, #ece9e1);
+  }
+
+  /* #2 faint grid — Services */
+  .services::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(17,17,16,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,16,0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at 28% 38%, #000 18%, transparent 72%);
+    mask-image: radial-gradient(ellipse at 28% 38%, #000 18%, transparent 72%);
+  }
+
+  /* #4 watermark word — Process (scroll-drifting) & FAQ (static) */
+  .faq::before {
+    content: "FAQ"; position: absolute; z-index: 0; pointer-events: none;
+    font-weight: 700; letter-spacing: -0.04em; line-height: 0.8; white-space: nowrap;
+    font-size: clamp(120px, 22vw, 320px); color: rgba(17,17,16,0.035);
+    right: -1%; bottom: -6%;
+  }
+  .process-wm {
+    position: absolute; left: 0; bottom: -3%; z-index: 0; pointer-events: none;
+    font-size: clamp(120px, 22vw, 320px); font-weight: 700; letter-spacing: -0.04em; line-height: 0.8;
+    color: rgba(17,17,16,0.04); white-space: nowrap; will-change: transform;
+  }
+
+  /* #5 dot-matrix / halftone — Projects (with a cursor-following spotlight) */
+  .projects::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(17,17,16,0.07) 1.4px, transparent 1.5px);
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 55%);
+    mask-image: linear-gradient(135deg, #000 0%, transparent 55%);
+  }
+  .projects::after {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(232,63,160,0.55) 1.7px, transparent 2px);
+    background-size: 22px 22px;
+    opacity: 0; transition: opacity 0.45s var(--ease);
+    -webkit-mask-image: radial-gradient(240px circle at var(--pmx, 50%) var(--pmy, 50%), #000 0%, transparent 68%);
+    mask-image: radial-gradient(240px circle at var(--pmx, 50%) var(--pmy, 50%), #000 0%, transparent 68%);
+  }
+  .projects.cursor-on::after { opacity: 1; }
+
+  /* #3 aurora blobs — Plans */
+  .plans::before, .plans::after {
+    content: ""; position: absolute; z-index: 0; border-radius: 50%; filter: blur(85px); pointer-events: none;
+  }
+  .plans::before { width: 480px; height: 480px; background: rgba(232,63,160,0.16); top: -130px; left: -90px; animation: blobA 16s ease-in-out infinite alternate; }
+  .plans::after { width: 540px; height: 540px; background: rgba(96,132,255,0.14); bottom: -180px; right: -110px; animation: blobB 21s ease-in-out infinite alternate; }
+  @keyframes blobA { to { transform: translate(70px, 50px) scale(1.12); } }
+  @keyframes blobB { to { transform: translate(-60px, -45px) scale(1.14); } }
+
+  /* #6 inverted dark — Maintenance, with a faint keyword field behind */
+  .maint { background: var(--ink); color: var(--bg); }
+  .maint::before {
+    content: "Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · ";
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    padding: 40px 28px;
+    font-size: clamp(34px, 5vw, 64px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+    color: rgba(255,255,255,0.035);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(115deg, #000 0%, transparent 60%);
+    mask-image: linear-gradient(115deg, #000 0%, transparent 60%);
+  }
+  .maint .sec-head, .maint .maint-item h3 { color: var(--bg); }
+  .maint p { color: rgba(255,255,255,0.62) !important; }
+  .maint .maint-item { border-color: rgba(255,255,255,0.15); }
+  .maint .maint-item p { color: rgba(255,255,255,0.55); }
+  .maint .mi-k { color: rgba(255,255,255,0.5); }
+  .maint .btn { background: var(--bg); color: var(--ink); }
+  .maint .btn:hover { background: #fff; }
+  .maint .btn .dot { background: var(--ink); }
+
+  /* #8 scroll-reactive rail + section number — Why KNB */
+  .why::before { content: "04"; position: absolute; z-index: 0; top: 36px; right: 5%; font-size: clamp(100px, 16vw, 220px); font-weight: 700; color: rgba(17,17,16,0.045); letter-spacing: -0.04em; }
+  .why::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: rgba(17,17,16,0.08); z-index: 0; }
+  .why-rail { position: absolute; left: 0; top: 0; width: 3px; height: 0; background: #e83fa0; z-index: 1; }
+
+  /* #9 themed star pattern — Testimonials */
+  .testi::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M11 1 L13 9 L21 11 L13 13 L11 21 L9 13 L1 11 L9 9 Z' fill='%23111110' fill-opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 72% 28%, #000 8%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 72% 28%, #000 8%, transparent 70%);
+  }
+
   /* ---------- FOOTER ---------- */
   footer {
     background: var(--ink);
@@ -897,7 +1069,7 @@
       <a href="#top" class="logo"><span class="mark">K</span>KNB</a>
       <div class="nav-right">
         <div class="nav-links">
-          <a href="#projects">Portfolio</a>
+          <a href="portfolio.html">Portfolio</a>
           <a href="contact.html">Contact</a>
         </div>
         <a href="mailto:youremail@gmail.com" class="nav-cta"><span class="dot"></span>Free audit</a>
@@ -908,7 +1080,7 @@
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#projects">Portfolio</a>
+    <a href="portfolio.html">Portfolio</a>
     <a href="contact.html">Contact</a>
     <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
   </div>
@@ -1037,6 +1209,45 @@
     </div>
   </section>
 
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="process-wm" aria-hidden="true">PROCESS</div>
+    <div class="wrap">
+      <h2 class="sec-head reveal">How we work — simple and clear</h2>
+      <div class="steps4">
+        <div class="proc-arrows" aria-hidden="true">
+          <svg style="width:27px;height:44px;opacity:.9;animation-delay:0s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:23px;height:38px;opacity:.74;animation-delay:.16s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:20px;height:32px;opacity:.6;animation-delay:.32s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:16px;height:27px;opacity:.46;animation-delay:.48s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:13px;height:22px;opacity:.34;animation-delay:.64s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:10px;height:17px;opacity:.23;animation-delay:.8s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:8px;height:13px;opacity:.14;animation-delay:.96s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+        </div>
+        <div class="step reveal">
+          <div class="sn">01</div>
+          <h3>Free audit</h3>
+          <p>We review your site for design, mobile, speed, and conversion opportunities.</p>
+        </div>
+        <div class="step reveal">
+          <div class="sn">02</div>
+          <h3>Written proposal</h3>
+          <p>A clear scope with deliverables, timeline, and payment terms — no surprises.</p>
+        </div>
+        <div class="step reveal">
+          <div class="sn">03</div>
+          <h3>Design & build</h3>
+          <p>We design, build, and test your store or website on the right platform.</p>
+        </div>
+        <div class="step reveal">
+          <div class="sn">04</div>
+          <h3>Launch & support</h3>
+          <p>We launch, hand over, and keep your site running with ongoing support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROJECTS -->
   <section class="projects" id="projects">
     <div class="wrap">
@@ -1066,6 +1277,93 @@
     </div>
   </section>
 
+  <!-- PLANS -->
+  <section class="plans">
+    <div class="wrap">
+      <h2 class="sec-head reveal">Solutions for every stage</h2>
+      <div class="plans-grid">
+        <div class="plan reveal">
+          <div class="tag-badge"></div>
+          <h3>Starter Website</h3>
+          <div class="who">Local shops, freelancers, service providers</div>
+          <ul>
+            <li>1–5 pages, mobile-ready</li>
+            <li>Clean, modern design</li>
+            <li>Contact form & basic SEO</li>
+            <li>Launch support</li>
+          </ul>
+          <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+        </div>
+        <div class="plan featured reveal">
+          <div class="tag-badge">Most popular</div>
+          <h3>Business Website</h3>
+          <div class="who">Growing companies & B2B</div>
+          <ul>
+            <li>Custom multi-page design</li>
+            <li>CMS so you can edit content</li>
+            <li>On-page SEO & analytics</li>
+            <li>Performance optimized</li>
+          </ul>
+          <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+        </div>
+        <div class="plan reveal">
+          <div class="tag-badge"></div>
+          <h3>Ecommerce</h3>
+          <div class="who">Online sellers & product brands</div>
+          <ul>
+            <li>Shopify or WooCommerce</li>
+            <li>Product & checkout setup</li>
+            <li>Payments & shipping</li>
+            <li>Conversion-focused design</li>
+          </ul>
+          <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+        </div>
+        <div class="plan reveal">
+          <div class="tag-badge"></div>
+          <h3>Custom Web App</h3>
+          <div class="who">Booking, dashboards, POS, portals</div>
+          <ul>
+            <li>Scoped custom build</li>
+            <li>Third-party integrations</li>
+            <li>Admin & internal tools</li>
+            <li>Ongoing support</li>
+          </ul>
+          <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAINTENANCE -->
+  <section class="maint">
+    <div class="wrap maint-grid">
+      <div>
+        <h2 class="sec-head reveal">Care plans that keep your site sharp</h2>
+        <p class="reveal" style="color:var(--muted);font-size:18px;margin-top:18px;max-width:38ch">Launch is just the start. Our monthly plans keep your store or website fast, secure, and up to date.</p>
+        <a href="contact.html" class="btn reveal" style="margin-top:30px"><span class="dot"></span>Talk to us</a>
+      </div>
+      <div class="maint-list">
+        <div class="maint-item reveal"><div class="mi-k">01</div><div><h3>Updates & backups</h3><p>Regular platform, theme, and plugin updates with secure backups.</p></div></div>
+        <div class="maint-item reveal"><div class="mi-k">02</div><div><h3>Speed & security</h3><p>Performance tuning and monitoring so your site stays fast and safe.</p></div></div>
+        <div class="maint-item reveal"><div class="mi-k">03</div><div><h3>Content edits & support</h3><p>Ongoing tweaks, fixes, and content changes when you need them.</p></div></div>
+        <div class="maint-item reveal"><div class="mi-k">04</div><div><h3>SEO & improvements</h3><p>Continuous on-page SEO and improvements with simple reporting.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY KNB -->
+  <section class="why">
+    <div class="wrap why-grid">
+      <h2 class="sec-head reveal">Why work with KNB</h2>
+      <div class="why-points">
+        <div class="why-point reveal"><div class="wp-ic">◆</div><div><h3>Platform specialists</h3><p>Deep experience across Shopify, Webflow, and WordPress — we recommend what actually fits your goals.</p></div></div>
+        <div class="why-point reveal"><div class="wp-ic">✓</div><div><h3>Free audit first</h3><p>We start by reviewing your site and sending a clear written proposal — no pressure, no guesswork.</p></div></div>
+        <div class="why-point reveal"><div class="wp-ic">↗</div><div><h3>Built to convert</h3><p>Design and structure focused on trust, mobile experience, and turning visitors into customers.</p></div></div>
+        <div class="why-point reveal"><div class="wp-ic">♥</div><div><h3>Ongoing support</h3><p>We don't disappear after launch — care plans keep your site performing month after month.</p></div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- LOGO WALL -->
   <section class="logos">
     <div class="wrap">
@@ -1089,6 +1387,35 @@
       <div class="slider-window">
         <div class="slider-track" id="sliderTrack">
           <!-- slides injected -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="wrap">
+      <h2 class="sec-head reveal" style="text-align:center;margin:0 auto;">Frequently asked questions</h2>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <div class="faq-q">How long does a project take?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Most websites and store revamps take about 2–6 weeks depending on scope, number of pages or products, and how quickly content is ready. We confirm the timeline in your proposal.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Which platform is right for me?<span class="ic">+</span></div>
+          <div class="faq-a"><p>It depends on your goals. Shopify suits most ecommerce brands, WooCommerce/WordPress fits content-heavy or flexible business sites, and Webflow is great for custom marketing sites. We'll recommend the best fit during your free audit.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What's included in a project?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Everything is spelled out in the written proposal — scope, deliverables, timeline, and payment terms — so there are no surprises. Common inclusions are design, build, testing, and launch support.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you offer support after launch?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Yes. We offer monthly care plans covering updates, backups, speed and security, content edits, and SEO improvements — so your site keeps performing after it goes live.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do we get started?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Book a free audit of your store or website. We'll review it, suggest practical improvements, and send a clear proposal if it's a good fit. No pressure either way.</p></div>
         </div>
       </div>
     </div>
@@ -1217,8 +1544,7 @@
           yTo((e.clientY - (r.top + r.height / 2)) * strength);
         });
         btn.addEventListener('mouseleave', () => {
-          xTo(0); yTo(0);
-          gsap.to(btn, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+          gsap.to(btn, { x: 0, y: 0, scale: 1, duration: 0.55, ease: 'power3.out', overwrite: true });
         });
       });
     }
@@ -1355,20 +1681,71 @@
       }
     })();
 
-    /* ---- Generic reveal-up ---- */
+    /* ---- Generic reveal-up (skips sections with their own animation) ---- */
+    const customSel = '.process, .plans, .maint, .why, .faq, .projects';
     gsap.utils.toArray('.reveal').forEach(el => {
+      if (el.closest(customSel)) return;
       gsap.to(el, {
         y: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 80%' }
       });
     });
-    // grouped staggers for rows/cards/stats
-    [['.srv-row', 0.12], ['.proj-card', 0.1], ['.stat', 0.12]].forEach(([sel, st]) => {
+    // grouped staggers for service rows + stats
+    [['.srv-row', 0.12], ['.stat', 0.12]].forEach(([sel, st]) => {
       gsap.to(gsap.utils.toArray(sel), {
         y: 0, opacity: 1, duration: 0.85, ease: 'power3.out', stagger: st,
         scrollTrigger: { trigger: sel, start: 'top 82%' }
       });
     });
+
+    /* ---- Distinct scroll-in animation per section ---- */
+    const once = (trigger) => ({ trigger, start: 'top 78%', once: true });
+
+    // PROCESS — heading slides in; the steps flow in left→right tied to scroll
+    gsap.set('.process .sec-head', { opacity: 0, x: -55, y: 0 });
+    ScrollTrigger.create({ ...once('.process'),
+      onEnter: () => gsap.to('.process .sec-head', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }) });
+    gsap.set('.process .step', { opacity: 0, x: -90, y: 0 });
+    gsap.to('.process .step', {
+      opacity: 1, x: 0, ease: 'none', stagger: 0.4,
+      scrollTrigger: { trigger: '.process', start: 'top 82%', end: 'center 48%', scrub: 0.6 }
+    });
+    // big "PROCESS" watermark drifts left → right as you scroll through the section
+    gsap.fromTo('.process-wm', { x: -180 }, {
+      x: 180, ease: 'none',
+      scrollTrigger: { trigger: '.process', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+
+    // PROJECTS — scale / pop in
+    gsap.set('.projects .reveal', { opacity: 0, scale: 0.9, y: 40 });
+    ScrollTrigger.create({ ...once('.projects'),
+      onEnter: () => gsap.to('.projects .reveal', { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger: 0.1 }) });
+
+    // PLANS — flip up (3D)
+    gsap.set('.plans .sec-head', { opacity: 0, y: 30 });
+    gsap.set('.plans .plan', { opacity: 0, y: 0, rotationX: 38, transformPerspective: 900, transformOrigin: 'center bottom' });
+    ScrollTrigger.create({ ...once('.plans'), onEnter: () => {
+      gsap.to('.plans .sec-head', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+      gsap.to('.plans .plan', { opacity: 1, rotationX: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1, delay: 0.1 });
+    } });
+
+    // MAINTENANCE — slide in from the right
+    gsap.set('.maint .reveal', { opacity: 0, x: 55, y: 0 });
+    ScrollTrigger.create({ ...once('.maint'),
+      onEnter: () => gsap.to('.maint .reveal', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 }) });
+
+    // WHY KNB — rise up + icons spin in
+    gsap.set('.why .reveal', { opacity: 0, y: 44 });
+    gsap.set('.why .wp-ic', { scale: 0, rotation: -90 });
+    ScrollTrigger.create({ ...once('.why'), onEnter: () => {
+      gsap.to('.why .reveal', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12 });
+      gsap.to('.why .wp-ic', { scale: 1, rotation: 0, duration: 0.7, ease: 'back.out(2)', stagger: 0.12, delay: 0.2 });
+    } });
+
+    // FAQ — slide up from below
+    gsap.set('.faq .reveal, .faq .faq-item', { opacity: 0, y: 50 });
+    ScrollTrigger.create({ ...once('.faq'),
+      onEnter: () => gsap.to('.faq .reveal, .faq .faq-item', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 }) });
 
     /* ---- Count-up stats ---- */
     gsap.utils.toArray('.count').forEach(el => {
@@ -1441,6 +1818,75 @@
     document.getElementById('prev').addEventListener('click', () => { go(idx - 1); resetAuto(); });
     let auto = setInterval(() => go(idx + 1), 5000);
     function resetAuto() { clearInterval(auto); auto = setInterval(() => go(idx + 1), 5000); }
+
+    /* ---- Services intro: words fill grey → black on scroll ---- */
+    (function () {
+      const intro = document.querySelector('.services .intro');
+      if (!intro) return;
+      const text = intro.textContent.replace(/\s+/g, ' ').trim();
+      intro.innerHTML = '';
+      const words = text.split(' ').map((w) => {
+        const s = document.createElement('span');
+        s.className = 'iw';
+        s.textContent = w;
+        intro.appendChild(s);
+        intro.appendChild(document.createTextNode(' '));
+        return s;
+      });
+      gsap.set(words, { color: '#b7b5ad' });
+      gsap.to(words, {
+        color: '#111110', ease: 'none', stagger: 0.5,
+        scrollTrigger: { trigger: '.services .intro', start: 'top 78%', end: 'top 38%', scrub: 0.5 }
+      });
+    })();
+
+    /* ---- Projects: cursor-following dot spotlight ---- */
+    (function () {
+      const sec = document.querySelector('.projects');
+      if (!sec || matchMedia('(hover: none)').matches) return;
+      sec.addEventListener('mousemove', (e) => {
+        const r = sec.getBoundingClientRect();
+        sec.style.setProperty('--pmx', (e.clientX - r.left) + 'px');
+        sec.style.setProperty('--pmy', (e.clientY - r.top) + 'px');
+        sec.classList.add('cursor-on');
+      });
+      sec.addEventListener('mouseleave', () => sec.classList.remove('cursor-on'));
+    })();
+
+    /* ---- Scroll-reactive rail in the Why section (#8) ---- */
+    (function () {
+      const why = document.querySelector('.why');
+      if (!why) return;
+      const rail = document.createElement('div'); rail.className = 'why-rail'; why.appendChild(rail);
+      const update = () => {
+        const r = why.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const prog = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh)));
+        rail.style.height = (prog * 100) + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    /* ---- FAQ accordion ---- */
+    document.querySelectorAll('#faqList .faq-item').forEach((item) => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('#faqList .faq-item').forEach((it) => {
+          it.classList.remove('open');
+          it.querySelector('.faq-a').style.maxHeight = null;
+        });
+        // open this one (unless it was already open)
+        if (!isOpen) {
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
   </script>
 </body>
 </html>
