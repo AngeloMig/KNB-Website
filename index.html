@@ -857,6 +857,7 @@
   .plan .btn { margin-top: auto; width: 100%; }
   .plan.featured .btn { background: var(--bg); color: var(--ink); }
   .plan.featured .btn:hover { background: #fff; }
+  .plan.featured .btn .dot { background: var(--ink); }
 
   /* ---------- MAINTENANCE ---------- */
   .maint { padding: 100px 0; }
@@ -1534,17 +1535,28 @@
     /* ---- Magnetic buttons (pull toward cursor + scale) ---- */
     if (!matchMedia('(hover: none)').matches) {
       document.querySelectorAll('.btn, .nav-cta').forEach((btn) => {
-        const strength = 0.32;
+        // Buttons inside a card are full-width, so use a gentler pull and clamp
+        // the travel to keep them within the card's padding.
+        const inCard = !!btn.closest('.plan');
+        const strength = inCard ? 0.18 : 0.32;
+        const maxMove = inCard ? 8 : 60;
+        const hoverScale = inCard ? 1.03 : 1.05;
+        const clamp = (v) => Math.max(-maxMove, Math.min(maxMove, v));
+        // Drive x, y AND scale through persistent quickTo tweens. These are
+        // reusable and never kill one another, so the magnetic effect keeps
+        // working on every hover — and it won't clash with the reveal tween
+        // that some buttons (e.g. in .services) run on their y transform.
         const xTo = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
         const yTo = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
-        btn.addEventListener('mouseenter', () => gsap.to(btn, { scale: 1.05, duration: 0.4, ease: 'power3' }));
+        const sTo = gsap.quickTo(btn, 'scale', { duration: 0.45, ease: 'power3' });
+        btn.addEventListener('mouseenter', () => sTo(hoverScale));
         btn.addEventListener('mousemove', (e) => {
           const r = btn.getBoundingClientRect();
-          xTo((e.clientX - (r.left + r.width / 2)) * strength);
-          yTo((e.clientY - (r.top + r.height / 2)) * strength);
+          xTo(clamp((e.clientX - (r.left + r.width / 2)) * strength));
+          yTo(clamp((e.clientY - (r.top + r.height / 2)) * strength));
         });
         btn.addEventListener('mouseleave', () => {
-          gsap.to(btn, { x: 0, y: 0, scale: 1, duration: 0.55, ease: 'power3.out', overwrite: true });
+          xTo(0); yTo(0); sTo(1);
         });
       });
     }
