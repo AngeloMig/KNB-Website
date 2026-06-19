@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KNB Web Solution — Creative Agency</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f3ef;
+    --ink: #111110;
+    --muted: #6d6c66;
+    --line: #dedcd4;
+    --card: #ffffff;
+    --accent: #111110;
+    --maxw: 1240px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  section { position: relative; }
+
+  /* ---------- NAV (floating glass pill) ---------- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 0;
+    transition: padding 0.4s var(--ease);
+  }
+  .nav.scrolled { padding: 10px 0; }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+    padding: 0 10px 0 18px;
+    border-radius: 100px;
+    background: rgba(244,243,239,0.45);
+    border: 1px solid transparent;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease),
+                box-shadow 0.4s var(--ease), backdrop-filter 0.4s;
+  }
+  .nav.scrolled .nav-inner {
+    background: rgba(255,255,255,0.72);
+    border-color: var(--line);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+  }
+  .logo .mark {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    background: var(--ink);
+    color: var(--bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.4s var(--ease);
+  }
+  .logo:hover .mark { transform: rotate(-8deg) scale(1.06); }
+
+  .nav-right { display: flex; align-items: center; gap: 6px; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-links a {
+    font-size: 14.5px;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 100px;
+    transition: background 0.3s var(--ease), color 0.3s;
+  }
+  .nav-links a:hover { background: rgba(17,17,16,0.06); }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 11px 20px;
+    border-radius: 100px;
+    margin-left: 6px;
+    transition: transform 0.3s var(--ease), background 0.3s;
+  }
+  .nav-cta:hover { transform: scale(1.04); background: #2c2b28; }
+  .nav-cta .dot { width: 7px; height: 7px; border-radius: 50%; background: #6cf09a; }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 30px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .burger span {
+    display: block;
+    height: 2px;
+    width: 26px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.35s var(--ease), opacity 0.25s;
+  }
+  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* full-screen overlay menu */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 99;
+    transform: translateY(-100%);
+    transition: transform 0.55s var(--ease);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 32px;
+    gap: 4px;
+  }
+  .mobile-menu.open { transform: translateY(0); }
+  .mobile-menu a {
+    font-size: clamp(40px, 13vw, 76px);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-menu .mm-foot {
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 28px;
+    padding: 0;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    padding: 108px 0 38px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero > .wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.55;
+    mask-image: radial-gradient(ellipse at 50% 38%, #000 35%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 38%, #000 35%, transparent 80%);
+    pointer-events: none;
+    animation: gridDrift 24s linear infinite;
+  }
+  @keyframes gridDrift {
+    to { background-position: 64px 128px; }
+  }
+
+  /* #4 — brighter grid revealed as a spotlight that follows the cursor */
+  .hero-grid-spot {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(17,17,16,0.42) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(17,17,16,0.42) 1px, transparent 1px);
+    background-size: 64px 64px;
+    animation: gridDrift 24s linear infinite;
+    --mx: 50%; --my: 38%;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+    -webkit-mask-image: radial-gradient(230px circle at var(--mx) var(--my), #000 0%, transparent 70%);
+    mask-image: radial-gradient(230px circle at var(--mx) var(--my), #000 0%, transparent 70%);
+  }
+  .hero-grid-spot.active { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-grid-bg, .hero-grid-spot { animation: none; }
+  }
+  .label {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    gap: 16px;
+  }
+  .label::before, .label::after {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--dot-color, #e83fa0);
+  }
+  .hero h1 {
+    font-size: clamp(46px, 9vw, 128px);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    margin: 22px auto 0;
+    max-width: 16ch;
+    align-self: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 .hch { display: inline-block; will-change: transform; }
+
+  /* scroll cue */
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    z-index: 5;
+  }
+  .scroll-cue .cue-line {
+    width: 1px;
+    height: 48px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-cue .cue-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -60%;
+    width: 100%;
+    height: 60%;
+    background: var(--ink);
+    animation: cueMove 1.9s var(--ease) infinite;
+  }
+  @keyframes cueMove { to { top: 100%; } }
+  /* centered overlapping photo stack */
+  .hero-photos {
+    position: relative;
+    height: 440px;
+    margin-top: -20px;
+    z-index: 1;
+  }
+  /* outer = position / hover / parallax target */
+  .card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    aspect-ratio: 4/5;
+  }
+  /* inner = visual card; idle float + tilt + dynamic shadow target */
+  .polaroid {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.20);
+    border-radius: 14px;
+    overflow: hidden;
+    will-change: transform;
+  }
+  /* platform-branded hero cards */
+  .plat {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 24px 22px 26px;
+    text-align: left;
+    /* C — slow light drift across the brand gradient */
+    background-size: 200% 200% !important;
+    animation: gradientDrift 11s ease-in-out infinite;
+  }
+  /* #5 — giant faint watermark logo + crisp content on top */
+  .plat-watermark {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    width: 140%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    right: -30%;
+    bottom: -16%;
+    opacity: 0.14;
+    transform: rotate(-8deg);
+  }
+  .plat-logobadge {
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+  }
+  .plat-logobadge img { width: 56%; height: auto; }
+  .plat-bottom {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+  .plat-bottom .plat-name { font-size: clamp(22px, 2.4vw, 30px); font-weight: 600; color: #fff; }
+  .plat-bottom .plat-desc { color: rgba(255,255,255,0.85); font-weight: 500; font-size: clamp(12px, 1.3vw, 14px); line-height: 1.3; max-width: 22ch; }
+  .plat-bottom .plat-chip { margin-top: 3px; }
+  /* #3 — mini browser mockup */
+  .mock {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 26px rgba(0,0,0,0.20);
+  }
+  .mock-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 11px;
+    background: #f1f0ec;
+    border-bottom: 1px solid #e6e4dd;
+  }
+  .mock-bar i { width: 7px; height: 7px; border-radius: 50%; background: #cfcdc4; }
+  .mock-bar i:nth-child(1) { background: #ff6159; }
+  .mock-bar i:nth-child(2) { background: #ffbd2e; }
+  .mock-bar i:nth-child(3) { background: #28c840; }
+  .mock-url { flex: 1; height: 9px; margin-left: 7px; border-radius: 5px; background: #e2e0d8; }
+  .mock-body { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .mock-hero { height: 54px; border-radius: 7px; background: var(--accent); }
+  .mock-line { height: 7px; border-radius: 4px; background: #e6e4dc; }
+  .mock-line.w1 { width: 82%; }
+  .mock-line.w2 { width: 56%; }
+  .mock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 2px; }
+  .mock-grid span { height: 30px; border-radius: 6px; background: #eceae2; }
+  .mock-grid span:first-child { background: var(--accent); opacity: 0.85; }
+  /* compact footer under the mockup */
+  .plat-foot {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: auto;
+  }
+  .plat-foot .plat-logo { width: 26px; height: 26px; flex: none; }
+  .plat-badge {
+    position: absolute;
+    top: 14px; right: 14px;
+    z-index: 3;
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.26);
+    padding: 5px 11px;
+    border-radius: 100px;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .plat-badge .stars {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #ffd66b;
+  }
+  .plat-info { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+  .plat-name { color: #fff; font-weight: 600; font-size: 16px; letter-spacing: 0.01em; }
+  .plat-desc {
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    font-size: 11.5px;
+    line-height: 1.25;
+  }
+  .plat-chip {
+    flex: none;
+    align-self: center;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.32);
+    padding: 6px 11px;
+    border-radius: 100px;
+    white-space: nowrap;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  @keyframes gradientDrift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+  /* D — soft glass sheen sweeping across the surface, occasionally */
+  .plat::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.22) 50%, transparent 58%);
+    background-size: 250% 250%;
+    background-position: 150% 0;
+    animation: sheen 7s ease-in-out infinite;
+  }
+  @keyframes sheen {
+    0%, 66%  { background-position: 150% 0; }
+    100%     { background-position: -150% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plat { animation: none; }
+    .plat::after { display: none; }
+  }
+  .plat-logo {
+    width: 36%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+  }
+  .plat-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: clamp(18px, 1.8vw, 23px);
+    letter-spacing: 0.01em;
+  }
+  .plat-shopify   { --accent: #5e8e3e; background: linear-gradient(160deg, #7fb85b, #5a8a37); }
+  .plat-webflow   { --accent: #4353ff; background: linear-gradient(160deg, #5169ff, #2d40d6); animation-delay: -3.5s; }
+  .plat-wordpress { --accent: #21759b; background: linear-gradient(160deg, #2b85ac, #1c5e7e); animation-delay: -7s; }
+  .plat-shopify::after   { animation-delay: 0s; }
+  .plat-webflow::after   { animation-delay: 2.3s; }
+  .plat-wordpress::after { animation-delay: 4.6s; }
+  .p1 { width: 340px; z-index: 3; }
+  .p2 { width: 320px; z-index: 2; }
+  .p3 { width: 320px; z-index: 2; }
+
+  .hero-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: auto;
+    position: relative;
+    z-index: 4;
+    text-align: left;
+  }
+  .hero-foot p {
+    font-size: clamp(13px, 1.3vw, 15px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    max-width: 24ch;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .hero-btn { margin-top: 0; }
+  .mail-link {
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 3px;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+  }
+  .mail-link:hover { opacity: 0.55; }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    user-select: none;
+  }
+  .marquee-row {
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 18px 0;
+  }
+  .marquee-row + .marquee-row { border-top: 1px solid var(--line); }
+  .marquee-track {
+    display: inline-flex;
+    will-change: transform;
+  }
+  .marquee-track span {
+    font-size: clamp(36px, 6vw, 84px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    padding: 0 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 56px;
+    transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .marquee-row:hover .marquee-track span { color: rgba(17,17,16,0.32); }
+  .marquee-row:hover .marquee-track span:hover { color: #e83fa0; transform: scale(1.14); }
+  .marquee-track span::after {
+    content: "✸";
+    font-size: 0.5em;
+    color: #e83fa0;
+  }
+
+  /* ---------- STATS ---------- */
+  .stats {
+    padding: 110px 0;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .stat {
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+  }
+  .stat .num {
+    font-size: clamp(56px, 8vw, 110px);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+  .stat .desc {
+    color: var(--muted);
+    font-size: 17px;
+    margin-top: 10px;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-head {
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    max-width: 18ch;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services { padding: 100px 0 120px; }
+  .services .intro {
+    font-size: clamp(28px, 4.5vw, 58px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 20ch;
+    margin-bottom: 80px;
+  }
+  .services .intro em { font-style: normal; color: var(--muted); }
+  /* intro row with floating tech-logo cluster on the right */
+  .services-top { display: grid; grid-template-columns: 1fr 0.8fr; gap: 40px; align-items: center; margin-bottom: 80px; }
+  .services-top .intro { margin-bottom: 0; }
+  .tech-cloud { position: relative; height: 320px; }
+  .tech-badge {
+    position: absolute; width: 88px; height: 88px;
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+    animation: techFloat 4.2s ease-in-out infinite;
+  }
+  .tech-badge img { width: 46%; height: auto; }
+  @keyframes techFloat {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50% { transform: translateY(-16px) rotate(var(--r, 0deg)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .tech-badge { animation: none; } }
+  @media (max-width: 860px) { .services-top { grid-template-columns: 1fr; } .tech-cloud { display: none; } }
+  .srv-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.2fr;
+    gap: 24px;
+    align-items: start;
+    padding: 38px 0;
+    border-top: 1px solid var(--line);
+  }
+  .srv-row:last-of-type { border-bottom: 1px solid var(--line); }
+  .srv-num { font-size: 18px; color: var(--muted); font-weight: 600; }
+  .srv-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 500; letter-spacing: -0.025em; }
+  .srv-desc { color: var(--muted); font-size: 18px; max-width: 36ch; }
+
+  .btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 16px 30px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 56px;
+    transition: transform 0.35s var(--ease), background 0.35s, box-shadow 0.35s var(--ease);
+    cursor: pointer;
+    border: none;
+  }
+  /* sweeping shine */
+  .btn::after, .nav-cta::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -130%;
+    width: 60%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.28), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.65s var(--ease);
+    pointer-events: none;
+  }
+  .btn:hover::after, .nav-cta:hover::after { left: 150%; }
+  .btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    background: #2c2b28;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.20);
+  }
+  .btn:active { transform: translateY(0) scale(0.98); }
+  .btn .dot, .nav-cta .dot {
+    position: relative;
+    z-index: 1;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--bg);
+    animation: dotPulse 1.8s ease-in-out infinite;
+  }
+  .nav-cta { position: relative; overflow: hidden; }
+  .nav-cta .dot { background: #6cf09a; }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(108,240,154,0.5); }
+    50%      { transform: scale(0.7); opacity: 0.55; }
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects { padding: 100px 0; }
+  .proj-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
+  .proj-head .btn { margin-top: 0; }
+  .proj-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+  .proj-filter { font-family: inherit; font-size: 14px; font-weight: 600; color: var(--muted); background: none; border: 1px solid var(--line); padding: 9px 18px; border-radius: 100px; cursor: pointer; transition: background 0.3s var(--ease), color 0.3s, border-color 0.3s; }
+  .proj-filter:hover { color: var(--ink); border-color: var(--muted); }
+  .proj-filter.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 34px;
+  }
+  .proj-card {
+    display: block;
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--card);
+    cursor: pointer;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+  .proj-card.featured { grid-column: 1 / -1; }
+  .proj-card.featured .proj-img { aspect-ratio: 21/8; }
+  .proj-card.hide { display: none; }
+  .proj-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.16);
+  }
+  .proj-img {
+    aspect-ratio: 16/11;
+    overflow: hidden;
+  }
+  .proj-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease);
+  }
+  .proj-card:hover .proj-img img { transform: scale(1.06); }
+  .proj-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px 24px;
+  }
+  .proj-meta h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .proj-out { display: block; color: var(--muted); font-size: 14px; margin-top: 5px; max-width: 38ch; line-height: 1.4; }
+  .proj-chip { flex: none; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--ink); background: #f0efe9; border: 1px solid var(--line); padding: 6px 12px; border-radius: 100px; white-space: nowrap; }
+  .view-tag {
+    position: absolute;
+    top: 18px; left: 18px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 100px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .proj-card:hover .view-tag { opacity: 1; transform: translateY(0); }
+
+  /* ---------- LOGO WALL ---------- */
+  .logos { padding: 90px 0; }
+  .logos h2 {
+    text-align: center;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 56px;
+    color: var(--muted);
+  }
+  .logo-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .logo-track {
+    display: inline-flex;
+    align-items: center;
+    will-change: transform;
+  }
+  .logo-track .logo-item {
+    width: 170px;
+    height: 70px;
+    margin: 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    background: var(--card);
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi { padding: 110px 0 120px; }
+  .testi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .testi-arrows { display: flex; gap: 14px; }
+  .arrow {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--ink);
+    background: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);
+  }
+  .arrow:hover { background: var(--ink); color: var(--bg); transform: scale(1.07); }
+
+  .slider-window { overflow: hidden; }
+  .slider-track {
+    display: flex;
+    transition: transform 0.6s var(--ease);
+  }
+  .slide {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .slide img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+  .slide .quote {
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .stars { color: #f0a500; font-size: 20px; margin: 22px 0 18px; letter-spacing: 3px; }
+  .who { font-weight: 700; font-size: 18px; }
+  .role { color: var(--muted); font-size: 15px; }
+
+  /* ---------- PROCESS ---------- */
+  .process { padding: 100px 0; }
+  .steps4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 60px; }
+  .step { border-top: 1px solid var(--line); padding-top: 24px; }
+  .step .sn { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .step h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-top: 14px; }
+  .step p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.5; }
+  /* shrinking arrow trail (biggest first) with a sequential "timer" pop */
+  .proc-arrows { position: absolute; top: -52px; left: 0; z-index: 1; display: flex; align-items: center; gap: 10px; pointer-events: none; }
+  .proc-arrows svg { flex: none; fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transform-origin: center; animation: arrowSeq 2.4s ease-in-out infinite; }
+  @keyframes arrowSeq { 0%, 28%, 100% { transform: scale(1); } 13% { transform: scale(1.32); } }
+  @media (prefers-reduced-motion: reduce) { .proc-arrows svg { animation: none; } }
+
+  /* ---------- PLANS (interactive package selector) ---------- */
+  .plans { padding: 100px 0; }
+  .plans-sub { color: var(--muted); font-size: 18px; margin-top: 18px; max-width: 46ch; }
+  .pkg { display: grid; grid-template-columns: 0.9fr 1.2fr; gap: 50px; margin-top: 50px; align-items: start; }
+  .pkg-list { display: flex; flex-direction: column; }
+  .pkg-item {
+    text-align: left; background: none; border: none; border-top: 1px solid var(--line);
+    padding: 24px 4px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    font-family: inherit; opacity: 0.5; transition: opacity 0.35s var(--ease), padding-left 0.35s var(--ease);
+  }
+  .pkg-item:last-child { border-bottom: 1px solid var(--line); }
+  .pkg-item:hover { opacity: 0.85; }
+  .pkg-item.active { opacity: 1; padding-left: 10px; }
+  .pi-name { display: block; font-size: clamp(22px, 2.6vw, 30px); font-weight: 600; letter-spacing: -0.02em; }
+  .pi-tag { display: block; font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+  .pi-arrow { font-size: 20px; opacity: 0; transform: translateX(-8px); transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+  .pkg-item.active .pi-arrow { opacity: 1; transform: translateX(0); }
+
+  .pkg-detail { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 38px; box-shadow: 0 24px 56px rgba(0,0,0,0.06); }
+  .pkg-panel { display: none; }
+  .pkg-panel.on { display: block; }
+  .pkg-panel.anim { animation: pkgIn 0.5s var(--ease); }
+  @keyframes pkgIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .pp-best { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .pkg-panel h3 { font-size: clamp(22px, 2.7vw, 31px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; margin: 8px 0 0; max-width: 18ch; }
+  /* A — quick-fact chips */
+  .pp-facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 26px; }
+  .pp-chip { font-size: 12px; font-weight: 600; letter-spacing: 0.01em; color: var(--ink); background: #f0efe9; border: 1px solid var(--line); padding: 6px 12px; border-radius: 100px; }
+  /* B — included vs quoted-separately columns */
+  .pp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .pp-col-h { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 15px; }
+  .pp-inc, .pp-exc { list-style: none; display: grid; gap: 11px; }
+  .pp-inc li, .pp-exc li { position: relative; padding-left: 24px; font-size: 14px; line-height: 1.4; }
+  .pp-inc li { color: var(--ink); }
+  .pp-inc li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #27a35f; font-weight: 700; }
+  .pp-exc li { color: var(--muted); }
+  .pp-exc li::before { content: "✕"; position: absolute; left: 0; top: 0; color: #c08a82; font-weight: 700; }
+  .pkg-panel .btn { margin-top: 30px; }
+  @media (max-width: 560px) { .pp-cols { grid-template-columns: 1fr; gap: 22px; } }
+
+  @media (max-width: 860px) {
+    .pkg { grid-template-columns: 1fr; gap: 28px; }
+    .pkg-detail { padding: 28px; }
+  }
+
+  /* ---------- MAINTENANCE ---------- */
+  .maint { padding: 100px 0; }
+  .maint-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center; }
+  .maint-list { display: flex; flex-direction: column; }
+  .maint-item { display: flex; gap: 18px; align-items: flex-start; padding: 22px 0; border-top: 1px solid var(--line); }
+  .maint-item:last-child { border-bottom: 1px solid var(--line); }
+  .maint-item .mi-k { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 26px; padding-top: 3px; }
+  .maint-item h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+  .maint-item p { color: var(--muted); font-size: 14.5px; margin-top: 4px; line-height: 1.45; }
+
+  /* ---------- WHY KNB ---------- */
+  .why { padding: 100px 0; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+  .why-points { display: grid; gap: 26px; }
+  .why-point { display: flex; gap: 18px; align-items: flex-start; }
+  .why-point .wp-ic { flex: none; width: 44px; height: 44px; border-radius: 12px; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .why-point h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+  .why-point p { color: var(--muted); font-size: 15px; margin-top: 5px; line-height: 1.5; max-width: 44ch; }
+
+  /* ---------- FAQ ---------- */
+  .faq { padding: 100px 0; }
+  .faq-list { max-width: 860px; margin: 50px auto 0; }
+  .faq-item { border-top: 1px solid var(--line); }
+  .faq-item:last-child { border-bottom: 1px solid var(--line); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0; cursor: pointer; font-size: clamp(18px, 2vw, 24px); font-weight: 500; letter-spacing: -0.02em; list-style: none; }
+  .faq-q .ic { flex: none; width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.4s var(--ease), background 0.3s, color 0.3s; font-size: 18px; }
+  .faq-item.open .faq-q .ic { transform: rotate(45deg); background: var(--ink); color: var(--bg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease); }
+  .faq-a p { color: var(--muted); font-size: 16px; line-height: 1.6; padding: 0 60px 26px 0; }
+
+  @media (max-width: 860px) {
+    .steps4 { grid-template-columns: 1fr 1fr; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .maint-grid, .why-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  /* ===== SECTION BACKGROUNDS (preview — easy to remove) ===== */
+  .stats, .services, .process, .projects, .plans, .maint, .why, .logos, .testi, .faq { position: relative; overflow: hidden; }
+  .stats > .wrap, .services > .wrap, .process > .wrap, .projects > .wrap, .plans > .wrap,
+  .maint > .wrap, .why > .wrap, .testi > .wrap, .faq > .wrap { position: relative; z-index: 1; }
+  .logos .logo-marquee { position: relative; z-index: 1; }
+
+  /* #1 alternating tones */
+  .services, .projects, .why, .testi { background: #ece9e1; }
+
+  /* #10 concentric rings — Stats  +  #7 gradient fade at the boundary */
+  .stats::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: repeating-radial-gradient(circle at 86% 50%, transparent 0 47px, rgba(17,17,16,0.05) 47px 48px);
+    -webkit-mask-image: radial-gradient(circle at 86% 50%, #000, transparent 65%);
+    mask-image: radial-gradient(circle at 86% 50%, #000, transparent 65%);
+  }
+  .stats::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: 0; pointer-events: none;
+    background: linear-gradient(to bottom, transparent, #ece9e1);
+  }
+
+  /* #2 faint grid — Services */
+  .services::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(17,17,16,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,16,0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at 28% 38%, #000 18%, transparent 72%);
+    mask-image: radial-gradient(ellipse at 28% 38%, #000 18%, transparent 72%);
+  }
+
+  /* #4 watermark word — Process (scroll-drifting) & FAQ (static) */
+  .faq::before {
+    content: "FAQ"; position: absolute; z-index: 0; pointer-events: none;
+    font-weight: 700; letter-spacing: -0.04em; line-height: 0.8; white-space: nowrap;
+    font-size: clamp(120px, 22vw, 320px); color: rgba(17,17,16,0.035);
+    right: -1%; bottom: -6%;
+  }
+  .process-wm {
+    position: absolute; left: 0; bottom: -3%; z-index: 0; pointer-events: none;
+    font-size: clamp(120px, 22vw, 320px); font-weight: 700; letter-spacing: -0.04em; line-height: 0.8;
+    color: rgba(17,17,16,0.04); white-space: nowrap; will-change: transform;
+  }
+
+  /* #5 dot-matrix / halftone — Projects (with a cursor-following spotlight) */
+  .projects::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(17,17,16,0.07) 1.4px, transparent 1.5px);
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 55%);
+    mask-image: linear-gradient(135deg, #000 0%, transparent 55%);
+  }
+  .projects::after {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(232,63,160,0.55) 1.7px, transparent 2px);
+    background-size: 22px 22px;
+    opacity: 0; transition: opacity 0.45s var(--ease);
+    -webkit-mask-image: radial-gradient(240px circle at var(--pmx, 50%) var(--pmy, 50%), #000 0%, transparent 68%);
+    mask-image: radial-gradient(240px circle at var(--pmx, 50%) var(--pmy, 50%), #000 0%, transparent 68%);
+  }
+  .projects.cursor-on::after { opacity: 1; }
+
+  /* Plans — #5 blueprint lines + #3 watermark + #4 active-package spotlight */
+  .plans { background-image: repeating-linear-gradient(90deg, rgba(17,17,16,0.035) 0 1px, transparent 1px 86px); }
+  .plans::before {
+    content: "PLANS"; position: absolute; z-index: 0; pointer-events: none;
+    left: -2%; bottom: -4%;
+    font-size: clamp(120px, 22vw, 320px); font-weight: 700; letter-spacing: -0.04em; line-height: 0.8;
+    color: rgba(17,17,16,0.04); white-space: nowrap;
+  }
+  .plans .pkg-glow {
+    position: absolute; z-index: 0; pointer-events: none;
+    width: 560px; height: 560px; right: 5%; top: 58%; transform: translateY(-50%);
+    border-radius: 50%; filter: blur(50px);
+    background: radial-gradient(circle, rgba(232,63,160,0.14), transparent 64%);
+    opacity: 0.85;
+  }
+  .plans.bloom .pkg-glow { animation: pkgBloom 0.75s var(--ease); }
+  @keyframes pkgBloom {
+    0% { opacity: 0.4; transform: translateY(-50%) scale(0.8); }
+    55% { opacity: 1; transform: translateY(-50%) scale(1.08); }
+    100% { opacity: 0.85; transform: translateY(-50%) scale(1); }
+  }
+
+  /* #6 inverted dark — Maintenance, with a faint keyword field behind */
+  .maint { background: var(--ink); color: var(--bg); }
+  .maint::before {
+    content: "Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · Updates · Backups · Speed · Security · SEO · Support · Monitoring · Performance · ";
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    padding: 40px 28px;
+    font-size: clamp(34px, 5vw, 64px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+    color: rgba(255,255,255,0.035);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(115deg, #000 0%, transparent 60%);
+    mask-image: linear-gradient(115deg, #000 0%, transparent 60%);
+  }
+  .maint .sec-head, .maint .maint-item h3 { color: var(--bg); }
+  .maint p { color: rgba(255,255,255,0.62) !important; }
+  .maint .maint-item { border-color: rgba(255,255,255,0.15); }
+  .maint .maint-item p { color: rgba(255,255,255,0.55); }
+  .maint .mi-k { color: rgba(255,255,255,0.5); }
+  .maint .btn { background: var(--bg); color: var(--ink); }
+  .maint .btn:hover { background: #fff; }
+  .maint .btn .dot { background: var(--ink); }
+
+  /* #8 scroll-reactive rail + section number — Why KNB */
+  .why::before { content: "04"; position: absolute; z-index: 0; top: 36px; right: 5%; font-size: clamp(100px, 16vw, 220px); font-weight: 700; color: rgba(17,17,16,0.045); letter-spacing: -0.04em; }
+  .why::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: rgba(17,17,16,0.08); z-index: 0; }
+  .why-rail { position: absolute; left: 0; top: 0; width: 3px; height: 0; background: #e83fa0; z-index: 1; }
+
+  /* #9 themed star pattern — Testimonials */
+  .testi::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M11 1 L13 9 L21 11 L13 13 L11 21 L9 13 L1 11 L9 9 Z' fill='%23111110' fill-opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 72% 28%, #000 8%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 72% 28%, #000 8%, transparent 70%);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 80px 0 40px;
+  }
+  .foot-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  footer .logo { font-size: 40px; letter-spacing: -0.04em; }
+  .socials { display: flex; gap: 16px; }
+  .socials a {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: background 0.3s, color 0.3s;
+  }
+  .socials a:hover { background: var(--bg); color: var(--ink); }
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 30px;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+  }
+  .foot-bottom a { border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(40px); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px) {
+    .nav-right { display: none; }
+    .burger { display: flex; }
+    .hero { padding: 120px 0 60px; }
+    .hero-photos { display: flex; gap: 12px; justify-content: center; height: auto; margin-top: 36px; }
+    .card { position: static; transform: none !important; width: 32% !important; }
+    .p2 { z-index: auto; }
+    .hero-foot { margin-top: 40px; }
+    .stats-grid { grid-template-columns: 1fr; gap: 0; }
+    .stat { padding: 24px 0; }
+    .srv-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+    .srv-num { order: -1; }
+    .proj-grid { grid-template-columns: 1fr; }
+    .slide { grid-template-columns: 1fr; gap: 24px; text-align: left; }
+    .slide img { max-width: 240px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="logo"><span class="mark">K</span>KNB</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="portfolio.html">Portfolio</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <a href="mailto:youremail@gmail.com" class="nav-cta"><span class="dot"></span>Free audit</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+    <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-grid-spot" id="gridSpot"></div>
+    <canvas class="hero-particles" id="heroParticles"></canvas>
+    <div class="wrap">
+      <p class="label reveal">Design · Build · Convert</p>
+      <h1 id="heroTitle">KNB Web Solution</h1>
+
+      <div class="hero-photos">
+        <div class="card p3" data-photo>
+          <div class="polaroid plat plat-webflow">
+            <img class="plat-watermark" src="https://cdn.simpleicons.org/webflow/ffffff" alt="">
+            <span class="plat-badge"><span class="stars">★★★★★</span></span>
+            <span class="plat-logobadge"><img src="https://cdn.simpleicons.org/webflow/ffffff" alt="Webflow"></span>
+            <div class="plat-bottom">
+              <span class="plat-name">Webflow</span>
+              <p class="plat-desc">Custom, modern website design</p>
+              <span class="plat-chip">Web Design</span>
+            </div>
+          </div>
+        </div>
+        <div class="card p1" data-photo>
+          <div class="polaroid plat plat-shopify">
+            <img class="plat-watermark" src="https://cdn.simpleicons.org/shopify/ffffff" alt="">
+            <span class="plat-badge"><span class="stars">★★★★★</span></span>
+            <span class="plat-logobadge"><img src="https://cdn.simpleicons.org/shopify/ffffff" alt="Shopify"></span>
+            <div class="plat-bottom">
+              <span class="plat-name">Shopify</span>
+              <p class="plat-desc">Store revamps & ecommerce builds</p>
+              <span class="plat-chip">Ecommerce</span>
+            </div>
+          </div>
+        </div>
+        <div class="card p2" data-photo>
+          <div class="polaroid plat plat-wordpress">
+            <img class="plat-watermark" src="https://cdn.simpleicons.org/wordpress/ffffff" alt="">
+            <span class="plat-badge"><span class="stars">★★★★★</span></span>
+            <span class="plat-logobadge"><img src="https://cdn.simpleicons.org/wordpress/ffffff" alt="WordPress"></span>
+            <div class="plat-bottom">
+              <span class="plat-name">WordPress</span>
+              <p class="plat-desc">WooCommerce & business sites</p>
+              <span class="plat-chip">WooCommerce</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-foot">
+        <p class="reveal">Shopify revamps, ecommerce builds, and modern websites — start with a free site audit.</p>
+        <div class="hero-cta reveal">
+          <a href="mailto:youremail@gmail.com" class="btn hero-btn"><span class="dot"></span>Get a free audit</a>
+          <a href="mailto:youremail@gmail.com" class="mail-link">youremail@gmail.com →</a>
+        </div>
+      </div>
+    </div>
+    <a href="#projects" class="scroll-cue" aria-label="Scroll to work">
+      <span>Scroll</span>
+      <span class="cue-line"></span>
+    </a>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-row">
+      <div class="marquee-track" id="marquee1">
+        <span>Shopify Revamps</span><span>Web Design</span><span>Ecommerce Builds</span><span>WordPress</span><span>Webflow</span>
+      </div>
+    </div>
+    <div class="marquee-row">
+      <div class="marquee-track" id="marquee2">
+        <span>Branding</span><span>UI / UX</span><span>Maintenance</span><span>SEO</span><span>Custom Web Apps</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat reveal">
+        <div class="num"><span class="count" data-target="3">0</span>+</div>
+        <div class="desc">Years of experience</div>
+      </div>
+      <div class="stat reveal">
+        <div class="num"><span class="count" data-target="40">0</span>+</div>
+        <div class="desc">Satisfied clients</div>
+      </div>
+      <div class="stat reveal">
+        <div class="num"><span class="count" data-target="100">0</span>+</div>
+        <div class="desc">Projects delivered</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="wrap">
+      <div class="services-top">
+        <p class="intro reveal">We design, build, and revamp websites and Shopify stores — <em>professional, fast, and built to turn visitors into customers.</em></p>
+        <div class="tech-cloud" aria-hidden="true">
+          <span class="tech-badge" style="top:24px;left:3%;--r:-6deg;animation-delay:0s"><img src="https://cdn.simpleicons.org/shopify" alt=""></span>
+          <span class="tech-badge" style="top:96px;left:38%;--r:-3deg;animation-delay:1.1s"><img src="https://cdn.simpleicons.org/wordpress" alt=""></span>
+          <span class="tech-badge" style="top:28px;left:72%;--r:7deg;animation-delay:.5s"><img src="https://cdn.simpleicons.org/webflow" alt=""></span>
+          <span class="tech-badge" style="top:184px;left:5%;--r:5deg;animation-delay:.9s"><img src="https://cdn.simpleicons.org/figma" alt=""></span>
+          <span class="tech-badge" style="top:222px;left:39%;--r:-7deg;animation-delay:1.4s"><img src="https://cdn.simpleicons.org/framer" alt=""></span>
+          <span class="tech-badge" style="top:188px;left:71%;--r:6deg;animation-delay:.3s"><img src="https://cdn.simpleicons.org/woocommerce" alt=""></span>
+        </div>
+      </div>
+
+      <div class="srv-row reveal">
+        <div class="srv-num">01</div>
+        <div class="srv-title">Shopify & ecommerce</div>
+        <div class="srv-desc">Store revamps and new builds on Shopify and WooCommerce that make buying simple and build trust.</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">02</div>
+        <div class="srv-title">Website design & development</div>
+        <div class="srv-desc">Modern WordPress, Webflow, and custom business websites that load fast and look the part.</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">03</div>
+        <div class="srv-title">Maintenance & support</div>
+        <div class="srv-desc">Ongoing updates, fixes, speed, and improvements to keep your site performing month after month.</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">04</div>
+        <div class="srv-title">Custom web apps</div>
+        <div class="srv-desc">Booking systems, dashboards, inventory, and POS integrations built around how you work.</div>
+      </div>
+
+      <a href="mailto:youremail@gmail.com" class="btn reveal"><span class="dot"></span>Get a free audit</a>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="process-wm" aria-hidden="true">PROCESS</div>
+    <div class="wrap">
+      <h2 class="sec-head reveal">How we work — simple and clear</h2>
+      <div class="steps4">
+        <div class="proc-arrows" aria-hidden="true">
+          <svg style="width:27px;height:44px;opacity:.9;animation-delay:0s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:23px;height:38px;opacity:.74;animation-delay:.16s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:20px;height:32px;opacity:.6;animation-delay:.32s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:16px;height:27px;opacity:.46;animation-delay:.48s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:13px;height:22px;opacity:.34;animation-delay:.64s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:10px;height:17px;opacity:.23;animation-delay:.8s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+          <svg style="width:8px;height:13px;opacity:.14;animation-delay:.96s" viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>
+        </div>
+        <div class="step reveal">
+          <div class="sn">01</div>
+          <h3>Free audit</h3>
+          <p>We review your site for design, mobile, speed, and conversion opportunities.</p>
+        </div>
+        <div class="step reveal">
+          <div class="sn">02</div>
+          <h3>Written proposal</h3>
+          <p>A clear scope with deliverables, timeline, and payment terms — no surprises.</p>
+        </div>
+        <div class="step reveal">
+          <div class="sn">03</div>
+          <h3>Design & build</h3>
+          <p>We design, build, and test your store or website on the right platform.</p>
+        </div>
+        <div class="step reveal">
+          <div class="sn">04</div>
+          <h3>Launch & support</h3>
+          <p>We launch, hand over, and keep your site running with ongoing support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="wrap">
+      <div class="proj-head">
+        <h2 class="sec-head reveal">Recent websites & store revamps</h2>
+        <a href="portfolio.html" class="btn reveal"><span class="dot"></span>View full portfolio</a>
+      </div>
+      <div class="proj-filters reveal">
+        <button class="proj-filter active" data-filter="all">All</button>
+        <button class="proj-filter" data-filter="shopify">Shopify</button>
+        <button class="proj-filter" data-filter="webflow">Webflow</button>
+        <button class="proj-filter" data-filter="wordpress">WordPress</button>
+      </div>
+      <div class="proj-grid">
+        <a href="shopify.html" class="proj-card featured reveal" data-plat="shopify">
+          <span class="view-tag">View project →</span>
+          <div class="proj-img"><img src="https://picsum.photos/seed/knb-lumen/1100/520" alt=""></div>
+          <div class="proj-meta">
+            <div><h3>Lumen Apparel</h3><span class="proj-out">Shopify revamp — faster checkout and cleaner product pages.</span></div>
+            <span class="proj-chip">Shopify</span>
+          </div>
+        </a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow">
+          <span class="view-tag">View project →</span>
+          <div class="proj-img"><img src="https://picsum.photos/seed/knb-atlas/720/495" alt=""></div>
+          <div class="proj-meta">
+            <div><h3>Atlas Agency</h3><span class="proj-out">Custom Webflow marketing site with editable CMS.</span></div>
+            <span class="proj-chip">Webflow</span>
+          </div>
+        </a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow">
+          <span class="view-tag">View project →</span>
+          <div class="proj-img"><img src="https://picsum.photos/seed/knb-form/720/495" alt=""></div>
+          <div class="proj-meta">
+            <div><h3>Form &amp; Field</h3><span class="proj-out">Editorial layout with smooth, lightweight motion.</span></div>
+            <span class="proj-chip">Webflow</span>
+          </div>
+        </a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress">
+          <span class="view-tag">View project →</span>
+          <div class="proj-img"><img src="https://picsum.photos/seed/knb-northwind/720/495" alt=""></div>
+          <div class="proj-meta">
+            <div><h3>Northwind Clinic</h3><span class="proj-out">Modern WordPress site that's easy to manage.</span></div>
+            <span class="proj-chip">WordPress</span>
+          </div>
+        </a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress">
+          <span class="view-tag">View project →</span>
+          <div class="proj-img"><img src="https://picsum.photos/seed/knb-verde/720/495" alt=""></div>
+          <div class="proj-meta">
+            <div><h3>Verde Market</h3><span class="proj-out">WooCommerce migration with a faster storefront.</span></div>
+            <span class="proj-chip">WooCommerce</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans">
+    <div class="pkg-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="sec-head reveal">Solutions for every stage</h2>
+      <p class="plans-sub reveal">Pick where you are — we'll scope the rest in a free audit and a written proposal.</p>
+      <div class="pkg">
+        <div class="pkg-list">
+          <button class="pkg-item active" data-pkg="starter">
+            <span class="pi-text"><span class="pi-name">Starter Website</span><span class="pi-tag">Small businesses & service sites</span></span>
+            <span class="pi-arrow">→</span>
+          </button>
+          <button class="pkg-item" data-pkg="business">
+            <span class="pi-text"><span class="pi-name">Business Website</span><span class="pi-tag">Growing companies, B2B, clinics, schools</span></span>
+            <span class="pi-arrow">→</span>
+          </button>
+          <button class="pkg-item" data-pkg="ecom">
+            <span class="pi-text"><span class="pi-name">Ecommerce</span><span class="pi-tag">Shopify & WooCommerce stores</span></span>
+            <span class="pi-arrow">→</span>
+          </button>
+          <button class="pkg-item" data-pkg="app">
+            <span class="pi-text"><span class="pi-name">Custom Web App</span><span class="pi-tag">Dashboards, portals, booking, POS</span></span>
+            <span class="pi-arrow">→</span>
+          </button>
+        </div>
+
+        <div class="pkg-detail">
+          <div class="pkg-panel on" data-panel="starter">
+            <div class="pp-best">Starter Website</div>
+            <h3>A clean, professional site — ready in weeks.</h3>
+            <div class="pp-facts"><span class="pp-chip">1–5 pages</span><span class="pp-chip">1 revision</span><span class="pp-chip">Basic SEO</span><span class="pp-chip">Launch support</span></div>
+            <div class="pp-cols">
+              <div>
+                <div class="pp-col-h">Included</div>
+                <ul class="pp-inc">
+                  <li>1–5 pages (Home, About, Services, Contact +1)</li>
+                  <li>Responsive design using your brand</li>
+                  <li>Contact form, navigation, footer & CTAs</li>
+                  <li>Basic SEO — titles, meta, alt text, clean URLs</li>
+                  <li>QA, launch support & handoff guidance</li>
+                </ul>
+              </div>
+              <div>
+                <div class="pp-col-h">Quoted separately</div>
+                <ul class="pp-exc">
+                  <li>Ecommerce checkout</li>
+                  <li>Custom animation</li>
+                  <li>Branding / logo design</li>
+                  <li>Full copywriting</li>
+                  <li>Large content migration</li>
+                </ul>
+              </div>
+            </div>
+            <a href="contact.html" class="btn"><span class="dot"></span>Get a free audit</a>
+          </div>
+
+          <div class="pkg-panel" data-panel="business">
+            <div class="pp-best">Business Website</div>
+            <h3>More pages, more credibility, more leads.</h3>
+            <div class="pp-facts"><span class="pp-chip">5–12 pages</span><span class="pp-chip">CMS</span><span class="pp-chip">2 revisions</span><span class="pp-chip">14–30 days support</span></div>
+            <div class="pp-cols">
+              <div>
+                <div class="pp-col-h">Included</div>
+                <ul class="pp-inc">
+                  <li>5–12 pages with custom layouts</li>
+                  <li>Discovery, sitemap & CTA strategy</li>
+                  <li>CMS setup so you can edit content</li>
+                  <li>On-page SEO, analytics & Search Console</li>
+                  <li>2 revisions, pre-launch QA & bug-fix support</li>
+                </ul>
+              </div>
+              <div>
+                <div class="pp-col-h">Quoted separately</div>
+                <ul class="pp-exc">
+                  <li>Ecommerce checkout & product uploads</li>
+                  <li>Custom app features</li>
+                  <li>Advanced integrations</li>
+                  <li>Large copywriting scope</li>
+                  <li>Ongoing SEO/content retainers</li>
+                </ul>
+              </div>
+            </div>
+            <a href="contact.html" class="btn"><span class="dot"></span>Get a free audit</a>
+          </div>
+
+          <div class="pkg-panel" data-panel="ecom">
+            <div class="pp-best">Ecommerce Website</div>
+            <h3>A store built to turn browsers into buyers.</h3>
+            <div class="pp-facts"><span class="pp-chip">Shopify / WooCommerce</span><span class="pp-chip">Product upload</span><span class="pp-chip">Payments & shipping</span><span class="pp-chip">14–30 days support</span></div>
+            <div class="pp-cols">
+              <div>
+                <div class="pp-col-h">Included</div>
+                <ul class="pp-inc">
+                  <li>Store audit & customer-journey review</li>
+                  <li>Core pages — Home, Collection, Product, Cart</li>
+                  <li>Product upload (an agreed set)</li>
+                  <li>Payment, shipping, apps & discounts setup</li>
+                  <li>Ecommerce SEO, tracking, mobile QA & training</li>
+                </ul>
+              </div>
+              <div>
+                <div class="pp-col-h">Quoted separately</div>
+                <ul class="pp-exc">
+                  <li>Custom Shopify apps</li>
+                  <li>ERP / POS integration</li>
+                  <li>Advanced subscriptions / checkout</li>
+                  <li>Large catalog import</li>
+                  <li>Product photography</li>
+                </ul>
+              </div>
+            </div>
+            <a href="contact.html" class="btn"><span class="dot"></span>Get a free audit</a>
+          </div>
+
+          <div class="pkg-panel" data-panel="app">
+            <div class="pp-best">Custom Web App</div>
+            <h3>Custom software shaped around how you work.</h3>
+            <div class="pp-facts"><span class="pp-chip">Custom build</span><span class="pp-chip">Integrations</span><span class="pp-chip">Roles & admin</span><span class="pp-chip">30 days support</span></div>
+            <div class="pp-cols">
+              <div>
+                <div class="pp-col-h">Included</div>
+                <ul class="pp-inc">
+                  <li>Discovery, workflow & user-role planning</li>
+                  <li>Wireframes, dashboard layouts & flows</li>
+                  <li>Custom front-end, back-end, database & auth</li>
+                  <li>Integrations — Shopify, POS, payments, CRM, APIs</li>
+                  <li>Testing, deployment, docs & training</li>
+                </ul>
+              </div>
+              <div>
+                <div class="pp-col-h">Quoted separately</div>
+                <ul class="pp-exc">
+                  <li>Features outside the approved scope</li>
+                  <li>Unplanned integrations</li>
+                  <li>Hosting & third-party fees</li>
+                  <li>Heavy data migration</li>
+                  <li>Ongoing product management</li>
+                </ul>
+              </div>
+            </div>
+            <a href="contact.html" class="btn"><span class="dot"></span>Get a free audit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAINTENANCE -->
+  <section class="maint">
+    <div class="wrap maint-grid">
+      <div>
+        <h2 class="sec-head reveal">Care plans that keep your site sharp</h2>
+        <p class="reveal" style="color:var(--muted);font-size:18px;margin-top:18px;max-width:38ch">Launch is just the start. Our monthly plans keep your store or website fast, secure, and up to date.</p>
+        <a href="contact.html" class="btn reveal" style="margin-top:30px"><span class="dot"></span>Talk to us</a>
+      </div>
+      <div class="maint-list">
+        <div class="maint-item reveal"><div class="mi-k">01</div><div><h3>Updates & backups</h3><p>Regular platform, theme, and plugin updates with secure backups.</p></div></div>
+        <div class="maint-item reveal"><div class="mi-k">02</div><div><h3>Speed & security</h3><p>Performance tuning and monitoring so your site stays fast and safe.</p></div></div>
+        <div class="maint-item reveal"><div class="mi-k">03</div><div><h3>Content edits & support</h3><p>Ongoing tweaks, fixes, and content changes when you need them.</p></div></div>
+        <div class="maint-item reveal"><div class="mi-k">04</div><div><h3>SEO & improvements</h3><p>Continuous on-page SEO and improvements with simple reporting.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY KNB -->
+  <section class="why">
+    <div class="wrap why-grid">
+      <h2 class="sec-head reveal">Why work with KNB</h2>
+      <div class="why-points">
+        <div class="why-point reveal"><div class="wp-ic">◆</div><div><h3>Platform specialists</h3><p>Deep experience across Shopify, Webflow, and WordPress — we recommend what actually fits your goals.</p></div></div>
+        <div class="why-point reveal"><div class="wp-ic">✓</div><div><h3>Free audit first</h3><p>We start by reviewing your site and sending a clear written proposal — no pressure, no guesswork.</p></div></div>
+        <div class="why-point reveal"><div class="wp-ic">↗</div><div><h3>Built to convert</h3><p>Design and structure focused on trust, mobile experience, and turning visitors into customers.</p></div></div>
+        <div class="why-point reveal"><div class="wp-ic">♥</div><div><h3>Ongoing support</h3><p>We don't disappear after launch — care plans keep your site performing month after month.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO WALL -->
+  <section class="logos">
+    <div class="wrap">
+      <h2 class="reveal">Trusted by growing ecommerce & local businesses</h2>
+    </div>
+    <div class="logo-marquee">
+      <div class="logo-track" id="logoTrack"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi">
+    <div class="wrap">
+      <div class="testi-top">
+        <h2 class="sec-head reveal">Voices of satisfaction and success</h2>
+        <div class="testi-arrows reveal">
+          <button class="arrow" id="prev" aria-label="Previous">←</button>
+          <button class="arrow" id="next" aria-label="Next">→</button>
+        </div>
+      </div>
+      <div class="slider-window">
+        <div class="slider-track" id="sliderTrack">
+          <!-- slides injected -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="wrap">
+      <h2 class="sec-head reveal" style="text-align:center;margin:0 auto;">Frequently asked questions</h2>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <div class="faq-q">How long does a project take?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Most websites and store revamps take about 2–6 weeks depending on scope, number of pages or products, and how quickly content is ready. We confirm the timeline in your proposal.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Which platform is right for me?<span class="ic">+</span></div>
+          <div class="faq-a"><p>It depends on your goals. Shopify suits most ecommerce brands, WooCommerce/WordPress fits content-heavy or flexible business sites, and Webflow is great for custom marketing sites. We'll recommend the best fit during your free audit.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What's included in a project?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Everything is spelled out in the written proposal — scope, deliverables, timeline, and payment terms — so there are no surprises. Common inclusions are design, build, testing, and launch support.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you offer support after launch?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Yes. We offer monthly care plans covering updates, backups, speed and security, content edits, and SEO improvements — so your site keeps performing after it goes live.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do we get started?<span class="ic">+</span></div>
+          <div class="faq-a"><p>Book a free audit of your store or website. We'll review it, suggest practical improvements, and send a clear proposal if it's a good fit. No pressure either way.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="wrap">
+      <div class="foot-top">
+        <div>
+          <div class="logo">KNB</div>
+          <p style="margin-top:16px;max-width:34ch;color:rgba(255,255,255,0.6)">Web design, Shopify revamps, and ongoing support for growing businesses.</p>
+        </div>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
+          <a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M5 6.5c3.5 4 8.5 6 14 6m-2-9c-4 5-5.5 12-5.5 15.5M3 14c5-1.5 11-1 15.5 4"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 KNB Web Solution. All rights reserved.</span>
+        <a href="#">Style Guide</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ---- Hero floating dust particles (drift up + parallax depth + cursor) ---- */
+    (function () {
+      const canvas = document.getElementById('heroParticles');
+      if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ctx = canvas.getContext('2d');
+      const hero = canvas.parentElement;
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let w = 0, h = 0, particles = [], mx = 0, my = 0, rafId;
+
+      // pink-forward palette (pink weighted, plus a few neutrals/accents)
+      const palette = [
+        '232,63,160', '232,63,160', '232,63,160',  // pink (weighted)
+        '17,17,16',                                  // neutral ink
+        '96,132,255', '39,196,153', '255,168,84'     // blue / teal / amber accents
+      ];
+      const spawn = (anywhere) => {
+        const depth = Math.random();                 // 0 = far/slow/faint, 1 = near/fast/bold
+        return {
+          x: Math.random() * w,
+          y: anywhere ? Math.random() * h : h + 12,
+          r: 0.6 + depth * 2.2,
+          vy: 0.15 + depth * 0.65,
+          drift: (Math.random() - 0.5) * 0.3,
+          alpha: 0.10 + depth * 0.34,
+          rgb: palette[Math.floor(Math.random() * palette.length)],
+          depth
+        };
+      };
+
+      function resize() {
+        w = hero.clientWidth; h = hero.clientHeight;
+        canvas.width = w * DPR; canvas.height = h * DPR;
+        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        const count = Math.round(Math.min(75, w / 18));
+        particles = Array.from({ length: count }, () => spawn(true));
+      }
+
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of particles) {
+          p.y -= p.vy;
+          p.x += p.drift;
+          if (p.y < -12) Object.assign(p, spawn(false));
+          const px = p.x + mx * p.depth * 28;        // nearer particles react more to cursor
+          const py = p.y + my * p.depth * 16;
+          ctx.beginPath();
+          ctx.arc(px, py, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + p.rgb + ',' + p.alpha + ')';
+          ctx.fill();
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      hero.addEventListener('mousemove', (e) => {
+        const r = hero.getBoundingClientRect();
+        mx = (e.clientX - r.left) / r.width - 0.5;
+        my = (e.clientY - r.top) / r.height - 0.5;
+      });
+      hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+      let rt;
+      window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 200); });
+
+      resize();
+      cancelAnimationFrame(rafId);
+      tick();
+    })();
+
+    /* ---- Hero grid cursor spotlight (#4) ---- */
+    (function () {
+      const spot = document.getElementById('gridSpot');
+      const heroEl = document.querySelector('.hero');
+      if (!spot || !heroEl || matchMedia('(hover: none)').matches) return;
+      heroEl.addEventListener('mousemove', (e) => {
+        const r = heroEl.getBoundingClientRect();
+        spot.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        spot.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        spot.classList.add('active');
+      });
+      heroEl.addEventListener('mouseleave', () => spot.classList.remove('active'));
+    })();
+
+    /* ---- Magnetic buttons (pull toward cursor + scale) ---- */
+    if (!matchMedia('(hover: none)').matches) {
+      document.querySelectorAll('.btn, .nav-cta').forEach((btn) => {
+        // Buttons inside a card are full-width, so use a gentler pull and clamp
+        // the travel to keep them within the card's padding.
+        const inCard = !!btn.closest('.plan');
+        const strength = inCard ? 0.18 : 0.32;
+        const maxMove = inCard ? 8 : 60;
+        const hoverScale = inCard ? 1.03 : 1.05;
+        const clamp = (v) => Math.max(-maxMove, Math.min(maxMove, v));
+        // Drive x, y AND scale through persistent quickTo tweens. These are
+        // reusable and never kill one another, so the magnetic effect keeps
+        // working on every hover — and it won't clash with the reveal tween
+        // that some buttons (e.g. in .services) run on their y transform.
+        const xTo = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
+        const yTo = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
+        const sTo = gsap.quickTo(btn, 'scale', { duration: 0.45, ease: 'power3' });
+        btn.addEventListener('mouseenter', () => sTo(hoverScale));
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          xTo(clamp((e.clientX - (r.left + r.width / 2)) * strength));
+          yTo(clamp((e.clientY - (r.top + r.height / 2)) * strength));
+        });
+        btn.addEventListener('mouseleave', () => {
+          xTo(0); yTo(0); sTo(1);
+        });
+      });
+    }
+
+    /* ---- NAV scroll bg ---- */
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll); onScroll();
+
+    /* ---- Mobile menu ---- */
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      burger.classList.remove('open'); menu.classList.remove('open');
+    }));
+
+    /* ---- Hero polaroids: centered fanned stack, load-in + parallax ---- */
+    const isMobile = window.innerWidth <= 860;
+    // base resting position per id: x offset from centre, rotation
+    const layout = { p3: { x: -370, rot: -3 }, p1: { x: 0, rot: 0 }, p2: { x: 370, rot: 3 } };
+    if (!isMobile) {
+      const cards = {};
+      Object.entries(layout).forEach(([id, { x, rot }]) => {
+        const el = document.querySelector('.' + id);
+        cards[id] = el;
+        gsap.set(el, { xPercent: -50, x: x, rotation: rot, transformOrigin: '50% 100%' });
+        // load-in: centre card appears first, then the side cards spread outward from it
+        gsap.from(el, {
+          x: 0, scale: 0.88, autoAlpha: 0, rotation: 0,
+          duration: 1.0, ease: 'back.out(1.3)', delay: id === 'p1' ? 0.2 : 0.5
+        });
+        // subtle scroll parallax (separate tween so it won't fight the base transform)
+        gsap.to(el, {
+          y: (rot < 0 ? -1 : 1) * 26 + (id === 'p1' ? -34 : 0),
+          ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+        });
+      });
+
+      /* ---- Idle: float + tilt + dynamic shadow on the inner card (floating-on-water) ---- */
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const idle = {
+          p3: { amp: -6, tilt:  2.2, dur: 3.4, delay: 0.0 },
+          p1: { amp: -9, tilt:  1.6, dur: 3.0, delay: 0.4 },
+          p2: { amp: -7, tilt: -2.4, dur: 3.7, delay: 0.2 }
+        };
+        gsap.delayedCall(1.4, () => {
+          Object.entries(idle).forEach(([id, { amp, tilt, dur, delay }]) => {
+            const inner = cards[id].querySelector('.polaroid');
+            // float up / down (yPercent — composes with outer y parallax + hover lift)
+            gsap.to(inner, { yPercent: amp, duration: dur, delay, ease: 'sine.inOut', repeat: -1, yoyo: true });
+            // gentle tilt sway, slower & offset so it never syncs with the bob
+            gsap.to(inner, { rotation: tilt, duration: dur * 1.35, delay: delay + 0.5, ease: 'sine.inOut', repeat: -1, yoyo: true });
+          });
+        });
+      }
+
+      /* ---- Hover: hovered card grows + stronger shadow, jumps to the front ---- */
+      const stack = document.querySelector('.hero-photos');
+      Object.keys(cards).forEach(id => {
+        const el = cards[id];
+        const inner = el.querySelector('.polaroid');
+        el.addEventListener('mouseenter', () => {
+          stack.style.zIndex = 50;         // lift the whole stack above the headline (but below the nav)
+          el.style.zIndex = 99999;         // hovered card on top within the stack
+          gsap.to(el, { scale: 1.12, y: -16, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(inner, { boxShadow: '0 55px 95px rgba(0,0,0,0.32)', duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
+        });
+        el.addEventListener('mouseleave', () => {
+          stack.style.zIndex = '';         // restore stack below the headline
+          el.style.zIndex = '';            // restore natural stacking
+          gsap.to(el, { scale: 1, y: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(inner, { boxShadow: '0 30px 60px rgba(0,0,0,0.20)', duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+        });
+      });
+
+      /* ---- Cursor parallax: the whole stack drifts toward the pointer ---- */
+      const heroEl = document.querySelector('.hero');
+      const xTo = gsap.quickTo(stack, 'x', { duration: 0.7, ease: 'power3' });
+      const yTo = gsap.quickTo(stack, 'y', { duration: 0.7, ease: 'power3' });
+      heroEl.addEventListener('mousemove', (e) => {
+        const r = heroEl.getBoundingClientRect();
+        const dx = (e.clientX - r.left) / r.width - 0.5;
+        const dy = (e.clientY - r.top) / r.height - 0.5;
+        xTo(dx * 34);
+        yTo(dy * 22);
+      });
+      heroEl.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
+
+    }
+
+    /* ---- Headline: split into letters → load reveal + cursor-reactive lift (#5) ---- */
+    (function () {
+      const title = document.getElementById('heroTitle');
+      if (!title) return;
+      const text = title.textContent;
+      title.textContent = '';
+      const letters = [];
+      [...text].forEach((ch) => {
+        const s = document.createElement('span');
+        s.className = 'hch';
+        s.textContent = ch === ' ' ? ' ' : ch;
+        title.appendChild(s);
+        letters.push(s);
+      });
+
+      // load reveal — letters rise + fade in, staggered (uses yPercent so cursor can own y)
+      gsap.from(letters, {
+        yPercent: 120, autoAlpha: 0, duration: 0.85, ease: 'power4.out', stagger: 0.035, delay: 0.15
+      });
+
+      // cursor-reactive — letters lift / scale toward the pointer
+      if (!matchMedia('(hover: none)').matches) {
+        const heroEl = document.querySelector('.hero');
+        const yqt = letters.map((s) => gsap.quickTo(s, 'y', { duration: 0.45, ease: 'power3' }));
+        const sqt = letters.map((s) => gsap.quickTo(s, 'scale', { duration: 0.45, ease: 'power3' }));
+        const MAX = 150;
+        heroEl.addEventListener('mousemove', (e) => {
+          letters.forEach((s, i) => {
+            const r = s.getBoundingClientRect();
+            const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+            const f = Math.max(0, 1 - Math.hypot(e.clientX - cx, e.clientY - cy) / MAX);
+            yqt[i](-f * 22);
+            sqt[i](1 + f * 0.16);
+          });
+        });
+        heroEl.addEventListener('mouseleave', () => {
+          letters.forEach((_, i) => { yqt[i](0); sqt[i](1); });
+        });
+      }
+    })();
+
+    /* ---- Generic reveal-up (skips sections with their own animation) ---- */
+    const customSel = '.process, .plans, .maint, .why, .faq, .projects';
+    gsap.utils.toArray('.reveal').forEach(el => {
+      if (el.closest(customSel)) return;
+      gsap.to(el, {
+        y: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 80%' }
+      });
+    });
+    // grouped staggers for service rows + stats
+    [['.srv-row', 0.12], ['.stat', 0.12]].forEach(([sel, st]) => {
+      gsap.to(gsap.utils.toArray(sel), {
+        y: 0, opacity: 1, duration: 0.85, ease: 'power3.out', stagger: st,
+        scrollTrigger: { trigger: sel, start: 'top 82%' }
+      });
+    });
+
+    /* ---- Distinct scroll-in animation per section ---- */
+    const once = (trigger) => ({ trigger, start: 'top 78%', once: true });
+
+    // PROCESS — heading slides in; the steps flow in left→right tied to scroll
+    gsap.set('.process .sec-head', { opacity: 0, x: -55, y: 0 });
+    ScrollTrigger.create({ ...once('.process'),
+      onEnter: () => gsap.to('.process .sec-head', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }) });
+    gsap.set('.process .step', { opacity: 0, x: -90, y: 0 });
+    gsap.to('.process .step', {
+      opacity: 1, x: 0, ease: 'none', stagger: 0.4,
+      scrollTrigger: { trigger: '.process', start: 'top 82%', end: 'center 48%', scrub: 0.6 }
+    });
+    // big "PROCESS" watermark drifts left → right as you scroll through the section
+    gsap.fromTo('.process-wm', { x: -180 }, {
+      x: 180, ease: 'none',
+      scrollTrigger: { trigger: '.process', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+
+    // PROJECTS — scale / pop in
+    gsap.set('.projects .reveal', { opacity: 0, scale: 0.9, y: 40 });
+    ScrollTrigger.create({ ...once('.projects'),
+      onEnter: () => gsap.to('.projects .reveal', { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger: 0.1 }) });
+
+    // PLANS — heading + selector rise in
+    gsap.set('.plans .sec-head, .plans .plans-sub', { opacity: 0, y: 30 });
+    gsap.set('.plans .pkg', { opacity: 0, y: 36 });
+    ScrollTrigger.create({ ...once('.plans'), onEnter: () => {
+      gsap.to('.plans .sec-head, .plans .plans-sub', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
+      gsap.to('.plans .pkg', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.15 });
+    } });
+
+    // MAINTENANCE — slide in from the right
+    gsap.set('.maint .reveal', { opacity: 0, x: 55, y: 0 });
+    ScrollTrigger.create({ ...once('.maint'),
+      onEnter: () => gsap.to('.maint .reveal', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 }) });
+
+    // WHY KNB — rise up + icons spin in
+    gsap.set('.why .reveal', { opacity: 0, y: 44 });
+    gsap.set('.why .wp-ic', { scale: 0, rotation: -90 });
+    ScrollTrigger.create({ ...once('.why'), onEnter: () => {
+      gsap.to('.why .reveal', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12 });
+      gsap.to('.why .wp-ic', { scale: 1, rotation: 0, duration: 0.7, ease: 'back.out(2)', stagger: 0.12, delay: 0.2 });
+    } });
+
+    // FAQ — slide up from below
+    gsap.set('.faq .reveal, .faq .faq-item', { opacity: 0, y: 50 });
+    ScrollTrigger.create({ ...once('.faq'),
+      onEnter: () => gsap.to('.faq .reveal, .faq .faq-item', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 }) });
+
+    /* ---- Count-up stats ---- */
+    gsap.utils.toArray('.count').forEach(el => {
+      const target = +el.dataset.target;
+      ScrollTrigger.create({
+        trigger: el, start: 'top 85%', once: true,
+        onEnter: () => {
+          gsap.to({ v: 0 }, {
+            v: target, duration: 1.6, ease: 'power2.out',
+            onUpdate() { el.textContent = Math.round(this.targets()[0].v); }
+          });
+        }
+      });
+    });
+
+    /* ---- Infinite marquees (seamless, directional) ---- */
+    function loopMarquee(track, duration, dir) {
+      // duplicate content for seamless wrap
+      track.innerHTML += track.innerHTML;
+      const half = track.scrollWidth / 2;
+      const from = dir === 'right' ? -half : 0;
+      const to = dir === 'right' ? 0 : -half;
+      return gsap.fromTo(track, { x: from }, { x: to, duration, ease: 'none', repeat: -1 });
+    }
+    // two opposing rows + hover to pause
+    const mqRow1 = loopMarquee(document.getElementById('marquee1'), 22, 'left');
+    const mqRow2 = loopMarquee(document.getElementById('marquee2'), 24, 'right');
+    [['marquee1', mqRow1], ['marquee2', mqRow2]].forEach(([id, tw]) => {
+      const row = document.getElementById(id).closest('.marquee-row');
+      row.addEventListener('mouseenter', () => tw.pause());
+      row.addEventListener('mouseleave', () => tw.resume());
+    });
+
+    /* ---- Logo wall marquee ---- */
+    const logoNames = ['NORTHPEAK','VELORA','SUNBRO','KINFOLK','AQUARI','BLOOMR','EVERLY','PIVOTL','MANGO+','TIDEUP'];
+    const logoTrack = document.getElementById('logoTrack');
+    logoTrack.innerHTML = logoNames.map(n => `<div class="logo-item">${n}</div>`).join('');
+    loopMarquee(logoTrack, 28);
+
+    /* ---- Testimonials slider ---- */
+    const testimonials = [
+      { name:'Maria Santos', role:'Owner, Lumen Apparel', img:'https://picsum.photos/seed/knb-maria/320/320',
+        quote:'Our Shopify revamp finally made the store feel trustworthy. The product pages and checkout are so much cleaner, and customers tell us it\'s easy to buy from now.' },
+      { name:'Daniel Cruz', role:'Founder, Verde Market', img:'https://picsum.photos/seed/knb-daniel/320/320',
+        quote:'They migrated us to WooCommerce without a hitch and the site is noticeably faster. Working with the team was clear, patient, and on schedule.' },
+      { name:'Dr. Aileen Reyes', role:'Northwind Clinic', img:'https://picsum.photos/seed/knb-aileen/320/320',
+        quote:'Our old website looked dated and was hard to use on mobile. KNB rebuilt it to look professional and modern — booking enquiries have been much smoother since.' },
+      { name:'Marcus Tan', role:'Operations, BookEasy', img:'https://picsum.photos/seed/knb-marcus/320/320',
+        quote:'They built us a custom booking system that fits exactly how we work. Responsive, thoughtful, and great support after launch.' }
+    ];
+    const sliderTrack = document.getElementById('sliderTrack');
+    sliderTrack.innerHTML = testimonials.map(t => `
+      <div class="slide">
+        <img src="${t.img}" alt="${t.name}">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="quote">“${t.quote}”</p>
+          <p class="who" style="margin-top:24px">${t.name}</p>
+          <p class="role">${t.role}</p>
+        </div>
+      </div>`).join('');
+
+    let idx = 0;
+    const total = testimonials.length;
+    const go = i => {
+      idx = (i + total) % total;
+      sliderTrack.style.transform = `translateX(-${idx * 100}%)`;
+    };
+    document.getElementById('next').addEventListener('click', () => { go(idx + 1); resetAuto(); });
+    document.getElementById('prev').addEventListener('click', () => { go(idx - 1); resetAuto(); });
+    let auto = setInterval(() => go(idx + 1), 5000);
+    function resetAuto() { clearInterval(auto); auto = setInterval(() => go(idx + 1), 5000); }
+
+    /* ---- Services intro: words fill grey → black on scroll ---- */
+    (function () {
+      const intro = document.querySelector('.services .intro');
+      if (!intro) return;
+      const text = intro.textContent.replace(/\s+/g, ' ').trim();
+      intro.innerHTML = '';
+      const words = text.split(' ').map((w) => {
+        const s = document.createElement('span');
+        s.className = 'iw';
+        s.textContent = w;
+        intro.appendChild(s);
+        intro.appendChild(document.createTextNode(' '));
+        return s;
+      });
+      gsap.set(words, { color: '#b7b5ad' });
+      gsap.to(words, {
+        color: '#111110', ease: 'none', stagger: 0.5,
+        scrollTrigger: { trigger: '.services .intro', start: 'top 78%', end: 'top 38%', scrub: 0.5 }
+      });
+    })();
+
+    /* ---- Projects: platform filter ---- */
+    (function () {
+      const filters = document.querySelectorAll('.proj-filter');
+      const cards = document.querySelectorAll('.proj-card');
+      if (!filters.length) return;
+      filters.forEach((f) => {
+        f.addEventListener('click', () => {
+          const key = f.dataset.filter;
+          filters.forEach((x) => x.classList.toggle('active', x === f));
+          cards.forEach((c) => c.classList.toggle('hide', !(key === 'all' || c.dataset.plat === key)));
+        });
+      });
+    })();
+
+    /* ---- Projects: cursor-following dot spotlight ---- */
+    (function () {
+      const sec = document.querySelector('.projects');
+      if (!sec || matchMedia('(hover: none)').matches) return;
+      sec.addEventListener('mousemove', (e) => {
+        const r = sec.getBoundingClientRect();
+        sec.style.setProperty('--pmx', (e.clientX - r.left) + 'px');
+        sec.style.setProperty('--pmy', (e.clientY - r.top) + 'px');
+        sec.classList.add('cursor-on');
+      });
+      sec.addEventListener('mouseleave', () => sec.classList.remove('cursor-on'));
+    })();
+
+    /* ---- Scroll-reactive rail in the Why section (#8) ---- */
+    (function () {
+      const why = document.querySelector('.why');
+      if (!why) return;
+      const rail = document.createElement('div'); rail.className = 'why-rail'; why.appendChild(rail);
+      const update = () => {
+        const r = why.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const prog = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh)));
+        rail.style.height = (prog * 100) + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    /* ---- Plans: package selector ---- */
+    (function () {
+      const items = document.querySelectorAll('.pkg-item');
+      const panels = document.querySelectorAll('.pkg-panel');
+      const plansSec = document.querySelector('.plans');
+      if (!items.length) return;
+      let activeKey = null;
+      const activate = (it) => {
+        const key = it.dataset.pkg;
+        if (key === activeKey) return;          // already showing it
+        activeKey = key;
+        items.forEach((x) => x.classList.toggle('active', x === it));
+        if (plansSec) { plansSec.classList.remove('bloom'); void plansSec.offsetWidth; plansSec.classList.add('bloom'); }
+        panels.forEach((p) => {
+          const on = p.dataset.panel === key;
+          p.classList.toggle('on', on);
+          if (on) { p.classList.remove('anim'); void p.offsetWidth; p.classList.add('anim'); }
+        });
+      };
+      items.forEach((it) => {
+        it.addEventListener('mouseenter', () => activate(it));   // hover to switch
+        it.addEventListener('click', () => activate(it));        // tap fallback (touch)
+      });
+    })();
+
+    /* ---- FAQ accordion ---- */
+    document.querySelectorAll('#faqList .faq-item').forEach((item) => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('#faqList .faq-item').forEach((it) => {
+          it.classList.remove('open');
+          it.querySelector('.faq-a').style.maxHeight = null;
+        });
+        // open this one (unless it was already open)
+        if (!isOpen) {
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

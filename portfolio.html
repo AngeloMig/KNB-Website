@@ -4,6 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Portfolio — KNB Web Solution</title>
+<meta name="description" content="Websites and online stores KNB Web Solution has designed and built — Shopify revamps, Webflow sites, and WordPress / WooCommerce builds for growing businesses. Filter the work by platform.">
+<meta property="og:title" content="Portfolio — KNB Web Solution">
+<meta property="og:description" content="Shopify revamps, Webflow builds, and WordPress sites we've designed for growing businesses.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KNB Web Solution">
+<!-- TODO: add og:image + og:url (absolute https URL) once the site is hosted on its real domain -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portfolio — KNB Web Solution">
+<meta name="twitter:description" content="Shopify revamps, Webflow builds, and WordPress sites we've designed for growing businesses.">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="work.css">
@@ -19,7 +28,7 @@
           <a href="portfolio.html" class="active">Portfolio</a>
           <a href="contact.html">Contact</a>
         </div>
-        <a href="contact.html" class="nav-cta"><span class="dot"></span>Free audit</a>
+        <a href="contact.html" class="nav-cta"><span class="dot"></span>Start your project</a>
       </div>
       <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -35,40 +44,109 @@
     <div class="wrap">
       <div class="eyebrow reveal">Our work</div>
       <h1 class="reveal">Websites &amp; stores we've built.</h1>
-      <p class="lead reveal">A selection of Shopify revamps, Webflow builds, and WordPress sites. Pick a platform to see the work.</p>
+      <p class="lead reveal">Shopify revamps, Webflow builds, and WordPress sites for growing businesses — filter the work below or dive into a platform.</p>
+      <div class="pf-stats reveal">
+        <div class="pf-stat"><span class="num" data-count="18">0</span><span class="lbl">Projects shipped</span></div>
+        <div class="pf-stat"><span class="num" data-count="3">0</span><span class="lbl">Platforms</span></div>
+        <div class="pf-stat"><span class="num" data-count="12" data-suffix="+">0</span><span class="lbl">Industries served</span></div>
+      </div>
     </div>
   </header>
 
-  <!-- PLATFORM CATEGORIES -->
-  <section class="cats">
-    <div class="wrap cats-grid">
-      <a href="shopify.html" class="cat-card plat-shopify reveal">
-        <span class="count">8 projects</span>
-        <span class="logo-badge"><img src="https://cdn.simpleicons.org/shopify/ffffff" alt="Shopify"></span>
-        <div>
-          <h3>Shopify</h3>
-          <p>Store revamps &amp; ecommerce builds that convert.</p>
-          <span class="go">View Shopify work →</span>
+  <!-- CLIENT LOGO MARQUEE -->
+  <!-- TODO: placeholder brand wordmarks — replace with real client logos (or remove) before launch -->
+  <section class="logos reveal" role="img" aria-label="A selection of brands KNB has designed for">
+    <div class="logos-track" aria-hidden="true">
+      <span>Lumen</span><span>Coastal Goods</span><span>Maison</span><span>Trailhead</span><span>Brew &amp; Co</span><span>Verde</span><span>Northwind</span><span>Atlas</span><span>Form &amp; Field</span><span>Pulse</span><span>Orbit</span><span>Harbor</span>
+      <span>Lumen</span><span>Coastal Goods</span><span>Maison</span><span>Trailhead</span><span>Brew &amp; Co</span><span>Verde</span><span>Northwind</span><span>Atlas</span><span>Form &amp; Field</span><span>Pulse</span><span>Orbit</span><span>Harbor</span>
+    </div>
+  </section>
+
+  <!-- CASE-STUDY SPOTLIGHT -->
+  <section class="spotlight">
+    <div class="wrap">
+      <div class="spot-inner">
+        <div class="ba reveal" id="ba">
+          <img class="ba-img ba-base" src="https://picsum.photos/seed/lumen-after/960/640" alt="Lumen Apparel — after">
+          <div class="ba-after"><img class="ba-img" src="https://picsum.photos/seed/lumen-before/960/640?grayscale" alt="Lumen Apparel — before"></div>
+          <span class="ba-label ba-before">Before</span>
+          <span class="ba-label ba-after-lbl">After</span>
+          <div class="ba-handle" role="slider" aria-label="Reveal before or after — Lumen Apparel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span></span></div>
         </div>
-      </a>
-      <a href="webflow.html" class="cat-card plat-webflow reveal">
-        <span class="count">6 projects</span>
-        <span class="logo-badge"><img src="https://cdn.simpleicons.org/webflow/ffffff" alt="Webflow"></span>
-        <div>
-          <h3>Webflow</h3>
-          <p>Custom, modern websites with clean design.</p>
-          <span class="go">View Webflow work →</span>
+        <div class="spot-copy reveal">
+          <span class="spot-eyebrow">✦ Featured project</span>
+          <h2>Lumen Apparel</h2>
+          <span class="spot-chip"><img src="https://cdn.simpleicons.org/shopify" alt="">Shopify · Fashion</span>
+          <dl class="spot-par">
+            <div><dt>Problem</dt><dd>Cluttered product pages and a slow, multi-step checkout made the store hard to shop — especially on mobile.</dd></div>
+            <div><dt>Approach</dt><dd>Rebuilt the theme around clear product storytelling, compressed media, and a streamlined two-step checkout.</dd></div>
+            <div><dt>Outcome</dt><dd>A faster, cleaner storefront that's easier to browse on any device — and easier for the team to manage.</dd></div>
+          </dl>
+          <a href="case-study.html" class="btn">Read the full case study →</a>
         </div>
-      </a>
-      <a href="wordpress.html" class="cat-card plat-wordpress reveal">
-        <span class="count">7 projects</span>
-        <span class="logo-badge"><img src="https://cdn.simpleicons.org/wordpress/ffffff" alt="WordPress"></span>
-        <div>
-          <h3>WordPress</h3>
-          <p>WooCommerce stores &amp; business sites, easy to manage.</p>
-          <span class="go">View WordPress work →</span>
-        </div>
-      </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERABLE WORK GRID -->
+  <section class="work">
+    <div class="wrap">
+      <div class="work-head reveal">
+        <h2>All projects</h2>
+        <a href="contact.html" class="btn ghost">Start a project →</a>
+      </div>
+      <div class="proj-filters reveal" role="group" aria-label="Filter projects by platform">
+        <button class="proj-filter active" data-filter="all" aria-pressed="true">All</button>
+        <button class="proj-filter" data-filter="shopify" aria-pressed="false">Shopify</button>
+        <button class="proj-filter" data-filter="webflow" aria-pressed="false">Webflow</button>
+        <button class="proj-filter" data-filter="wordpress" aria-pressed="false">WordPress</button>
+      </div>
+      <p class="sr-only" id="filterStatus" aria-live="polite">Showing all 18 projects.</p>
+      <div class="proj-grid pf-grid">
+        <a href="shopify.html" class="proj-card feat reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-lumen/960/540" alt="Lumen Apparel — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Lumen Apparel</h3><span class="cat">Shopify</span></div><span class="proj-scope">Fashion · theme rebuild &amp; faster checkout</span></div></a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-northwind/720/495" alt="Northwind Studio — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Northwind Studio</h3><span class="cat">Webflow</span></div><span class="proj-scope">Agency · CMS-driven marketing site</span></div></a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-harbor/720/495" alt="Harbor Realty — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Harbor Realty</h3><span class="cat">WordPress</span></div><span class="proj-scope">Real estate · property search &amp; filters</span></div></a>
+        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-coastal/720/495" alt="Coastal Goods — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Coastal Goods</h3><span class="cat">Shopify</span></div><span class="proj-scope">Home goods · new storefront &amp; filters</span></div></a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-atlas/720/495" alt="Atlas Agency — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Atlas Agency</h3><span class="cat">Webflow</span></div><span class="proj-scope">Creative · portfolio with custom motion</span></div></a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-bright/720/495" alt="Bright Academy — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Bright Academy</h3><span class="cat">WordPress</span></div><span class="proj-scope">Education · courses &amp; enrollment</span></div></a>
+        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-maison/720/495" alt="Maison Beauty — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Maison Beauty</h3><span class="cat">Shopify</span></div><span class="proj-scope">Beauty · brand refresh &amp; speed</span></div></a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-form/720/495" alt="Form & Field — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Form &amp; Field</h3><span class="cat">Webflow</span></div><span class="proj-scope">Architecture · editable brochure site</span></div></a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-sunrise/720/495" alt="Sunrise Dental — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Sunrise Dental</h3><span class="cat">WordPress</span></div><span class="proj-scope">Clinic · online booking integration</span></div></a>
+        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-trail/720/495" alt="Trailhead Outfitters — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Trailhead Outfitters</h3><span class="cat">Shopify</span></div><span class="proj-scope">Outdoor · new store &amp; bundles</span></div></a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-pulse/720/495" alt="Pulse Fitness — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Pulse Fitness</h3><span class="cat">Webflow</span></div><span class="proj-scope">Health · landing page &amp; signups</span></div></a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-greenleaf/720/495" alt="Greenleaf Org — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Greenleaf Org</h3><span class="cat">WordPress</span></div><span class="proj-scope">Non-profit · programs &amp; donations</span></div></a>
+        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-brew/720/495" alt="Brew & Co — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Brew &amp; Co</h3><span class="cat">Shopify</span></div><span class="proj-scope">Food · subscriptions &amp; recurring orders</span></div></a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-orbit/720/495" alt="Orbit SaaS — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Orbit SaaS</h3><span class="cat">Webflow</span></div><span class="proj-scope">Tech · product &amp; pricing pages</span></div></a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-dispatch/720/495" alt="Daily Dispatch — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Daily Dispatch</h3><span class="cat">WordPress</span></div><span class="proj-scope">Media · WooCommerce memberships</span></div></a>
+        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-verde/720/495" alt="Verde Living — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Verde Living</h3><span class="cat">Shopify</span></div><span class="proj-scope">Lifestyle · revamp &amp; mobile UX</span></div></a>
+        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-clay/720/495" alt="Clayworks — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Clayworks</h3><span class="cat">Webflow</span></div><span class="proj-scope">Studio · gallery &amp; lookbook</span></div></a>
+        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-northwind/720/495" alt="Northwind Clinic — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Northwind Clinic</h3><span class="cat">WordPress</span></div><span class="proj-scope">Healthcare · services &amp; appointments</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <!-- TODO: PLACEHOLDER testimonials — replace with REAL, attributable client quotes (with permission) before launch. Do NOT publish fabricated quotes live. -->
+  <section class="testi-sec">
+    <div class="wrap">
+      <div class="testi-head reveal">
+        <span class="testi-kicker">What clients say</span>
+        <h2>Work that earns repeat business.</h2>
+      </div>
+      <div class="testi-grid">
+        <figure class="testi-card reveal">
+          <blockquote>KNB rebuilt our store and made it genuinely easy to manage — updates that used to take days now take minutes.</blockquote>
+          <figcaption><span class="t-name">[Client name]</span><span class="t-role">Founder · [Sample Brand]</span></figcaption>
+        </figure>
+        <figure class="testi-card reveal">
+          <blockquote>Clear scope, clear pricing, and a site that finally loads fast on mobile. The whole process was refreshingly simple.</blockquote>
+          <figcaption><span class="t-name">[Client name]</span><span class="t-role">Marketing Lead · [Sample Company]</span></figcaption>
+        </figure>
+        <figure class="testi-card reveal">
+          <blockquote>They understood what we needed before we could explain it, and the handoff guidance meant our team could take it from there.</blockquote>
+          <figcaption><span class="t-name">[Client name]</span><span class="t-role">Owner · [Sample Store]</span></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -76,9 +154,15 @@
   <section class="cta-strip">
     <div class="wrap">
       <div class="cta-box reveal">
-        <h2>Have a project in mind?</h2>
-        <p>Start with a free audit of your store or website — we'll send a clear written proposal.</p>
-        <a href="contact.html" class="btn"><span class="dot"></span>Get a free audit</a>
+        <div class="cta-head">
+          <span class="cta-eyebrow"><span class="dot"></span>Get started</span>
+          <h2>Have a project in mind?</h2>
+        </div>
+        <div class="cta-body">
+          <p>Start with a free consultation — whether you're building new or revamping — and we'll send back a clear, written proposal.</p>
+          <a href="contact.html" class="btn">Start your project →</a>
+          <ul class="cta-trust"><li>Free</li><li>No obligation</li><li>Clear written proposal</li></ul>
+        </div>
       </div>
     </div>
   </section>
