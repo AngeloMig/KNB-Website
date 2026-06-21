@@ -128,37 +128,51 @@ a.proj-card { cursor: pointer; }
 
 /* ---------- CTA STRIP ---------- */
 .cta-strip { padding: 90px 0; }
-.cta-box {
-  position: relative; overflow: hidden;
-  background: var(--ink); color: var(--bg);
-  border-radius: 28px; padding: clamp(40px, 6vw, 84px);
-  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(30px, 5vw, 72px);
-  align-items: center;
+
+/* ---------- CTA — ticket / coupon (rips on hover) ---------- */
+/* container is transparent so the page bg shows through the torn gap; */
+/* drop-shadow (not box-shadow) hugs the real torn silhouette of each piece */
+.ctaC { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: stretch; perspective: 1400px; filter: drop-shadow(0 16px 30px rgba(0,0,0,0.08)); transition: transform 0.45s var(--ease), filter 0.45s var(--ease); }
+.ctaC:hover { transform: translateY(-4px); filter: drop-shadow(0 30px 50px rgba(0,0,0,0.13)); }
+.ctaC .cta-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: #e83fa0; margin-bottom: 0; }
+.ctaC .cta-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: #e83fa0; box-shadow: none; }
+.ctaC .cta-trust { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin-top: 18px; }
+.ctaC .cta-trust li { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+.ctaC .cta-trust li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #6cf09a; }
+/* left piece — the part you keep */
+.ctaC-main { position: relative; z-index: 2; background: var(--card); border: 1px solid var(--line); border-right: none; border-radius: 20px 0 0 20px; padding: clamp(30px, 4vw, 50px); }
+.ctaC-main h2 { font-size: clamp(26px, 3.4vw, 44px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.04; margin: 14px 0 0; max-width: none; color: var(--ink); }
+.ctaC-main p { color: var(--muted); font-size: 16px; line-height: 1.5; margin-top: 14px; max-width: 44ch; }
+/* torn right edge of the keep-piece — revealed once the stub rips off */
+.ctaC-main::after { content: ""; position: absolute; top: -1px; bottom: -1px; right: 0; width: 15px; background: var(--bg); opacity: 0; transition: opacity 0.4s var(--ease);
+  clip-path: polygon(6px 0%, 13px 7%, 2px 14%, 10px 21%, 4px 28%, 12px 35%, 1px 42%, 9px 49%, 3px 56%, 13px 63%, 2px 70%, 10px 77%, 6px 84%, 11px 91%, 4px 100%, 100% 100%, 100% 0%); }
+.ctaC:hover .ctaC-main::after { opacity: 1; }
+/* right piece — the tear-off stub */
+.ctaC-stub { position: relative; z-index: 1; align-self: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: clamp(30px, 4vw, 46px) clamp(28px, 4vw, 52px); text-align: center; background: var(--card); border: 1px solid var(--line); border-left: 2px dashed var(--line); border-radius: 0 20px 20px 0; transform-origin: 0% 0%;
+  clip-path: polygon(0 0%, 0 7%, 0 14%, 0 21%, 0 28%, 0 35%, 0 42%, 0 49%, 0 56%, 0 63%, 0 70%, 0 77%, 0 84%, 0 91%, 0 100%, 100% 100%, 100% 0%);
+  transition: transform 0.6s cubic-bezier(0.34, 1.25, 0.5, 1), clip-path 0.6s cubic-bezier(0.34, 1.25, 0.5, 1); }
+.ctaC-stub .btn { background: #e83fa0; color: #fff; margin-top: 0; }
+.ctaC-stub .btn:hover { background: #d22e8d; }
+.ctaC-stub .tk-free { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.ctaC-stub .tk-tear { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity 0.35s var(--ease); }
+/* RIP — stub tears off the perforation: jagged edge grows, paper peels in 3D, gap opens */
+.ctaC:hover .ctaC-stub {
+  transform: translateX(16px) translateY(-3px) rotate(2deg) rotateY(-15deg);
+  border-left-color: transparent;
+  clip-path: polygon(7px 0%, 0 7%, 11px 14%, 3px 21%, 8px 28%, 1px 35%, 13px 42%, 5px 49%, 9px 56%, 0 63%, 12px 70%, 4px 77%, 7px 84%, 2px 91%, 10px 100%, 100% 100%, 100% 0%); }
+.ctaC:hover .ctaC-stub .tk-tear { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .ctaC, .ctaC-stub { transition: none; }
+  .ctaC:hover, .ctaC:hover .ctaC-stub { transform: none; }
+  .ctaC:hover .ctaC-stub { clip-path: none; }
 }
-/* dotted texture, fading from the top-left */
-.cta-box::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(255,255,255,0.05) 1.2px, transparent 1.2px);
-  background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(130% 130% at 0% 0%, #000 25%, transparent 68%);
-  mask-image: radial-gradient(130% 130% at 0% 0%, #000 25%, transparent 68%);
+@media (max-width: 640px) {
+  .ctaC { grid-template-columns: 1fr; perspective: none; }
+  .ctaC-main { border-right: 1px solid var(--line); border-bottom: none; border-radius: 20px 20px 0 0; }
+  .ctaC-main::after { display: none; }
+  .ctaC-stub { border: 1px solid var(--line); border-top: 2px dashed var(--line); border-radius: 0 0 20px 20px; clip-path: none; transform-origin: 50% 0%; }
+  .ctaC:hover .ctaC-stub { transform: translateY(14px) rotate(0deg) rotateX(-12deg); clip-path: none; border-top-color: transparent; }
 }
-/* pink glow blooming from the bottom-right corner */
-.cta-box::after {
-  content: ""; position: absolute; right: -140px; bottom: -180px; pointer-events: none;
-  width: 460px; height: 460px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,63,160,0.45), transparent 62%);
-}
-.cta-box > * { position: relative; z-index: 1; }
-.cta-eyebrow { display: inline-flex; align-items: center; gap: 11px; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: rgba(255,255,255,0.66); margin-bottom: 22px; }
-.cta-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 5px rgba(232,63,160,0.16); }
-.cta-box h2 { font-size: clamp(32px, 4.6vw, 62px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.0; max-width: 16ch; }
-.cta-box p { color: rgba(255,255,255,0.72); font-size: 17px; line-height: 1.55; max-width: 44ch; }
-.cta-box .btn { background: var(--bg); color: var(--ink); margin-top: 26px; }
-.cta-box .btn:hover { background: #fff; }
-.cta-trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 26px 0 0; padding: 0; }
-.cta-trust li { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; color: rgba(255,255,255,0.62); }
-.cta-trust li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #6cf09a; }
 
 /* ---------- FOOTER ---------- */
 footer { background: var(--ink); color: var(--bg); padding: 80px 0 40px; }
@@ -286,7 +300,6 @@ footer .logo { font-size: 40px; letter-spacing: -0.04em; }
   .proj-grid, .proj-grid.cols-3 { grid-template-columns: 1fr; }
   .pf-grid { grid-template-columns: repeat(2, 1fr); }
   .pf-grid .proj-card.feat { grid-column: span 2; }
-  .cta-box { grid-template-columns: 1fr; gap: 26px; }
   .spot-inner { grid-template-columns: 1fr; }
   .pf-stats { gap: 32px; margin-top: 40px; }
 }
@@ -460,24 +473,6 @@ button.pf-chip:hover { transform: translateY(-1px); filter: brightness(1.06); }
 /* #2 filter pill counts */
 .pf-n { font-size: 11px; font-weight: 700; opacity: 0.6; margin-left: 1px; }
 .proj-filter.active .pf-n { opacity: 0.85; }
-
-/* ===== CTA — alternative design (centered dark card, for comparison) ===== */
-.cta-alt-sec { padding: 30px 0 0; }
-.cta-alt { position: relative; overflow: hidden; text-align: center; background: var(--ink); color: var(--bg); border-radius: 28px; padding: 64px 32px; }
-.cta-alt::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.4px); background-size: 24px 24px; -webkit-mask-image: radial-gradient(circle at 50% 0%, #000, transparent 70%); mask-image: radial-gradient(circle at 50% 0%, #000, transparent 70%); pointer-events: none; }
-.cta-alt > * { position: relative; z-index: 1; }
-.cta-alt-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
-.cta-alt-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: #6cf09a; }
-.cta-alt h2 { font-size: clamp(30px, 5vw, 54px); font-weight: 500; letter-spacing: -0.03em; margin: 18px 0 0; }
-.cta-alt p { color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.55; max-width: 50ch; margin: 18px auto 0; }
-.cta-alt-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; }
-.cta-alt .btn { background: #fff; color: var(--ink); }
-.cta-alt .btn:hover { background: #fff; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
-.cta-alt .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,0.3); }
-.cta-alt .btn.ghost:hover { background: rgba(255,255,255,0.1); box-shadow: none; }
-.cta-alt-trust { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: center; margin-top: 28px; color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 600; }
-.cta-alt-trust li { position: relative; padding-left: 18px; }
-.cta-alt-trust li::before { content: "✓"; position: absolute; left: 0; color: #6cf09a; }
 
 /* ===== filters revamp ===== */
 /* platform pills get a brand-colour dot */

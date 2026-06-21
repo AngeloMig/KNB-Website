@@ -67,23 +67,26 @@
   .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
 
   /* #8 — add-ons */
-  .addons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
-  .addon { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
-  .addon::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); }
-  .addon:hover::before { transform: scaleX(1); }
-  .addon-ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); margin-bottom: 14px; }
-  .addon-ic svg { width: 21px; height: 21px; }
-  .addon .an { font-weight: 600; font-size: 16px; }
-  .addon .ad { color: var(--muted); font-size: 13.5px; margin-top: 6px; line-height: 1.45; }
-  .addon .aq { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .addons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 24px; }
+  .addon { position: relative; overflow: hidden; display: grid; grid-template-columns: 46px 1fr; column-gap: 16px; align-items: start; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+  .addon::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; border-radius: 0 3px 3px 0; background: var(--ink); transform: scaleY(0); transition: transform 0.3s var(--ease); }
+  .addon:hover::before { transform: scaleY(1); }
+  .addon-ic { grid-column: 1; grid-row: 1 / span 3; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); }
+  .addon-ic svg { width: 22px; height: 22px; }
+  .addon .an { grid-column: 2; grid-row: 1; font-weight: 600; font-size: 16px; }
+  .addon .ad { grid-column: 2; grid-row: 2; color: var(--muted); font-size: 13.5px; margin-top: 5px; line-height: 1.45; }
+  .addon .aq { grid-column: 2; grid-row: 3; display: inline-flex; align-items: center; gap: 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
   .addon .aq::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; flex: none; }
 
   .pr-note { margin-top: 34px; background: linear-gradient(180deg, #f6f5f1, #efeee8); border: 1px solid var(--line); border-radius: 18px; padding: 28px 30px; position: relative; overflow: hidden; }
   .pr-note::before { content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--line); }
   .pr-note h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #e83fa0; }
-  .pr-note ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; margin-top: 18px; }
-  .pr-note li { position: relative; padding-left: 24px; font-size: 14px; color: var(--ink); line-height: 1.45; }
-  .pr-note li::before { content: ""; position: absolute; left: 2px; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 4px rgba(232,63,160,0.14); }
+  .gtk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 34px; margin-top: 20px; }
+  .gtk { display: flex; align-items: flex-start; gap: 14px; }
+  .gtk-ic { flex: none; width: 40px; height: 40px; border-radius: 11px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; }
+  .gtk-ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .gtk-t { font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; }
+  .gtk-d { color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 3px; }
 
   /* care plans */
   .care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
@@ -151,7 +154,7 @@
 
   @media (max-width: 860px) { .howit { grid-template-columns: 1fr; } .care-grid, .addons { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 760px) {
-    .pr-grid, .care-grid, .addons, .pr-note ul { grid-template-columns: 1fr; }
+    .pr-grid, .care-grid, .addons, .gtk-grid { grid-template-columns: 1fr; }
     .pr-sticky { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; padding: 12px 16px; background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); gap: 12px; align-items: center; justify-content: space-between; }
     .pr-sticky span { font-size: 13px; font-weight: 600; }
     .pr-sticky .btn { padding: 11px 18px; }
@@ -197,32 +200,42 @@
   /* ===== packages — interactive selector ===== */
   .psel { display: grid; grid-template-columns: 0.92fr 1.3fr; gap: 24px; margin-top: 30px; align-items: start; }
   .psel-list { display: flex; flex-direction: column; gap: 10px; }
-  .psel-item { --pc: #6d6c66; --pcbg: rgba(17,17,16,0.06); position: relative; display: flex; align-items: center; gap: 14px; text-align: left; font-family: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; cursor: pointer; transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+  .psel-item { --pc: #6d6c66; --pcbg: rgba(17,17,16,0.06); position: relative; display: flex; align-items: center; gap: 14px; text-align: left; font-family: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; cursor: pointer; transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease); }
   .psel-item.pc-business { --pc: #6d6c66; --pcbg: rgba(17,17,16,0.06); }
   .psel-item.pc-ecom { --pc: #5e8e3e; --pcbg: rgba(94,142,62,0.14); }
   .psel-item.pc-app { --pc: #4353ff; --pcbg: rgba(67,83,255,0.12); }
-  .psel-item:hover { border-color: #cdcbc2; transform: translateX(2px); }
-  .psel-item.active { border-color: var(--pc); box-shadow: 0 12px 30px rgba(0,0,0,0.07); }
+  .psel-item:hover { border-color: #cdcbc2; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.06); }
+  .psel-item.active { border-color: var(--pc); background: var(--pcbg); box-shadow: 0 14px 32px rgba(0,0,0,0.08); }
   .psel-item.active::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0; background: var(--pc); }
-  .pi-ic { flex: none; width: 42px; height: 42px; border-radius: 11px; background: var(--pcbg); color: var(--pc); display: flex; align-items: center; justify-content: center; }
+  .pi-ic { flex: none; width: 42px; height: 42px; border-radius: 11px; background: var(--pcbg); color: var(--pc); display: flex; align-items: center; justify-content: center; transition: background 0.3s, color 0.3s; }
+  .psel-item.active .pi-ic { background: var(--pc); color: #fff; }
   .pi-ic svg { width: 20px; height: 20px; }
   .pi-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
   .pi-name { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
   .pi-who { font-size: 12.5px; color: var(--muted); }
   .pi-arrow { color: var(--muted); transition: transform 0.3s var(--ease), color 0.3s; }
   .psel-item.active .pi-arrow { color: var(--pc); transform: translateX(3px); }
-  .pi-tag { position: absolute; top: -9px; right: 14px; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
-  .psel-detail { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px 30px; min-height: 360px; overflow: hidden; }
+  .pi-tag { position: absolute; top: -9px; right: 14px; background: var(--card); color: var(--ink); border: 1px solid var(--ink); box-shadow: 0 3px 10px rgba(0,0,0,0.1); font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
+  .psel-detail { --pcbg: rgba(17,17,16,0.05); position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px 30px; min-height: 360px; overflow: hidden; }
+  .psel-detail:has(.pc-ecom.on) { --pcbg: rgba(94,142,62,0.16); }
+  .psel-detail:has(.pc-app.on) { --pcbg: rgba(67,83,255,0.14); }
   .psel-detail::before { content: ""; position: absolute; top: -120px; right: -120px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--pcbg, transparent), transparent 70%); pointer-events: none; }
-  .psel-panel { display: none; position: relative; }
+  .psel-panel { --pc: #6d6c66; --pcbg: rgba(17,17,16,0.06); display: none; position: relative; }
+  .psel-panel.pc-ecom { --pc: #5e8e3e; --pcbg: rgba(94,142,62,0.14); }
+  .psel-panel.pc-app { --pc: #4353ff; --pcbg: rgba(67,83,255,0.12); }
   .psel-panel.on { display: block; animation: ppIn 0.45s var(--ease); }
   @keyframes ppIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .pp-ic { width: 46px; height: 46px; border-radius: 13px; background: var(--pcbg); color: var(--pc); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .pp-ic svg { width: 22px; height: 22px; }
   .pp-kicker { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pc); font-weight: 700; }
   .psel-panel h3 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; letter-spacing: -0.02em; margin: 10px 0 0; max-width: 20ch; }
-  .pp-quote { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); margin: 14px 0 22px; }
+  .pp-quote { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em; color: var(--muted); margin: 16px 0 0; border: 1px solid var(--line); background: rgba(17,17,16,0.03); padding: 5px 12px; border-radius: 100px; }
   .pp-quote .pq-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pc); }
-  .pp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+  .pp-facts { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+  .pp-facts span { font-size: 12px; font-weight: 600; color: var(--muted); background: rgba(17,17,16,0.04); border: 1px solid var(--line); border-radius: 100px; padding: 5px 11px; }
+  .pp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; margin-top: 24px; }
   .pp-cols h4 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 12px; }
+  .pp-cols > div:first-child h4 { color: var(--ink); }
   .pp-inc, .pp-exc { list-style: none; display: grid; gap: 9px; }
   .pp-inc li, .pp-exc li { position: relative; padding-left: 24px; font-size: 14px; line-height: 1.4; }
   .pp-inc li::before { content: "✓"; position: absolute; left: 0; color: #27a35f; font-weight: 700; }
@@ -269,8 +282,8 @@
   /* hover interactions */
   .howit .step { transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
   .howit .step:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(0,0,0,0.08); }
-  .addon { transition: transform 0.35s var(--ease), border-color 0.35s; }
-  .addon:hover { transform: translateY(-4px); border-color: #cdcbc2; }
+  .addon { transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s var(--ease); }
+  .addon:hover { transform: translateY(-3px); border-color: #cdcbc2; box-shadow: 0 16px 36px rgba(0,0,0,0.06); }
   .cmp tbody tr { transition: background 0.25s; }
   .cmp tbody tr:hover td, .cmp tbody tr:hover th { background: rgba(17,17,16,0.03); }
 
@@ -307,7 +320,7 @@
     <a href="pricing.html">Pricing</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
+    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions →</a>
   </div>
 
   <header class="page-hero pr-hero">
@@ -372,9 +385,11 @@
 
           <div class="psel-detail">
             <div class="psel-panel on" data-panel="starter">
+              <span class="pp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
               <span class="pp-kicker">Starter Website</span>
               <h3>A clean, professional site — ready in weeks.</h3>
               <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-facts"><span>~1–2 weeks</span><span>1 revision</span><span>Launch support</span></div>
               <div class="pp-cols">
                 <div><h4>Included</h4><ul class="pp-inc">
                   <li>1–5 pages, responsive design</li>
@@ -393,9 +408,11 @@
             </div>
 
             <div class="psel-panel pc-business" data-panel="business">
+              <span class="pp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
               <span class="pp-kicker">Business Website · Most popular</span>
               <h3>More pages, more credibility, more leads.</h3>
               <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-facts"><span>~2–4 weeks</span><span>2 revisions</span><span>14–30 days support</span></div>
               <div class="pp-cols">
                 <div><h4>Included</h4><ul class="pp-inc">
                   <li>5–12 pages, custom layouts</li>
@@ -415,9 +432,11 @@
             </div>
 
             <div class="psel-panel pc-ecom" data-panel="ecom">
+              <span class="pp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span>
               <span class="pp-kicker">Ecommerce Website</span>
               <h3>A store built to turn browsers into buyers.</h3>
               <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-facts"><span>~3–5 weeks</span><span>Product upload</span><span>14–30 days support</span></div>
               <div class="pp-cols">
                 <div><h4>Included</h4><ul class="pp-inc">
                   <li>Store audit &amp; journey planning</li>
@@ -436,9 +455,11 @@
             </div>
 
             <div class="psel-panel pc-app" data-panel="app">
+              <span class="pp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
               <span class="pp-kicker">Custom Web App</span>
               <h3>Custom software shaped around how you work.</h3>
               <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-facts"><span>Scoped timeline</span><span>Roles &amp; admin</span><span>30 days support</span></div>
               <div class="pp-cols">
                 <div><h4>Included</h4><ul class="pp-inc">
                   <li>Technical discovery &amp; workflow mapping</li>
@@ -497,12 +518,24 @@
 
         <div class="pr-note reveal">
           <h4>Good to know</h4>
-          <ul>
-            <li>Every project is quoted in a written proposal after a free consultation.</li>
-            <li>Pass-through costs (domains, hosting, paid apps, themes, ad spend) are billed separately.</li>
-            <li>No guaranteed sales or rankings — results depend on traffic, product, pricing &amp; marketing.</li>
-            <li>Typical payment terms: 50% to start, 30% at design approval, 20% before launch.</li>
-          </ul>
+          <div class="gtk-grid">
+            <div class="gtk">
+              <span class="gtk-ic"><svg viewBox="0 0 24 24"><path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+              <div><div class="gtk-t">Written proposal</div><div class="gtk-d">Every project is quoted in writing after a free consultation.</div></div>
+            </div>
+            <div class="gtk">
+              <span class="gtk-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11.5h1V16h1"/></svg></span>
+              <div><div class="gtk-t">No guarantees</div><div class="gtk-d">No guaranteed sales or rankings — results depend on traffic, product, pricing &amp; marketing.</div></div>
+            </div>
+            <div class="gtk">
+              <span class="gtk-ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
+              <div><div class="gtk-t">Pass-through costs</div><div class="gtk-d">Domains, hosting, paid apps, themes &amp; ad spend are billed separately.</div></div>
+            </div>
+            <div class="gtk">
+              <span class="gtk-ic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+              <div><div class="gtk-t">Payment terms</div><div class="gtk-d">50% to start, 30% at design approval, 20% before launch.</div></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -593,15 +626,17 @@
 
   <section class="cta-strip">
     <div class="wrap">
-      <div class="cta-box reveal">
-        <div class="cta-head">
+      <div class="ctaC reveal r-scale">
+        <div class="ctaC-main">
           <span class="cta-eyebrow"><span class="dot"></span>Get started</span>
           <h2>Ready for an exact quote?</h2>
-        </div>
-        <div class="cta-body">
           <p>Start with a free consultation. We'll review your site or idea and send a clear written proposal with the exact scope and price.</p>
-          <a href="contact.html" class="btn">Start your project →</a>
           <ul class="cta-trust"><li>Free</li><li>No obligation</li><li>Written proposal</li></ul>
+        </div>
+        <div class="ctaC-stub">
+          <span class="tk-tear" aria-hidden="true">✂ tear here</span>
+          <span class="tk-free">Free consultation</span>
+          <a href="contact.html" class="btn">Start your project →</a>
         </div>
       </div>
     </div>

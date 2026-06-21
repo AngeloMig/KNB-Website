@@ -85,7 +85,7 @@ gsap.registerPlugin(ScrollTrigger);
 
     /* ---- Magnetic buttons (pull toward cursor + scale) ---- */
     if (!matchMedia('(hover: none)').matches) {
-      document.querySelectorAll('.btn, .nav-cta').forEach((btn) => {
+      document.querySelectorAll('.btn, .nav-cta, .btn-ghost').forEach((btn) => {
         // Buttons inside a card are full-width, so use a gentler pull and clamp
         // the travel to keep them within the card's padding.
         const inCard = !!btn.closest('.plan');
@@ -322,42 +322,64 @@ gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.create({ ...once('.projects'),
       onEnter: () => gsap.to('.projects .reveal', { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger: 0.1 }) });
 
-    // PLANS / Solutions — heading + toggle + card lists rise in
+    // PLANS / Solutions — #7 choreographed: heading → toggle → cards stagger → aside slides in
     gsap.set('.plans .sec-head, .plans .solu-toggle', { opacity: 0, y: 30 });
     gsap.set('.plans .sol-item', { opacity: 0, y: 22 });
+    gsap.set('.plans .sol-aside', { opacity: 0, x: 36 });
     ScrollTrigger.create({ ...once('.plans'), onEnter: () => {
       gsap.to('.plans .sec-head, .plans .solu-toggle', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
       gsap.to('.plans .sol-item', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06, delay: 0.15 });
+      gsap.to('.plans .sol-aside', { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', delay: 0.3 });
     } });
 
-    // Solutions toggle (Website projects / Care plans)
+    // Solutions toggle (Website projects / Care plans) — sliding indicator + bg re-bloom
     (function () {
-      const tabs = document.querySelectorAll('.solu-tab');
-      const panels = document.querySelectorAll('.solu-panel');
+      const toggle = document.querySelector('.solu-toggle');
+      const tabs = [...document.querySelectorAll('.solu-tab')];
+      const panels = [...document.querySelectorAll('.solu-panel')];
       if (!tabs.length) return;
-      tabs.forEach((t) => t.addEventListener('click', () => {
-        const k = t.dataset.solu;
+      const ind = toggle && toggle.querySelector('.solu-ind');
+      const plans = document.querySelector('.plans');
+      const moveInd = (tab) => { if (ind && tab) { ind.style.width = tab.offsetWidth + 'px'; ind.style.transform = 'translateX(' + tab.offsetLeft + 'px)'; } };
+      const activate = (t) => {
         tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
-        panels.forEach((p) => p.classList.toggle('on', p.dataset.soluPanel === k));
-      }));
+        panels.forEach((p) => p.classList.toggle('on', p.dataset.soluPanel === t.dataset.solu));
+        moveInd(t);
+        if (plans) { plans.classList.remove('bloom'); void plans.offsetWidth; plans.classList.add('bloom'); } // #9 re-bloom (existing keyframe)
+      };
+      tabs.forEach((t) => t.addEventListener('click', () => activate(t)));
+      const initInd = () => moveInd(tabs.find((t) => t.classList.contains('active')) || tabs[0]);
+      initInd();
+      if (toggle) toggle.classList.add('ready');
+      window.addEventListener('load', initInd);
+      window.addEventListener('resize', initInd);
     })();
 
-    // Solutions: hover (or focus) a plan → show its details in the right aside
+    // Solutions: hover (or focus) a plan → animate its details into the right aside
     (function () {
+      const FACT = {
+        'Starter Website': '~1–2 weeks', 'Business Website': '~2–4 weeks', 'Ecommerce Website': '~3–5 weeks', 'Custom Web App': 'Scoped per project',
+        'Basic Care': 'Monthly retainer', 'Standard Support': 'Monthly retainer', 'Growth Support': 'Rollover included', 'Premium Support': 'Rollover included', 'Custom System Support': 'Tailored coverage'
+      };
       document.querySelectorAll('.solu-panel').forEach((panel) => {
         const aside = panel.querySelector('.sol-aside');
         const items = [...panel.querySelectorAll('.sol-item')];
         if (!aside || !items.length) return;
         const nameEl = aside.querySelector('[data-aside="name"]');
         const descEl = aside.querySelector('[data-aside="desc"]');
+        const factEl = aside.querySelector('[data-aside="fact"]');
         const tagsEl = aside.querySelector('[data-aside="tags"]');
         const link = aside.querySelector('.sol-aside-cta .btn-ghost');
         const show = (item) => {
           items.forEach((x) => x.classList.toggle('active', x === item));
-          if (nameEl) nameEl.textContent = item.querySelector('.sol-name').textContent;
+          const nm = item.querySelector('.sol-name').textContent;
+          aside.classList.add('swapping'); // #3 fade content out before swapping
+          if (nameEl) nameEl.textContent = nm;
           if (descEl) descEl.textContent = item.dataset.desc || '';
-          if (tagsEl) tagsEl.innerHTML = (item.dataset.feats || '').split('|').filter(Boolean).map((t) => '<span>' + t + '</span>').join('');
+          if (factEl) { factEl.textContent = FACT[nm] || ''; factEl.parentElement.hidden = !FACT[nm]; } // #10
+          if (tagsEl) tagsEl.innerHTML = (item.dataset.feats || '').split('|').filter(Boolean).map((t) => '<span>' + t + '</span>').join(''); // #4 chips re-animate
           if (link) link.setAttribute('href', item.getAttribute('href')); // deep-link to this plan on pricing.html
+          requestAnimationFrame(() => requestAnimationFrame(() => aside.classList.remove('swapping')));
         };
         items.forEach((item) => {
           item.addEventListener('mouseenter', () => show(item));
@@ -365,6 +387,128 @@ gsap.registerPlugin(ScrollTrigger);
         });
         show(items[0]);
       });
+    })();
+
+    // Testimonials marquee — JS-driven: cards from data, auto-scroll, drag, hover-pause, speed-on-scroll
+    // + tilt (#4), hover-focus (#1, CSS), click→quote modal (#10), proof count-up (#3), featured card (#8)
+    (function () {
+      const root = document.getElementById('testiWall');
+      if (!root) return;
+      const PLAT = { shopify: 'Shopify', webflow: 'Webflow', wordpress: 'WordPress' };
+      // NOTE: names below are illustrative placeholders paired with real KNB project brands.
+      // Get written permission + a real quote from each client before launch (see handoff).
+      const T = [
+        { i: 'DC', q: 'Updates that used to take days now take minutes.', n: 'Daniel Cho', m: 'Light My Bricks', p: 'shopify', w: 0, f: 1 },
+        { i: 'MP', q: 'Clear scope, clear pricing — and it finally loads fast on mobile.', n: 'Maya Patel', m: 'Feedbird', p: 'webflow', w: 1 },
+        { i: 'SO', q: 'They understood what we needed before we could explain it.', n: "Sarah O'Neil", m: 'All Terrain Industries', p: 'wordpress', w: 0 },
+        { i: 'RC', q: 'The handoff meant our team could take it from there.', n: 'Renato Cruz', m: 'Cacao Collective', p: 'shopify', w: 0 },
+        { i: 'JD', q: 'Refreshingly simple from the first call to launch.', n: 'Julian Drew', m: 'Maestro Labs', p: 'webflow', w: 0 },
+        { i: 'AR', q: 'Our new storefront is so much easier to shop.', n: 'Alana Reyes', m: 'Rise Outdoor', p: 'shopify', w: 1 },
+        { i: 'KM', q: 'Exactly what we asked for, on time and on scope.', n: 'Kim Mendoza', m: 'Privvy Marketing', p: 'wordpress', w: 0 },
+        { i: 'FB', q: 'Fast, communicative, and the result speaks for itself.', n: 'Faith Bautista', m: 'Teamtown', p: 'webflow', w: 1 }
+      ];
+      const card = (t, dup) => '<a class="talt-qc' + (t.w ? ' wide' : '') + (t.f ? ' feat' : '') + '" data-plat="' + t.p + '" data-idx="' + T.indexOf(t) + '" href="portfolio.html#work=' + t.p + '"' + (dup ? ' aria-hidden="true" tabindex="-1"' : '') + '>' +
+        (t.f ? '<span class="talt-feat">★ Featured</span>' : '') +
+        '<div class="talt-qc-top"><span class="talt-av sm">' + t.i + '</span><span class="talt-chip ' + t.p + '">' + PLAT[t.p] + '</span></div>' +
+        '<div class="talt-stars" aria-hidden="true">★★★★★</div><blockquote>"' + t.q + '"</blockquote>' +
+        '<figcaption>' + t.n + ' · ' + t.m + '</figcaption></a>';
+      const rows = [...root.querySelectorAll('.talt-mq')];
+      const data = [T.slice(0, 4), T.slice(4)];
+      rows.forEach((row, ri) => {
+        const track = row.querySelector('.talt-mq-track');
+        const set = data[ri].map((t) => card(t)).join('');
+        track.innerHTML = set + data[ri].map((t) => card(t, true)).join('');
+        track.style.animation = 'none';
+      });
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let dragging = false; // shared flag so tilt yields to a drag
+      const states = rows.map((row) => {
+        const track = row.querySelector('.talt-mq-track');
+        const dir = parseFloat(row.dataset.dir) || -1;
+        const st = { track, dir, half: track.scrollWidth / 2, x: dir < 0 ? 0 : -track.scrollWidth / 2, paused: reduce, dragging: false, lastX: 0, moved: 0, boost: 0 };
+        const measure = () => { st.half = track.scrollWidth / 2; };
+        window.addEventListener('resize', measure); window.addEventListener('load', measure);
+        row.addEventListener('mouseenter', () => { if (!reduce) st.paused = true; });
+        row.addEventListener('mouseleave', () => { if (!st.dragging && !reduce) st.paused = false; });
+        row.addEventListener('pointerdown', (e) => { st.dragging = true; dragging = true; st.lastX = e.clientX; st.moved = 0; row.classList.add('grabbing'); });
+        window.addEventListener('pointermove', (e) => { if (!st.dragging) return; const dx = e.clientX - st.lastX; st.lastX = e.clientX; st.x += dx; st.moved += Math.abs(dx); });
+        window.addEventListener('pointerup', () => { if (!st.dragging) return; st.dragging = false; dragging = false; row.classList.remove('grabbing'); if (!reduce) st.paused = false; });
+        return st;
+      });
+      const tick = () => {
+        states.forEach((st) => {
+          if (!st.paused && !st.dragging) st.x += st.dir * 0.45 * (1 + st.boost);
+          if (st.half) { if (st.x <= -st.half) st.x += st.half; else if (st.x >= 0) st.x -= st.half; }
+          st.track.style.transform = 'translateX(' + st.x + 'px)';
+          st.boost *= 0.9;
+        });
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      if (!reduce) window.addEventListener('scroll', () => { states.forEach((st) => { st.boost = 2.5; }); }, { passive: true });
+
+      /* #10 — quote modal */
+      const modal = document.getElementById('tqModal');
+      const openModal = (t) => {
+        if (!modal) return;
+        const chip = modal.querySelector('#tqChip');
+        chip.className = 'talt-chip ' + t.p; chip.textContent = PLAT[t.p];
+        modal.querySelector('#tqQuote').textContent = '“' + t.q + '”';
+        modal.querySelector('#tqAv').textContent = t.i;
+        modal.querySelector('#tqAv').setAttribute('data-plat', t.p);
+        modal.querySelector('#tqName').textContent = t.n;
+        modal.querySelector('#tqMeta').textContent = ' · ' + t.m + ' · ' + PLAT[t.p];
+        const link = modal.querySelector('#tqLink');
+        link.href = 'portfolio.html#work=' + t.p;
+        link.innerHTML = '<span class="dot"></span>See ' + PLAT[t.p] + ' work';
+        modal.hidden = false; document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => modal.classList.add('show'));
+      };
+      const closeModal = () => {
+        if (!modal) return;
+        modal.classList.remove('show'); document.body.style.overflow = '';
+        setTimeout(() => { modal.hidden = true; }, 240);
+      };
+      if (modal) {
+        modal.querySelectorAll('[data-tqclose]').forEach((b) => b.addEventListener('click', closeModal));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+      }
+
+      /* #4 tilt + #10 click wiring on every card */
+      const tilt = function (e) {
+        if (reduce || dragging) return;
+        const r = this.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        this.style.transition = 'transform 0.08s linear';
+        this.style.transform = 'perspective(720px) rotateX(' + (-py * 5).toFixed(2) + 'deg) rotateY(' + (px * 7).toFixed(2) + 'deg) scale(1.05)';
+      };
+      const untilt = function () { this.style.transition = 'transform 0.45s var(--ease)'; this.style.transform = ''; };
+      root.querySelectorAll('.talt-qc').forEach((c) => {
+        const idx = +c.dataset.idx;
+        const ri = rows.indexOf(c.closest('.talt-mq'));
+        c.addEventListener('mousemove', tilt);
+        c.addEventListener('mouseleave', untilt);
+        c.addEventListener('click', (e) => {
+          const st = states[ri];
+          if (st && st.moved > 6) { e.preventDefault(); return; } // was a drag
+          e.preventDefault();
+          openModal(T[idx]);
+        });
+      });
+
+      /* #3 — count up the proof figures (4.9 / 18) on first view */
+      const nums = root.querySelectorAll('.testi-proof [data-count]');
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const el = en.target; const target = parseFloat(el.dataset.count); const dec = +(el.dataset.dec || 0);
+          if (reduce || typeof gsap === 'undefined') { el.textContent = target.toFixed(dec); }
+          else { gsap.to({ v: 0 }, { v: target, duration: 1.4, ease: 'power2.out', onUpdate() { el.textContent = this.targets()[0].v.toFixed(dec); } }); }
+          obs.unobserve(el);
+        });
+      }, { threshold: 0.6 });
+      nums.forEach((el) => io.observe(el));
     })();
 
     // WHY KNB — rise up + icons spin in
@@ -418,39 +562,7 @@ gsap.registerPlugin(ScrollTrigger);
     logoTrack.innerHTML = logoNames.map(n => `<div class="logo-item">${n}</div>`).join('');
     loopMarquee(logoTrack, 28);
 
-    /* ---- Testimonials slider ---- */
-    const testimonials = [
-      { name:'Maria Santos', role:'Owner, Lumen Apparel', img:'https://picsum.photos/seed/knb-maria/320/320',
-        quote:'Our Shopify revamp finally made the store feel trustworthy. The product pages and checkout are so much cleaner, and customers tell us it\'s easy to buy from now.' },
-      { name:'Daniel Cruz', role:'Founder, Verde Market', img:'https://picsum.photos/seed/knb-daniel/320/320',
-        quote:'They migrated us to WooCommerce without a hitch and the site is noticeably faster. Working with the team was clear, patient, and on schedule.' },
-      { name:'Dr. Aileen Reyes', role:'Northwind Clinic', img:'https://picsum.photos/seed/knb-aileen/320/320',
-        quote:'Our old website looked dated and was hard to use on mobile. KNB rebuilt it to look professional and modern — booking enquiries have been much smoother since.' },
-      { name:'Marcus Tan', role:'Operations, BookEasy', img:'https://picsum.photos/seed/knb-marcus/320/320',
-        quote:'They built us a custom booking system that fits exactly how we work. Responsive, thoughtful, and great support after launch.' }
-    ];
-    const sliderTrack = document.getElementById('sliderTrack');
-    sliderTrack.innerHTML = testimonials.map(t => `
-      <div class="slide">
-        <img src="${t.img}" alt="${t.name}">
-        <div>
-          <div class="stars">★★★★★</div>
-          <p class="quote">“${t.quote}”</p>
-          <p class="who" style="margin-top:24px">${t.name}</p>
-          <p class="role">${t.role}</p>
-        </div>
-      </div>`).join('');
-
-    let idx = 0;
-    const total = testimonials.length;
-    const go = i => {
-      idx = (i + total) % total;
-      sliderTrack.style.transform = `translateX(-${idx * 100}%)`;
-    };
-    document.getElementById('next').addEventListener('click', () => { go(idx + 1); resetAuto(); });
-    document.getElementById('prev').addEventListener('click', () => { go(idx - 1); resetAuto(); });
-    let auto = setInterval(() => go(idx + 1), 5000);
-    function resetAuto() { clearInterval(auto); auto = setInterval(() => go(idx + 1), 5000); }
+    /* ---- (old testimonials slider removed — replaced by the marquee testimonials section) ---- */
 
     /* ---- Services intro: words fill grey → black on scroll ---- */
     (function () {
@@ -694,3 +806,13 @@ gsap.registerPlugin(ScrollTrigger);
         }
       });
     });
+
+    /* ---- Footer: back to top (smooth, no hash) ---- */
+    (function () {
+      const up = document.querySelector('.foot-up');
+      if (!up) return;
+      up.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    })();
