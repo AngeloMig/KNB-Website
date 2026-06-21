@@ -9,15 +9,43 @@
 <meta property="og:description" content="Shopify revamps, Webflow builds, and WordPress sites we've designed for growing businesses.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KNB Web Solution">
-<!-- TODO: add og:image + og:url (absolute https URL) once the site is hosted on its real domain -->
+<!-- TODO: swap these to the real absolute https URLs once hosted on the live domain -->
+<meta property="og:url" content="https://knbwebsolution.com/portfolio.html">
+<meta property="og:image" content="https://knbwebsolution.com/og-portfolio.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://knbwebsolution.com/og-portfolio.jpg">
 <meta name="twitter:title" content="Portfolio — KNB Web Solution">
 <meta name="twitter:description" content="Shopify revamps, Webflow builds, and WordPress sites we've designed for growing businesses.">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="work.css">
+<style>
+  /* search + industries + tools */
+  .work-tools { display: flex; align-items: center; gap: 14px; }
+  .work-search { position: relative; display: flex; align-items: center; }
+  .work-search svg { position: absolute; left: 13px; width: 16px; height: 16px; color: var(--muted); pointer-events: none; }
+  .work-search input { font-family: inherit; font-size: 14px; padding: 9px 14px 9px 36px; border: 1px solid var(--line); border-radius: 100px; background: var(--card); color: var(--ink); width: 190px; transition: border-color 0.3s var(--ease), width 0.3s var(--ease); }
+  .work-search input:focus { outline: none; border-color: var(--ink); width: 230px; }
+  .ind-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 26px; }
+  .ind-label { font-size: 13px; color: var(--muted); font-weight: 700; letter-spacing: 0.04em; margin-right: 4px; }
+  .ind-chip { font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 100px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease); }
+  .ind-chip:hover { color: var(--ink); border-color: var(--ink); }
+  .ind-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  /* modal prev / next */
+  .pfm-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,0.92); color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 0.25s, transform 0.25s; }
+  .pfm-prev { left: -23px; } .pfm-next { right: -23px; }
+  .pfm-nav:hover { background: #fff; transform: translateY(-50%) scale(1.06); }
+  @media (max-width: 860px) { .pfm-prev { left: 8px; } .pfm-next { right: 8px; } }
+  /* modal share + actions wrap */
+  .pfm-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .pfm-share { font-family: inherit; font-size: 14px; font-weight: 600; padding: 4px 6px; background: none; border: none; color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .pfm-share:hover { color: var(--ink); }
+  @media (max-width: 600px) { .work-tools { width: 100%; } .work-search input, .work-search input:focus { width: 100%; flex: 1; } }
+</style>
 </head>
 <body>
+
+  <div class="scroll-prog" id="scrollProg" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav class="nav" id="nav">
@@ -26,6 +54,8 @@
       <div class="nav-right">
         <div class="nav-links">
           <a href="portfolio.html" class="active">Portfolio</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
         </div>
         <a href="contact.html" class="nav-cta"><span class="dot"></span>Start your project</a>
@@ -35,6 +65,8 @@
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="portfolio.html">Portfolio</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
     <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
   </div>
@@ -46,19 +78,19 @@
       <h1 class="reveal">Websites &amp; stores we've built.</h1>
       <p class="lead reveal">Shopify revamps, Webflow builds, and WordPress sites for growing businesses — filter the work below or dive into a platform.</p>
       <div class="pf-stats reveal">
-        <div class="pf-stat"><span class="num" data-count="18">0</span><span class="lbl">Projects shipped</span></div>
-        <div class="pf-stat"><span class="num" data-count="3">0</span><span class="lbl">Platforms</span></div>
-        <div class="pf-stat"><span class="num" data-count="12" data-suffix="+">0</span><span class="lbl">Industries served</span></div>
+        <div class="pf-stat"><span class="stat-ring"><span class="num" data-count="18">0</span></span><span class="lbl">Projects shipped</span></div>
+        <div class="pf-stat"><span class="stat-ring"><span class="num" data-count="3">0</span></span><span class="lbl">Platforms</span></div>
+        <div class="pf-stat"><span class="stat-ring"><span class="num" data-count="12" data-suffix="+">0</span></span><span class="lbl">Industries served</span></div>
       </div>
     </div>
   </header>
 
   <!-- CLIENT LOGO MARQUEE -->
-  <!-- TODO: placeholder brand wordmarks — replace with real client logos (or remove) before launch -->
-  <section class="logos reveal" role="img" aria-label="A selection of brands KNB has designed for">
+  <!-- Real client wordmarks (from the 18 live projects). TODO: swap to actual logos / confirm permission before launch. -->
+  <section class="logos reveal" id="logos" role="img" aria-label="A selection of clients KNB has designed for">
     <div class="logos-track" aria-hidden="true">
-      <span>Lumen</span><span>Coastal Goods</span><span>Maison</span><span>Trailhead</span><span>Brew &amp; Co</span><span>Verde</span><span>Northwind</span><span>Atlas</span><span>Form &amp; Field</span><span>Pulse</span><span>Orbit</span><span>Harbor</span>
-      <span>Lumen</span><span>Coastal Goods</span><span>Maison</span><span>Trailhead</span><span>Brew &amp; Co</span><span>Verde</span><span>Northwind</span><span>Atlas</span><span>Form &amp; Field</span><span>Pulse</span><span>Orbit</span><span>Harbor</span>
+      <span>Light My Bricks</span><span>Cacao Collective</span><span>Omenz</span><span>Thirsty Squirrel</span><span>Rise Outdoor</span><span>Feedbird</span><span>Qi Platform</span><span>Maestro Labs</span><span>Teamtown</span><span>All Terrain Industries</span><span>Privvy Marketing</span><span>Narrative Hub</span>
+      <span>Light My Bricks</span><span>Cacao Collective</span><span>Omenz</span><span>Thirsty Squirrel</span><span>Rise Outdoor</span><span>Feedbird</span><span>Qi Platform</span><span>Maestro Labs</span><span>Teamtown</span><span>All Terrain Industries</span><span>Privvy Marketing</span><span>Narrative Hub</span>
     </div>
   </section>
 
@@ -66,14 +98,14 @@
   <section class="spotlight">
     <div class="wrap">
       <div class="spot-inner">
-        <div class="ba reveal" id="ba">
+        <div class="ba reveal r-scale" id="ba">
           <img class="ba-img ba-base" src="https://picsum.photos/seed/lumen-after/960/640" alt="Lumen Apparel — after">
           <div class="ba-after"><img class="ba-img" src="https://picsum.photos/seed/lumen-before/960/640?grayscale" alt="Lumen Apparel — before"></div>
           <span class="ba-label ba-before">Before</span>
           <span class="ba-label ba-after-lbl">After</span>
           <div class="ba-handle" role="slider" aria-label="Reveal before or after — Lumen Apparel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span></span></div>
         </div>
-        <div class="spot-copy reveal">
+        <div class="spot-copy reveal r-right">
           <span class="spot-eyebrow">✦ Featured project</span>
           <h2>Lumen Apparel</h2>
           <span class="spot-chip"><img src="https://cdn.simpleicons.org/shopify" alt="">Shopify · Fashion</span>
@@ -90,37 +122,175 @@
 
   <!-- FILTERABLE WORK GRID -->
   <section class="work">
+    <span class="work-wm" aria-hidden="true">WORK</span>
     <div class="wrap">
-      <div class="work-head reveal">
+      <div class="work-head reveal r-left">
         <h2>All projects</h2>
         <a href="contact.html" class="btn ghost">Start a project →</a>
       </div>
-      <div class="proj-filters reveal" role="group" aria-label="Filter projects by platform">
-        <button class="proj-filter active" data-filter="all" aria-pressed="true">All</button>
-        <button class="proj-filter" data-filter="shopify" aria-pressed="false">Shopify</button>
-        <button class="proj-filter" data-filter="webflow" aria-pressed="false">Webflow</button>
-        <button class="proj-filter" data-filter="wordpress" aria-pressed="false">WordPress</button>
+      <div class="work-controls reveal">
+        <div class="proj-filters" role="group" aria-label="Filter projects">
+          <button class="proj-filter active" data-filter="all" aria-pressed="true">All</button>
+          <button class="proj-filter" data-filter="shopify" aria-pressed="false">Shopify</button>
+          <button class="proj-filter" data-filter="webflow" aria-pressed="false">Webflow</button>
+          <button class="proj-filter" data-filter="wordpress" aria-pressed="false">WordPress</button>
+          <span class="proj-fdiv" aria-hidden="true"></span>
+          <button class="proj-filter" data-filter="ecommerce" aria-pressed="false">Online store</button>
+          <button class="proj-filter" data-filter="business" aria-pressed="false">Business site</button>
+          <button class="proj-filter" data-filter="cms" aria-pressed="false">Editable CMS</button>
+        </div>
+        <div class="work-tools">
+          <div class="work-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+            <input id="workSearch" type="search" placeholder="Search projects…" aria-label="Search projects">
+          </div>
+          <label class="work-sort">Sort
+            <select id="workSort">
+              <option value="default">Featured</option>
+              <option value="az">A–Z</option>
+              <option value="platform">Platform</option>
+            </select>
+          </label>
+        </div>
       </div>
+      <div class="ind-strip reveal" role="group" aria-label="Filter by industry">
+        <span class="ind-label">Industries</span>
+        <button class="ind-chip" data-filter="retail">Retail</button>
+        <button class="ind-chip" data-filter="food-drink">Food &amp; drink</button>
+        <button class="ind-chip" data-filter="software">Software</button>
+        <button class="ind-chip" data-filter="property">Property</button>
+        <button class="ind-chip" data-filter="outdoor">Outdoor</button>
+        <button class="ind-chip" data-filter="beauty">Beauty</button>
+      </div>
+      <p class="work-count reveal" id="workCount">Showing all <b>18</b> projects</p>
       <p class="sr-only" id="filterStatus" aria-live="polite">Showing all 18 projects.</p>
       <div class="proj-grid pf-grid">
-        <a href="shopify.html" class="proj-card feat reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-lumen/960/540" alt="Lumen Apparel — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Lumen Apparel</h3><span class="cat">Shopify</span></div><span class="proj-scope">Fashion · theme rebuild &amp; faster checkout</span></div></a>
-        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-northwind/720/495" alt="Northwind Studio — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Northwind Studio</h3><span class="cat">Webflow</span></div><span class="proj-scope">Agency · CMS-driven marketing site</span></div></a>
-        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-harbor/720/495" alt="Harbor Realty — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Harbor Realty</h3><span class="cat">WordPress</span></div><span class="proj-scope">Real estate · property search &amp; filters</span></div></a>
-        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-coastal/720/495" alt="Coastal Goods — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Coastal Goods</h3><span class="cat">Shopify</span></div><span class="proj-scope">Home goods · new storefront &amp; filters</span></div></a>
-        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-atlas/720/495" alt="Atlas Agency — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Atlas Agency</h3><span class="cat">Webflow</span></div><span class="proj-scope">Creative · portfolio with custom motion</span></div></a>
-        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-bright/720/495" alt="Bright Academy — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Bright Academy</h3><span class="cat">WordPress</span></div><span class="proj-scope">Education · courses &amp; enrollment</span></div></a>
-        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-maison/720/495" alt="Maison Beauty — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Maison Beauty</h3><span class="cat">Shopify</span></div><span class="proj-scope">Beauty · brand refresh &amp; speed</span></div></a>
-        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-form/720/495" alt="Form & Field — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Form &amp; Field</h3><span class="cat">Webflow</span></div><span class="proj-scope">Architecture · editable brochure site</span></div></a>
-        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-sunrise/720/495" alt="Sunrise Dental — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Sunrise Dental</h3><span class="cat">WordPress</span></div><span class="proj-scope">Clinic · online booking integration</span></div></a>
-        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-trail/720/495" alt="Trailhead Outfitters — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Trailhead Outfitters</h3><span class="cat">Shopify</span></div><span class="proj-scope">Outdoor · new store &amp; bundles</span></div></a>
-        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-pulse/720/495" alt="Pulse Fitness — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Pulse Fitness</h3><span class="cat">Webflow</span></div><span class="proj-scope">Health · landing page &amp; signups</span></div></a>
-        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-greenleaf/720/495" alt="Greenleaf Org — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Greenleaf Org</h3><span class="cat">WordPress</span></div><span class="proj-scope">Non-profit · programs &amp; donations</span></div></a>
-        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-brew/720/495" alt="Brew & Co — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Brew &amp; Co</h3><span class="cat">Shopify</span></div><span class="proj-scope">Food · subscriptions &amp; recurring orders</span></div></a>
-        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-orbit/720/495" alt="Orbit SaaS — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Orbit SaaS</h3><span class="cat">Webflow</span></div><span class="proj-scope">Tech · product &amp; pricing pages</span></div></a>
-        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-dispatch/720/495" alt="Daily Dispatch — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Daily Dispatch</h3><span class="cat">WordPress</span></div><span class="proj-scope">Media · WooCommerce memberships</span></div></a>
-        <a href="shopify.html" class="proj-card reveal" data-plat="shopify"><span class="view-tag">View Shopify →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/shop-verde/720/495" alt="Verde Living — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Verde Living</h3><span class="cat">Shopify</span></div><span class="proj-scope">Lifestyle · revamp &amp; mobile UX</span></div></a>
-        <a href="webflow.html" class="proj-card reveal" data-plat="webflow"><span class="view-tag">View Webflow →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wf-clay/720/495" alt="Clayworks — Webflow project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Clayworks</h3><span class="cat">Webflow</span></div><span class="proj-scope">Studio · gallery &amp; lookbook</span></div></a>
-        <a href="wordpress.html" class="proj-card reveal" data-plat="wordpress"><span class="view-tag">View WordPress →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://picsum.photos/seed/wp-northwind/720/495" alt="Northwind Clinic — WordPress project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Northwind Clinic</h3><span class="cat">WordPress</span></div><span class="proj-scope">Healthcare · services &amp; appointments</span></div></a>
+        <article class="proj-card feat reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.lightmybricks.com/" data-title="Light My Bricks" data-scope="Shopify store for LED lighting kits — a clean, product-focused storefront.">
+          <button type="button" class="view-details" aria-label="View details for Light My Bricks">View details</button>
+          <a href="https://www.lightmybricks.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwlightmybrickscom/960/540" alt="Light My Bricks — Shopify project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Light My Bricks</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Shopify store for LED lighting kits</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.cacaocollective.com.au/" data-title="Cacao Collective" data-scope="Craft-chocolate Shopify store with a simple, mobile-first buying flow.">
+          <button type="button" class="view-details" aria-label="View details for Cacao Collective">View details</button>
+          <a href="https://www.cacaocollective.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwcacaocollectivecomau/720/495" alt="Cacao Collective — Shopify project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Cacao Collective</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Craft chocolate Shopify store</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://omenz.com.au/" data-title="Omenz" data-scope="Shopify storefront with easy product browsing.">
+          <button type="button" class="view-details" aria-label="View details for Omenz">View details</button>
+          <a href="https://omenz.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/omenzcomau/720/495" alt="Omenz — Shopify project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Omenz</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Shopify storefront &amp; product browsing</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://thirstysquirrel.com.au/" data-title="Thirsty Squirrel" data-scope="Shopify store for a beverage brand.">
+          <button type="button" class="view-details" aria-label="View details for Thirsty Squirrel">View details</button>
+          <a href="https://thirstysquirrel.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/thirstysquirrelcomau/720/495" alt="Thirsty Squirrel — Shopify project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Thirsty Squirrel</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Shopify store for a beverage brand</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://riseoutdoor.com.au/" data-title="Rise Outdoor" data-scope="Shopify store for outdoor gear.">
+          <button type="button" class="view-details" aria-label="View details for Rise Outdoor">View details</button>
+          <a href="https://riseoutdoor.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/riseoutdoorcomau/720/495" alt="Rise Outdoor — Shopify project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Rise Outdoor</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Shopify store for outdoor gear</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.salon.store/" data-title="Salon Store" data-scope="Shopify store for salon products.">
+          <button type="button" class="view-details" aria-label="View details for Salon Store">View details</button>
+          <a href="https://www.salon.store/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwsalonstore/720/495" alt="Salon Store — Shopify project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Salon Store</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Shopify store for salon products</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business cms" data-url="https://brookhaven-village.webflow.io/" data-title="Brookhaven Village" data-scope="Webflow community &amp; property site with an editable CMS.">
+          <button type="button" class="view-details" aria-label="View details for Brookhaven Village">View details</button>
+          <a href="https://brookhaven-village.webflow.io/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/brookhavenvillagewebflowio/720/495" alt="Brookhaven Village — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Brookhaven Village</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow community &amp; property site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business cms" data-url="https://feedbird.com/" data-title="Feedbird" data-scope="Webflow SaaS site with an editable, scalable CMS.">
+          <button type="button" class="view-details" aria-label="View details for Feedbird">View details</button>
+          <a href="https://feedbird.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/feedbirdcom/720/495" alt="Feedbird — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Feedbird</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow SaaS site with editable CMS</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="https://qiplatform.com/" data-title="Qi Platform" data-scope="Webflow product marketing site.">
+          <button type="button" class="view-details" aria-label="View details for Qi Platform">View details</button>
+          <a href="https://qiplatform.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/qiplatformcom/720/495" alt="Qi Platform — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Qi Platform</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow product marketing site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="https://www.maestrolabs.com/" data-title="Maestro Labs" data-scope="Webflow product &amp; marketing site.">
+          <button type="button" class="view-details" aria-label="View details for Maestro Labs">View details</button>
+          <a href="https://www.maestrolabs.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwmaestrolabscom/720/495" alt="Maestro Labs — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Maestro Labs</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow product &amp; marketing site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="https://www.teamtown.co/" data-title="Teamtown" data-scope="Webflow marketing site.">
+          <button type="button" class="view-details" aria-label="View details for Teamtown">View details</button>
+          <a href="https://www.teamtown.co/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwteamtownco/720/495" alt="Teamtown — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Teamtown</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow marketing site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business cms" data-url="https://www.narrativehub.com.au/" data-title="Narrative Hub" data-scope="Webflow site for a content studio, with an editable CMS.">
+          <button type="button" class="view-details" aria-label="View details for Narrative Hub">View details</button>
+          <a href="https://www.narrativehub.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwnarrativehubcomau/720/495" alt="Narrative Hub — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Narrative Hub</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow site for a content studio</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="http://peregrine-projects-staging.webflow.io/" data-title="Peregrine Projects" data-scope="Webflow portfolio site.">
+          <button type="button" class="view-details" aria-label="View details for Peregrine Projects">View details</button>
+          <a href="http://peregrine-projects-staging.webflow.io/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/peregrineprojectsstagingwebflowio/720/495" alt="Peregrine Projects — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Peregrine Projects</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow portfolio site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="https://monsera-dev.webflow.io/" data-title="Monsera" data-scope="Webflow marketing site.">
+          <button type="button" class="view-details" aria-label="View details for Monsera">View details</button>
+          <a href="https://monsera-dev.webflow.io/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/monseradevwebflowio/720/495" alt="Monsera — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Monsera</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow marketing site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="https://tca-dev.webflow.io/" data-title="TCA" data-scope="Webflow business website.">
+          <button type="button" class="view-details" aria-label="View details for TCA">View details</button>
+          <a href="https://tca-dev.webflow.io/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/tcadevwebflowio/720/495" alt="TCA — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>TCA</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="webflow" data-tags="webflow business" data-url="https://bbd-dev.webflow.io/" data-title="BBD" data-scope="Webflow website build.">
+          <button type="button" class="view-details" aria-label="View details for BBD">View details</button>
+          <a href="https://bbd-dev.webflow.io/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/bbddevwebflowio/720/495" alt="BBD — Webflow project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>BBD</h3><button class="cat" data-filter="webflow" data-stop>Webflow</button></div><span class="proj-scope">Webflow website build</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://www.allterrainindustries.com.au/" data-title="All Terrain Industries" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for All Terrain Industries">View details</button>
+          <a href="https://www.allterrainindustries.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwallterrainindustriescomau/720/495" alt="All Terrain Industries — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>All Terrain Industries</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business cms" data-url="https://www.privvymarketing.com.au/" data-title="Privvy Marketing" data-scope="WordPress agency site the team can manage themselves.">
+          <button type="button" class="view-details" aria-label="View details for Privvy Marketing">View details</button>
+          <a href="https://www.privvymarketing.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwprivvymarketingcomau/720/495" alt="Privvy Marketing — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Privvy Marketing</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress agency site, easy to manage</span></div>
+        </article>
+      </div>
+      <div class="pf-empty" hidden>No projects match that filter. <button type="button" class="pf-reset">Show all →</button></div>
+      <div class="work-more"><button type="button" class="btn ghost" id="loadMore" hidden>Load more projects</button></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process-sec">
+    <div class="wrap">
+      <div class="proc-head reveal r-left">
+        <span class="testi-kicker">How we work</span>
+        <h2>From first call to launch.</h2>
+      </div>
+      <div class="proc-steps">
+        <div class="proc-step reveal"><span class="proc-n">01</span><h3>Free consultation</h3><p>We learn your goals, audience, and scope — then send a clear written proposal.</p></div>
+        <div class="proc-step reveal"><span class="proc-n">02</span><h3>Design</h3><p>We design the pages around your brand and the actions you want visitors to take.</p></div>
+        <div class="proc-step reveal"><span class="proc-n">03</span><h3>Build</h3><p>We build it responsive and fast on Shopify, Webflow, or WordPress — with a CMS you can edit.</p></div>
+        <div class="proc-step reveal"><span class="proc-n">04</span><h3>Launch &amp; support</h3><p>We QA, launch, and hand off with guidance — plus optional ongoing care.</p></div>
       </div>
     </div>
   </section>
@@ -134,15 +304,15 @@
         <h2>Work that earns repeat business.</h2>
       </div>
       <div class="testi-grid">
-        <figure class="testi-card reveal">
+        <figure class="testi-card reveal r-pop">
           <blockquote>KNB rebuilt our store and made it genuinely easy to manage — updates that used to take days now take minutes.</blockquote>
           <figcaption><span class="t-name">[Client name]</span><span class="t-role">Founder · [Sample Brand]</span></figcaption>
         </figure>
-        <figure class="testi-card reveal">
+        <figure class="testi-card reveal r-pop">
           <blockquote>Clear scope, clear pricing, and a site that finally loads fast on mobile. The whole process was refreshingly simple.</blockquote>
           <figcaption><span class="t-name">[Client name]</span><span class="t-role">Marketing Lead · [Sample Company]</span></figcaption>
         </figure>
-        <figure class="testi-card reveal">
+        <figure class="testi-card reveal r-pop">
           <blockquote>They understood what we needed before we could explain it, and the handoff guidance meant our team could take it from there.</blockquote>
           <figcaption><span class="t-name">[Client name]</span><span class="t-role">Owner · [Sample Store]</span></figcaption>
         </figure>
@@ -150,10 +320,27 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="faq-sec">
+    <div class="wrap">
+      <div class="faq-head reveal r-left">
+        <span class="testi-kicker">Questions</span>
+        <h2>Good to know.</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal"><summary>How long does a website take?<span class="faq-ic" aria-hidden="true"></span></summary><p>Most sites launch in a few weeks — it depends on page count, content readiness, and revisions. You'll get a timeline in your proposal.</p></details>
+        <details class="faq-item reveal"><summary>What do you need from me to start?<span class="faq-ic" aria-hidden="true"></span></summary><p>Your goals, any brand assets (logo, colours, copy or photos if you have them), and a few example sites you like. We'll guide the rest.</p></details>
+        <details class="faq-item reveal"><summary>Can I edit the site myself afterward?<span class="faq-ic" aria-hidden="true"></span></summary><p>Yes — we build on a CMS (Shopify, Webflow, or WordPress) and hand off guidance so your team can manage content.</p></details>
+        <details class="faq-item reveal"><summary>Do you offer ongoing support?<span class="faq-ic" aria-hidden="true"></span></summary><p>Yes — optional care plans cover updates, fixes, and improvements after launch. We'll recommend a tier that fits.</p></details>
+        <details class="faq-item reveal"><summary>How much does it cost?<span class="faq-ic" aria-hidden="true"></span></summary><p>Every project is scoped to what you need, so we quote after a quick consultation. See the <a href="pricing.html">pricing page</a> for starting points.</p></details>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta-strip">
     <div class="wrap">
-      <div class="cta-box reveal">
+      <div class="cta-box reveal r-scale">
         <div class="cta-head">
           <span class="cta-eyebrow"><span class="dot"></span>Get started</span>
           <h2>Have a project in mind?</h2>
@@ -166,6 +353,39 @@
       </div>
     </div>
   </section>
+
+  <!-- DETAIL MODAL + LIVE PREVIEW (ported from home Projects) -->
+  <div class="pf-modal" id="pfModal" hidden>
+    <div class="pfm-backdrop" data-close></div>
+    <div class="pfm-dialog" role="dialog" aria-modal="true" aria-labelledby="pfmTitle">
+      <button type="button" class="pfm-x" data-close aria-label="Close">✕</button>
+      <button type="button" class="pfm-nav pfm-prev" id="pfmPrev" aria-label="Previous project">‹</button>
+      <button type="button" class="pfm-nav pfm-next" id="pfmNext" aria-label="Next project">›</button>
+      <div class="pfm-stage">
+        <div class="pfm-bar"><i></i><i></i><i></i><span class="pfm-url" id="pfmUrl"></span>
+          <span class="pfm-toggle">
+            <button type="button" class="pfm-tab active" data-view="shot">Screenshot</button>
+            <button type="button" class="pfm-tab" data-view="live">Live preview</button>
+          </span>
+        </div>
+        <div class="pfm-shotwrap"><img class="pfm-img" id="pfmImg" alt=""></div>
+        <div class="pfm-livewrap" hidden>
+          <iframe class="pfm-iframe" id="pfmFrame" title="Live preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          <p class="pfm-note">Some sites block embedding — if it stays blank, <a href="#" id="pfmOpen" target="_blank" rel="noopener">open the live site ↗</a>.</p>
+        </div>
+      </div>
+      <div class="pfm-info">
+        <span class="pfm-eyebrow" id="pfmPlat"></span>
+        <h3 id="pfmTitle"></h3>
+        <p class="pfm-scope" id="pfmScope"></p>
+        <div class="pfm-actions">
+          <a class="btn" id="pfmLive" target="_blank" rel="noopener"><span class="dot"></span>Visit live site</a>
+          <a class="btn ghost" id="pfmStart" href="contact.html">Start a project like this →</a>
+          <button type="button" class="pfm-share" id="pfmShare">Copy link</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -186,6 +406,8 @@
       </div>
     </div>
   </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
   <script src="work.js"></script>
 </body>

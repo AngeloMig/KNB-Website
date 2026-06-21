@@ -63,9 +63,10 @@ gsap.registerPlugin(ScrollTrigger);
       let rt;
       window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 200); });
 
-      resize();
-      cancelAnimationFrame(rafId);
-      tick();
+      // decorative — start after the browser is idle so it doesn't compete with first paint / LCP
+      const start = () => { resize(); cancelAnimationFrame(rafId); tick(); };
+      if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 900 });
+      else setTimeout(start, 250);
     })();
 
     /* ---- Hero grid cursor spotlight (#4) ---- */
@@ -143,11 +144,14 @@ gsap.registerPlugin(ScrollTrigger);
           duration: 1.0, ease: 'back.out(1.3)', delay: id === 'p1' ? 0.2 : 0.5
         });
         // subtle scroll parallax (separate tween so it won't fight the base transform)
-        gsap.to(el, {
-          y: (rot < 0 ? -1 : 1) * 26 + (id === 'p1' ? -34 : 0),
-          ease: 'none',
-          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
-        });
+        // p3 (left/first card) opts out — no scroll parallax on it
+        if (id !== 'p3') {
+          gsap.to(el, {
+            y: (rot < 0 ? -1 : 1) * 26 + (id === 'p1' ? -34 : 0),
+            ease: 'none',
+            scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+          });
+        }
       });
 
       /* ---- Idle: float + tilt + dynamic shadow on the inner card (floating-on-water) ---- */
@@ -168,7 +172,7 @@ gsap.registerPlugin(ScrollTrigger);
         });
       }
 
-      /* ---- Hover: hovered card grows + stronger shadow, jumps to the front ---- */
+      /* ---- Hover: hovered card grows, jumps to the front ---- */
       const stack = document.querySelector('.hero-photos');
       Object.keys(cards).forEach(id => {
         const el = cards[id];
@@ -177,13 +181,17 @@ gsap.registerPlugin(ScrollTrigger);
           stack.style.zIndex = 50;         // lift the whole stack above the headline (but below the nav)
           el.style.zIndex = 99999;         // hovered card on top within the stack
           gsap.to(el, { scale: 1.12, y: -16, duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
-          gsap.to(inner, { boxShadow: '0 55px 95px rgba(0,0,0,0.32)', duration: 0.45, ease: 'power3.out', overwrite: 'auto' });
         });
         el.addEventListener('mouseleave', () => {
           stack.style.zIndex = '';         // restore stack below the headline
           el.style.zIndex = '';            // restore natural stacking
           gsap.to(el, { scale: 1, y: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
-          gsap.to(inner, { boxShadow: '0 30px 60px rgba(0,0,0,0.20)', duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+        });
+        // cursor-reactive sheen — light follows the pointer across the card
+        el.addEventListener('mousemove', (e) => {
+          const r = inner.getBoundingClientRect();
+          inner.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%');
+          inner.style.setProperty('--sy', ((e.clientY - r.top) / r.height * 100) + '%');
         });
       });
 
@@ -206,10 +214,17 @@ gsap.registerPlugin(ScrollTrigger);
     (function () {
       const title = document.getElementById('heroTitle');
       if (!title) return;
+      // The H1 is the LCP element: skip the JS split entirely for reduced-motion users
+      // (plain text paints instantly), and never gate first paint on the reveal.
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      requestAnimationFrame(function build() {
       const text = title.textContent;
       title.textContent = '';
       const letters = [];
       [...text].forEach((ch) => {
+        // keep spaces as real text nodes so the headline wraps between words on mobile
+        // (a chain of inline-block letter spans never breaks -> can overflow narrow screens)
+        if (ch === ' ') { title.appendChild(document.createTextNode(' ')); return; }
         const s = document.createElement('span');
         s.className = 'hch';
         s.textContent = ch === ' ' ? ' ' : ch;
@@ -219,7 +234,7 @@ gsap.registerPlugin(ScrollTrigger);
 
       // load reveal — letters rise + fade in, staggered (uses yPercent so cursor can own y)
       gsap.from(letters, {
-        yPercent: 120, autoAlpha: 0, duration: 0.85, ease: 'power4.out', stagger: 0.035, delay: 0.15
+        yPercent: 120, autoAlpha: 0, duration: 0.85, ease: 'power4.out', stagger: 0.035
       });
 
       // cursor-reactive — letters lift / scale toward the pointer
@@ -241,10 +256,34 @@ gsap.registerPlugin(ScrollTrigger);
           letters.forEach((_, i) => { yqt[i](0); sqt[i](1); });
         });
       }
+      });
     })();
 
+    /* ---- Hero rotating service word (#4) ---- */
+    (function () {
+      const rot = document.getElementById('heroRotator');
+      if (!rot) return;
+      const word = rot.querySelector('.rot-word');
+      if (!word) return;
+      const words = ['Shopify stores', 'Webflow sites', 'WooCommerce shops', 'custom web apps'];
+      let i = 0;
+      setInterval(() => {
+        word.classList.add('out');
+        setTimeout(() => {
+          i = (i + 1) % words.length;
+          word.textContent = words[i];
+          word.classList.remove('out');
+        }, 320);
+      }, 2600);
+    })();
+
+    /* ---- Hero reveals play on LOAD ---- */
+    // The hero foot (lead + CTAs + email) sits at the bottom of the 100vh hero, below the
+    // generic 'top 80%' scroll-trigger — so a scroll-reveal would keep it hidden until you scroll.
+    gsap.to('.hero .reveal', { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
+
     /* ---- Generic reveal-up (skips sections with their own animation) ---- */
-    const customSel = '.process, .plans, .maint, .why, .faq, .projects';
+    const customSel = '.process, .plans, .maint, .why, .faq, .projects, .hero';
     gsap.utils.toArray('.reveal').forEach(el => {
       if (el.closest(customSel)) return;
       gsap.to(el, {
@@ -283,18 +322,50 @@ gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.create({ ...once('.projects'),
       onEnter: () => gsap.to('.projects .reveal', { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger: 0.1 }) });
 
-    // PLANS — heading + selector rise in
-    gsap.set('.plans .sec-head, .plans .plans-sub', { opacity: 0, y: 30 });
-    gsap.set('.plans .pkg', { opacity: 0, y: 36 });
+    // PLANS / Solutions — heading + toggle + card lists rise in
+    gsap.set('.plans .sec-head, .plans .solu-toggle', { opacity: 0, y: 30 });
+    gsap.set('.plans .sol-item', { opacity: 0, y: 22 });
     ScrollTrigger.create({ ...once('.plans'), onEnter: () => {
-      gsap.to('.plans .sec-head, .plans .plans-sub', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
-      gsap.to('.plans .pkg', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.15 });
+      gsap.to('.plans .sec-head, .plans .solu-toggle', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
+      gsap.to('.plans .sol-item', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06, delay: 0.15 });
     } });
 
-    // MAINTENANCE — slide in from the right
-    gsap.set('.maint .reveal', { opacity: 0, x: 55, y: 0 });
-    ScrollTrigger.create({ ...once('.maint'),
-      onEnter: () => gsap.to('.maint .reveal', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 }) });
+    // Solutions toggle (Website projects / Care plans)
+    (function () {
+      const tabs = document.querySelectorAll('.solu-tab');
+      const panels = document.querySelectorAll('.solu-panel');
+      if (!tabs.length) return;
+      tabs.forEach((t) => t.addEventListener('click', () => {
+        const k = t.dataset.solu;
+        tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+        panels.forEach((p) => p.classList.toggle('on', p.dataset.soluPanel === k));
+      }));
+    })();
+
+    // Solutions: hover (or focus) a plan → show its details in the right aside
+    (function () {
+      document.querySelectorAll('.solu-panel').forEach((panel) => {
+        const aside = panel.querySelector('.sol-aside');
+        const items = [...panel.querySelectorAll('.sol-item')];
+        if (!aside || !items.length) return;
+        const nameEl = aside.querySelector('[data-aside="name"]');
+        const descEl = aside.querySelector('[data-aside="desc"]');
+        const tagsEl = aside.querySelector('[data-aside="tags"]');
+        const link = aside.querySelector('.sol-aside-cta .btn-ghost');
+        const show = (item) => {
+          items.forEach((x) => x.classList.toggle('active', x === item));
+          if (nameEl) nameEl.textContent = item.querySelector('.sol-name').textContent;
+          if (descEl) descEl.textContent = item.dataset.desc || '';
+          if (tagsEl) tagsEl.innerHTML = (item.dataset.feats || '').split('|').filter(Boolean).map((t) => '<span>' + t + '</span>').join('');
+          if (link) link.setAttribute('href', item.getAttribute('href')); // deep-link to this plan on pricing.html
+        };
+        items.forEach((item) => {
+          item.addEventListener('mouseenter', () => show(item));
+          item.addEventListener('focus', () => show(item));
+        });
+        show(items[0]);
+      });
+    })();
 
     // WHY KNB — rise up + icons spin in
     gsap.set('.why .reveal', { opacity: 0, y: 44 });
@@ -416,18 +487,139 @@ gsap.registerPlugin(ScrollTrigger);
       let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 200); });
     })();
 
-    /* ---- Projects: platform filter ---- */
+    /* ---- Projects: unified filter (platform + goal + clickable chips + count + #work= hash) ---- */
     (function () {
-      const filters = document.querySelectorAll('.proj-filter');
-      const cards = document.querySelectorAll('.proj-card');
-      if (!filters.length) return;
-      filters.forEach((f) => {
-        f.addEventListener('click', () => {
-          const key = f.dataset.filter;
-          filters.forEach((x) => x.classList.toggle('active', x === f));
-          cards.forEach((c) => c.classList.toggle('hide', !(key === 'all' || c.dataset.plat === key)));
+      const grid = document.querySelector('.pj-grid');
+      if (!grid) return;
+      const filters = [...document.querySelectorAll('.proj-filter')];
+      const cards = [...document.querySelectorAll('.pj-card')];
+      const status = document.querySelector('.proj-status');
+      const empty = document.querySelector('.pj-empty');
+      const total = cards.length;
+      const tokensOf = (c) => (c.dataset.tags || c.dataset.plat || '').split(/\s+/);
+
+      function apply(key, push) {
+        key = key || 'all';
+        let n = 0;
+        cards.forEach((c) => {
+          const match = key === 'all' || tokensOf(c).includes(key);
+          c.hidden = !match;
+          if (match) n++;
+        });
+        const owned = filters.some((f) => f.dataset.filter === key);
+        filters.forEach((f) => f.classList.toggle('active', f.dataset.filter === (owned ? key : 'all')));
+        if (status) status.innerHTML = '<span>' + n + '</span> of ' + total + ' highlights shown';
+        if (empty) empty.hidden = n !== 0;
+        if (push) history.replaceState(null, '', key === 'all' ? location.pathname + location.search : '#work=' + key);
+      }
+
+      filters.forEach((f) => f.addEventListener('click', () => apply(f.dataset.filter, true)));
+      document.querySelectorAll('button.pj-chip[data-filter]').forEach((chip) => {
+        chip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          apply(chip.dataset.filter, true);
+          const ctrls = document.querySelector('.proj-controls');
+          if (ctrls) ctrls.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
       });
+      const reset = document.querySelector('.pj-reset');
+      if (reset) reset.addEventListener('click', () => apply('all', true));
+
+      const m = /#work=([\w-]+)/.exec(location.hash);
+      if (m) apply(m[1], false);
+    })();
+
+    /* ---- Projects: count-ups (header + stat band) ---- */
+    (function () {
+      document.querySelectorAll('.projects [data-count]').forEach((el) => {
+        const target = +el.dataset.count;
+        ScrollTrigger.create({
+          trigger: el, start: 'top 92%', once: true,
+          onEnter: () => gsap.to({ v: 0 }, { v: target, duration: 1.4, ease: 'power2.out', onUpdate() { el.textContent = Math.round(this.targets()[0].v); } })
+        });
+      });
+    })();
+
+    /* ---- Projects: real screenshots (#1) via WordPress mShots + shimmer blur-up (#8) ---- */
+    (function () {
+      const imgs = document.querySelectorAll('.pj-img');
+      imgs.forEach((img) => {
+        const shot = img.dataset.shot;
+        const fallback = img.dataset.fallback;
+        const done = () => { const s = img.closest('.pj-shot'); if (s) s.classList.add('is-loaded'); };
+        img.addEventListener('load', done);
+        img.addEventListener('error', () => {
+          if (fallback && img.src !== fallback) img.src = fallback; // mShots offline/blocked -> placeholder
+          else done();
+        });
+        img.src = shot ? 'https://s.wp.com/mshots/v1/' + encodeURIComponent(shot) + '?w=1200' : (fallback || '');
+      });
+    })();
+
+    /* ---- Projects: detail modal (#6) + live preview (#2) ---- */
+    (function () {
+      const modal = document.getElementById('pjModal');
+      if (!modal) return;
+      const byId = (id) => document.getElementById(id);
+      const imgEl = byId('pjmImg'), frameEl = byId('pjmFrame');
+      const shotWrap = modal.querySelector('.pjm-shotwrap');
+      const liveWrap = modal.querySelector('.pjm-livewrap');
+      const tabs = [...modal.querySelectorAll('.pjm-tab')];
+      let lastFocus = null;
+
+      function setView(view) {
+        tabs.forEach((t) => t.classList.toggle('active', t.dataset.view === view));
+        const live = view === 'live';
+        liveWrap.hidden = !live;
+        shotWrap.hidden = live;
+        if (live && !frameEl.getAttribute('src') && frameEl.dataset.url) frameEl.src = frameEl.dataset.url;
+      }
+
+      function open(card) {
+        const d = card.dataset;
+        byId('pjmTitle').textContent = d.title || '';
+        byId('pjmScope').textContent = d.scope || '';
+        byId('pjmPlat').textContent = d.plain || '';
+        byId('pjmUrl').textContent = (d.url || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+        const shotImg = card.querySelector('.pj-img');
+        imgEl.src = (shotImg && (shotImg.currentSrc || shotImg.src)) || '';
+        imgEl.alt = d.title || '';
+        byId('pjmLive').href = d.url || '#';
+        byId('pjmOpen').href = d.url || '#';
+        frameEl.dataset.url = d.url || '';
+        frameEl.removeAttribute('src');
+        const caseBtn = byId('pjmCase');
+        if (d.case) { caseBtn.href = d.case; caseBtn.hidden = false; } else { caseBtn.hidden = true; }
+        const tagWrap = byId('pjmTags'); tagWrap.innerHTML = '';
+        card.querySelectorAll('.pj-tags .pj-chip').forEach((c) => {
+          const s = document.createElement('span');
+          s.className = c.className.replace(/\bproj-filter\b/, '').trim();
+          s.textContent = c.textContent;
+          tagWrap.appendChild(s);
+        });
+        modal.querySelector('.pjm-dialog').style.setProperty('--pa', (getComputedStyle(card).getPropertyValue('--pa') || '').trim());
+        setView('shot');
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('.pjm-x').focus();
+      }
+      function close() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        frameEl.removeAttribute('src');
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+
+      document.querySelectorAll('.pj-card').forEach((card) => {
+        const trigger = card.querySelector('.pj-open');
+        if (trigger) trigger.addEventListener('click', (e) => { e.stopPropagation(); open(card); });
+        const shot = card.querySelector('.pj-shot');
+        if (shot) { shot.style.cursor = 'pointer'; shot.addEventListener('click', () => open(card)); }
+      });
+      modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+      tabs.forEach((t) => t.addEventListener('click', () => setView(t.dataset.view)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
     })();
 
     /* ---- Projects: cursor-following dot spotlight ---- */

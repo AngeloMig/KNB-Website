@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page not found — KNB Web Solution</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="work.css">
+<style>
+  .nf { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 140px 28px 80px; position: relative; overflow: hidden; }
+  .nf-grid { position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 64px 64px; opacity: 0.5; -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 78%); mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 78%); }
+  .nf-inner { position: relative; z-index: 1; max-width: 560px; }
+  .nf .big { font-size: clamp(110px, 22vw, 240px); font-weight: 500; letter-spacing: -0.05em; line-height: 0.9; }
+  .nf .big span { color: #e83fa0; }
+  .nf .eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .nf h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 500; letter-spacing: -0.03em; margin: 18px 0 0; }
+  .nf p { color: var(--muted); font-size: 17px; line-height: 1.55; margin: 14px auto 0; max-width: 42ch; }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+  .nf-links { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: center; margin-top: 30px; font-size: 14px; }
+  .nf-links a { color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 2px; transition: color 0.3s, border-color 0.3s; }
+  .nf-links a:hover { color: var(--ink); border-color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo"><span class="mark">K</span>KNB</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="portfolio.html">Portfolio</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <a href="contact.html" class="nav-cta"><span class="dot"></span>Free audit</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="portfolio.html">Portfolio</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
+  </div>
+
+  <main class="nf">
+    <div class="nf-grid"></div>
+    <div class="nf-inner">
+      <div class="big">4<span>0</span>4</div>
+      <div class="eyebrow">Page not found</div>
+      <h1>This page took a wrong turn.</h1>
+      <p>The link may be broken or the page may have moved. Let's get you back on track.</p>
+      <div class="nf-actions">
+        <a href="index.html" class="btn"><span class="dot"></span>Back to home</a>
+        <a href="contact.html" class="btn ghost">Get a free audit →</a>
+      </div>
+      <div class="nf-links">
+        <a href="portfolio.html">Portfolio</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="work.js"></script>
+</body>
+</html>

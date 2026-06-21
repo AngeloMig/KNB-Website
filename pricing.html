@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pricing &amp; Packages — KNB Web Solution</title>
+<meta name="description" content="Packages and care plans for Shopify, WordPress, Webflow and custom websites. Every project is quoted in a written proposal after a free consultation. Take the 30-second quiz to find your fit.">
+<meta property="og:title" content="Pricing & Packages — KNB Web Solution">
+<meta property="og:description" content="Website packages, care plans, and a quick quiz to find the right fit. Exact pricing in a written proposal.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KNB Web Solution">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="work.css">
+<style>
+  .block { padding: 70px 0; position: relative; }
+  .sec-intro { max-width: 640px; }
+  .sec-intro .eyebrow { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; font-weight: 700; }
+  .sec-intro h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 500; letter-spacing: -0.03em; margin: 14px 0 0; }
+  .sec-intro p { color: var(--muted); font-size: 16px; line-height: 1.55; margin-top: 14px; }
+
+  /* #6 — how pricing works */
+  .howit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
+  .howit .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px 24px; }
+  .howit .sn { width: 34px; height: 34px; border-radius: 10px; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
+  .howit h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin: 16px 0 6px; }
+  .howit p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+  /* #1 — build / care toggle */
+  .pr-tabs { display: inline-flex; gap: 4px; padding: 5px; border: 1px solid var(--line); background: var(--card); border-radius: 100px; margin-top: 8px; }
+  .pr-tab { font-family: inherit; font-size: 14.5px; font-weight: 600; padding: 10px 22px; border-radius: 100px; border: none; background: transparent; color: var(--muted); cursor: pointer; transition: color 0.25s, background 0.25s; }
+  .pr-tab.active { background: var(--ink); color: var(--bg); }
+  .pr-panel[hidden] { display: none; }
+
+  /* package cards */
+  .pr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 26px; }
+  .pr-card { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 30px 28px; transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+  .pr-card:hover { transform: translateY(-6px); box-shadow: 0 26px 56px rgba(0,0,0,0.08); }
+  .pr-card.feat { border-color: rgba(232,63,160,0.5); box-shadow: 0 16px 40px rgba(232,63,160,0.10); }
+  .pr-ribbon { position: absolute; top: -12px; left: 28px; background: var(--ink); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 12px; border-radius: 100px; }
+  .pr-ic { width: 44px; height: 44px; border-radius: 12px; background: rgba(17,17,16,0.06); color: var(--ink); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .pr-card.feat .pr-ic { background: rgba(232,63,160,0.12); color: #e83fa0; }
+  .pr-ic svg { width: 22px; height: 22px; }
+  .pr-card h3 { font-size: 23px; font-weight: 600; letter-spacing: -0.02em; }
+  .pr-who { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .pr-price.na { font-size: 16px; color: var(--muted); font-weight: 600; margin: 18px 0 2px; }
+  .pr-list { list-style: none; display: grid; gap: 10px; margin: 18px 0 16px; }
+  .pr-list li { position: relative; padding-left: 26px; font-size: 14.5px; line-height: 1.4; color: var(--ink); }
+  .pr-list li::before { content: "✓"; position: absolute; left: 0; color: #27a35f; font-weight: 700; }
+  .pr-excl { font-size: 13px; color: var(--muted); line-height: 1.45; margin-bottom: 22px; }
+  .pr-excl b { color: var(--ink); font-weight: 700; }
+  .pr-card .btn { margin-top: auto; width: 100%; justify-content: center; }
+  .pr-card.feat .btn { background: var(--ink); }
+  .pr-card.feat .btn:hover { background: #2c2b28; }
+
+  /* #2 — comparison table */
+  .cmp-wrap { overflow-x: auto; margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; }
+  .cmp { width: 100%; min-width: 680px; border-collapse: collapse; background: var(--card); font-size: 14px; }
+  .cmp th, .cmp td { padding: 14px 16px; text-align: center; border-bottom: 1px solid var(--line); }
+  .cmp thead th { font-weight: 700; font-size: 14.5px; letter-spacing: -0.01em; background: #faf9f6; }
+  .cmp thead th.feat { color: #e83fa0; }
+  .cmp tbody th { text-align: left; font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .cmp td.feat { background: rgba(232,63,160,0.04); }
+  .cmp .yes { color: #27a35f; font-weight: 700; }
+  .cmp .no { color: var(--muted); }
+  .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
+
+  /* #8 — add-ons */
+  .addons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .addon { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .addon::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #e83fa0; transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease); }
+  .addon:hover::before { transform: scaleX(1); }
+  .addon-ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: rgba(232,63,160,0.10); color: #e83fa0; margin-bottom: 14px; }
+  .addon-ic svg { width: 21px; height: 21px; }
+  .addon .an { font-weight: 600; font-size: 16px; }
+  .addon .ad { color: var(--muted); font-size: 13.5px; margin-top: 6px; line-height: 1.45; }
+  .addon .aq { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .addon .aq::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; flex: none; }
+
+  .pr-note { margin-top: 34px; background: linear-gradient(180deg, #f6f5f1, #efeee8); border: 1px solid var(--line); border-radius: 18px; padding: 28px 30px; position: relative; overflow: hidden; }
+  .pr-note::before { content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: #e83fa0; }
+  .pr-note h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #e83fa0; }
+  .pr-note ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; margin-top: 18px; }
+  .pr-note li { position: relative; padding-left: 24px; font-size: 14px; color: var(--ink); line-height: 1.45; }
+  .pr-note li::before { content: ""; position: absolute; left: 2px; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 4px rgba(232,63,160,0.14); }
+
+  /* care plans */
+  .care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
+  .care-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px 24px; display: flex; flex-direction: column; }
+  .care-card.feat { border-color: rgba(232,63,160,0.5); background: linear-gradient(180deg, rgba(232,63,160,0.05), #fff 40%); }
+  .care-card h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+  .care-badge { display: inline-block; align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #e83fa0; margin-top: 8px; min-height: 14px; }
+  .care-for { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
+  .care-cov { color: #46453f; font-size: 14px; line-height: 1.5; margin-top: 10px; flex: 1; }
+  .care-resp { display: inline-flex; align-self: flex-start; margin-top: 16px; font-size: 12px; font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); padding: 7px 12px; border-radius: 100px; }
+
+  /* #4 — quiz */
+  .quiz-sec { position: relative; overflow: hidden; background: #111110; color: var(--bg); }
+  .quiz-sec::before { content: ""; position: absolute; top: -180px; right: -120px; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(232,63,160,0.14), transparent 62%); pointer-events: none; }
+  .quiz-sec > .wrap { position: relative; z-index: 1; }
+  .quiz-sec .sec-intro h2 { color: var(--bg); }
+  .quiz-sec .sec-intro p { color: rgba(255,255,255,0.7); }
+  .quiz { max-width: 640px; margin: 30px auto 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 34px 34px 30px; }
+  .quiz-prog { display: flex; gap: 6px; margin-bottom: 22px; }
+  .quiz-prog span { height: 4px; flex: 1; border-radius: 4px; background: rgba(255,255,255,0.18); transition: background 0.3s; }
+  .quiz-prog span.on { background: #e83fa0; }
+  .quiz-q { font-size: clamp(20px, 2.6vw, 26px); font-weight: 500; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .quiz-opts { display: grid; gap: 10px; }
+  .quiz-opt { text-align: left; font-family: inherit; font-size: 15.5px; font-weight: 600; color: var(--bg); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 12px; padding: 15px 18px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .quiz-opt:hover { background: rgba(232,63,160,0.07); border-color: rgba(232,63,160,0.28); transform: translateX(3px); }
+  .quiz-back { background: none; border: none; color: rgba(255,255,255,0.6); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 18px; }
+  .quiz-back:hover { color: #fff; }
+  /* result */
+  .quiz-res .qr-kicker { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #e83fa0; font-weight: 700; }
+  .quiz-res h3 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 600; letter-spacing: -0.02em; margin: 10px 0 8px; color: #fff; }
+  .quiz-res p { color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.5; }
+  .quiz-res .qr-care { margin-top: 14px; font-size: 14px; color: rgba(255,255,255,0.78); }
+  .quiz-res .qr-care b { color: #fff; }
+  .quiz-res .qr-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .quiz-res .btn { background: var(--bg); color: var(--ink); }
+  .quiz-res .btn:hover { background: #fff; }
+  .quiz-res .qr-extras { margin-top: 16px; }
+  .quiz-res .qr-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 700; }
+  .quiz-res .qr-extras ul { list-style: none; margin-top: 8px; display: grid; gap: 6px; }
+  .quiz-res .qr-extras li { position: relative; padding-left: 22px; font-size: 14px; color: rgba(255,255,255,0.85); }
+  .quiz-res .qr-extras li::before { content: "✓"; position: absolute; left: 0; color: #6cf09a; font-weight: 700; }
+  .quiz-res .qr-extras b { color: #fff; }
+
+  /* #9 — trust band */
+  .trust { text-align: center; }
+  .trust .t-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px; }
+  .trust .t-stat .n { font-size: clamp(34px, 5vw, 52px); font-weight: 500; letter-spacing: -0.03em; }
+  .trust .t-stat .l { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .trust blockquote { max-width: 640px; margin: 38px auto 0; font-size: clamp(18px, 2.2vw, 24px); font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; }
+  .trust blockquote span { color: #e83fa0; }
+  .trust cite { display: block; margin-top: 16px; font-style: normal; color: var(--muted); font-size: 14px; }
+
+  /* #7 — FAQ */
+  .pfaq { max-width: 760px; margin: 26px auto 0; }
+  .pfaq details { border-top: 1px solid var(--line); }
+  .pfaq details:last-child { border-bottom: 1px solid var(--line); }
+  .pfaq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; font-size: clamp(16px, 1.8vw, 20px); font-weight: 500; letter-spacing: -0.01em; }
+  .pfaq summary::-webkit-details-marker { display: none; }
+  .pfaq summary::after { content: "+"; flex: none; width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: transform 0.3s var(--ease); }
+  .pfaq details[open] summary::after { content: "−"; background: var(--ink); color: var(--bg); }
+  .pfaq p { color: var(--muted); font-size: 15px; line-height: 1.6; padding: 0 40px 22px 0; margin-top: -4px; }
+
+  /* #10 — sticky mobile quote bar */
+  .pr-sticky { display: none; }
+
+  @media (max-width: 860px) { .howit { grid-template-columns: 1fr; } .care-grid, .addons { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) {
+    .pr-grid, .care-grid, .addons, .pr-note ul { grid-template-columns: 1fr; }
+    .pr-sticky { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; padding: 12px 16px; background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); gap: 12px; align-items: center; justify-content: space-between; }
+    .pr-sticky span { font-size: 13px; font-weight: 600; }
+    .pr-sticky .btn { padding: 11px 18px; }
+  }
+
+  /* ===== packages redesign — per-type accent ===== */
+  .pr-card { --pc: #6d6c66; --pcbg: rgba(17,17,16,0.06); }
+  .pr-card.pc-business { --pc: #e83fa0; --pcbg: rgba(232,63,160,0.12); }
+  .pr-card.pc-ecom { --pc: #5e8e3e; --pcbg: rgba(94,142,62,0.14); }
+  .pr-card.pc-app { --pc: #4353ff; --pcbg: rgba(67,83,255,0.12); }
+  .pr-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--pc); transform: scaleX(0); transform-origin: left; transition: transform 0.45s var(--ease); border-radius: 18px 18px 0 0; }
+  .pr-card:hover::before, .pr-card.feat::before { transform: scaleX(1); }
+  .pr-ic { background: var(--pcbg); color: var(--pc); }
+  .pr-quote { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); margin: 18px 0 2px; }
+  .pr-quote .pq-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pc); }
+
+  /* ===== care plans redesign — level rows ===== */
+  .care-rows { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+  .crow { position: relative; display: grid; grid-template-columns: 1.15fr 1.7fr auto; gap: 28px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px 28px; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s; }
+  .crow:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(0,0,0,0.07); border-color: #cdcbc2; }
+  .crow.feat { border-color: rgba(232,63,160,0.5); background: linear-gradient(90deg, rgba(232,63,160,0.06), #fff 30%); box-shadow: 0 12px 34px rgba(232,63,160,0.08); }
+  .crow-name { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+  .crow-for { display: block; color: var(--muted); font-size: 13.5px; margin-top: 5px; }
+  .crow-lvl { display: inline-flex; align-items: flex-end; gap: 3px; margin-top: 12px; height: 17px; }
+  .crow-lvl i { width: 5px; border-radius: 2px; background: var(--line); }
+  .crow-lvl i:nth-child(1) { height: 8px; } .crow-lvl i:nth-child(2) { height: 11px; }
+  .crow-lvl i:nth-child(3) { height: 14px; } .crow-lvl i:nth-child(4) { height: 17px; }
+  .crow[data-lvl="1"] .crow-lvl i:nth-child(-n+1),
+  .crow[data-lvl="2"] .crow-lvl i:nth-child(-n+2),
+  .crow[data-lvl="3"] .crow-lvl i:nth-child(-n+3),
+  .crow[data-lvl="4"] .crow-lvl i:nth-child(-n+4) { background: #e83fa0; }
+  .crow-cov { color: #46453f; font-size: 14px; line-height: 1.5; }
+  .crow-resp { white-space: nowrap; text-align: right; }
+  .crow-resp .rk { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .crow-resp .rv { font-size: 14px; font-weight: 600; }
+  .crow-badge { position: absolute; top: -11px; left: 28px; background: var(--ink); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 11px; border-radius: 100px; }
+  .care-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 22px 28px; margin-top: 14px; }
+  .care-cta p { font-size: 15px; }
+  .care-cta b { font-weight: 700; }
+  .care-cta .btn { background: var(--bg); color: var(--ink); }
+  @media (max-width: 760px) { .crow { grid-template-columns: 1fr; gap: 12px; } .crow-resp { text-align: left; } }
+
+  /* ===== packages — interactive selector ===== */
+  .psel { display: grid; grid-template-columns: 0.92fr 1.3fr; gap: 24px; margin-top: 30px; align-items: start; }
+  .psel-list { display: flex; flex-direction: column; gap: 10px; }
+  .psel-item { --pc: #6d6c66; --pcbg: rgba(17,17,16,0.06); position: relative; display: flex; align-items: center; gap: 14px; text-align: left; font-family: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; cursor: pointer; transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+  .psel-item.pc-business { --pc: #e83fa0; --pcbg: rgba(232,63,160,0.12); }
+  .psel-item.pc-ecom { --pc: #5e8e3e; --pcbg: rgba(94,142,62,0.14); }
+  .psel-item.pc-app { --pc: #4353ff; --pcbg: rgba(67,83,255,0.12); }
+  .psel-item:hover { border-color: #cdcbc2; transform: translateX(2px); }
+  .psel-item.active { border-color: var(--pc); box-shadow: 0 12px 30px rgba(0,0,0,0.07); }
+  .psel-item.active::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0; background: var(--pc); }
+  .pi-ic { flex: none; width: 42px; height: 42px; border-radius: 11px; background: var(--pcbg); color: var(--pc); display: flex; align-items: center; justify-content: center; }
+  .pi-ic svg { width: 20px; height: 20px; }
+  .pi-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .pi-name { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+  .pi-who { font-size: 12.5px; color: var(--muted); }
+  .pi-arrow { color: var(--muted); transition: transform 0.3s var(--ease), color 0.3s; }
+  .psel-item.active .pi-arrow { color: var(--pc); transform: translateX(3px); }
+  .pi-tag { position: absolute; top: -9px; right: 14px; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
+  .psel-detail { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px 30px; min-height: 360px; overflow: hidden; }
+  .psel-detail::before { content: ""; position: absolute; top: -120px; right: -120px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--pcbg, transparent), transparent 70%); pointer-events: none; }
+  .psel-panel { display: none; position: relative; }
+  .psel-panel.on { display: block; animation: ppIn 0.45s var(--ease); }
+  @keyframes ppIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .pp-kicker { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pc); font-weight: 700; }
+  .psel-panel h3 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; letter-spacing: -0.02em; margin: 10px 0 0; max-width: 20ch; }
+  .pp-quote { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); margin: 14px 0 22px; }
+  .pp-quote .pq-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pc); }
+  .pp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+  .pp-cols h4 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 12px; }
+  .pp-inc, .pp-exc { list-style: none; display: grid; gap: 9px; }
+  .pp-inc li, .pp-exc li { position: relative; padding-left: 24px; font-size: 14px; line-height: 1.4; }
+  .pp-inc li::before { content: "✓"; position: absolute; left: 0; color: #27a35f; font-weight: 700; }
+  .pp-exc li { color: var(--muted); }
+  .pp-exc li::before { content: "✕"; position: absolute; left: 0; color: #c08a82; font-weight: 700; }
+  .psel-panel .btn { margin-top: 26px; }
+  .psel-panel.pc-business .btn { background: var(--ink); }
+  .psel-panel.pc-business .btn:hover { background: #2c2b28; }
+  @media (max-width: 760px) { .psel { grid-template-columns: 1fr; } .pp-cols { grid-template-columns: 1fr; gap: 18px; } }
+
+  /* ===== section motion + backgrounds ===== */
+  /* directional reveal variants (work.js toggles .in) */
+  .reveal.r-left  { transform: translateX(-44px); }
+  .reveal.r-right { transform: translateX(44px); }
+  .reveal.r-scale { transform: scale(0.93); }
+  .reveal.r-left.in, .reveal.r-right.in, .reveal.r-scale.in { transform: none; }
+  /* staggered children */
+  .stagger > *:nth-child(1) { transition-delay: 0.04s; }
+  .stagger > *:nth-child(2) { transition-delay: 0.12s; }
+  .stagger > *:nth-child(3) { transition-delay: 0.20s; }
+  .stagger > *:nth-child(4) { transition-delay: 0.28s; }
+  .stagger > *:nth-child(5) { transition-delay: 0.36s; }
+  .stagger > *:nth-child(6) { transition-delay: 0.44s; }
+
+  /* hero animated backdrop (scoped to pricing) */
+  .pr-hero { position: relative; overflow: hidden; }
+  .pr-hero::before, .pr-hero::after { content: ""; position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: 0; }
+  .pr-hero::before { width: 420px; height: 420px; background: rgba(232,63,160,0.07); top: -150px; right: 8%; animation: floatA 20s ease-in-out infinite; }
+  .pr-hero::after { width: 340px; height: 340px; background: rgba(96,132,255,0.10); top: -40px; left: -80px; animation: floatB 26s ease-in-out infinite; }
+  .pr-hero > .wrap { position: relative; z-index: 1; }
+  @keyframes floatA { 50% { transform: translate(-50px, 50px) scale(1.15); } }
+  @keyframes floatB { 50% { transform: translate(60px, 30px) scale(1.12); } }
+
+  /* cursor spotlight section */
+  .spot { position: relative; }
+  .spot::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), rgba(232,63,160,0.07), transparent 70%); opacity: 0; transition: opacity 0.5s var(--ease); }
+  .spot.lit::after { opacity: 1; }
+  .spot > .wrap { position: relative; z-index: 1; }
+
+  /* animate the quiz glow */
+  .quiz-sec::before { animation: glowDrift 16s ease-in-out infinite; }
+  @keyframes glowDrift { 50% { transform: translate(-70px, 50px) scale(1.25); } }
+
+  /* hover interactions */
+  .howit .step { transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+  .howit .step:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(0,0,0,0.08); }
+  .addon { transition: transform 0.35s var(--ease), border-color 0.35s; }
+  .addon:hover { transform: translateY(-4px); border-color: #cdcbc2; }
+  .cmp tbody tr { transition: background 0.25s; }
+  .cmp tbody tr:hover td, .cmp tbody tr:hover th { background: rgba(232,63,160,0.05); }
+
+  /* faint drifting watermark */
+  .wm-sec { position: relative; overflow: hidden; }
+  .wm-sec .wm { position: absolute; z-index: 0; font-size: clamp(120px, 22vw, 280px); font-weight: 700; letter-spacing: -0.04em; color: rgba(17,17,16,0.035); white-space: nowrap; top: 50%; left: 50%; pointer-events: none; animation: wmDrift 32s linear infinite alternate; }
+  .wm-sec > .wrap { position: relative; z-index: 1; }
+  @keyframes wmDrift { from { transform: translate(-56%, -50%); } to { transform: translate(-44%, -50%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pr-hero::before, .pr-hero::after, .quiz-sec::before, .wm-sec .wm { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo"><span class="mark">K</span>KNB</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="portfolio.html">Portfolio</a>
+          <a href="pricing.html" class="active">Pricing</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <a href="contact.html" class="nav-cta"><span class="dot"></span>Start your project</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="portfolio.html">Portfolio</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="mailto:youremail@gmail.com" class="mm-foot">youremail@gmail.com →</a>
+  </div>
+
+  <header class="page-hero pr-hero">
+    <div class="wrap">
+      <div class="eyebrow reveal">Pricing &amp; packages</div>
+      <h1 class="reveal">Packages built around your scope.</h1>
+      <p class="lead reveal">Every project starts with a free consultation and a written proposal. Below is what each package covers — we'll send an exact quote based on your scope. Not sure where to start? <a href="#quiz" style="color:#e83fa0;font-weight:600;">Take the 30-second quiz ↓</a></p>
+    </div>
+  </header>
+
+  <!-- #6 HOW PRICING WORKS -->
+  <section class="block" style="padding-top:20px;">
+    <div class="wrap">
+      <div class="howit stagger">
+        <div class="step reveal"><div class="sn">1</div><h3>Free consultation</h3><p>We learn your goals and review your current site, if you have one, for quick wins.</p></div>
+        <div class="step reveal"><div class="sn">2</div><h3>Written proposal</h3><p>A clear scope with deliverables, timeline, and an exact price — no surprises.</p></div>
+        <div class="step reveal"><div class="sn">3</div><h3>Build &amp; launch</h3><p>We design, build, test, and launch — then keep it running with a care plan.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- #1 TOGGLE + PACKAGES / CARE -->
+  <section class="block spot" style="padding-top:10px;">
+    <div class="wrap">
+      <div class="pr-tabs reveal" role="tablist" aria-label="Pricing view">
+        <button class="pr-tab active" id="tab-build" role="tab" aria-selected="true" aria-controls="panel-build">Website projects</button>
+        <button class="pr-tab" id="tab-care" role="tab" aria-selected="false" aria-controls="panel-care">Care plans</button>
+      </div>
+
+      <!-- BUILD PANEL -->
+      <div class="pr-panel" id="panel-build" role="tabpanel" aria-labelledby="tab-build">
+        <div class="sec-intro reveal r-left" style="margin-top:30px;">
+          <div class="eyebrow">Website &amp; store packages</div>
+          <h2>Pick a starting point</h2>
+          <p>Fixed-scope packages for standard websites and stores. Custom systems are always quoted after a discovery call.</p>
+        </div>
+
+        <div class="psel reveal">
+          <div class="psel-list" role="tablist" aria-label="Choose a package">
+            <button class="psel-item active" role="tab" aria-selected="true" data-pkg="starter">
+              <span class="pi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
+              <span class="pi-text"><span class="pi-name">Starter Website</span><span class="pi-who">Small businesses &amp; service sites</span></span>
+              <span class="pi-arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="psel-item pc-business" role="tab" aria-selected="false" data-pkg="business">
+              <span class="pi-tag">Popular</span>
+              <span class="pi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
+              <span class="pi-text"><span class="pi-name">Business Website</span><span class="pi-who">Growing companies, B2B, clinics</span></span>
+              <span class="pi-arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="psel-item pc-ecom" role="tab" aria-selected="false" data-pkg="ecom">
+              <span class="pi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span>
+              <span class="pi-text"><span class="pi-name">Ecommerce Website</span><span class="pi-who">Shopify &amp; WooCommerce brands</span></span>
+              <span class="pi-arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="psel-item pc-app" role="tab" aria-selected="false" data-pkg="app">
+              <span class="pi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+              <span class="pi-text"><span class="pi-name">Custom Web App</span><span class="pi-who">Dashboards, portals, booking, POS</span></span>
+              <span class="pi-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="psel-detail">
+            <div class="psel-panel on" data-panel="starter">
+              <span class="pp-kicker">Starter Website</span>
+              <h3>A clean, professional site — ready in weeks.</h3>
+              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-cols">
+                <div><h4>Included</h4><ul class="pp-inc">
+                  <li>1–5 pages, responsive design</li>
+                  <li>Contact form, navigation &amp; CTAs</li>
+                  <li>Basic SEO (titles, meta, alt text)</li>
+                  <li>One revision, QA &amp; launch support</li>
+                </ul></div>
+                <div><h4>Quoted separately</h4><ul class="pp-exc">
+                  <li>Ecommerce checkout</li>
+                  <li>Custom animation</li>
+                  <li>Branding / logo</li>
+                  <li>Full copywriting</li>
+                </ul></div>
+              </div>
+              <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+            </div>
+
+            <div class="psel-panel pc-business" data-panel="business">
+              <span class="pp-kicker">Business Website · Most popular</span>
+              <h3>More pages, more credibility, more leads.</h3>
+              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-cols">
+                <div><h4>Included</h4><ul class="pp-inc">
+                  <li>5–12 pages, custom layouts</li>
+                  <li>Discovery, sitemap &amp; CTA strategy</li>
+                  <li>CMS so your team can edit</li>
+                  <li>On-page SEO, analytics &amp; Search Console</li>
+                  <li>Two revisions &amp; 14–30 days support</li>
+                </ul></div>
+                <div><h4>Quoted separately</h4><ul class="pp-exc">
+                  <li>Ecommerce checkout</li>
+                  <li>Custom app features</li>
+                  <li>Advanced integrations</li>
+                  <li>Large copywriting scope</li>
+                </ul></div>
+              </div>
+              <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+            </div>
+
+            <div class="psel-panel pc-ecom" data-panel="ecom">
+              <span class="pp-kicker">Ecommerce Website</span>
+              <h3>A store built to turn browsers into buyers.</h3>
+              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-cols">
+                <div><h4>Included</h4><ul class="pp-inc">
+                  <li>Store audit &amp; journey planning</li>
+                  <li>Core store pages + product upload</li>
+                  <li>Payment, shipping &amp; app setup</li>
+                  <li>Ecommerce SEO, mobile QA &amp; training</li>
+                </ul></div>
+                <div><h4>Quoted separately</h4><ul class="pp-exc">
+                  <li>Custom Shopify apps</li>
+                  <li>ERP / POS integration</li>
+                  <li>Large catalog import</li>
+                  <li>Product photography</li>
+                </ul></div>
+              </div>
+              <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+            </div>
+
+            <div class="psel-panel pc-app" data-panel="app">
+              <span class="pp-kicker">Custom Web App</span>
+              <h3>Custom software shaped around how you work.</h3>
+              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
+              <div class="pp-cols">
+                <div><h4>Included</h4><ul class="pp-inc">
+                  <li>Technical discovery &amp; workflow mapping</li>
+                  <li>Wireframes, custom build &amp; admin</li>
+                  <li>Integrations (payments, CRM, APIs…)</li>
+                  <li>Testing, deployment, docs &amp; training</li>
+                </ul></div>
+                <div><h4>Quoted separately</h4><ul class="pp-exc">
+                  <li>Features outside the scope</li>
+                  <li>Unplanned integrations</li>
+                  <li>Hosting &amp; third-party fees</li>
+                  <li>Heavy data migration</li>
+                </ul></div>
+              </div>
+              <a href="contact.html" class="btn"><span class="dot"></span>Request a quote</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- #2 COMPARISON TABLE -->
+        <div class="sec-intro reveal r-right" style="margin-top:54px;">
+          <div class="eyebrow">Compare at a glance</div>
+          <h2 style="font-size:clamp(22px,3vw,32px);">What's in each package</h2>
+        </div>
+        <div class="cmp-wrap reveal">
+          <table class="cmp">
+            <thead>
+              <tr><th>Feature</th><th>Starter</th><th class="feat">Business</th><th>Ecommerce</th><th>Custom App</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>Pages / screens</th><td>1–5</td><td class="feat">5–12</td><td>Store pages</td><td>App screens</td></tr>
+              <tr><th>Custom design</th><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+              <tr><th>CMS (edit content)</th><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+              <tr><th>Ecommerce / checkout</th><td class="no">—</td><td class="feat no">—</td><td class="yes">✓</td><td>Optional</td></tr>
+              <tr><th>SEO setup</th><td>Basic</td><td class="feat">On-page</td><td>Ecommerce</td><td class="no">—</td></tr>
+              <tr><th>Integrations</th><td class="no">—</td><td class="feat">Basic</td><td>Apps</td><td>Custom</td></tr>
+              <tr><th>Revisions</th><td>1</td><td class="feat">2</td><td>2</td><td>Scoped</td></tr>
+              <tr><th>Support after launch</th><td>Launch</td><td class="feat">14–30 days</td><td>14–30 days</td><td>30 days</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- #8 ADD-ONS -->
+        <div class="sec-intro reveal r-left" style="margin-top:54px;">
+          <div class="eyebrow">Optional extras</div>
+          <h2 style="font-size:clamp(22px,3vw,32px);">Add-ons, quoted separately</h2>
+        </div>
+        <div class="addons stagger">
+          <div class="addon reveal"><span class="addon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><div class="an">Extra pages</div><div class="ad">More templates or landing pages beyond the package.</div><span class="aq">Quoted per page</span></div>
+          <div class="addon reveal"><span class="addon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div class="an">Copywriting</div><div class="ad">Full website copy written for your audience.</div><span class="aq">Quoted by scope</span></div>
+          <div class="addon reveal"><span class="addon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg></span><div class="an">Branding &amp; logo</div><div class="ad">Logo, colours, and brand direction.</div><span class="aq">Quoted by scope</span></div>
+          <div class="addon reveal"><span class="addon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.2"/><path d="M8.5 7l1.3-2h4.4l1.3 2"/></svg></span><div class="an">Product photography</div><div class="ad">Studio or lifestyle shots for your store.</div><span class="aq">Quoted by scope</span></div>
+          <div class="addon reveal"><span class="addon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg></span><div class="an">Content migration</div><div class="ad">Moving large amounts of content or products.</div><span class="aq">Quoted by volume</span></div>
+          <div class="addon reveal"><span class="addon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><div class="an">Advanced integrations</div><div class="ad">ERP, POS, CRM, or custom API connections.</div><span class="aq">Quoted by scope</span></div>
+        </div>
+
+        <div class="pr-note reveal">
+          <h4>Good to know</h4>
+          <ul>
+            <li>Every project is quoted in a written proposal after a free consultation.</li>
+            <li>Pass-through costs (domains, hosting, paid apps, themes, ad spend) are billed separately.</li>
+            <li>No guaranteed sales or rankings — results depend on traffic, product, pricing &amp; marketing.</li>
+            <li>Typical payment terms: 50% to start, 30% at design approval, 20% before launch.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CARE PANEL -->
+      <div class="pr-panel" id="panel-care" role="tabpanel" aria-labelledby="tab-care" hidden>
+        <div class="sec-intro reveal r-right" style="margin-top:30px;">
+          <div class="eyebrow">Care plans</div>
+          <h2>Ongoing support, monthly</h2>
+          <p>Simple monthly retainers. Higher tiers cover more and respond faster — start where you are and move up anytime.</p>
+        </div>
+        <div class="cmp-wrap reveal">
+          <table class="cmp">
+            <thead>
+              <tr><th>Plan covers</th><th>Basic</th><th>Standard</th><th class="feat">Growth</th><th>Premium</th><th>Custom System</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>Best for</th><td>Light support</td><td>Regular updates</td><td class="feat">Active stores</td><td>Busy ecommerce</td><td>Custom apps</td></tr>
+              <tr><th>Edits, updates &amp; backups</th><td class="yes">✓</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+              <tr><th>Bug fixes &amp; troubleshooting</th><td class="no">—</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+              <tr><th>Content updates</th><td class="no">—</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
+              <tr><th>SEO tasks</th><td class="no">—</td><td>Light</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
+              <tr><th>Landing pages &amp; CRO</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
+              <tr><th>Monthly report</th><td class="no">—</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
+              <tr><th>Ecommerce fixes</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
+              <tr><th>Improvement roadmap</th><td class="no">—</td><td class="no">—</td><td class="feat no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
+              <tr><th>Integrations / custom dev</th><td class="no">—</td><td class="no">—</td><td class="feat no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+              <tr><th>Priority support</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+              <tr><th>Response time</th><td>2–3 days</td><td>1–2 days</td><td class="feat">1 day</td><td>Same / next</td><td>By agreement</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="care-cta reveal">
+          <p><b>Not sure which plan?</b> We'll recommend one based on your site and how often it changes.</p>
+          <a href="contact.html" class="btn"><span class="dot"></span>Talk to us</a>
+        </div>
+        <p class="reveal" style="color:var(--muted);font-size:13.5px;margin-top:22px;max-width:70ch;">Each plan includes a set amount of monthly support time; extra work is quoted or approved before it starts. Rollover available on Growth &amp; Premium. Minimum 3-month term on Growth, Premium &amp; Custom System Support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- #4 QUIZ -->
+  <section class="block quiz-sec" id="quiz">
+    <div class="wrap">
+      <div class="sec-intro reveal" style="max-width:none;">
+        <div class="eyebrow">Find your fit</div>
+        <h2>Not sure where to start?</h2>
+        <p>Answer 6 quick questions and we'll point you to the right package — and the extras you'll likely need.</p>
+      </div>
+      <div class="quiz reveal r-scale">
+        <div class="quiz-prog" id="quizProg"></div>
+        <div id="quizBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- #9 TRUST BAND -->
+  <!-- TODO: stats + testimonial are PLACEHOLDER — replace with real numbers and an attributable quote before launch. -->
+  <section class="block trust">
+    <div class="wrap">
+      <div class="t-stats reveal stagger">
+        <div class="t-stat reveal"><div class="n" data-count="18">0</div><div class="l">Projects shipped</div></div>
+        <div class="t-stat reveal"><div class="n" data-count="3">0</div><div class="l">Platforms</div></div>
+        <div class="t-stat reveal"><div class="n" data-count="12" data-suffix="+">0</div><div class="l">Industries served</div></div>
+      </div>
+      <blockquote class="reveal">"KNB scoped everything clearly up front — <span>no surprise costs</span>, and the site was easy for our team to run after launch."
+        <cite>[Client name] · [Sample Brand]</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- #7 FAQ -->
+  <section class="block wm-sec" style="background:#f1efe8;">
+    <div class="wm" aria-hidden="true">PRICING</div>
+    <div class="wrap">
+      <div class="sec-intro reveal" style="margin:0 auto;text-align:center;">
+        <div class="eyebrow">Pricing questions</div>
+        <h2>Good to know</h2>
+      </div>
+      <div class="pfaq reveal">
+        <details><summary>Why don't you show exact prices?</summary><p>Every site is different — pages, features, content, and integrations all change the cost. Instead of a misleading number, we send an exact, written quote after a free consultation so you know precisely what you're paying for.</p></details>
+        <details><summary>What affects the price?</summary><p>Scope (number of pages or screens), design complexity, ecommerce or custom features, content and copywriting needs, integrations, and timeline. The package you start from sets the baseline; add-ons are quoted separately.</p></details>
+        <details><summary>What's not included by default?</summary><p>Pass-through costs (domains, hosting, paid apps, themes, ad spend) and optional extras like branding, full copywriting, product photography, and large migrations. These are always listed in your proposal.</p></details>
+        <details><summary>What are your payment terms?</summary><p>Typically 50% to start, 30% at design approval, and 20% before launch — confirmed in the written proposal. Care plans are billed monthly.</p></details>
+        <details><summary>Do you guarantee sales or rankings?</summary><p>No. We build fast, conversion-focused sites, but results depend on your traffic, product, pricing, and marketing — so we don't make guarantees we can't control.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div class="cta-head">
+          <span class="cta-eyebrow"><span class="dot"></span>Get started</span>
+          <h2>Ready for an exact quote?</h2>
+        </div>
+        <div class="cta-body">
+          <p>Start with a free consultation. We'll review your site or idea and send a clear written proposal with the exact scope and price.</p>
+          <a href="contact.html" class="btn">Start your project →</a>
+          <ul class="cta-trust"><li>Free</li><li>No obligation</li><li>Written proposal</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div>
+          <div class="logo">KNB</div>
+          <p style="margin-top:16px;max-width:34ch;color:rgba(255,255,255,0.6)">Web design, Shopify revamps, and ongoing support for growing businesses.</p>
+        </div>
+        <div class="foot-links">
+          <div class="col"><span>Work</span><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
+          <div class="col"><span>Company</span><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a></div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 KNB Web Solution. All rights reserved.</span>
+        <a href="contact.html">Start a project →</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- #10 sticky mobile quote bar -->
+  <div class="pr-sticky">
+    <span>Get an exact quote</span>
+    <a href="contact.html" class="btn"><span class="dot"></span>Start your project</a>
+  </div>
+
+  <script src="work.js"></script>
+  <script>
+    /* ---- Build / Care toggle ---- */
+    (function () {
+      const tabs = { build: document.getElementById('tab-build'), care: document.getElementById('tab-care') };
+      const panels = { build: document.getElementById('panel-build'), care: document.getElementById('panel-care') };
+      if (!tabs.build) return;
+      const show = (key) => {
+        Object.entries(tabs).forEach(([k, t]) => { const on = k === key; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+        Object.entries(panels).forEach(([k, p]) => { p.hidden = k !== key; });
+      };
+      tabs.build.addEventListener('click', () => show('build'));
+      tabs.care.addEventListener('click', () => show('care'));
+    })();
+
+    /* ---- #4 Quiz ---- */
+    (function () {
+      const body = document.getElementById('quizBody');
+      const prog = document.getElementById('quizProg');
+      if (!body) return;
+
+      const QUESTIONS = [
+        { key: 'type', q: 'What are you building?', opts: [
+          { label: 'A simple website', val: 'starter' },
+          { label: 'A bigger business website', val: 'business' },
+          { label: 'An online store', val: 'ecom' },
+          { label: 'A custom tool, dashboard or portal', val: 'app' } ] },
+        { key: 'scope', q: 'Roughly how big is it?', opts: [
+          { label: 'A few pages (1–5)', val: 'small' },
+          { label: 'A full site (6–12 pages)', val: 'med' },
+          { label: 'Lots of pages or a product catalog', val: 'large' },
+          { label: 'Not sure yet', val: 'unsure' } ] },
+        { key: 'feature', q: 'Which sounds most like you?', opts: [
+          { label: 'I sell products or take payments', val: 'payments' },
+          { label: 'I take bookings or appointments', val: 'booking' },
+          { label: 'I publish content (blog, news, resources)', val: 'content' },
+          { label: 'Mainly an info / brochure site', val: 'info' } ] },
+        { key: 'update', q: 'Who will keep it updated after launch?', opts: [
+          { label: 'My team — we want to edit it ourselves', val: 'team' },
+          { label: 'You handle updates for us', val: 'us' },
+          { label: 'Not sure yet', val: 'unsure' } ] },
+        { key: 'ready', q: 'What do you already have ready?', opts: [
+          { label: 'Brand and content are ready', val: 'ready' },
+          { label: 'I need branding / logo help', val: 'branding' },
+          { label: 'I need help writing the copy', val: 'copy' },
+          { label: 'I need both', val: 'both' } ] },
+        { key: 'care', q: 'Want us to maintain it after launch?', opts: [
+          { label: 'Yes — ongoing care', val: 'yes' },
+          { label: 'No — just the build', val: 'no' } ] }
+      ];
+      const PKG = {
+        starter:  { name: 'Starter Website',   desc: 'A clean, professional site for small businesses that need a solid online presence.', care: 'Basic Care' },
+        business: { name: 'Business Website',   desc: 'More pages, a CMS, and lead-generation structure for growing companies.', care: 'Standard Support' },
+        ecom:     { name: 'Ecommerce Website',  desc: 'A Shopify or WooCommerce store built around products, mobile shopping, and conversion.', care: 'Growth Support' },
+        app:      { name: 'Custom Web App',     desc: 'A custom dashboard, portal, or tool built around exactly how you work.', care: 'Custom System Support' }
+      };
+
+      let step = 0;
+      const answers = {};
+
+      function buildProg() {
+        prog.innerHTML = QUESTIONS.map((_, i) => '<span' + (i === 0 ? ' class="on"' : '') + '></span>').join('');
+      }
+      function setProg() {
+        [...prog.children].forEach((s, i) => s.classList.toggle('on', i <= step));
+      }
+      function recommend() {
+        let rec = answers.type || 'business';
+        if (answers.feature === 'payments') rec = 'ecom';
+        else if (answers.feature === 'booking') rec = 'app';
+        if (rec === 'starter' && (answers.scope === 'med' || answers.scope === 'large')) rec = 'business';
+        if (rec === 'business' && answers.scope === 'small') rec = 'starter';
+        return rec;
+      }
+      function renderQuestion() {
+        const item = QUESTIONS[step];
+        setProg();
+        body.innerHTML =
+          '<div class="quiz-q">' + item.q + '</div><div class="quiz-opts">' +
+          item.opts.map((o) => '<button class="quiz-opt" data-val="' + o.val + '">' + o.label + '</button>').join('') +
+          '</div>' + (step > 0 ? '<button class="quiz-back">← Back</button>' : '');
+        body.querySelectorAll('.quiz-opt').forEach((b) => b.addEventListener('click', () => {
+          answers[item.key] = b.dataset.val;
+          if (step < QUESTIONS.length - 1) { step++; renderQuestion(); }
+          else renderResult();
+        }));
+        const back = body.querySelector('.quiz-back');
+        if (back) back.addEventListener('click', () => { step--; renderQuestion(); });
+      }
+      function renderResult() {
+        prog.querySelectorAll('span').forEach((s) => s.classList.add('on'));
+        const p = PKG[recommend()];
+        const extras = [];
+        if (answers.update === 'team') extras.push('A <b>CMS</b> so your team can edit content');
+        if (answers.feature === 'content') extras.push('A <b>blog / content</b> section');
+        if (answers.ready === 'branding' || answers.ready === 'both') extras.push('<b>Branding &amp; logo</b> (add-on)');
+        if (answers.ready === 'copy' || answers.ready === 'both') extras.push('<b>Copywriting</b> (add-on)');
+        const extrasHtml = extras.length
+          ? '<div class="qr-extras"><span class="qr-label">Likely to include</span><ul>' + extras.map((e) => '<li>' + e + '</li>').join('') + '</ul></div>'
+          : '';
+        const careLine = answers.care === 'yes'
+          ? '<div class="qr-care">Pair it with our <b>' + p.care + '</b> plan to keep it running after launch.</div>'
+          : '';
+        body.innerHTML =
+          '<div class="quiz-res">' +
+            '<span class="qr-kicker">Your recommended starting point</span>' +
+            '<h3>' + p.name + '</h3>' +
+            '<p>' + p.desc + '</p>' +
+            extrasHtml + careLine +
+            '<div class="qr-actions">' +
+              '<a href="contact.html" class="btn"><span class="dot"></span>Get my quote</a>' +
+              '<button class="quiz-back" id="quizRetake">↻ Retake quiz</button>' +
+            '</div>' +
+          '</div>';
+        body.querySelector('#quizRetake').addEventListener('click', () => { step = 0; for (const k in answers) delete answers[k]; renderQuestion(); });
+      }
+      buildProg();
+      renderQuestion();
+    })();
+
+    /* ---- cursor spotlight on tagged sections ---- */
+    if (!matchMedia('(hover: none)').matches) {
+      document.querySelectorAll('.spot').forEach((sec) => {
+        sec.addEventListener('mousemove', (e) => {
+          const r = sec.getBoundingClientRect();
+          sec.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          sec.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          sec.classList.add('lit');
+        });
+        sec.addEventListener('mouseleave', () => sec.classList.remove('lit'));
+      });
+    }
+
+    /* ---- package selector ---- */
+    (function () {
+      const items = document.querySelectorAll('.psel-item');
+      const panels = document.querySelectorAll('.psel-panel');
+      if (!items.length) return;
+      const select = (key) => {
+        items.forEach((it) => { const on = it.dataset.pkg === key; it.classList.toggle('active', on); it.setAttribute('aria-selected', on ? 'true' : 'false'); });
+        panels.forEach((p) => p.classList.toggle('on', p.dataset.panel === key));
+      };
+      items.forEach((it) => {
+        it.addEventListener('click', () => select(it.dataset.pkg));
+        if (!matchMedia('(hover: none)').matches) it.addEventListener('mouseenter', () => select(it.dataset.pkg));
+      });
+    })();
+
+    /* ---- deep-link from the home Solutions cards: #build-<pkg> / #care-<plan> ---- */
+    (function () {
+      const m = /^#(build|care)(?:-([a-z]+))?$/.exec(location.hash);
+      if (!m) return;
+      const tab = m[1], key = m[2];
+      const tabBtn = document.getElementById('tab-' + tab);
+      if (tabBtn) tabBtn.click();
+      if (tab === 'build' && key) {
+        const item = document.querySelector('.psel-item[data-pkg="' + key + '"]');
+        if (item) item.click();
+      }
+      if (tabBtn) setTimeout(() => {
+        const y = tabBtn.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }, 90);
+    })();
+
+    /* ---- stat count-up on scroll ---- */
+    (function () {
+      const nums = document.querySelectorAll('[data-count]');
+      if (!nums.length) return;
+      const run = (el) => {
+        const target = parseFloat(el.dataset.count) || 0;
+        const suffix = el.dataset.suffix || '';
+        const dur = 1200, start = performance.now();
+        const step = (now) => {
+          const p = Math.min((now - start) / dur, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((en) => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+        }, { threshold: 0.5 });
+        nums.forEach((n) => io.observe(n));
+      } else {
+        nums.forEach((n) => { n.textContent = (n.dataset.count || '') + (n.dataset.suffix || ''); });
+      }
+    })();
+  </script>
+</body>
+</html>
