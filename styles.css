@@ -1683,7 +1683,7 @@
   .sol-aside .btn .dot { background: #6cf09a; }
   .sol-aside .btn-ghost { border-color: rgba(255,255,255,0.28); color: #fff; }
   .sol-aside .btn-ghost:hover { background: rgba(255,255,255,0.1); }
-  @media (max-width: 600px) { .sol-aside-cta { flex-direction: column; } }
+  @media (max-width: 600px) { .sol-aside-cta { flex-direction: column; } .sol-aside-cta > .btn, .sol-aside-cta > .btn-ghost { flex: none; width: 100%; } }
   @media (max-width: 860px) { .sol-wrap { grid-template-columns: 1fr; } }
   .sol-ic { flex: none; width: 42px; height: 42px; border-radius: 11px; background: var(--pcbg); color: var(--pc); display: flex; align-items: center; justify-content: center; }
   .sol-ic svg { width: 20px; height: 20px; }
