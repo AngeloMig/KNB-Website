@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="work.css">
+<link rel="stylesheet" href="testimonials.css">
 <style>
   .ab-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; padding: 70px 0; border-top: 1px solid var(--line); }
   .ab-lead h2 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
@@ -110,6 +111,30 @@
     </div>
   </section>
 
+  <!-- TESTIMONIALS (shared marquee — testimonials.css / testimonials.js) -->
+  <section class="talt testi-wall" id="testiWall">
+    <div class="wrap"><div class="testi-head reveal">
+      <span class="testi-eyebrow">★ What clients say</span>
+      <h2 class="sec-head">Voices of satisfaction and success</h2>
+      <p class="testi-proof"><span class="talt-stars" aria-hidden="true">★★★★★</span> <b data-count="4.9" data-dec="1">4.9</b> · <b data-count="18">18</b> projects shipped across Shopify, Webflow &amp; WordPress</p>
+    </div></div>
+    <div class="talt-mq reveal" data-dir="-1" role="group" aria-label="Client testimonials"><div class="talt-mq-track" data-row="0"></div></div>
+    <div class="talt-mq reveal" data-dir="1" aria-hidden="true"><div class="talt-mq-track" data-row="1"></div></div>
+  </section>
+
+  <!-- testimonial quote modal -->
+  <div class="tq-modal" id="tqModal" hidden>
+    <div class="tq-backdrop" data-tqclose></div>
+    <div class="tq-dialog" role="dialog" aria-modal="true" aria-label="Client quote">
+      <button class="tq-x" data-tqclose aria-label="Close">✕</button>
+      <span class="talt-chip" id="tqChip"></span>
+      <div class="talt-stars" aria-hidden="true">★★★★★</div>
+      <blockquote id="tqQuote"></blockquote>
+      <div class="tq-who"><span class="talt-av" id="tqAv"></span><div class="talt-who"><b id="tqName"></b><span id="tqMeta"></span></div></div>
+      <a class="btn" id="tqLink"><span class="dot"></span>See the work</a>
+    </div>
+  </div>
+
   <section class="cta-strip">
     <div class="wrap">
       <div class="ctaC reveal r-scale">
@@ -148,5 +173,6 @@
   </footer>
 
   <script src="work.js"></script>
+  <script src="testimonials.js"></script>
 </body>
 </html>

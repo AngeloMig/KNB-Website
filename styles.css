@@ -1494,18 +1494,20 @@
   .faq-aside { position: sticky; top: 110px; }
   .faq-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #e83fa0; }
   .faq-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; }
-  .faq-aside .sec-head { text-align: left; margin: 16px 0 0; }
-  .faq-aside p { color: var(--muted); font-size: 16px; line-height: 1.6; margin: 16px 0 26px; max-width: 34ch; }
+  .faq-aside .sec-head { text-align: left; margin: 14px 0 0; }
+  .faq-aside p { color: var(--muted); font-size: 16px; line-height: 1.55; margin: 14px 0 14px; max-width: 34ch; }
   .faq-grid .faq-list { max-width: none; margin: 0; }
+  /* right column flush to the top — first question aligns with the heading */
+  .faq-grid .faq-list .faq-item:first-child .faq-q { padding-top: 0; }
   @media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; gap: 32px; } .faq-aside { position: static; } }
   .faq-list { max-width: 860px; margin: 50px auto 0; }
   .faq-item { border-top: 1px solid var(--line); }
   .faq-item:last-child { border-bottom: 1px solid var(--line); }
-  .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0; cursor: pointer; font-size: clamp(18px, 2vw, 24px); font-weight: 500; letter-spacing: -0.02em; list-style: none; }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 15px 0; cursor: pointer; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; list-style: none; }
   .faq-q .ic { flex: none; width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.4s var(--ease), background 0.3s, color 0.3s; font-size: 18px; }
   .faq-item.open .faq-q .ic { transform: rotate(45deg); background: var(--ink); color: var(--bg); }
   .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease); }
-  .faq-a p { color: var(--muted); font-size: 16px; line-height: 1.6; padding: 0 60px 26px 0; }
+  .faq-a p { color: var(--muted); font-size: 15px; line-height: 1.55; padding: 0 50px 18px 0; }
 
   @media (max-width: 860px) {
     .steps4 { grid-template-columns: 1fr 1fr; }
@@ -1973,9 +1975,9 @@
   .testi-proof { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 14px; color: var(--muted); font-size: 14px; font-weight: 600; }
   .testi-proof b { color: var(--ink); }
   .testi-proof .talt-stars { font-size: 15px; }
-  .talt-mq { cursor: grab; touch-action: pan-y; }
+  .talt-mq { cursor: grab; touch-action: pan-y; padding: 16px 0; }
   .talt-mq.grabbing { cursor: grabbing; }
-  .talt-mq + .talt-mq { margin-top: 16px; }
+  .talt-mq + .talt-mq { margin-top: -16px; }
   .talt-qc.wide { width: 388px; }
 
   /* ====== testimonial polish: 10 design + motion touches ====== */

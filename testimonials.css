@@ -1,0 +1,93 @@
+/* ===== KNB shared testimonials marquee (ported from the home section) =====
+   Self-contained: only depends on the brand tokens (--ink/--bg/--line/--card/
+   --muted/--ease) defined in work.css :root. Add testimonials.js + the
+   #testiWall markup + #tqModal to use it. */
+
+.talt { padding: 50px 0; position: relative; }
+.testi-wall { padding: 90px 0; }
+.testi-head { margin-bottom: 36px; }
+.testi-eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #e83fa0; margin-bottom: 12px; }
+.testi-wall .sec-head { font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; max-width: 18ch; }
+.testi-proof { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 14px; color: var(--muted); font-size: 14px; font-weight: 600; }
+.testi-proof b { color: var(--ink); }
+.testi-proof .talt-stars { font-size: 15px; }
+
+.talt-stars { color: #f5a623; letter-spacing: 2px; font-size: 14px; }
+.talt-av { width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+.talt-av.sm { width: 34px; height: 34px; font-size: 12px; }
+.talt-who { display: flex; flex-direction: column; }
+.talt-who b { font-weight: 600; }
+.talt-who span { color: var(--muted); font-size: 14px; }
+
+/* marquee rows */
+.talt-mq { overflow: hidden; cursor: grab; touch-action: pan-y; padding: 16px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.talt-mq.grabbing { cursor: grabbing; }
+.talt-mq + .talt-mq { margin-top: -16px; }
+.talt-mq-track { display: flex; gap: 16px; width: max-content; animation: taltScroll 44s linear infinite; }
+.talt-mq:hover .talt-mq-track { animation-play-state: paused; }
+@keyframes taltScroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .talt-mq-track { animation: none; } }
+
+/* card */
+a.talt-qc { position: relative; flex: none; width: 330px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; text-decoration: none; color: inherit; transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s var(--ease), opacity 0.3s var(--ease); }
+a.talt-qc:hover { transform: translateY(-3px); border-color: #cdcbc2; box-shadow: 0 14px 30px rgba(0,0,0,0.07); }
+.talt-qc.wide { width: 388px; }
+.talt-qc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.talt-qc blockquote { font-size: 15px; line-height: 1.5; font-weight: 500; margin-top: 10px; }
+.talt-qc figcaption { color: var(--muted); font-size: 13px; font-weight: 600; margin-top: 14px; }
+
+/* platform chips */
+.talt-chip { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
+.talt-chip.shopify { background: rgba(94,142,62,0.14); color: #4e7f32; }
+.talt-chip.webflow { background: rgba(67,83,255,0.12); color: #4353ff; }
+.talt-chip.wordpress { background: rgba(33,117,155,0.14); color: #21759b; }
+
+/* #6 quote mark */
+.talt-qc::after { content: "\201D"; position: absolute; top: 6px; right: 16px; font: 700 58px/1 Georgia, "Times New Roman", serif; color: rgba(17,17,16,0.06); pointer-events: none; transition: color 0.3s var(--ease); }
+.talt-qc:hover::after { color: rgba(232,63,160,0.16); }
+/* #1 hover focus */
+.talt-mq:hover .talt-qc:not(:hover) { opacity: 0.4; }
+.talt-mq.grabbing .talt-qc { opacity: 1 !important; }
+/* #5 star shimmer */
+.talt-qc:hover .talt-stars { background: linear-gradient(90deg, #f5a623 0%, #ffe1a3 45%, #f5a623 90%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: starSweep 0.9s linear; }
+@keyframes starSweep { from { background-position: 220% 0; } to { background-position: -220% 0; } }
+/* #7 avatar ring */
+.talt-qc[data-plat="shopify"],   .talt-av[data-plat="shopify"]   { --pa: #5e8e3e; }
+.talt-qc[data-plat="webflow"],   .talt-av[data-plat="webflow"]   { --pa: #4353ff; }
+.talt-qc[data-plat="wordpress"], .talt-av[data-plat="wordpress"] { --pa: #21759b; }
+.talt-av { box-shadow: 0 0 0 2px var(--pa, transparent); transition: box-shadow 0.3s var(--ease); }
+/* #8 featured card */
+.talt-qc.feat { width: 408px; background: var(--ink); border-color: var(--ink); color: #fff; }
+.talt-qc.feat::after { color: rgba(255,255,255,0.12); }
+.talt-qc.feat:hover::after { color: rgba(255,255,255,0.2); }
+.talt-qc.feat blockquote { color: #fff; }
+.talt-qc.feat figcaption { color: rgba(255,255,255,0.62); }
+.talt-qc.feat .talt-av { background: #fff; color: var(--ink); }
+.talt-feat { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #ffd98a; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.16); padding: 4px 11px; border-radius: 100px; margin-bottom: 14px; }
+/* #9 watermark */
+.testi-wall::before { content: "CLIENTS"; position: absolute; top: 36px; left: 50%; transform: translateX(-50%); font-size: clamp(90px, 18vw, 230px); font-weight: 700; letter-spacing: -0.04em; color: rgba(17,17,16,0.025); pointer-events: none; z-index: 0; white-space: nowrap; }
+.testi-wall .wrap, .testi-wall .talt-mq { position: relative; z-index: 1; }
+
+/* #10 quote modal */
+.tq-modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; }
+.tq-modal[hidden] { display: none; }
+.tq-backdrop { position: absolute; inset: 0; background: rgba(17,17,16,0.5); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.24s var(--ease); }
+.tq-modal.show .tq-backdrop { opacity: 1; }
+.tq-dialog { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 36px 32px 32px; max-width: 480px; width: 100%; box-shadow: 0 40px 90px rgba(0,0,0,0.28); transform: translateY(20px) scale(0.97); opacity: 0; transition: transform 0.34s var(--ease), opacity 0.34s var(--ease); }
+.tq-modal.show .tq-dialog { transform: none; opacity: 1; }
+.tq-x { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); cursor: pointer; font-size: 13px; color: var(--muted); transition: color 0.25s, border-color 0.25s; }
+.tq-x:hover { color: var(--ink); border-color: #cdcbc2; }
+.tq-dialog .talt-chip { margin-bottom: 16px; }
+.tq-dialog .talt-stars { font-size: 18px; }
+.tq-dialog blockquote { font-size: 21px; line-height: 1.42; font-weight: 500; letter-spacing: -0.015em; margin: 12px 0 22px; }
+.tq-who { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.tq-who .talt-who { display: flex; flex-direction: column; line-height: 1.35; }
+.tq-who .talt-who b { font-size: 14.5px; }
+.tq-who .talt-who span { color: var(--muted); font-size: 13px; }
+.tq-dialog .btn { width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .talt-qc:hover .talt-stars { animation: none; }
+  .tq-backdrop, .tq-dialog { transition: opacity 0.2s linear; }
+  .tq-dialog { transform: none; }
+}

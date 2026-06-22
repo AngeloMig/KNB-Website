@@ -26,6 +26,7 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="work.css">
+<link rel="stylesheet" href="testimonials.css">
 <style>
   /* search + industries + tools */
   .work-tools { display: flex; align-items: center; gap: 14px; }
@@ -304,30 +305,29 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <!-- TODO: PLACEHOLDER testimonials — replace with REAL, attributable client quotes (with permission) before launch. Do NOT publish fabricated quotes live. -->
-  <section class="testi-sec">
-    <div class="wrap">
-      <div class="testi-head reveal">
-        <span class="testi-kicker">What clients say</span>
-        <h2>Work that earns repeat business.</h2>
-      </div>
-      <div class="testi-grid">
-        <figure class="testi-card reveal r-pop">
-          <blockquote>KNB rebuilt our store and made it genuinely easy to manage — updates that used to take days now take minutes.</blockquote>
-          <figcaption><span class="t-name">[Client name]</span><span class="t-role">Founder · [Sample Brand]</span></figcaption>
-        </figure>
-        <figure class="testi-card reveal r-pop">
-          <blockquote>Clear scope, clear pricing, and a site that finally loads fast on mobile. The whole process was refreshingly simple.</blockquote>
-          <figcaption><span class="t-name">[Client name]</span><span class="t-role">Marketing Lead · [Sample Company]</span></figcaption>
-        </figure>
-        <figure class="testi-card reveal r-pop">
-          <blockquote>They understood what we needed before we could explain it, and the handoff guidance meant our team could take it from there.</blockquote>
-          <figcaption><span class="t-name">[Client name]</span><span class="t-role">Owner · [Sample Store]</span></figcaption>
-        </figure>
-      </div>
-    </div>
+  <!-- TESTIMONIALS (shared marquee — testimonials.css / testimonials.js) -->
+  <section class="talt testi-wall" id="testiWall">
+    <div class="wrap"><div class="testi-head reveal">
+      <span class="testi-eyebrow">★ What clients say</span>
+      <h2 class="sec-head">Voices of satisfaction and success</h2>
+      <p class="testi-proof"><span class="talt-stars" aria-hidden="true">★★★★★</span> <b data-count="4.9" data-dec="1">4.9</b> · <b data-count="18">18</b> projects shipped across Shopify, Webflow &amp; WordPress</p>
+    </div></div>
+    <div class="talt-mq reveal" data-dir="-1" role="group" aria-label="Client testimonials"><div class="talt-mq-track" data-row="0"></div></div>
+    <div class="talt-mq reveal" data-dir="1" aria-hidden="true"><div class="talt-mq-track" data-row="1"></div></div>
   </section>
+
+  <!-- testimonial quote modal -->
+  <div class="tq-modal" id="tqModal" hidden>
+    <div class="tq-backdrop" data-tqclose></div>
+    <div class="tq-dialog" role="dialog" aria-modal="true" aria-label="Client quote">
+      <button class="tq-x" data-tqclose aria-label="Close">✕</button>
+      <span class="talt-chip" id="tqChip"></span>
+      <div class="talt-stars" aria-hidden="true">★★★★★</div>
+      <blockquote id="tqQuote"></blockquote>
+      <div class="tq-who"><span class="talt-av" id="tqAv"></span><div class="talt-who"><b id="tqName"></b><span id="tqMeta"></span></div></div>
+      <a class="btn" id="tqLink"><span class="dot"></span>See the work</a>
+    </div>
+  </div>
 
   <!-- FAQ -->
   <section class="faq-sec">
@@ -421,5 +421,6 @@
   <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
   <script src="work.js"></script>
+  <script src="testimonials.js"></script>
 </body>
 </html>
