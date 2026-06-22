@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="86%" cy="14%" r="62%">
+      <stop offset="0%" stop-color="#e83fa0" stop-opacity="0.24"/>
+      <stop offset="55%" stop-color="#e83fa0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#111110"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <!-- badge + wordmark -->
+  <rect x="90" y="84" width="86" height="86" rx="20" fill="#f4f3ef"/>
+  <g transform="translate(98,92) scale(2.1875)">
+    <path d="M8.8 8 H12.4 V14.4 L18.8 8 H22.8 L15.2 15.7 L23.2 24 H19 L12.4 16.8 V24 H8.8 Z" fill="#111110"/>
+  </g>
+  <text x="196" y="142" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-1">KNB</text>
+  <!-- headline -->
+  <text x="88" y="330" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="84" font-weight="700" letter-spacing="-3">Websites that earn</text>
+  <text x="88" y="424" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="84" font-weight="700" letter-spacing="-3">their keep.</text>
+  <!-- sub -->
+  <text x="90" y="514" fill="#9a9892" font-family="Helvetica, Arial, sans-serif" font-size="29" font-weight="500">Web design &amp; development &#183; Shopify &#183; Webflow &#183; WordPress</text>
+  <!-- now booking -->
+  <circle cx="102" cy="566" r="7" fill="#6cf09a"/>
+  <text x="120" y="575" fill="#cfcdc6" font-family="Helvetica, Arial, sans-serif" font-size="23" font-weight="600">Now booking new projects &#183; knb.solutions</text>
+</svg>

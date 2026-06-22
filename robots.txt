@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /headline-preview.html
+Disallow: /logo-preview.html
+Disallow: /work-menu-preview.html
+Disallow: /case-study.html
+
+Sitemap: https://knb.solutions/sitemap.xml
