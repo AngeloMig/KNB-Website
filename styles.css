@@ -85,6 +85,19 @@
     transition: transform 0.4s var(--ease);
   }
   .logo:hover .mark { transform: rotate(-8deg) scale(1.06); }
+  /* Option 1 wordmark logo — bold "KNB" + pink signature dot */
+  .logo .lw { display: inline-flex; align-items: flex-end; font-weight: 900; font-size: 23px; letter-spacing: -0.05em; line-height: 0.9; animation: lwIn 0.7s var(--ease) backwards; }
+  .logo .lw .ch { display: inline-block; }
+  .logo .lw .ld { width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; margin: 0 0 4px 3px; flex: none; }
+  @keyframes lwIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .logo:hover .lw .ch { animation: lwWave 0.55s var(--ease); }
+  .logo:hover .lw .ch:nth-child(2) { animation-delay: 0.06s; }
+  .logo:hover .lw .ch:nth-child(3) { animation-delay: 0.12s; }
+  @keyframes lwWave { 30% { transform: translateY(-32%); } 60% { transform: translateY(7%); } to { transform: none; } }
+  .logo:hover .lw .ld { animation: lwDot 0.55s var(--ease); }
+  @keyframes lwDot { 30% { transform: scale(1.7); } 60% { transform: scale(0.9); } to { transform: none; } }
+  footer .logo .lgdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #e83fa0; margin-left: 5px; }
+  @media (prefers-reduced-motion: reduce) { .logo .lw, .logo:hover .lw .ch, .logo:hover .lw .ld { animation: none; } }
 
   .nav-right { display: flex; align-items: center; gap: 6px; }
   .nav-links { display: flex; align-items: center; gap: 2px; }
@@ -1823,7 +1836,7 @@
   .foot-col a { display: block; color: rgba(255,255,255,0.78); font-size: 15px; padding: 6px 0; transition: color 0.25s, transform 0.25s var(--ease); }
   .foot-col a:hover { color: #fff; transform: translateX(3px); }
   .foot-loc { display: block; color: rgba(255,255,255,0.45); font-size: 13px; padding: 6px 0 14px; }
-  footer .logo { font-size: 40px; letter-spacing: -0.04em; }
+  footer .logo { font-size: 40px; letter-spacing: -0.04em; gap: 0; align-items: center; }
   .socials { display: flex; gap: 12px; margin-top: 4px; }
   .socials a {
     width: 42px; height: 42px;
