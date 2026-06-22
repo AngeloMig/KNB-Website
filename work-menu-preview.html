@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Work dropdown — 5 full-width alternatives</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#f4f3ef; --ink:#111110; --muted:#6d6c66; --line:#dedcd4; --card:#fff; --ease:cubic-bezier(0.16,1,0.3,1); --w:min(1184px,calc(100vw - 56px)); }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Satoshi",-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.45;min-height:220vh;}
+  a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 28px;}
+
+  /* nav */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;}
+  .nav-inner{position:relative;display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 10px 0 18px;border-radius:100px;background:rgba(255,255,255,0.85);border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,0.08);}
+  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:700;font-size:19px;letter-spacing:-0.02em;}
+  .logo .mark{width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--bg);display:inline-flex;align-items:center;justify-content:center;font-size:14px;}
+  .nav-right{display:flex;align-items:center;gap:6px;}
+  .nav-links{display:flex;align-items:center;gap:2px;}
+  .nav-links > a,.nm-trigger{font-size:14px;font-weight:500;padding:9px 12px;border-radius:100px;transition:background .3s var(--ease);background:none;border:none;cursor:pointer;font-family:inherit;color:inherit;display:inline-flex;align-items:center;gap:6px;}
+  .nav-links > a:hover,.nm-trigger:hover,.nav-item.nm.open .nm-trigger{background:rgba(17,17,16,0.06);}
+  .nm-chev{width:12px;height:12px;opacity:.6;transition:transform .35s var(--ease);}
+  .nav-item.nm.open .nm-chev{transform:rotate(180deg);}
+  .nav-cta{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:600;padding:11px 18px;border-radius:100px;margin-left:6px;}
+  .nav-cta .dot{width:7px;height:7px;border-radius:50%;background:#6cf09a;}
+  .nav-item.nm{position:static;}
+
+  .intro{padding:150px 0 40px;}
+  .intro .eyebrow{font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#e83fa0;font-weight:700;}
+  .intro h1{font-size:clamp(36px,6vw,68px);font-weight:500;letter-spacing:-0.03em;margin:14px 0 0;}
+  .intro p{color:var(--muted);font-size:18px;margin-top:16px;max-width:64ch;}
+  .intro .hint{margin-top:22px;font-size:14px;font-weight:600;background:#fff;border:1px solid var(--line);display:inline-block;padding:10px 16px;border-radius:100px;}
+  .filler{height:60vh;}
+
+  /* ===== full-width panel shell ===== */
+  .nm-panel{position:absolute;top:calc(100% + 14px);left:0;right:0;transform:translateY(10px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s var(--ease),transform .3s var(--ease),visibility .3s;z-index:90;}
+  .nav-item.nm.open .nm-panel{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+  .wm-label{display:block;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+  .pcard{border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,0.2);padding:18px;background:var(--card);border:1px solid var(--line);}
+
+  /* shared thumb */
+  .th{position:relative;overflow:hidden;}
+  .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease);}
+  .th::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,16,0) 38%,rgba(17,17,16,.85));}
+
+  /* ============ WORK 1 — split feature, 4 columns + strip ============ */
+  .wm1-cols{display:grid;grid-template-columns:1.25fr 1.25fr 1fr 0.9fr;gap:14px;}
+  .wm1-feat{position:relative;border-radius:16px;overflow:hidden;min-height:248px;color:#fff;}
+  .wm1-feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease);}
+  .wm1-feat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,16,0) 35%,rgba(17,17,16,.86));}
+  .wm1-feat:hover img{transform:scale(1.05);}
+  .wm1-ov{position:absolute;inset:auto 0 0 0;z-index:1;padding:18px;}
+  .wm1-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.25);padding:4px 10px;border-radius:100px;backdrop-filter:blur(4px);}
+  .wm1-ov h3{font-size:21px;font-weight:600;letter-spacing:-0.02em;margin:10px 0 4px;}
+  .wm1-ov p{font-size:13px;color:rgba(255,255,255,0.8);max-width:30ch;}
+  .wm1-ov .go{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:600;border-bottom:1.5px solid #fff;padding-bottom:2px;}
+  .wm1-list{display:flex;flex-direction:column;gap:8px;}
+  .wm1-list .wm-label{margin:2px 0 2px 4px;}
+  .wm1-row{display:flex;align-items:center;gap:11px;padding:11px;border-radius:13px;border:1px solid var(--line);transition:border-color .25s,transform .25s var(--ease);}
+  .wm1-row:hover{border-color:var(--c);transform:translateX(3px);}
+  .wm1-ic{width:36px;height:36px;border-radius:10px;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none;}
+  .wm1-row b{font-size:13.5px;display:block;} .wm1-row small{font-size:11.5px;color:var(--muted);}
+  .wm1-row i{margin-left:auto;color:var(--c);font-style:normal;font-weight:700;}
+  .wm1-side{display:flex;flex-direction:column;}
+  .wm1-links{display:flex;flex-direction:column;gap:1px;margin-top:6px;}
+  .wm1-links a{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:9px;font-size:13.5px;font-weight:500;color:var(--muted);transition:.2s;}
+  .wm1-links a:hover{background:var(--bg);color:var(--ink);}
+  .wm1-links a span{font-size:11px;color:#e83fa0;font-weight:700;}
+  .wm1-book{margin-top:auto;background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:13px;font-size:12.5px;color:var(--muted);}
+  .wm1-book b{display:flex;align-items:center;gap:7px;color:var(--ink);font-size:13px;margin-bottom:3px;}
+  .wm1-book b::before{content:"";width:8px;height:8px;border-radius:50%;background:#6cf09a;}
+  .wm1-strip{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);}
+  .wm1-stats{display:flex;gap:30px;}
+  .wm1-stats b{font-size:19px;letter-spacing:-0.02em;} .wm1-stats small{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
+  .wm1-cta{background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;padding:12px 22px;border-radius:100px;}
+
+  /* ============ WORK 2 — bento mosaic ============ */
+  .wm2-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;grid-template-rows:128px 128px 116px;gap:12px;grid-template-areas:"big big web rate" "big big wp ind" "sh ca stats ind";}
+  .wm2-grid>*{border-radius:15px;}
+  .wm2-t{position:relative;overflow:hidden;border:1px solid var(--line);color:#fff;display:flex;align-items:flex-end;}
+  .wm2-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease);}
+  .wm2-t::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,16,0) 40%,rgba(17,17,16,.85));}
+  .wm2-t:hover img{transform:scale(1.07);}
+  .wm2-tov{position:relative;z-index:1;padding:13px;} .wm2-tov b{display:block;font-size:14px;font-weight:600;} .wm2-tov small,.wm2-tov span{font-size:11.5px;color:rgba(255,255,255,0.82);}
+  .wm2-big{grid-area:big;} .wm2-big .wm2-tov b{font-size:20px;}
+  .wm2-web{grid-area:web;} .wm2-wp{grid-area:wp;} .wm2-sh{grid-area:sh;} .wm2-ca{grid-area:ca;}
+  .wm2-rate{grid-area:rate;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:14px;border:none;}
+  .wm2-rate .n{font-size:30px;font-weight:700;letter-spacing:-0.02em;} .wm2-rate .s{color:#f5a623;font-size:13px;} .wm2-rate small{color:rgba(255,255,255,0.6);font-size:11px;}
+  .wm2-ind{grid-area:ind;background:var(--bg);border:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:8px;}
+  .wm2-ind .wm-label{margin-bottom:2px;} .wm2-chips{display:flex;flex-wrap:wrap;gap:6px;} .wm2-chips span{font-size:11px;font-weight:600;background:#fff;border:1px solid var(--line);padding:5px 9px;border-radius:100px;}
+  .wm2-stats{grid-area:stats;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;text-align:center;}
+  .wm2-stats b{font-size:22px;display:block;letter-spacing:-0.02em;} .wm2-stats small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
+  .wm2-cta{grid-area:cta;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:13.5px;border:none;transition:background .3s;}
+  .wm2-cta:hover{background:#2c2b28;}
+
+  /* ============ WORK 3 — tabs + content ============ */
+  .wm3-grid{display:grid;grid-template-columns:230px 1fr;gap:18px;min-height:330px;}
+  .wm3-tabs{display:flex;flex-direction:column;gap:6px;}
+  .wm3-tabs .wm-label{padding:4px 10px 6px;}
+  .wm3-tab{display:flex;align-items:center;justify-content:space-between;font-family:inherit;font-size:15px;font-weight:600;color:var(--muted);background:none;border:none;border-radius:11px;padding:13px 14px;cursor:pointer;text-align:left;transition:background .25s,color .25s;}
+  .wm3-tab small{font-size:12px;font-weight:700;color:var(--c);}
+  .wm3-tab:hover,.wm3-tab.active{background:var(--bg);color:var(--ink);}
+  .wm3-tab.active{box-shadow:inset 3px 0 0 var(--c);}
+  .wm3-all{margin-top:auto;font-size:13px;font-weight:600;background:var(--ink);color:#fff;text-align:center;padding:12px;border-radius:100px;}
+  .wm3-stage{position:relative;}
+  .wm3-panel{position:absolute;inset:0;opacity:0;transform:translateY(8px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none;display:grid;grid-template-columns:1.5fr 1fr;gap:16px;}
+  .wm3-panel.on{opacity:1;transform:none;pointer-events:auto;}
+  .wm3-shots{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;}
+  .wm3-shot{position:relative;border-radius:13px;overflow:hidden;}
+  .wm3-shot:first-child{grid-column:span 2;}
+  .wm3-shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease);min-height:90px;}
+  .wm3-shot:hover img{transform:scale(1.06);}
+  .wm3-shot span{position:absolute;left:0;bottom:0;right:0;z-index:1;padding:10px;color:#fff;font-size:12px;font-weight:600;background:linear-gradient(180deg,transparent,rgba(17,17,16,.8));}
+  .wm3-info{display:flex;flex-direction:column;}
+  .wm3-info h3{font-size:22px;font-weight:600;letter-spacing:-0.02em;}
+  .wm3-info .wm3-stat{font-size:12.5px;color:var(--c);font-weight:600;margin:4px 0 12px;}
+  .wm3-info ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
+  .wm3-info li{font-size:13px;color:var(--muted);display:flex;gap:8px;}
+  .wm3-info li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c);margin-top:6px;flex:none;}
+  .wm3-quote{font-size:13px;font-style:italic;color:var(--ink);border-left:2px solid var(--c);padding-left:12px;line-height:1.4;margin-bottom:14px;}
+  .wm3-cta{margin-top:auto;background:var(--c);color:#fff;font-size:13px;font-weight:600;text-align:center;padding:12px;border-radius:100px;}
+
+  /* ============ WORK 4 — dark immersive, intro + 6 cards ============ */
+  .wm4{background:#141413;border-color:#2a2a27;color:#fff;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+  .wm4::before{content:"";position:absolute;top:-140px;right:-60px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(108,240,154,0.16),transparent 70%);filter:blur(34px);}
+  .wm4::after{content:"";position:absolute;bottom:-160px;left:-60px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(123,140,255,0.14),transparent 70%);filter:blur(34px);}
+  .wm4-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;position:relative;z-index:1;}
+  .wm4-intro{display:flex;flex-direction:column;}
+  .wm4-intro .wm-label{color:rgba(255,255,255,0.5);}
+  .wm4-intro h3{font-size:26px;font-weight:500;letter-spacing:-0.03em;margin:10px 0 8px;}
+  .wm4-intro p{font-size:13.5px;color:rgba(255,255,255,0.62);line-height:1.55;}
+  .wm4-mini{display:flex;gap:22px;margin:18px 0;}
+  .wm4-mini b{font-size:22px;font-weight:700;letter-spacing:-0.02em;} .wm4-mini small{display:block;font-size:11px;color:rgba(255,255,255,0.5);}
+  .wm4-cta{background:#fff;color:#141413;font-size:13.5px;font-weight:600;text-align:center;padding:13px;border-radius:100px;}
+  .wm4-book{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:8px;}
+  .wm4-book::before{content:"";width:8px;height:8px;border-radius:50%;background:#6cf09a;box-shadow:0 0 10px #6cf09a;}
+  .wm4-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .wm4-card{border:1px solid #2c2c28;border-radius:14px;overflow:hidden;background:#1b1b19;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;}
+  .wm4-card:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 16px 36px rgba(0,0,0,0.5);}
+  .wm4-th{position:relative;aspect-ratio:16/10;overflow:hidden;}
+  .wm4-th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease);}
+  .wm4-card:hover .wm4-th img{transform:scale(1.08);}
+  .wm4-dot{position:absolute;top:9px;left:9px;width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);}
+  .wm4-cb{padding:10px 12px 12px;} .wm4-cb b{font-size:13.5px;} .wm4-cb small{display:block;font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px;}
+
+  /* ============ WORK 5 — editorial, sidebar + 8 thumbs ============ */
+  .wm5-grid{display:grid;grid-template-columns:212px 1fr;gap:22px;}
+  .wm5-side{display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--line);padding-right:20px;}
+  .wm5-side .wm-label{margin-bottom:4px;}
+  .wm5-side a{font-size:14px;font-weight:600;color:var(--muted);padding:8px 6px;border-radius:8px;display:flex;justify-content:space-between;transition:.2s;}
+  .wm5-side a:hover,.wm5-side a.on{color:var(--ink);background:var(--bg);}
+  .wm5-side a span{font-size:11px;color:var(--muted);}
+  .wm5-ind{margin-top:14px;} .wm5-ind .wm-label{margin-bottom:8px;}
+  .wm5-indchips{display:flex;flex-wrap:wrap;gap:6px;} .wm5-indchips span{font-size:11px;font-weight:600;border:1px solid var(--line);padding:5px 9px;border-radius:100px;cursor:pointer;color:var(--muted);}
+  .wm5-indchips span:hover{color:var(--ink);border-color:var(--ink);}
+  .wm5-main{display:flex;flex-direction:column;}
+  .wm5-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px;}
+  .wm5-head h3{font-size:24px;font-weight:500;letter-spacing:-0.03em;margin-top:4px;}
+  .wm5-filters{display:flex;gap:6px;}
+  .wm5-filters span{font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:100px;cursor:pointer;transition:.25s;}
+  .wm5-filters span:hover{color:var(--ink);border-color:var(--ink);} .wm5-filters span.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .wm5-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .wm5-item{border-radius:12px;overflow:hidden;border:1px solid var(--line);transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .wm5-item:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,0.14);}
+  .wm5-item img{aspect-ratio:4/3;width:100%;object-fit:cover;object-position:top;}
+  .wm5-cap{display:block;padding:9px 11px 11px;} .wm5-cap b{font-size:13px;display:block;} .wm5-cap small{font-size:11px;color:var(--muted);}
+  .wm5-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+  .wm5-foot span{font-size:13px;color:var(--muted);} .wm5-foot a{font-size:13px;font-weight:600;border-bottom:1.5px solid var(--ink);padding-bottom:2px;}
+
+  /* ---- v3 extra features ---- */
+  .wm1-strip-r{display:flex;align-items:center;gap:18px;}
+  .wm1-trust{font-size:12.5px;color:var(--muted);font-weight:600;white-space:nowrap;}
+  .wm1-trust .st{color:#f5a623;letter-spacing:2px;margin-right:6px;}
+  .wm1-feat .wm1-meta{display:block;margin-top:8px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.82);}
+  .wm2-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .wm2-head .t{font-size:14px;font-weight:600;} .wm2-head .t small{color:var(--muted);font-weight:500;margin-left:8px;}
+  .wm2-head a{font-size:12.5px;font-weight:600;border-bottom:1.5px solid var(--ink);padding-bottom:1px;}
+  .wm3-tools{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+  .wm3-tools span{font-size:10.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 28%,#fff);padding:4px 9px;border-radius:100px;}
+  .wm4-stars{color:#f5a623;font-size:14px;letter-spacing:2px;margin:-2px 0 10px;}
+  .wm4-foot{display:flex;align-items:center;gap:14px;margin-top:14px;}
+  .wm4-foot a.alt{background:none;color:#fff;border-bottom:1.5px solid rgba(255,255,255,0.4);padding:0 0 1px;border-radius:0;}
+  .wm5-item{position:relative;} .wm5-badge{position:absolute;top:8px;left:8px;z-index:2;font-size:9.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:#e83fa0;color:#fff;padding:3px 8px;border-radius:100px;}
+  @media (max-width:1080px){ .nm-panel{display:none!important;} }
+</style>
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap nav-inner">
+    <a href="index.html" class="logo"><span class="mark">K</span>KNB</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <div class="nav-item nm"><button class="nm-trigger">Work 1 <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="nm-panel pcard wm1">
+            <div class="wm1-cols">
+              <a class="wm1-feat" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=520" alt=""><span class="wm1-ov"><span class="wm1-tag">Featured · Shopify</span><h3>Light My Bricks</h3><p>Ecommerce store revamp for an LED lighting brand.</p><span class="wm1-meta">★★★★★ · delivered in 4 weeks</span><span class="go">View case study →</span></span></a>
+              <a class="wm1-feat" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=520" alt=""><span class="wm1-ov"><span class="wm1-tag">Featured · Webflow</span><h3>Feedbird</h3><p>Marketing site for a social-media management service.</p><span class="wm1-meta">★★★★★ · custom Webflow build</span><span class="go">View case study →</span></span></a>
+              <div class="wm1-list">
+                <span class="wm-label">By platform</span>
+                <a class="wm1-row" href="shopify.html" style="--c:#5e8e3e"><span class="wm1-ic">S</span><span><b>Shopify</b><small>6 projects</small></span><i>→</i></a>
+                <a class="wm1-row" href="webflow.html" style="--c:#4353ff"><span class="wm1-ic">W</span><span><b>Webflow</b><small>10 projects</small></span><i>→</i></a>
+                <a class="wm1-row" href="wordpress.html" style="--c:#21759b"><span class="wm1-ic">Wp</span><span><b>WordPress</b><small>2 projects</small></span><i>→</i></a>
+              </div>
+              <div class="wm1-side">
+                <span class="wm-label">Quick links</span>
+                <div class="wm1-links">
+                  <a href="portfolio.html">All projects <span>18</span></a>
+                  <a href="portfolio.html">By industry</a>
+                  <a href="pricing.html">Pricing &amp; plans</a>
+                  <a href="contact.html">Our process</a>
+                  <a href="contact.html">Get in touch</a>
+                </div>
+                <div class="wm1-book"><b>Now booking</b>1 Shopify slot left this month.</div>
+              </div>
+            </div>
+            <div class="wm1-strip">
+              <div class="wm1-stats"><div><b>18</b><small>Projects</small></div><div><b>★ 4.9</b><small>Rating</small></div><div><b>3</b><small>Platforms</small></div><div><b>12+</b><small>Industries</small></div></div>
+              <div class="wm1-strip-r"><span class="wm1-trust"><span class="st">★★★★★</span>Trusted by 18 clients</span><a class="wm1-cta" href="contact.html">Start your project →</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item nm"><button class="nm-trigger">Work 2 <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="nm-panel pcard wm2">
+            <div class="wm2-head"><span class="t">Our work <small>18 projects · 3 platforms</small></span><a href="portfolio.html">View all →</a></div>
+            <div class="wm2-grid">
+              <a class="wm2-t wm2-big" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=520" alt=""><span class="wm2-tov"><b>Shopify</b><span>Store revamps &amp; ecommerce · 6 projects</span></span></a>
+              <a class="wm2-t wm2-web" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=360" alt=""><span class="wm2-tov"><b>Webflow</b><small>10 sites</small></span></a>
+              <a class="wm2-t wm2-wp" href="wordpress.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.allterrainindustries.com.au%2F?w=360" alt=""><span class="wm2-tov"><b>WordPress</b><small>2 sites</small></span></a>
+              <div class="wm2-rate"><span class="s">★★★★★</span><span class="n">4.9</span><small>18 projects shipped</small></div>
+              <div class="wm2-ind"><span class="wm-label">Industries</span><div class="wm2-chips"><span>Retail</span><span>Food</span><span>Software</span><span>Outdoor</span><span>Beauty</span><span>Property</span></div></div>
+              <a class="wm2-t wm2-sh" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=300" alt=""><span class="wm2-tov"><b>Cacao Collective</b></span></a>
+              <a class="wm2-t wm2-ca" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=300" alt=""><span class="wm2-tov"><b>Maestro Labs</b></span></a>
+              <div class="wm2-stats"><div><b>18</b><small>Projects</small></div><div><b>3</b><small>Platforms</small></div><div><b>12+</b><small>Industries</small></div></div>
+              <a class="wm2-cta" href="contact.html">Start a project →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item nm"><button class="nm-trigger">Work 3 <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="nm-panel pcard wm3">
+            <div class="wm3-grid">
+              <div class="wm3-tabs">
+                <span class="wm-label">Platforms</span>
+                <button class="wm3-tab active" data-t="0" style="--c:#5e8e3e">Shopify <small>6</small></button>
+                <button class="wm3-tab" data-t="1" style="--c:#4353ff">Webflow <small>10</small></button>
+                <button class="wm3-tab" data-t="2" style="--c:#21759b">WordPress <small>2</small></button>
+                <a class="wm3-all" href="portfolio.html">All 18 projects →</a>
+              </div>
+              <div class="wm3-stage">
+                <div class="wm3-panel on" data-p="0" style="--c:#5e8e3e">
+                  <div class="wm3-shots">
+                    <a class="wm3-shot" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=520" alt=""><span>Light My Bricks</span></a>
+                    <a class="wm3-shot" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=300" alt=""><span>Cacao Collective</span></a>
+                    <a class="wm3-shot" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=300" alt=""><span>Rise Outdoor</span></a>
+                  </div>
+                  <div class="wm3-info"><h3>Shopify</h3><p class="wm3-stat">6 stores · 2–4 week delivery · ★ 4.9</p><ul><li>Store revamps &amp; migrations</li><li>Conversion-focused product pages</li><li>Fast, mobile-first checkout</li></ul><div class="wm3-tools"><span>Liquid</span><span>Apps</span><span>Speed</span><span>CRO</span></div><p class="wm3-quote">"Updates that used to take days now take minutes." — Light My Bricks</p><a class="wm3-cta" href="shopify.html">Start a Shopify project →</a></div>
+                </div>
+                <div class="wm3-panel" data-p="1" style="--c:#4353ff">
+                  <div class="wm3-shots">
+                    <a class="wm3-shot" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=520" alt=""><span>Feedbird</span></a>
+                    <a class="wm3-shot" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=300" alt=""><span>Maestro Labs</span></a>
+                    <a class="wm3-shot" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.teamtown.co%2F?w=300" alt=""><span>Teamtown</span></a>
+                  </div>
+                  <div class="wm3-info"><h3>Webflow</h3><p class="wm3-stat">10 sites · custom + CMS · ★ 4.9</p><ul><li>Custom visual design</li><li>Editable CMS, no code</li><li>SEO &amp; launch setup</li></ul><div class="wm3-tools"><span>CMS</span><span>Interactions</span><span>SEO</span></div><p class="wm3-quote">"Clear scope, clear pricing — and it loads fast." — Feedbird</p><a class="wm3-cta" href="webflow.html">Start a Webflow project →</a></div>
+                </div>
+                <div class="wm3-panel" data-p="2" style="--c:#21759b">
+                  <div class="wm3-shots">
+                    <a class="wm3-shot" href="wordpress.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.allterrainindustries.com.au%2F?w=520" alt=""><span>All Terrain Industries</span></a>
+                    <a class="wm3-shot" href="wordpress.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.privvymarketing.com.au%2F?w=300" alt=""><span>Privvy Marketing</span></a>
+                    <a class="wm3-shot" href="wordpress.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.allterrainindustries.com.au%2F?w=300" alt=""><span>WooCommerce</span></a>
+                  </div>
+                  <div class="wm3-info"><h3>WordPress</h3><p class="wm3-stat">2 sites · WooCommerce &amp; CMS · ★ 4.9</p><ul><li>WooCommerce stores</li><li>Flexible business sites</li><li>Content-managed pages</li></ul><div class="wm3-tools"><span>WooCommerce</span><span>ACF</span><span>Security</span></div><p class="wm3-quote">"They understood what we needed before we could explain it." — ATI</p><a class="wm3-cta" href="wordpress.html">Start a WordPress project →</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item nm"><button class="nm-trigger">Work 4 <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="nm-panel pcard wm4">
+            <div class="wm4-grid">
+              <div class="wm4-intro">
+                <span class="wm-label">Our work</span>
+                <h3>Websites that earn their keep.</h3>
+                <div class="wm4-stars">★★★★★</div>
+                <p>Shopify revamps, Webflow builds, and WordPress sites for growing businesses — 18 shipped across 3 platforms.</p>
+                <div class="wm4-mini"><div><b>18</b><small>Projects</small></div><div><b>★4.9</b><small>Rating</small></div><div><b>3</b><small>Platforms</small></div></div>
+                <a class="wm4-cta" href="portfolio.html">View all work →</a>
+                <a class="wm4-cta" href="contact.html" style="background:none;color:#fff;border:1px solid rgba(255,255,255,0.25);margin-top:8px;">Talk to us →</a>
+                <div class="wm4-book">Now booking new projects</div>
+              </div>
+              <div class="wm4-cards">
+                <a class="wm4-card" href="shopify.html" style="--c:#6cf09a"><span class="wm4-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=360" alt=""><span class="wm4-dot"></span></span><span class="wm4-cb"><b>Light My Bricks</b><small>Shopify</small></span></a>
+                <a class="wm4-card" href="shopify.html" style="--c:#6cf09a"><span class="wm4-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=360" alt=""><span class="wm4-dot"></span></span><span class="wm4-cb"><b>Cacao Collective</b><small>Shopify</small></span></a>
+                <a class="wm4-card" href="webflow.html" style="--c:#7b8cff"><span class="wm4-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=360" alt=""><span class="wm4-dot"></span></span><span class="wm4-cb"><b>Feedbird</b><small>Webflow</small></span></a>
+                <a class="wm4-card" href="webflow.html" style="--c:#7b8cff"><span class="wm4-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=360" alt=""><span class="wm4-dot"></span></span><span class="wm4-cb"><b>Maestro Labs</b><small>Webflow</small></span></a>
+                <a class="wm4-card" href="wordpress.html" style="--c:#54b8e0"><span class="wm4-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.allterrainindustries.com.au%2F?w=360" alt=""><span class="wm4-dot"></span></span><span class="wm4-cb"><b>All Terrain</b><small>WordPress</small></span></a>
+                <a class="wm4-card" href="wordpress.html" style="--c:#54b8e0"><span class="wm4-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.privvymarketing.com.au%2F?w=360" alt=""><span class="wm4-dot"></span></span><span class="wm4-cb"><b>Privvy Marketing</b><small>WordPress</small></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item nm"><button class="nm-trigger">Work 5 <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="nm-panel pcard wm5">
+            <div class="wm5-grid">
+              <div class="wm5-side">
+                <span class="wm-label">Browse</span>
+                <a class="on" href="portfolio.html">All work <span>44</span></a>
+                <a href="shopify.html">Shopify <span>6</span></a>
+                <a href="webflow.html">Webflow <span>10</span></a>
+                <a href="wordpress.html">WordPress <span>28</span></a>
+                <div class="wm5-ind"><span class="wm-label">By industry</span><div class="wm5-indchips"><span>Retail</span><span>Food</span><span>Software</span><span>Outdoor</span><span>Beauty</span></div></div>
+              </div>
+              <div class="wm5-main">
+                <div class="wm5-head"><div><span class="wm-label">Selected work · 2024–25</span><h3>Sites we've shipped</h3></div><div class="wm5-filters"><span class="on">All</span><span>Shopify</span><span>Webflow</span><span>WordPress</span></div></div>
+                <div class="wm5-thumbs">
+                  <a class="wm5-item" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=300" alt=""><span class="wm5-cap"><b>Light My Bricks</b><small>Shopify</small></span></a>
+                  <a class="wm5-item" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=300" alt=""><span class="wm5-cap"><b>Feedbird</b><small>Webflow</small></span></a>
+                  <a class="wm5-item" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=300" alt=""><span class="wm5-cap"><b>Cacao Collective</b><small>Shopify</small></span></a>
+                  <a class="wm5-item" href="webflow.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=300" alt=""><span class="wm5-cap"><b>Maestro Labs</b><small>Webflow</small></span></a>
+                  <a class="wm5-item" href="shopify.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=300" alt=""><span class="wm5-cap"><b>Rise Outdoor</b><small>Shopify</small></span></a>
+                  <a class="wm5-item" href="webflow.html"><span class="wm5-badge">New</span><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.teamtown.co%2F?w=300" alt=""><span class="wm5-cap"><b>Teamtown</b><small>Webflow</small></span></a>
+                  <a class="wm5-item" href="wordpress.html"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.allterrainindustries.com.au%2F?w=300" alt=""><span class="wm5-cap"><b>All Terrain</b><small>WordPress</small></span></a>
+                  <a class="wm5-item" href="wordpress.html"><span class="wm5-badge">New</span><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.privvymarketing.com.au%2F?w=300" alt=""><span class="wm5-cap"><b>Privvy Marketing</b><small>WordPress</small></span></a>
+                </div>
+                <div class="wm5-foot"><span>18 projects across 3 platforms &amp; 12+ industries</span><a href="portfolio.html">Browse the portfolio →</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <a href="contact.html" class="nav-cta"><span class="dot"></span>Start your project</a>
+    </div>
+  </div></nav>
+
+  <section class="intro"><div class="wrap">
+    <span class="eyebrow">● Internal review · v2 (full-width)</span>
+    <h1>Work dropdown — 5 alternatives</h1>
+    <p>Each <b>Work 1–5</b> opens a different <b>full-width</b> mega-menu (matched to the nav width), now with extra content. Click a trigger to pin it open; Esc or click-out to close. Tell me the number and I'll ship it across the site.</p>
+    <p class="hint">Work 1 split-feature · Work 2 bento · Work 3 tabs · Work 4 dark · Work 5 editorial</p>
+  </div></section>
+  <div class="filler"></div>
+
+  <script>
+    document.querySelectorAll('.nav-item.nm').forEach((item) => {
+      const t = item.querySelector('.nm-trigger');
+      t.addEventListener('click', (e) => {
+        e.preventDefault();
+        const open = item.classList.contains('open');
+        document.querySelectorAll('.nav-item.nm').forEach((i) => i.classList.remove('open'));
+        if (!open) item.classList.add('open');
+      });
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.nav-item.nm').forEach((i) => i.classList.remove('open')); });
+    document.addEventListener('click', (e) => { if (!e.target.closest('.nav-item.nm')) document.querySelectorAll('.nav-item.nm').forEach((i) => i.classList.remove('open')); });
+    document.querySelectorAll('.wm3').forEach((p) => {
+      const act = (i) => {
+        p.querySelectorAll('.wm3-tab').forEach((t) => t.classList.toggle('active', t.dataset.t === i));
+        p.querySelectorAll('.wm3-panel').forEach((pan) => pan.classList.toggle('on', pan.dataset.p === i));
+      };
+      p.querySelectorAll('.wm3-tab').forEach((tab) => {
+        tab.addEventListener('mouseenter', () => act(tab.dataset.t));
+        tab.addEventListener('click', (e) => { e.preventDefault(); act(tab.dataset.t); });
+      });
+    });
+    document.querySelectorAll('.wm5-filters, .wm5-side').forEach((f) => f.querySelectorAll('span, a').forEach((s) => { if (s.tagName === 'SPAN' || s.classList.contains('on') || f.classList.contains('wm5-side')) s.addEventListener('click', (e) => { if (f.classList.contains('wm5-side')) return; e.preventDefault(); f.querySelectorAll('span').forEach((x) => x.classList.remove('on')); s.classList.add('on'); }); }));
+  </script>
+</body>
+</html>

@@ -13,7 +13,11 @@
 <title>Page not found — KNB Web Solution</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://s.wp.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.simpleicons.org">
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="work.css">
 <style>
   .nf { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 140px 28px 80px; position: relative; overflow: hidden; }
@@ -29,6 +33,7 @@
   .nf-links a { color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 2px; transition: color 0.3s, border-color 0.3s; }
   .nf-links a:hover { color: var(--ink); border-color: var(--ink); }
 </style>
+<link rel="stylesheet" href="navmenu.css">
 </head>
 <body>
 
@@ -37,7 +42,37 @@
       <a href="index.html" class="logo"><span class="mark">K</span>KNB</a>
       <div class="nav-right">
         <div class="nav-links">
-          <a href="portfolio.html">Portfolio</a>
+          <div class="nav-item nm">
+            <button class="nm-trigger" aria-haspopup="true" aria-expanded="false">Work
+              <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="nm-panel" role="menu">
+              <div class="nm-wrap">
+                <div class="nm-side">
+                  <span class="nm-label">Browse</span>
+                  <a href="portfolio.html">All work <span>44</span></a>
+                  <a href="shopify.html">Shopify <span>6</span></a>
+                  <a href="webflow.html">Webflow <span>10</span></a>
+                  <a href="wordpress.html">WordPress <span>28</span></a>
+                  <div class="nm-ind"><span class="nm-label">By industry</span><div class="nm-indchips"><span>Retail</span><span>Food</span><span>Software</span><span>Outdoor</span><span>Beauty</span></div></div>
+                </div>
+                <div class="nm-main">
+                  <div class="nm-head"><div><span class="nm-label">Selected work</span><h3>Sites we've shipped</h3></div><div class="nm-filters"><button class="on" data-f="all">All</button><button data-f="shopify">Shopify</button><button data-f="webflow">Webflow</button><button data-f="wordpress">WordPress</button></div></div>
+                  <div class="nm-thumbs">
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Light My Bricks</b><small>Shopify · Retail</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Feedbird</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Cacao Collective</b><small>Shopify · Food</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Maestro Labs</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Rise Outdoor</b><small>Shopify · Outdoor</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coptrz</b><small>WordPress · Drone tech</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoachman.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fphoenixsafe.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
+                  </div>
+                  <div class="nm-foot"><span>44 projects · 3 platforms · 18+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
           <a href="pricing.html">Pricing</a>
           <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
@@ -49,10 +84,11 @@
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="portfolio.html">Portfolio</a>
+    <div class="mm-plats"><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
     <a href="pricing.html">Pricing</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions →</a>
+    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions &#8594;</a>
   </div>
 
   <main class="nf">
@@ -76,5 +112,6 @@
   </main>
 
   <script src="work.js"></script>
+  <script src="navmenu.js"></script>
 </body>
 </html>

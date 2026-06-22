@@ -1,0 +1,29 @@
+# Netlify headers — caching + safe security defaults
+# Docs: https://docs.netlify.com/routing/headers/
+
+# Default for every response: sensible security headers
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# HTML — always revalidate so deploys show up immediately
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Stylesheets & scripts — short cache (no fingerprinting in filenames)
+/*.css
+  Cache-Control: public, max-age=3600
+/*.js
+  Cache-Control: public, max-age=3600
+
+# Static brand assets that rarely change — cache hard
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+/*.webmanifest
+  Cache-Control: public, max-age=86400

@@ -1,0 +1,115 @@
+/* ===== KNB nav "Work" mega-menu — editorial (shared: home styles.css + work pages work.css) =====
+   Depends only on brand tokens (--ink/--bg/--line/--card/--muted/--ease).
+   Panel is positioned against .nav-inner so it stays put even when the nav
+   gains backdrop-filter on scroll. The base .nav-links>a fix (styles.css /
+   work.css) keeps these panel anchors from inheriting the pill-link styles. */
+
+.nav-inner { position: relative; }
+.nav-item.nm { position: static; display: inline-flex; }
+
+.nm-trigger { display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:14.5px; font-weight:500; color:inherit; background:none; border:none; cursor:pointer; padding:9px 14px; border-radius:100px; transition:background .3s var(--ease); }
+.nm-trigger:hover, .nm-trigger.active, .nav-item.nm.open .nm-trigger { background: rgba(17,17,16,0.06); }
+.nm-chev { width:13px; height:13px; transition:transform .35s var(--ease); opacity:.7; }
+.nav-item.nm.open .nm-chev { transform: rotate(180deg); }
+
+/* full-width panel anchored to the nav bar */
+.nm-panel { position:absolute; top:calc(100% + 12px); left:0; right:0; background:var(--card); border:1px solid var(--line); border-radius:22px; box-shadow:0 30px 80px rgba(0,0,0,0.18); padding:20px; opacity:0; visibility:hidden; pointer-events:none; transform:translateY(10px); transition:opacity .3s var(--ease), transform .3s var(--ease), visibility .3s; z-index:90; }
+.nm-panel::before { content:""; position:absolute; top:-18px; left:0; right:0; height:18px; } /* hover bridge over the gap */
+.nav-item.nm.open .nm-panel, .nav-item.nm:focus-within .nm-panel { opacity:1; visibility:visible; pointer-events:auto; transform:translateY(0); }
+
+.nm-label { display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+.nm-wrap { display:grid; grid-template-columns:212px 1fr; gap:22px; }
+
+/* sidebar */
+.nm-side { display:flex; flex-direction:column; gap:3px; border-right:1px solid var(--line); padding-right:20px; }
+.nm-side > .nm-label { margin-bottom:6px; }
+.nm-side > a { display:flex; justify-content:space-between; align-items:center; font-size:14px; font-weight:600; color:var(--muted); padding:8px; border-radius:9px; transition:background .2s, color .2s; }
+.nm-side > a:hover { color:var(--ink); background:var(--bg); }
+.nm-side > a span { font-size:11px; color:var(--muted); font-weight:700; }
+/* #9 active-page awareness: the rail link for the current page gets the dark pill
+   (JS sets .nm-active; defaults to "All work" when not on a platform page) */
+.nm-side > a.nm-active { background:var(--ink); color:var(--bg); font-weight:700; }
+.nm-side > a.nm-active:hover { background:#2c2b28; color:var(--bg); }
+.nm-side > a.nm-active span { color:rgba(255,255,255,0.7); }
+.nm-ind { margin-top:14px; }
+.nm-ind .nm-label { margin-bottom:9px; }
+.nm-indchips { display:flex; flex-wrap:wrap; gap:6px; }
+.nm-indchips span { font-size:11px; font-weight:600; color:var(--muted); border:1px solid var(--line); padding:5px 9px; border-radius:100px; }
+
+/* main */
+.nm-main { display:flex; flex-direction:column; }
+.nm-head { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:14px; }
+.nm-head h3 { font-size:23px; font-weight:500; letter-spacing:-0.03em; margin-top:5px; }
+.nm-filters { display:flex; gap:6px; }
+.nm-filters button { font-family:inherit; font-size:12px; font-weight:600; color:var(--muted); background:none; border:1px solid var(--line); padding:6px 13px; border-radius:100px; cursor:pointer; transition:.25s; }
+.nm-filters button:hover { color:var(--ink); border-color:var(--ink); }
+.nm-filters button.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+
+.nm-thumbs { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; align-items:start; }
+.nm-item { position:relative; display:flex; flex-direction:column; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--card); transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease); }
+.nm-item.hide { display:none; }
+.nm-item:hover { transform:translateY(-4px); box-shadow:0 16px 32px rgba(0,0,0,0.14); }
+.nm-th { position:relative; display:block; aspect-ratio:4/3; overflow:hidden; background:var(--bg); }
+.nm-th img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; opacity:0; transition:transform .6s var(--ease), opacity .4s var(--ease); }
+.nm-th.is-loaded img { opacity:1; }
+.nm-item:hover .nm-th img { transform:scale(1.07); }
+/* #6 hover darkening gradient so the View pill always reads */
+.nm-th::after { content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(to top, rgba(17,17,16,0.42), transparent 55%); opacity:0; transition:opacity .3s var(--ease); }
+.nm-item:hover .nm-th::after { opacity:1; }
+/* #7 loading shimmer until the screenshot loads */
+.nm-th::before { content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(100deg,#ece9e1 30%,#f6f5f0 50%,#ece9e1 70%); background-size:200% 100%; animation:nmShimmer 1.3s linear infinite; }
+.nm-th.is-loaded::before { display:none; }
+@keyframes nmShimmer { to { background-position:-200% 0; } }
+.nm-view { position:absolute; right:8px; bottom:8px; z-index:1; font-size:11px; font-weight:700; color:#fff; background:rgba(17,17,16,0.72); padding:4px 9px; border-radius:100px; opacity:0; transform:translateY(4px); transition:opacity .25s var(--ease), transform .25s var(--ease); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); }
+.nm-item:hover .nm-view { opacity:1; transform:none; }
+.nm-cap { display:block; padding:9px 11px 11px; }
+.nm-cap b { font-size:13px; font-weight:600; display:block; }
+.nm-cap small { font-size:11px; color:var(--muted); }
+/* #4 platform colour-coding — dot before the caption + border tint on hover */
+.nm-cap small::before { content:""; display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:6px; vertical-align:middle; background:var(--muted); }
+.nm-item[data-plat="shopify"]   .nm-cap small::before { background:#5e8e3e; }
+.nm-item[data-plat="webflow"]   .nm-cap small::before { background:#4353ff; }
+.nm-item[data-plat="wordpress"] .nm-cap small::before { background:#2b85ac; }
+.nm-item[data-plat="shopify"]:hover   { border-color:#5e8e3e; }
+.nm-item[data-plat="webflow"]:hover   { border-color:#4353ff; }
+.nm-item[data-plat="wordpress"]:hover { border-color:#2b85ac; }
+/* #5 staggered tile reveal when the panel opens */
+.nav-item.nm.open .nm-item { animation:nmTileIn .42s var(--ease) backwards; }
+.nav-item.nm.open .nm-item:nth-child(1){animation-delay:.02s}
+.nav-item.nm.open .nm-item:nth-child(2){animation-delay:.06s}
+.nav-item.nm.open .nm-item:nth-child(3){animation-delay:.10s}
+.nav-item.nm.open .nm-item:nth-child(4){animation-delay:.14s}
+.nav-item.nm.open .nm-item:nth-child(5){animation-delay:.18s}
+.nav-item.nm.open .nm-item:nth-child(6){animation-delay:.22s}
+.nav-item.nm.open .nm-item:nth-child(7){animation-delay:.26s}
+.nav-item.nm.open .nm-item:nth-child(8){animation-delay:.30s}
+@keyframes nmTileIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+.nm-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+.nm-foot span { font-size:13px; color:var(--muted); }
+.nm-foot a { font-size:13px; font-weight:600; color:var(--ink); border-bottom:1.5px solid var(--ink); padding-bottom:1px; }
+
+@media (max-width:1280px){ .nm-thumbs { grid-template-columns:repeat(3,1fr); } }
+@media (prefers-reduced-motion: reduce){
+  .nm-panel { transition:opacity .2s linear, visibility .2s; transform:translateY(0); }
+  .nav-item.nm.open .nm-panel, .nav-item.nm:focus-within .nm-panel { transform:translateY(0); }
+  .nm-th img, .nm-chev, .nm-view { transition:none; }
+  .nm-th::before { animation:none; }
+  .nav-item.nm.open .nm-item { animation:none; }
+}
+
+/* mobile: chip row in the fullscreen menu; hide the desktop panel */
+.mm-plats { display:flex; flex-wrap:wrap; gap:8px; margin:-4px 0 4px; }
+.mm-plats a { font-size:15px !important; font-weight:600; color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:7px 15px !important; }
+.mm-plats a:hover { color:var(--ink); border-color:var(--ink); }
+@media (max-width:1080px){ .nav-item.nm .nm-panel { display:none; } }
+
+/* #10 mobile work browser — a horizontal scroll of recent thumbnails injected
+   into the fullscreen menu (cloned from the hidden desktop panel by navmenu.js) */
+.mm-work { display:flex; gap:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; margin:2px 0 10px; padding-bottom:6px; }
+.mm-work::-webkit-scrollbar { display:none; }
+.mm-work .nm-item { flex:0 0 64%; max-width:240px; font-size:13px !important; font-weight:600 !important; padding:0 !important; border:1px solid var(--line) !important; border-radius:12px !important; }
+.mm-work .nm-item.is-feat { grid-column:auto; grid-row:auto; }
+.mm-work .nm-item.is-feat .nm-th { aspect-ratio:4/3; flex:none; }
+.mm-work .nm-cap b { font-size:13px; }
+.mm-work .nm-cap small { font-size:11px; color:var(--muted); }
+.mm-work .nm-feat-badge { display:none; }

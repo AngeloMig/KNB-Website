@@ -221,15 +221,21 @@ gsap.registerPlugin(ScrollTrigger);
       const text = title.textContent;
       title.textContent = '';
       const letters = [];
-      [...text].forEach((ch) => {
-        // keep spaces as real text nodes so the headline wraps between words on mobile
-        // (a chain of inline-block letter spans never breaks -> can overflow narrow screens)
-        if (ch === ' ') { title.appendChild(document.createTextNode(' ')); return; }
-        const s = document.createElement('span');
-        s.className = 'hch';
-        s.textContent = ch === ' ' ? ' ' : ch;
-        title.appendChild(s);
-        letters.push(s);
+      // Wrap each WORD in an inline-block span so the headline only ever breaks
+      // between words. Without this the per-letter inline-block letter spans can
+      // break mid-word on narrow screens (e.g. "Solutio" / "n").
+      text.split(' ').forEach((word, wi, arr) => {
+        const wEl = document.createElement('span');
+        wEl.className = 'hword';
+        [...word].forEach((ch) => {
+          const s = document.createElement('span');
+          s.className = 'hch';
+          s.textContent = ch;
+          wEl.appendChild(s);
+          letters.push(s);
+        });
+        title.appendChild(wEl);
+        if (wi < arr.length - 1) title.appendChild(document.createTextNode(' '));
       });
 
       // load reveal — letters rise + fade in, staggered (uses yPercent so cursor can own y)
@@ -556,10 +562,23 @@ gsap.registerPlugin(ScrollTrigger);
       row.addEventListener('mouseleave', () => tw.resume());
     });
 
-    /* ---- Logo wall marquee ---- */
-    const logoNames = ['NORTHPEAK','VELORA','SUNBRO','KINFOLK','AQUARI','BLOOMR','EVERLY','PIVOTL','MANGO+','TIDEUP'];
+    /* ---- Logo wall marquee — wordmark + simple brand mark ---- */
+    const logoData = [
+      { n: 'NORTHPEAK', m: '<path d="M2 20L9 6l3.5 6.5L16 7l6 13z" fill="currentColor"/>' },
+      { n: 'VELORA',    m: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="3" fill="currentColor"/>' },
+      { n: 'SUNBRO',    m: '<circle cx="12" cy="12" r="4.6" fill="currentColor"/><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></g>' },
+      { n: 'KINFOLK',   m: '<rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/>' },
+      { n: 'AQUARI',    m: '<path d="M12 2C7.5 8.5 5.5 11.5 5.5 15a6.5 6.5 0 0013 0c0-3.5-2-6.5-6.5-13z" fill="currentColor"/>' },
+      { n: 'BLOOMR',    m: '<g fill="currentColor"><circle cx="12" cy="6" r="3.1"/><circle cx="6" cy="14" r="3.1"/><circle cx="18" cy="14" r="3.1"/><circle cx="12" cy="18" r="3.1"/></g>' },
+      { n: 'EVERLY',    m: '<path d="M12 2l2.9 6.6 7.1.6-5.4 4.6 1.7 7L12 17.7 5.7 21.4l1.7-7L2 9.8l7.1-.6z" fill="currentColor"/>' },
+      { n: 'PIVOTL',    m: '<path d="M12 2l10 10-10 10L2 12z" fill="currentColor"/>' },
+      { n: 'MANGO+',    m: '<path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>' },
+      { n: 'TIDEUP',    m: '<g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 9c3-3 5-3 8 0s5 3 8 0M2 15c3-3 5-3 8 0s5 3 8 0"/></g>' },
+    ];
     const logoTrack = document.getElementById('logoTrack');
-    logoTrack.innerHTML = logoNames.map(n => `<div class="logo-item">${n}</div>`).join('');
+    logoTrack.innerHTML = logoData.map(o =>
+      `<div class="logo-item"><span class="lg-mark"><svg viewBox="0 0 24 24" aria-hidden="true">${o.m}</svg></span><span class="lg-name">${o.n}</span></div>`
+    ).join('');
     loopMarquee(logoTrack, 28);
 
     /* ---- (old testimonials slider removed — replaced by the marquee testimonials section) ---- */
@@ -679,16 +698,43 @@ gsap.registerPlugin(ScrollTrigger);
       const tabs = [...modal.querySelectorAll('.pjm-tab')];
       let lastFocus = null;
 
+      const loadingEl = byId('pjmLoading'), fallbackEl = byId('pjmFallback');
+      let currentCard = null, probeTimer = null;
+
+      function resetLive() {
+        clearTimeout(probeTimer);
+        if (loadingEl) loadingEl.hidden = true;
+        if (fallbackEl) fallbackEl.hidden = true;
+      }
+      function startLive() {
+        if (loadingEl) loadingEl.hidden = false;
+        if (fallbackEl) fallbackEl.hidden = true;
+        clearTimeout(probeTimer);
+        // a browser-blocked iframe is indistinguishable from a successful cross-origin
+        // embed in JS, so we don't try to detect it — the persistent helper bar handles
+        // the blank case. This timeout only covers a frame that never responds at all.
+        probeTimer = setTimeout(() => {
+          if (loadingEl) loadingEl.hidden = true;
+          if (fallbackEl) fallbackEl.hidden = false;
+        }, 8000);
+      }
+      if (frameEl) frameEl.addEventListener('load', () => {
+        clearTimeout(probeTimer);
+        if (loadingEl) loadingEl.hidden = true;
+        if (fallbackEl) fallbackEl.hidden = true;
+      });
+
       function setView(view) {
         tabs.forEach((t) => t.classList.toggle('active', t.dataset.view === view));
         const live = view === 'live';
         liveWrap.hidden = !live;
         shotWrap.hidden = live;
-        if (live && !frameEl.getAttribute('src') && frameEl.dataset.url) frameEl.src = frameEl.dataset.url;
+        if (live && !frameEl.getAttribute('src') && frameEl.dataset.url) { startLive(); frameEl.src = frameEl.dataset.url; }
       }
 
       function open(card) {
         const d = card.dataset;
+        currentCard = card;
         byId('pjmTitle').textContent = d.title || '';
         byId('pjmScope').textContent = d.scope || '';
         byId('pjmPlat').textContent = d.plain || '';
@@ -698,8 +744,10 @@ gsap.registerPlugin(ScrollTrigger);
         imgEl.alt = d.title || '';
         byId('pjmLive').href = d.url || '#';
         byId('pjmOpen').href = d.url || '#';
+        if (byId('pjmOpenBig')) byId('pjmOpenBig').href = d.url || '#';
         frameEl.dataset.url = d.url || '';
         frameEl.removeAttribute('src');
+        resetLive();
         const caseBtn = byId('pjmCase');
         if (d.case) { caseBtn.href = d.case; caseBtn.hidden = false; } else { caseBtn.hidden = true; }
         const tagWrap = byId('pjmTags'); tagWrap.innerHTML = '';
@@ -709,6 +757,15 @@ gsap.registerPlugin(ScrollTrigger);
           s.textContent = c.textContent;
           tagWrap.appendChild(s);
         });
+        // meta details panel
+        const cap = (s) => s.replace(/\b\w/g, (m) => m.toUpperCase());
+        const cleanUrl = (d.url || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+        if (byId('pjmMetaPlat')) byId('pjmMetaPlat').textContent = d.plain || '—';
+        if (byId('pjmMetaFocus')) {
+          const focus = (d.tags || '').split(/\s+/).filter((t) => t && t !== (d.plat || ''));
+          byId('pjmMetaFocus').textContent = focus.length ? cap(focus.join(', ')) : '—';
+        }
+        if (byId('pjmMetaUrl')) byId('pjmMetaUrl').textContent = cleanUrl || '—';
         modal.querySelector('.pjm-dialog').style.setProperty('--pa', (getComputedStyle(card).getPropertyValue('--pa') || '').trim());
         setView('shot');
         lastFocus = document.activeElement;
@@ -720,6 +777,7 @@ gsap.registerPlugin(ScrollTrigger);
         modal.hidden = true;
         document.body.style.overflow = '';
         frameEl.removeAttribute('src');
+        resetLive();
         if (lastFocus && lastFocus.focus) lastFocus.focus();
       }
 
@@ -731,7 +789,15 @@ gsap.registerPlugin(ScrollTrigger);
       });
       modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
       tabs.forEach((t) => t.addEventListener('click', () => setView(t.dataset.view)));
+      ['pjmBackShot', 'pjmBackShot2'].forEach((id) => { const b = byId(id); if (b) b.addEventListener('click', () => setView('shot')); });
+      // prev / next between projects
+      const allCards = () => [...document.querySelectorAll('.pj-card')];
+      function navTo(dir) { const v = allCards(); const i = v.indexOf(currentCard); if (i < 0) return; open(v[(i + dir + v.length) % v.length]); }
+      const prevB = byId('pjmPrev'), nextB = byId('pjmNext');
+      if (prevB) prevB.addEventListener('click', (e) => { e.stopPropagation(); navTo(-1); });
+      if (nextB) nextB.addEventListener('click', (e) => { e.stopPropagation(); navTo(1); });
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
+      document.addEventListener('keydown', (e) => { if (modal.hidden) return; if (e.key === 'ArrowLeft') navTo(-1); else if (e.key === 'ArrowRight') navTo(1); });
     })();
 
     /* ---- Projects: cursor-following dot spotlight ---- */

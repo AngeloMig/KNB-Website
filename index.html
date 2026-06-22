@@ -12,8 +12,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KNB Web Solution — Creative Agency</title>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://s.wp.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.simpleicons.org">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="navmenu.css">
 </head>
 <body>
 
@@ -23,7 +29,37 @@
       <a href="#top" class="logo"><span class="mark">K</span>KNB</a>
       <div class="nav-right">
         <div class="nav-links">
-          <a href="portfolio.html">Portfolio</a>
+          <div class="nav-item nm">
+            <button class="nm-trigger" aria-haspopup="true" aria-expanded="false">Work
+              <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="nm-panel" role="menu">
+              <div class="nm-wrap">
+                <div class="nm-side">
+                  <span class="nm-label">Browse</span>
+                  <a href="portfolio.html">All work <span>44</span></a>
+                  <a href="shopify.html">Shopify <span>6</span></a>
+                  <a href="webflow.html">Webflow <span>10</span></a>
+                  <a href="wordpress.html">WordPress <span>28</span></a>
+                  <div class="nm-ind"><span class="nm-label">By industry</span><div class="nm-indchips"><span>Retail</span><span>Food</span><span>Software</span><span>Outdoor</span><span>Beauty</span></div></div>
+                </div>
+                <div class="nm-main">
+                  <div class="nm-head"><div><span class="nm-label">Selected work</span><h3>Sites we've shipped</h3></div><div class="nm-filters"><button class="on" data-f="all">All</button><button data-f="shopify">Shopify</button><button data-f="webflow">Webflow</button><button data-f="wordpress">WordPress</button></div></div>
+                  <div class="nm-thumbs">
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Light My Bricks</b><small>Shopify · Retail</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Feedbird</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Cacao Collective</b><small>Shopify · Food</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Maestro Labs</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Rise Outdoor</b><small>Shopify · Outdoor</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coptrz</b><small>WordPress · Drone tech</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoachman.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fphoenixsafe.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
+                  </div>
+                  <div class="nm-foot"><span>44 projects · 3 platforms · 18+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
           <a href="pricing.html">Pricing</a>
           <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
@@ -37,10 +73,11 @@
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="portfolio.html">Portfolio</a>
+    <div class="mm-plats"><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
     <a href="pricing.html">Pricing</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions →</a>
+    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions &#8594;</a>
   </div>
 
   <!-- HERO -->
@@ -437,6 +474,8 @@
       <div class="pjm-backdrop" data-close></div>
       <div class="pjm-dialog" role="dialog" aria-modal="true" aria-labelledby="pjmTitle">
         <button type="button" class="pjm-x" data-close aria-label="Close">✕</button>
+        <button type="button" class="pjm-nav pjm-prev" id="pjmPrev" aria-label="Previous project">‹</button>
+        <button type="button" class="pjm-nav pjm-next" id="pjmNext" aria-label="Next project">›</button>
         <div class="pjm-stage">
           <div class="pjm-bar"><i></i><i></i><i></i><span class="pjm-url" id="pjmUrl"></span>
             <span class="pjm-toggle">
@@ -447,7 +486,17 @@
           <div class="pjm-shotwrap"><img class="pjm-img" id="pjmImg" alt=""></div>
           <div class="pjm-livewrap" hidden>
             <iframe class="pjm-iframe" id="pjmFrame" title="Live preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
-            <p class="pjm-note">Some sites block embedding — if it stays blank, <a href="#" id="pjmOpen" target="_blank" rel="noopener">open the live site ↗</a>.</p>
+            <div class="pjm-loading" id="pjmLoading" hidden><span class="pjm-spin" aria-hidden="true"></span>Loading live site…</div>
+            <p class="pjm-livebar">Some sites block embedding — if it's blank, <a id="pjmOpen" target="_blank" rel="noopener">open the live site ↗</a> or <button type="button" class="pjm-linkbtn" id="pjmBackShot">view the screenshot</button>.</p>
+            <div class="pjm-fallback" id="pjmFallback" hidden>
+              <span class="pjm-fb-ico" aria-hidden="true">🔌</span>
+              <h4>Couldn't load the live site</h4>
+              <p>The preview didn't respond. View the full-resolution screenshot, or open the real site in a new tab.</p>
+              <div class="pjm-fb-actions">
+                <a class="btn" id="pjmOpenBig" target="_blank" rel="noopener"><span class="dot"></span>Open live site ↗</a>
+                <button type="button" class="btn-ghost" id="pjmBackShot2">View screenshot</button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="pjm-info">
@@ -455,10 +504,16 @@
           <h3 id="pjmTitle"></h3>
           <p class="pjm-scope" id="pjmScope"></p>
           <div class="pjm-tags" id="pjmTags"></div>
+          <dl class="pjm-meta">
+            <div><dt>Platform</dt><dd id="pjmMetaPlat">—</dd></div>
+            <div><dt>Focus</dt><dd id="pjmMetaFocus">—</dd></div>
+            <div><dt>Live at</dt><dd id="pjmMetaUrl">—</dd></div>
+          </dl>
           <div class="pjm-actions">
             <a class="btn" id="pjmLive" target="_blank" rel="noopener"><span class="dot"></span>Visit live site</a>
             <a class="btn-ghost" id="pjmCase" hidden>Read case study <b>→</b></a>
           </div>
+          <p class="pjm-hint" aria-hidden="true">← → browse · Esc to close</p>
         </div>
       </div>
     </div>
@@ -592,7 +647,7 @@
       <div class="testi-head reveal">
         <span class="testi-eyebrow">★ What clients say</span>
         <h2 class="sec-head">Voices of satisfaction and success</h2>
-        <p class="testi-proof"><span class="talt-stars" aria-hidden="true">★★★★★</span> <b data-count="4.9" data-dec="1">4.9</b> · <b data-count="18">18</b> projects shipped across Shopify, Webflow &amp; WordPress</p>
+        <p class="testi-proof"><span class="talt-stars" aria-hidden="true">★★★★★</span> <b data-count="4.9" data-dec="1">4.9</b> · <b data-count="44">44</b> projects shipped across Shopify, Webflow &amp; WordPress</p>
       </div>
     </div>
     <div class="talt-mq reveal" data-dir="-1" role="group" aria-label="Client testimonials"><div class="talt-mq-track" data-row="0"></div></div>
@@ -731,5 +786,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="main.js"></script>
+  <script src="navmenu.js"></script>
 </body>
 </html>

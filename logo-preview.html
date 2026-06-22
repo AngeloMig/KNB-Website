@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KNB logo — 5 animated options</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#f4f3ef; --ink:#111110; --muted:#6d6c66; --line:#dedcd4; --card:#fff; --pink:#e83fa0; --green:#6cf09a; --ease:cubic-bezier(.16,1,.3,1); }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Satoshi",-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding:56px 28px 90px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  .eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);font-weight:700;}
+  h1{font-size:clamp(32px,5vw,52px);font-weight:500;letter-spacing:-.03em;margin:12px 0 6px;}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:40px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:18px;}
+  .tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  .tag b{color:var(--ink);}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:130px;padding:18px 0;cursor:pointer;}
+  .desc{font-size:13.5px;color:var(--muted);line-height:1.5;}
+  .ctx{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:100px;padding:8px 8px 8px 16px;}
+  .ctx .links{margin-left:auto;display:flex;gap:14px;font-size:12px;color:var(--muted);}
+
+  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:700;font-size:26px;letter-spacing:-.02em;}
+  .logo.sm{font-size:18px;gap:9px;}
+  .mark{width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--bg);display:inline-flex;align-items:center;justify-content:center;flex:none;}
+  .logo.sm .mark{width:30px;height:30px;border-radius:9px;font-size:14px;font-weight:700;}
+  .mark svg{width:64%;height:64%;overflow:visible;}
+
+  .l1{font-weight:900;font-size:36px;letter-spacing:-.05em;display:inline-flex;align-items:flex-end;}
+  .l1 .ch{display:inline-block;}
+  .l1 i{width:9px;height:9px;border-radius:50%;background:var(--pink);margin-left:4px;margin-bottom:6px;position:relative;}
+  .logo.sm .l1{font-size:21px;} .logo.sm .l1 i{width:6px;height:6px;margin-bottom:4px;}
+  .mark.tt{background:linear-gradient(140deg,#1a1116,var(--ink));position:relative;overflow:hidden;}
+  .mark.tt::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--pink);}
+  .mark.line{background:var(--ink);color:var(--bg);}
+
+  /* ============================ ANIMATIONS (loop; scoped to the big .stage) ============================ */
+  /* 1 — letters rise (stagger) + dot bounce + pulse ring; hover = wave */
+  .stage .l1 .ch{animation:l1rise 4.6s var(--ease) infinite;}
+  .stage .l1 .ch:nth-child(2){animation-delay:.13s;} .stage .l1 .ch:nth-child(3){animation-delay:.26s;}
+  @keyframes l1rise{0%{opacity:0;transform:translateY(120%) rotate(12deg);}9%,82%{opacity:1;transform:none;}93%,100%{opacity:0;transform:translateY(-120%) rotate(-12deg);}}
+  .stage .l1 i{animation:l1dot 4.6s var(--ease) infinite;}
+  @keyframes l1dot{0%,27%{transform:scale(0);}37%{transform:scale(1.7);}47%{transform:scale(1);}80%{transform:scale(1);}90%,100%{transform:scale(0);}}
+  .stage .l1 i::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(232,63,160,.55);animation:l1pulse 1.9s ease-out infinite;}
+  @keyframes l1pulse{60%,100%{box-shadow:0 0 0 12px rgba(232,63,160,0);}}
+  .stage:hover .l1 .ch{animation:l1wave .7s var(--ease);}
+  .stage:hover .l1 .ch:nth-child(2){animation-delay:.08s;} .stage:hover .l1 .ch:nth-child(3){animation-delay:.16s;}
+  @keyframes l1wave{30%{transform:translateY(-45%);}60%{transform:translateY(10%);}100%{transform:none;}}
+
+  /* 2 — squares assemble from opposite corners + breathe depth (continuous) */
+  .stage .l2 .sq1,.stage .l2 .sq2{transform-box:fill-box;transform-origin:center;}
+  .stage .l2 .sq1{animation:l2a 4s var(--ease) infinite;} .stage .l2 .sq2{animation:l2b 4s var(--ease) infinite;}
+  @keyframes l2a{0%{transform:translate(-7px,-7px) rotate(-12deg);opacity:0;}18%{transform:none;opacity:.45;}50%{transform:translate(-1.4px,-1.8px);}80%{transform:none;}100%{transform:translate(-7px,-7px) rotate(-12deg);opacity:0;}}
+  @keyframes l2b{0%{transform:translate(8px,8px) rotate(12deg);opacity:0;}22%{transform:none;opacity:1;}50%{transform:translate(1.8px,1.4px);}80%{transform:none;}100%{transform:translate(8px,8px) rotate(12deg);opacity:0;}}
+
+  /* 3 — brackets draw in + blinking cursor; hover = brackets push apart */
+  .stage .l3 .br{stroke-dasharray:100;stroke-dashoffset:100;animation:l3draw 4s var(--ease) infinite;}
+  @keyframes l3draw{0%{stroke-dashoffset:100;}28%{stroke-dashoffset:0;}76%{stroke-dashoffset:0;}100%{stroke-dashoffset:-100;}}
+  .stage .l3 .cur{transform-box:fill-box;transform-origin:center;animation:l3blink 1s steps(1) infinite;}
+  @keyframes l3blink{50%{opacity:0;}}
+  .stage .l3 .lb,.stage .l3 .rb{transform-box:fill-box;transform-origin:center;transition:transform .4s var(--ease);}
+  .stage:hover .l3 .lb{transform:translateX(-2px);} .stage:hover .l3 .rb{transform:translateX(2px);}
+
+  /* 4 — animated gradient badge + stripe wipe + dot pulse; hover = 3D flip */
+  .stage .mark.tt{background:linear-gradient(120deg,#1a1116,#111110,#2a0f1c,#111110);background-size:300% 300%;animation:l4grad 5s ease infinite;}
+  @keyframes l4grad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+  .stage .mark.tt::after{transform-origin:left;animation:l4stripe 4s var(--ease) infinite;}
+  @keyframes l4stripe{0%,100%{transform:scaleX(.25);opacity:.4;}50%{transform:scaleX(1);opacity:1;}}
+  .stage .l4 .pdot{display:inline-block;color:var(--pink);animation:l4dot 2s ease-in-out infinite;}
+  @keyframes l4dot{0%,100%{transform:scale(1);}50%{transform:scale(1.55);}}
+  .stage:hover .mark.tt{animation:l4grad 5s ease infinite, l4flip .9s var(--ease);}
+  @keyframes l4flip{to{transform:rotateY(360deg);}}
+
+  /* 5 — line K draws its strokes, fills, glows; hover = 3D flip */
+  .stage .mark.line{perspective:240px;animation:l5glow 4s ease-in-out infinite;}
+  .stage .l5 .kp{stroke-dasharray:100;stroke-dashoffset:100;animation:l5draw 5s var(--ease) infinite;}
+  @keyframes l5draw{0%{stroke-dashoffset:100;fill:rgba(244,243,239,0);}38%{stroke-dashoffset:0;fill:rgba(244,243,239,0);}54%{fill:rgba(244,243,239,1);}84%{stroke-dashoffset:0;fill:rgba(244,243,239,1);}100%{stroke-dashoffset:-100;fill:rgba(244,243,239,0);}}
+  @keyframes l5glow{0%,100%{box-shadow:0 0 0 0 rgba(17,17,16,0);}50%{box-shadow:0 0 22px 2px rgba(17,17,16,.22);}}
+  .stage:hover .mark.line svg{animation:l5flip 1s var(--ease);}
+  @keyframes l5flip{to{transform:rotateY(360deg);}}
+
+  @media (prefers-reduced-motion: reduce){ .stage *{animation:none !important;} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="eyebrow">● Internal review</span>
+    <h1>KNB logo — 5 animated options</h1>
+    <p class="sub">Each option loops continuously — and <b>hover any big logo</b> for an extra interaction. Tell me the number and I'll wire it into the nav + footer + favicon.</p>
+
+    <div class="grid">
+
+      <div class="card">
+        <span class="tag">Option <b>1</b> · Wordmark + dot</span>
+        <div class="stage"><span class="logo"><span class="l1"><span class="ch">K</span><span class="ch">N</span><span class="ch">B</span><i></i></span></span></div>
+        <p class="desc">Letters spring up in sequence, then the pink signature dot bounces in with a pulse ring. Hover = the letters do a wave.</p>
+        <div class="ctx"><span class="logo sm"><span class="l1">KNB<i></i></span></span><span class="links"><span>Work</span><span>Pricing</span><span>About</span></span></div>
+      </div>
+
+      <div class="card">
+        <span class="tag">Option <b>2</b> · Layered monogram</span>
+        <div class="stage"><span class="logo"><span class="mark"><svg class="l2" viewBox="0 0 24 24" fill="none"><rect class="sq1" x="3.5" y="3.5" width="12" height="12" rx="3.2" fill="currentColor" opacity=".45"/><rect class="sq2" x="8.5" y="8.5" width="12" height="12" rx="3.2" fill="currentColor"/></svg></span>KNB</span></div>
+        <p class="desc">The two "layers" fly in from opposite corners, lock together, then breathe with a subtle depth float — building, layer by layer.</p>
+        <div class="ctx"><span class="logo sm"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="12" height="12" rx="3.2" fill="currentColor" opacity=".45"/><rect x="8.5" y="8.5" width="12" height="12" rx="3.2" fill="currentColor"/></svg></span>KNB</span><span class="links"><span>Work</span><span>Pricing</span><span>About</span></span></div>
+      </div>
+
+      <div class="card">
+        <span class="tag">Option <b>3</b> · Code motif</span>
+        <div class="stage"><span class="logo"><span class="mark"><svg class="l3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="br lb" pathLength="100" d="M8.5 7l-4 5 4 5"/><path class="br rb" pathLength="100" d="M15.5 7l4 5-4 5"/><line class="cur" x1="12" y1="8.5" x2="12" y2="15.5" stroke-width="2"/></svg></span>KNB</span></div>
+        <p class="desc">The <code>&lt;</code> and <code>&gt;</code> brackets draw themselves in, with a blinking code cursor between. Hover pushes the brackets apart.</p>
+        <div class="ctx"><span class="logo sm"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7l-4 5 4 5M15.5 7l4 5-4 5"/></svg></span>KNB</span><span class="links"><span>Work</span><span>Pricing</span><span>About</span></span></div>
+      </div>
+
+      <div class="card">
+        <span class="tag">Option <b>4</b> · Two-tone accent</span>
+        <div class="stage"><span class="logo"><span class="mark tt"><svg viewBox="0 0 32 32"><path d="M8.8 8 H12.4 V14.4 L18.8 8 H22.8 L15.2 15.7 L23.2 24 H19 L12.4 16.8 V24 H8.8 Z" fill="currentColor"/></svg></span><span class="l4">KNB<span class="pdot">.</span></span></span></div>
+        <p class="desc">The badge's gradient drifts, a pink base-stripe wipes left-to-right, and the full-stop pulses. Hover = a full 3D flip.</p>
+        <div class="ctx"><span class="logo sm"><span class="mark tt"><svg viewBox="0 0 32 32"><path d="M8.8 8 H12.4 V14.4 L18.8 8 H22.8 L15.2 15.7 L23.2 24 H19 L12.4 16.8 V24 H8.8 Z" fill="currentColor"/></svg></span><span class="l4">KNB<span style="color:var(--pink)">.</span></span></span><span class="links"><span>Work</span><span>Pricing</span><span>About</span></span></div>
+      </div>
+
+      <div class="card">
+        <span class="tag">Option <b>5</b> · Outline / draw</span>
+        <div class="stage"><span class="logo"><span class="mark line"><svg class="l5" viewBox="0 0 32 32"><path class="kp" pathLength="100" d="M8.8 8 H12.4 V14.4 L18.8 8 H22.8 L15.2 15.7 L23.2 24 H19 L12.4 16.8 V24 H8.8 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>KNB</span></div>
+        <p class="desc">The "K" <b style="color:#1a7a45">draws its own strokes</b>, fills in, and the badge glows — then flips in 3D on hover. The most crafted of the set.</p>
+        <div class="ctx"><span class="logo sm"><span class="mark line"><svg viewBox="0 0 32 32"><path d="M8.8 8 H12.4 V14.4 L18.8 8 H22.8 L15.2 15.7 L23.2 24 H19 L12.4 16.8 V24 H8.8 Z" fill="var(--bg)"/></svg></span>KNB</span><span class="links"><span>Work</span><span>Pricing</span><span>About</span></span></div>
+      </div>
+
+      <div class="card">
+        <span class="tag">Current · for reference</span>
+        <div class="stage"><span class="logo"><span class="mark" style="font-size:21px;font-weight:700">K</span>KNB</span></div>
+        <p class="desc">What's live now — a flat ink badge with a solid "K" + wordmark (just a small hover rotate).</p>
+        <div class="ctx"><span class="logo sm"><span class="mark" style="font-size:14px;font-weight:700">K</span>KNB</span><span class="links"><span>Work</span><span>Pricing</span><span>About</span></span></div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

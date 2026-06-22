@@ -24,7 +24,11 @@
 <meta name="twitter:title" content="Portfolio — KNB Web Solution">
 <meta name="twitter:description" content="Shopify revamps, Webflow builds, and WordPress sites we've designed for growing businesses.">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://s.wp.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.simpleicons.org">
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="work.css">
 <link rel="stylesheet" href="testimonials.css">
 <style>
@@ -54,6 +58,7 @@
   .proj-card.feat:hover .proj-img img { transform: none; }
   /* CTA ticket / coupon styles live in work.css (.ctaC) — shared across all pages */
 </style>
+<link rel="stylesheet" href="navmenu.css">
 </head>
 <body>
 
@@ -63,7 +68,37 @@
       <a href="index.html" class="logo"><span class="mark">K</span>KNB</a>
       <div class="nav-right">
         <div class="nav-links">
-          <a href="portfolio.html" class="active">Portfolio</a>
+          <div class="nav-item nm">
+            <button class="nm-trigger active" aria-haspopup="true" aria-expanded="false">Work
+              <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="nm-panel" role="menu">
+              <div class="nm-wrap">
+                <div class="nm-side">
+                  <span class="nm-label">Browse</span>
+                  <a href="portfolio.html">All work <span>44</span></a>
+                  <a href="shopify.html">Shopify <span>6</span></a>
+                  <a href="webflow.html">Webflow <span>10</span></a>
+                  <a href="wordpress.html">WordPress <span>28</span></a>
+                  <div class="nm-ind"><span class="nm-label">By industry</span><div class="nm-indchips"><span>Retail</span><span>Food</span><span>Software</span><span>Outdoor</span><span>Beauty</span></div></div>
+                </div>
+                <div class="nm-main">
+                  <div class="nm-head"><div><span class="nm-label">Selected work</span><h3>Sites we've shipped</h3></div><div class="nm-filters"><button class="on" data-f="all">All</button><button data-f="shopify">Shopify</button><button data-f="webflow">Webflow</button><button data-f="wordpress">WordPress</button></div></div>
+                  <div class="nm-thumbs">
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Light My Bricks</b><small>Shopify · Retail</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Feedbird</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Cacao Collective</b><small>Shopify · Food</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Maestro Labs</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Rise Outdoor</b><small>Shopify · Outdoor</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coptrz</b><small>WordPress · Drone tech</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoachman.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fphoenixsafe.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
+                  </div>
+                  <div class="nm-foot"><span>44 projects · 3 platforms · 18+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
           <a href="pricing.html">Pricing</a>
           <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
@@ -75,10 +110,11 @@
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="portfolio.html">Portfolio</a>
+    <div class="mm-plats"><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
     <a href="pricing.html">Pricing</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions →</a>
+    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions &#8594;</a>
   </div>
 
   <!-- HERO -->
@@ -88,7 +124,7 @@
       <h1 class="reveal">Websites &amp; stores we've built.</h1>
       <p class="lead reveal">Shopify revamps, Webflow builds, and WordPress sites for growing businesses — filter the work below or dive into a platform.</p>
       <div class="pf-stats reveal">
-        <div class="pf-stat"><span class="num" data-count="18">0</span><span class="lbl">Projects shipped</span></div>
+        <div class="pf-stat"><span class="num" data-count="44">0</span><span class="lbl">Projects shipped</span></div>
         <div class="pf-stat"><span class="num" data-count="3">0</span><span class="lbl">Platforms</span></div>
         <div class="pf-stat"><span class="num" data-count="12" data-suffix="+">0</span><span class="lbl">Industries served</span></div>
       </div>
@@ -283,6 +319,162 @@
           <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwprivvymarketingcomau/720/495" alt="Privvy Marketing — WordPress project by KNB Web Solution"></div>
           <div class="proj-meta"><div class="proj-top"><h3>Privvy Marketing</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress agency site, easy to manage</span></div>
         </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://digitallydisruptive.co.uk/" data-title="Digitally Disruptive" data-scope="WordPress marketing site.">
+          <button type="button" class="view-details" aria-label="View details for Digitally Disruptive">View details</button>
+          <a href="https://digitallydisruptive.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/digitallydisruptivecouk/720/495" alt="Digitally Disruptive — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Digitally Disruptive</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress marketing site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://mdo.digital/" data-title="MDO Digital" data-scope="WordPress agency site.">
+          <button type="button" class="view-details" aria-label="View details for MDO Digital">View details</button>
+          <a href="https://mdo.digital/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/mdodigital/720/495" alt="MDO Digital — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>MDO Digital</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress agency site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://coptrz.com/" data-title="Coptrz" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Coptrz">View details</button>
+          <a href="https://coptrz.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/coptrzcom/720/495" alt="Coptrz — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Coptrz</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://influencercollective.co/" data-title="Influencer Collective" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Influencer Collective">View details</button>
+          <a href="https://influencercollective.co/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/influencercollectiveco/720/495" alt="Influencer Collective — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Influencer Collective</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://barwonheatpumps.com.au/" data-title="Barwon Heat Pumps" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Barwon Heat Pumps">View details</button>
+          <a href="https://barwonheatpumps.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/barwonheatpumpscomau/720/495" alt="Barwon Heat Pumps — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Barwon Heat Pumps</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://www.tgilescaravans.co.uk/" data-title="T Giles Caravans" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for T Giles Caravans">View details</button>
+          <a href="https://www.tgilescaravans.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/tgilescaravanscouk/720/495" alt="T Giles Caravans — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>T Giles Caravans</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://coachman.co.uk/" data-title="Coachman" data-scope="WordPress brand website.">
+          <button type="button" class="view-details" aria-label="View details for Coachman">View details</button>
+          <a href="https://coachman.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/coachmancouk/720/495" alt="Coachman — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Coachman</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress brand website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://www.amberarch.com/" data-title="Amber Arch" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Amber Arch">View details</button>
+          <a href="https://www.amberarch.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/amberarchcom/720/495" alt="Amber Arch — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Amber Arch</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://edeninternational.com/" data-title="Eden International" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Eden International">View details</button>
+          <a href="https://edeninternational.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/edeninternationalcom/720/495" alt="Eden International — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Eden International</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://www.rushdrink.com/" data-title="Rush" data-scope="WordPress brand website.">
+          <button type="button" class="view-details" aria-label="View details for Rush">View details</button>
+          <a href="https://www.rushdrink.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/rushdrinkcom/720/495" alt="Rush — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Rush</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress brand website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://hatbag.com/" data-title="Hatbag" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Hatbag">View details</button>
+          <a href="https://hatbag.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/hatbagcom/720/495" alt="Hatbag — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Hatbag</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://davidwalters.co.uk/" data-title="David Walters" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for David Walters">View details</button>
+          <a href="https://davidwalters.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/davidwalterscouk/720/495" alt="David Walters — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>David Walters</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://cocuun.co/" data-title="Cocuun" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Cocuun">View details</button>
+          <a href="https://cocuun.co/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/cocuunco/720/495" alt="Cocuun — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Cocuun</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://gsfgroup.com/" data-title="GSF Group" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for GSF Group">View details</button>
+          <a href="https://gsfgroup.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/gsfgroupcom/720/495" alt="GSF Group — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>GSF Group</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://millersbakery.co.uk/" data-title="Millers Bakery" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Millers Bakery">View details</button>
+          <a href="https://millersbakery.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/millersbakerycouk/720/495" alt="Millers Bakery — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Millers Bakery</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://sasgas.co.uk/" data-title="SAS Gas" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for SAS Gas">View details</button>
+          <a href="https://sasgas.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/sasgascouk/720/495" alt="SAS Gas — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>SAS Gas</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://stephan-uk.co.uk/" data-title="Stephan UK" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Stephan UK">View details</button>
+          <a href="https://stephan-uk.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/stephanukcouk/720/495" alt="Stephan UK — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Stephan UK</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://financialadvisoruk.com/" data-title="Financial Advisor UK" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Financial Advisor UK">View details</button>
+          <a href="https://financialadvisoruk.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/financialadvisorukcom/720/495" alt="Financial Advisor UK — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Financial Advisor UK</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://sbskills.co.uk/" data-title="SB Skills" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for SB Skills">View details</button>
+          <a href="https://sbskills.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/sbskillscouk/720/495" alt="SB Skills — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>SB Skills</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="http://learn.orca.org.uk/" data-title="ORCA Learn" data-scope="WordPress learning site.">
+          <button type="button" class="view-details" aria-label="View details for ORCA Learn">View details</button>
+          <a href="http://learn.orca.org.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/learnorcaorguk/720/495" alt="ORCA Learn — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>ORCA Learn</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress learning site</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://signum-solutions.co.uk/" data-title="Signum Solutions" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Signum Solutions">View details</button>
+          <a href="https://signum-solutions.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/signumsolutionscouk/720/495" alt="Signum Solutions — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Signum Solutions</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://onlinerecordingstudio.com/" data-title="Online Recording Studio" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Online Recording Studio">View details</button>
+          <a href="https://onlinerecordingstudio.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/onlinerecordingstudiocom/720/495" alt="Online Recording Studio — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Online Recording Studio</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://thewalsallbox.co.uk/" data-title="The Walsall Box" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for The Walsall Box">View details</button>
+          <a href="https://thewalsallbox.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/thewalsallboxcouk/720/495" alt="The Walsall Box — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>The Walsall Box</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://ten87.studio/" data-title="Ten87 Studio" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Ten87 Studio">View details</button>
+          <a href="https://ten87.studio/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/ten87studio/720/495" alt="Ten87 Studio — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Ten87 Studio</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://phoenixsafe.co.uk/" data-title="Phoenix Safe" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Phoenix Safe">View details</button>
+          <a href="https://phoenixsafe.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/phoenixsafecouk/720/495" alt="Phoenix Safe — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Phoenix Safe</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="http://zerogravitysafety.co.uk/" data-title="Zero Gravity Safety" data-scope="WordPress business website.">
+          <button type="button" class="view-details" aria-label="View details for Zero Gravity Safety">View details</button>
+          <a href="http://zerogravitysafety.co.uk/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
+          <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/zerogravitysafetycouk/720/495" alt="Zero Gravity Safety — WordPress project by KNB Web Solution"></div>
+          <div class="proj-meta"><div class="proj-top"><h3>Zero Gravity Safety</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress business website</span></div>
+        </article>
       </div>
       <div class="pf-empty" hidden>No projects match that filter. <button type="button" class="pf-reset">Show all →</button></div>
       <div class="work-more"><button type="button" class="btn ghost" id="loadMore" hidden>Load more projects</button></div>
@@ -310,7 +502,7 @@
     <div class="wrap"><div class="testi-head reveal">
       <span class="testi-eyebrow">★ What clients say</span>
       <h2 class="sec-head">Voices of satisfaction and success</h2>
-      <p class="testi-proof"><span class="talt-stars" aria-hidden="true">★★★★★</span> <b data-count="4.9" data-dec="1">4.9</b> · <b data-count="18">18</b> projects shipped across Shopify, Webflow &amp; WordPress</p>
+      <p class="testi-proof"><span class="talt-stars" aria-hidden="true">★★★★★</span> <b data-count="4.9" data-dec="1">4.9</b> · <b data-count="44">44</b> projects shipped across Shopify, Webflow &amp; WordPress</p>
     </div></div>
     <div class="talt-mq reveal" data-dir="-1" role="group" aria-label="Client testimonials"><div class="talt-mq-track" data-row="0"></div></div>
     <div class="talt-mq reveal" data-dir="1" aria-hidden="true"><div class="talt-mq-track" data-row="1"></div></div>
@@ -382,7 +574,8 @@
         <div class="pfm-shotwrap"><img class="pfm-img" id="pfmImg" alt=""></div>
         <div class="pfm-livewrap" hidden>
           <iframe class="pfm-iframe" id="pfmFrame" title="Live preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
-          <p class="pfm-note">Some sites block embedding — if it stays blank, <a href="#" id="pfmOpen" target="_blank" rel="noopener">open the live site ↗</a>.</p>
+          <div class="pfm-loading" id="pfmLoading" hidden><span class="pfm-spin" aria-hidden="true"></span>Loading live site…</div>
+          <p class="pfm-note">Some sites block embedding — if it's blank, <a href="#" id="pfmOpen" target="_blank" rel="noopener">open the live site ↗</a>.</p>
         </div>
       </div>
       <div class="pfm-info">
@@ -422,5 +615,6 @@
 
   <script src="work.js"></script>
   <script src="testimonials.js"></script>
+  <script src="navmenu.js"></script>
 </body>
 </html>

@@ -244,15 +244,24 @@
     const imgEl = byId('pfmImg'), frameEl = byId('pfmFrame');
     const shotWrap = modal.querySelector('.pfm-shotwrap');
     const liveWrap = modal.querySelector('.pfm-livewrap');
+    const loadingEl = byId('pfmLoading');
     const tabs = [...modal.querySelectorAll('.pfm-tab')];
     let lastFocus = null;
     let currentCard = null;
+    let liveTimer = null;
+    const hideLoading = () => { clearTimeout(liveTimer); if (loadingEl) loadingEl.hidden = true; };
+    if (frameEl) frameEl.addEventListener('load', hideLoading);
     const slugOf = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const setView = (view) => {
       tabs.forEach((t) => t.classList.toggle('active', t.dataset.view === view));
       const live = view === 'live';
       liveWrap.hidden = !live; shotWrap.hidden = live;
-      if (live && !frameEl.getAttribute('src') && frameEl.dataset.url) frameEl.src = frameEl.dataset.url;
+      if (live && !frameEl.getAttribute('src') && frameEl.dataset.url) {
+        if (loadingEl) loadingEl.hidden = false;
+        clearTimeout(liveTimer);
+        liveTimer = setTimeout(hideLoading, 8000); // stop spinning even if the frame never resolves
+        frameEl.src = frameEl.dataset.url;
+      }
     };
     const open = (card) => {
       const d = card.dataset;
@@ -271,6 +280,7 @@
       byId('pfmOpen').href = d.url || '#';
       frameEl.dataset.url = d.url || '';
       frameEl.removeAttribute('src');
+      hideLoading();
       modal.querySelector('.pfm-dialog').style.setProperty('--accent', (getComputedStyle(card).getPropertyValue('--accent') || '').trim());
       setView('shot');
       lastFocus = document.activeElement;
@@ -476,4 +486,36 @@
     onScroll();
     if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
   })();
+})();
+
+/* platform-page grid load-more (shopify / webflow / wordpress) — not the portfolio controller grid */
+(function () {
+  const grid = document.querySelector('.work .proj-grid:not(.pf-grid)');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.proj-card')];
+  const STEP = 9;
+  if (cards.length <= STEP) return;
+  let shown = STEP;
+  const wrap = document.createElement('div');
+  wrap.className = 'work-more';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn ghost';
+  wrap.appendChild(btn);
+  grid.parentNode.insertBefore(wrap, grid.nextSibling);
+  const render = () => {
+    cards.forEach((c, i) => {
+      if (i < shown) {
+        c.style.display = '';
+        if (i >= STEP) c.classList.add('in'); // force-reveal cards loaded via the button (observer won't fire for them)
+      } else {
+        c.style.display = 'none';
+      }
+    });
+    const left = cards.length - shown;
+    if (left <= 0) { wrap.remove(); return; }
+    btn.textContent = 'Load more (' + left + ' more)';
+  };
+  btn.addEventListener('click', () => { shown += STEP; render(); });
+  render();
 })();
