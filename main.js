@@ -422,8 +422,12 @@ gsap.registerPlugin(ScrollTrigger);
       const data = [T.slice(0, 4), T.slice(4)];
       rows.forEach((row, ri) => {
         const track = row.querySelector('.talt-mq-track');
-        const set = data[ri].map((t) => card(t)).join('');
-        track.innerHTML = set + data[ri].map((t) => card(t, true)).join('');
+        // a row marked aria-hidden is decorative -> none of its links should be
+        // focusable (a11y: no focusable descendants inside aria-hidden)
+        const rowHidden = row.getAttribute('aria-hidden') === 'true';
+        const mk = (t, dup) => card(t, dup || rowHidden);
+        const set = data[ri].map((t) => mk(t)).join('');
+        track.innerHTML = set + data[ri].map((t) => mk(t, true)).join('');
         track.style.animation = 'none';
       });
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
