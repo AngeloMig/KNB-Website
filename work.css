@@ -530,3 +530,23 @@ button.pf-chip:hover { transform: translateY(-1px); filter: brightness(1.06); }
 .to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .to-top:hover { background: #2c2b28; }
 
+
+/* ---------- a11y: skip link + global keyboard focus fallback ---------- */
+.skip-link { position: fixed; left: 12px; top: -60px; z-index: 9999; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s var(--ease); }
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 3px solid #e83fa0; outline-offset: 2px; }
+
+/* ---------- "What we do" service cards (platform pages) ---------- */
+.svc { padding: 36px 0 24px; }
+.svc-head { margin-bottom: 30px; }
+.svc-head .eyebrow { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; font-weight: 700; }
+.svc-head h2 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.03em; margin-top: 12px; max-width: 18ch; }
+.svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.svc-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px 22px; transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s; }
+.svc-card:hover { transform: translateY(-4px); border-color: #cdcbc2; box-shadow: 0 16px 34px rgba(0,0,0,0.08); }
+.svc-ic { width: 42px; height: 42px; border-radius: 11px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; color: var(--ink); margin-bottom: 16px; }
+.svc-ic svg { width: 20px; height: 20px; }
+.svc-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.svc-card p { color: var(--muted); font-size: 13.5px; line-height: 1.5; margin-top: 7px; }
+@media (max-width: 920px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .svc-grid { grid-template-columns: 1fr; } }

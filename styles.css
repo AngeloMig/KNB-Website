@@ -2105,3 +2105,8 @@
     .tq-backdrop, .tq-dialog { transition: opacity 0.2s linear; }
     .tq-dialog { transform: none; }
   }
+
+/* ---------- a11y: skip link + global keyboard focus fallback ---------- */
+.skip-link { position: fixed; left: 12px; top: -60px; z-index: 9999; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s var(--ease); }
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 3px solid #e83fa0; outline-offset: 2px; }
