@@ -113,3 +113,16 @@
 .mm-work .nm-cap b { font-size:13px; }
 .mm-work .nm-cap small { font-size:11px; color:var(--muted); }
 .mm-work .nm-feat-badge { display:none; }
+
+/* ---------- Option 1 wordmark logo (lives here so every page that loads the shared header gets it) ---------- */
+.logo .lw { display: inline-flex; align-items: flex-end; font-weight: 900; font-size: 23px; letter-spacing: -0.05em; line-height: 0.9; animation: lwIn 0.7s var(--ease, cubic-bezier(0.16,1,0.3,1)) backwards; }
+.logo .lw .ch { display: inline-block; }
+.logo .lw .ld { width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; margin: 0 0 4px 3px; flex: none; }
+@keyframes lwIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.logo:hover .lw .ch { animation: lwWave 0.55s var(--ease, cubic-bezier(0.16,1,0.3,1)); }
+.logo:hover .lw .ch:nth-child(2) { animation-delay: 0.06s; }
+.logo:hover .lw .ch:nth-child(3) { animation-delay: 0.12s; }
+@keyframes lwWave { 30% { transform: translateY(-32%); } 60% { transform: translateY(7%); } to { transform: none; } }
+.logo:hover .lw .ld { animation: lwDot 0.55s var(--ease, cubic-bezier(0.16,1,0.3,1)); }
+@keyframes lwDot { 30% { transform: scale(1.7); } 60% { transform: scale(0.9); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .logo .lw, .logo:hover .lw .ch, .logo:hover .lw .ld { animation: none; } }

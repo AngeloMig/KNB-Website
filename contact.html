@@ -117,6 +117,10 @@
   .btn .dot { position: relative; z-index: 1; width: 8px; height: 8px; border-radius: 50%; background: var(--bg); animation: dotPulse 1.8s ease-in-out infinite; }
   @keyframes dotPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.7); opacity: 0.55; } }
 
+  /* skip-to-content link — hidden until keyboard-focused */
+  .skip-link { position: fixed; left: 12px; top: -60px; z-index: 9999; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s var(--ease); }
+  .skip-link:focus { top: 12px; }
+
   /* ---------- CONTACT ---------- */
   .contact { position: relative; padding: 150px 0 100px; min-height: 100vh; }
   .contact-grid-bg {
@@ -128,6 +132,19 @@
     pointer-events: none; animation: gridDrift 24s linear infinite;
   }
   @keyframes gridDrift { to { background-position: 64px 128px; } }
+  /* upward-floating dots (same idea as the homepage hero) */
+  .contact-particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  /* brighter grid revealed as a spotlight that follows the cursor */
+  .contact-grid-spot {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background-image: linear-gradient(rgba(17,17,16,0.40) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,16,0.40) 1px, transparent 1px);
+    background-size: 64px 64px; animation: gridDrift 24s linear infinite;
+    --mx: 50%; --my: 30%; opacity: 0; transition: opacity 0.5s var(--ease);
+    -webkit-mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000 0%, transparent 70%);
+    mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000 0%, transparent 70%);
+  }
+  .contact-grid-spot.active { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .contact-grid-bg, .contact-grid-spot { animation: none; } }
   .contact .wrap { position: relative; z-index: 2; }
 
   .label { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: inline-flex; align-items: center; gap: 16px; }
@@ -147,12 +164,25 @@
     transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s;
   }
   .field textarea { resize: vertical; min-height: 130px; }
+  /* drop the native OS select chrome (the macOS double-arrow / heavy focus ring) for a custom chevron that matches the inputs */
+  .field select {
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236d6c66' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 15px center; background-size: 16px;
+    padding-right: 42px; cursor: pointer;
+  }
   .field input:focus, .field select:focus, .field textarea:focus {
-    outline: none; border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(17,17,16,0.06);
+    outline: none; border-color: var(--ink); background-color: #fff; box-shadow: 0 0 0 4px rgba(17,17,16,0.06);
   }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .form-card .btn { width: 100%; margin-top: 6px; }
   .form-note { font-size: 13px; color: var(--muted); margin-top: 16px; text-align: center; }
+  .field .req { color: #e83fa0; }
+  .field .opt { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 12px; }
+  .field-error { display: block; margin-top: 7px; font-size: 13px; font-weight: 600; color: #d12e6b; }
+  .field-error[hidden] { display: none; }
+  .field.invalid input, .field.invalid select { border-color: #d12e6b; box-shadow: 0 0 0 4px rgba(209,46,107,0.10); }
+  .hidden-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .form-success {
     display: none; text-align: center; padding: 40px 10px;
   }
@@ -183,11 +213,31 @@
   .reveal { opacity: 0; transform: translateY(36px); }
 
   /* ---------- FOOTER ---------- */
-  footer { background: var(--ink); color: var(--bg); padding: 80px 0 40px; position: relative; z-index: 2; }
-  .foot-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-  footer .logo { font-size: 40px; letter-spacing: -0.04em; }
-  .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 30px; color: rgba(255,255,255,0.6); font-size: 14px; }
-  .foot-bottom a { border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
+  footer { background: var(--ink); color: var(--bg); padding: 80px 0 36px; position: relative; z-index: 2; overflow: hidden; }
+  .foot-top { display: grid; grid-template-columns: 1.3fr 2fr; gap: 48px; padding-bottom: 30px; }
+  footer .logo { font-size: 40px; letter-spacing: -0.04em; gap: 0; align-items: center; }
+  footer .logo .lgdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #e83fa0; margin-left: 5px; }
+  .foot-brand p { margin-top: 16px; max-width: 32ch; color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.55; }
+  .foot-status { display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+  .foot-status .fs-dot { width: 8px; height: 8px; border-radius: 50%; background: #6cf09a; box-shadow: 0 0 0 0 rgba(108,240,154,0.6); animation: fsPulse 2.4s var(--ease) infinite; }
+  @keyframes fsPulse { 0% { box-shadow: 0 0 0 0 rgba(108,240,154,0.5); } 70%,100% { box-shadow: 0 0 0 7px rgba(108,240,154,0); } }
+  .foot-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .foot-col h3 { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+  .foot-col a { display: block; color: rgba(255,255,255,0.78); font-size: 15px; padding: 6px 0; transition: color 0.25s, transform 0.25s var(--ease); }
+  .foot-col a:hover { color: #fff; transform: translateX(3px); }
+  .foot-loc { display: block; color: rgba(255,255,255,0.45); font-size: 13px; padding: 6px 0 14px; }
+  .socials { display: flex; gap: 12px; margin-top: 4px; }
+  .socials a { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 15px; transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease); }
+  .socials a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); transform: translateY(-3px); }
+  .foot-mark { font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none; }
+  .foot-mark::after { content: "KNB"; }
+  .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); font-size: 14px; }
+  .foot-bottom-r { display: flex; gap: 24px; align-items: center; }
+  .foot-bottom a { color: rgba(255,255,255,0.7); transition: color 0.25s; }
+  .foot-bottom a:hover { color: #fff; }
+  .foot-up:hover { color: #fff; }
+  @media (max-width: 760px) { .foot-top { grid-template-columns: 1fr; gap: 36px; } .foot-cols { grid-template-columns: repeat(2, 1fr); gap: 28px; } }
+  @media (max-width: 520px) { .foot-cols { grid-template-columns: 1fr; gap: 24px; } }
 
   @media (max-width: 860px) {
     .nav-right { display: none; }
@@ -204,65 +254,15 @@
   <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="wrap nav-inner">
-      <a href="index.html" class="logo"><span class="lw"><span class="ch">K</span><span class="ch">N</span><span class="ch">B</span><i class="ld"></i></span></a>
-      <div class="nav-right">
-        <div class="nav-links">
-          <div class="nav-item nm">
-            <button class="nm-trigger" aria-haspopup="true" aria-expanded="false">Work
-              <svg class="nm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="nm-panel" role="menu">
-              <div class="nm-wrap">
-                <div class="nm-side">
-                  <span class="nm-label">Browse</span>
-                  <a href="portfolio.html">All work <span>44</span></a>
-                  <a href="shopify.html">Shopify <span>6</span></a>
-                  <a href="webflow.html">Webflow <span>10</span></a>
-                  <a href="wordpress.html">WordPress <span>28</span></a>
-                  <div class="nm-ind"><span class="nm-label">By industry</span><div class="nm-indchips"><span>Retail</span><span>Food</span><span>Software</span><span>Outdoor</span><span>Beauty</span></div></div>
-                </div>
-                <div class="nm-main">
-                  <div class="nm-head"><div><span class="nm-label">Selected work</span><h3>Sites we've shipped</h3></div><div class="nm-filters"><button class="on" data-f="all">All</button><button data-f="shopify">Shopify</button><button data-f="webflow">Webflow</button><button data-f="wordpress">WordPress</button></div></div>
-                  <div class="nm-thumbs">
-                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Light My Bricks</b><small>Shopify · Retail</small></span></a>
-                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Feedbird</b><small>Webflow · Software</small></span></a>
-                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Cacao Collective</b><small>Shopify · Food</small></span></a>
-                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Maestro Labs</b><small>Webflow · Software</small></span></a>
-                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Rise Outdoor</b><small>Shopify · Outdoor</small></span></a>
-                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coptrz</b><small>WordPress · Drone tech</small></span></a>
-                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoachman.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
-                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fphoenixsafe.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
-                  </div>
-                  <div class="nm-foot"><span>44 projects · 3 platforms · 18+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a href="pricing.html">Pricing</a>
-          <a href="about.html">About</a>
-          <a href="contact.html" class="active">Contact</a>
-        </div>
-        <a href="#contactForm" class="nav-cta"><span class="dot"></span>Start your project</a>
-      </div>
-      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="portfolio.html">Portfolio</a>
-    <div class="mm-plats"><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
-    <a href="pricing.html">Pricing</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions &#8594;</a>
-  </div>
+  <script src="header.js"></script>
 
   <main>
 
   <!-- CONTACT -->
   <section id="main" class="contact">
     <div class="contact-grid-bg"></div>
+    <div class="contact-grid-spot" id="contactSpot"></div>
+    <canvas class="contact-particles" id="contactParticles"></canvas>
     <div class="wrap">
       <p class="label reveal">Get in touch</p>
       <h1 class="reveal">Let's build something that works.</h1>
@@ -271,33 +271,66 @@
       <div class="contact-layout">
         <!-- FORM -->
         <div class="form-card reveal" id="contactForm">
-          <form id="auditForm" novalidate>
+          <form id="auditForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="contact">
+            <p class="hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
             <div class="field-row">
               <div class="field">
-                <label for="name">Your name</label>
-                <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" required>
+                <label for="name">Your name <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" autocomplete="name" required aria-required="true" aria-describedby="name-err">
+                <span class="field-error" id="name-err" hidden>Please enter your name.</span>
               </div>
               <div class="field">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="you@business.com" required>
+                <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="email" name="email" placeholder="you@business.com" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="email-err">
+                <span class="field-error" id="email-err" hidden>Please enter a valid email address.</span>
               </div>
             </div>
-            <div class="field">
-              <label for="site">Website or store URL</label>
-              <input type="text" id="site" name="site" placeholder="yourstore.com (optional)">
+            <div class="field-row">
+              <div class="field">
+                <label for="company">Company <span class="opt">(optional)</span></label>
+                <input type="text" id="company" name="company" placeholder="Your business name" autocomplete="organization">
+              </div>
+              <div class="field">
+                <label for="site">Website or store URL <span class="opt">(optional)</span></label>
+                <input type="url" id="site" name="site" placeholder="yourstore.com" autocomplete="url" inputmode="url">
+              </div>
             </div>
             <div class="field">
               <label for="service">What do you need?</label>
               <select id="service" name="service">
+                <option value="" disabled selected>Select one…</option>
                 <option>Shopify store revamp</option>
                 <option>New Shopify / ecommerce store</option>
                 <option>WordPress / WooCommerce site</option>
                 <option>Webflow website</option>
                 <option>Business website / redesign</option>
-                <option>Maintenance & support</option>
+                <option>Maintenance &amp; support</option>
                 <option>Custom web app</option>
                 <option>Not sure yet — need advice</option>
               </select>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="size">Project size</label>
+                <select id="size" name="project_size">
+                  <option value="" disabled selected>Select one…</option>
+                  <option>Small — a few pages / quick refresh</option>
+                  <option>Mid — full site or store build</option>
+                  <option>Large — complex build or ongoing work</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="timeline">Timeline</label>
+                <select id="timeline" name="timeline">
+                  <option value="" disabled selected>Select one…</option>
+                  <option>As soon as possible</option>
+                  <option>Within 1–3 months</option>
+                  <option>In 3–6 months</option>
+                  <option>Just exploring</option>
+                </select>
+              </div>
             </div>
             <div class="field">
               <label for="message">Tell us a bit more</label>
@@ -344,18 +377,48 @@
   <!-- FOOTER -->
   </main>
 
-  <footer>
+  <footer id="footer">
     <div class="wrap">
       <div class="foot-top">
-        <div>
+        <div class="foot-brand">
           <div class="logo">KNB<i class="lgdot"></i></div>
-          <p style="margin-top:16px;max-width:34ch;color:rgba(255,255,255,0.6)">Web design, Shopify revamps, and ongoing support for growing businesses.</p>
+          <p>Web design, Shopify revamps, and ongoing support for growing businesses.</p>
+          <span class="foot-status"><span class="fs-dot"></span>Now booking new projects</span>
         </div>
-        <a href="mailto:info@knb.solutions" class="btn"><span class="dot"></span>Start your project</a>
+        <nav class="foot-cols" aria-label="Footer">
+          <div class="foot-col">
+            <h3>Explore</h3>
+            <a href="portfolio.html">Work</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="foot-col">
+            <h3>Platforms</h3>
+            <a href="shopify.html">Shopify</a>
+            <a href="webflow.html">Webflow</a>
+            <a href="wordpress.html">WordPress</a>
+          </div>
+          <div class="foot-col">
+            <h3>Get in touch</h3>
+            <a href="mailto:info@knb.solutions">info@knb.solutions</a>
+            <span class="foot-loc">Philippines · Remote worldwide</span>
+            <div class="socials">
+              <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+              <a href="#" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
+              <a href="#" aria-label="Dribbble"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M5 6.5c3.5 4 8.5 6 14 6m-2-9c-4 5-5.5 12-5.5 15.5M3 14c5-1.5 11-1 15.5 4"/></svg></a>
+            </div>
+          </div>
+        </nav>
       </div>
+      <div class="foot-mark" aria-hidden="true"></div>
       <div class="foot-bottom">
         <span>© 2026 KNB Web Solution. All rights reserved.</span>
-        <a href="index.html">Back to home</a>
+        <div class="foot-bottom-r">
+          <a href="#">Privacy</a>
+          <a href="#" class="foot-up">Back to top ↑</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -394,22 +457,103 @@
       });
     }
 
-    /* form submit (front-end only — shows success state) */
+    /* floating dust particles (drift up + parallax depth + cursor) — same as the homepage hero */
+    (function () {
+      const canvas = document.getElementById('contactParticles');
+      if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ctx = canvas.getContext('2d');
+      const host = document.querySelector('.contact');
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let w = 0, h = 0, particles = [], mx = 0, my = 0, rafId;
+      const palette = ['232,63,160', '232,63,160', '232,63,160', '17,17,16', '96,132,255', '39,196,153', '255,168,84'];
+      const spawn = (anywhere) => {
+        const depth = Math.random();
+        return { x: Math.random() * w, y: anywhere ? Math.random() * h : h + 12, r: 0.6 + depth * 2.2, vy: 0.15 + depth * 0.6, drift: (Math.random() - 0.5) * 0.3, alpha: 0.08 + depth * 0.3, rgb: palette[Math.floor(Math.random() * palette.length)], depth };
+      };
+      function resize() {
+        w = host.clientWidth; h = host.clientHeight;
+        canvas.width = w * DPR; canvas.height = h * DPR;
+        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        particles = Array.from({ length: Math.round(Math.min(70, w / 20)) }, () => spawn(true));
+      }
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of particles) {
+          p.y -= p.vy; p.x += p.drift;
+          if (p.y < -12) Object.assign(p, spawn(false));
+          ctx.beginPath();
+          ctx.arc(p.x + mx * p.depth * 28, p.y + my * p.depth * 16, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + p.rgb + ',' + p.alpha + ')'; ctx.fill();
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+      host.addEventListener('mousemove', (e) => { const r = host.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5; });
+      host.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+      let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 200); });
+      resize(); tick();
+    })();
+
+    /* grid spotlight follows the cursor */
+    (function () {
+      const spot = document.getElementById('contactSpot');
+      const host = document.querySelector('.contact');
+      if (!spot || !host || matchMedia('(hover: none)').matches) return;
+      host.addEventListener('mousemove', (e) => {
+        const r = host.getBoundingClientRect();
+        spot.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        spot.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        spot.classList.add('active');
+      });
+      host.addEventListener('mouseleave', () => spot.classList.remove('active'));
+    })();
+
+    /* form submit — inline validation + Netlify Forms (AJAX, keeps the inline success state) */
     const form = document.getElementById('auditForm');
+    const nameEl = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const emailOK = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    function setError(el, show) {
+      const field = el.closest('.field');
+      field.classList.toggle('invalid', show);
+      const err = field.querySelector('.field-error');
+      if (err) err.hidden = !show;
+      el.setAttribute('aria-invalid', show ? 'true' : 'false');
+    }
+    // clear an error as soon as the user fixes the field
+    nameEl.addEventListener('input', () => { if (nameEl.value.trim()) setError(nameEl, false); });
+    emailEl.addEventListener('input', () => { if (emailOK(emailEl.value.trim())) setError(emailEl, false); });
+
+    function validate() {
+      const nameBad = !nameEl.value.trim();
+      const emailBad = !emailOK(emailEl.value.trim());
+      setError(nameEl, nameBad);
+      setError(emailEl, emailBad);
+      const firstBad = nameBad ? nameEl : (emailBad ? emailEl : null);
+      if (firstBad) firstBad.focus();
+      return !nameBad && !emailBad;
+    }
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('name');
-      const email = document.getElementById('email');
-      if (!name.value.trim() || !email.value.trim()) {
-        (!name.value.trim() ? name : email).focus();
-        return;
-      }
-      gsap.to(form, { opacity: 0, y: -10, duration: 0.4, ease: 'power2.in', onComplete: () => {
+      if (!validate()) return;
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+      let done = false;
+      const showSuccess = () => {
+        if (done) return; done = true;
+        // swap to the success state directly (don't gate it on a GSAP callback,
+        // so it always shows — even with reduced motion or a throttled tab)
         form.style.display = 'none';
         const s = document.getElementById('formSuccess');
         s.classList.add('show');
-        gsap.fromTo(s, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-      }});
+        if (window.gsap) gsap.fromTo(s, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' });
+      };
+      // send to Netlify Forms (URL-encoded POST to the page itself)
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+        .then(showSuccess).catch(showSuccess);
+      setTimeout(showSuccess, 2500); // safety: always confirm, even if the network hangs
     });
   </script>
   <script src="navmenu.js"></script>
