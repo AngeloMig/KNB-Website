@@ -537,12 +537,13 @@ gsap.registerPlugin(ScrollTrigger);
     /* ---- Count-up stats ---- */
     gsap.utils.toArray('.count').forEach(el => {
       const target = +el.dataset.target;
+      const dec = +(el.dataset.dec || 0);
       ScrollTrigger.create({
         trigger: el, start: 'top 85%', once: true,
         onEnter: () => {
           gsap.to({ v: 0 }, {
             v: target, duration: 1.6, ease: 'power2.out',
-            onUpdate() { el.textContent = Math.round(this.targets()[0].v); }
+            onUpdate() { el.textContent = this.targets()[0].v.toFixed(dec); }
           });
         }
       });

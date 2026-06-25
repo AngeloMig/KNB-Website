@@ -205,7 +205,7 @@ footer .logo { font-size: 40px; letter-spacing: -0.04em; gap: 0; align-items: ce
 .socials { display: flex; gap: 12px; margin-top: 4px; }
 .socials a { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 15px; transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease); }
 .socials a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); transform: translateY(-3px); }
-.foot-mark { font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none; }
+.foot-mark { font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none; text-align: center; }
 .foot-mark::after { content: "KNB"; }
 .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); font-size: 14px; }
 .foot-bottom-r { display: flex; gap: 24px; align-items: center; }
@@ -326,16 +326,18 @@ footer .logo { font-size: 40px; letter-spacing: -0.04em; gap: 0; align-items: ce
   .burger { display: flex; }
   .page-hero { padding: 120px 0 40px; }
   .cats-grid { grid-template-columns: 1fr; }
-  .proj-grid, .proj-grid.cols-3 { grid-template-columns: 1fr; }
-  .proj-grid.cols-3 .proj-card.feat { grid-column: auto; }
+  .proj-grid { grid-template-columns: 1fr; }
+  /* platform grids: 3-up -> 2-up on tablet (featured spans the row), like the portfolio */
+  .proj-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .proj-grid.cols-3 .proj-card.feat { grid-column: span 2; }
   .pf-grid { grid-template-columns: repeat(2, 1fr); }
   .pf-grid .proj-card.feat { grid-column: span 2; }
   .spot-inner { grid-template-columns: 1fr; }
   .pf-stats { gap: 32px; margin-top: 40px; }
 }
 @media (max-width: 560px) {
-  .pf-grid { grid-template-columns: 1fr; }
-  .pf-grid .proj-card.feat { grid-column: auto; }
+  .pf-grid, .proj-grid.cols-3 { grid-template-columns: 1fr; }
+  .pf-grid .proj-card.feat, .proj-grid.cols-3 .proj-card.feat { grid-column: auto; }
 }
 
 /* ===== Portfolio upgrades (ported from home Projects) ===== */
@@ -564,3 +566,6 @@ button.pf-chip:hover { transform: translateY(-1px); filter: brightness(1.06); }
 .svc-card p { color: var(--muted); font-size: 13.5px; line-height: 1.5; margin-top: 7px; }
 @media (max-width: 920px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .svc-grid { grid-template-columns: 1fr; } }
+
+/* mobile: keep the oversized page-hero heading from overflowing small screens */
+@media (max-width: 560px) { .page-hero { padding: 120px 0 40px; } .page-hero h1 { font-size: clamp(30px, 8vw, 46px); max-width: 100%; } }

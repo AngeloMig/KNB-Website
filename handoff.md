@@ -79,6 +79,7 @@ The hero platform cards (Shopify/Webflow/WordPress) have **comic speech bubbles*
 Still optional / not done: a **tap-to-reveal** fallback for touch (bubbles are hover-only, hidden <1200px, so mobile/tablet users never see them).
 
 ## 6. Open items / TODO
+- [ ] **Booking / "Book a call" feature** (deferred 2026-06-23) — let visitors schedule a consultation. Recommended: embed **Calendly or Cal.com** (free tier) as a popup from the existing "Book a free consultation" / "Start your project" CTAs, OR inline on contact, OR a `/book` page. Needs the client's scheduler link. (Custom date/time form via Netlify is the no-external-tool fallback, but it's a request not a live booking.)
 - [x] ~~Replace `youremail@gmail.com` with the real email everywhere.~~ → now `info@knb.solutions` (2026-06-22). Confirm this is the final inbox.
 - [ ] **Home testimonials** now show **invented client names on real KNB project brands** + placeholder quotes and a placeholder "4.9" rating — get **written permission + real quotes/rating** before launch. Do NOT ship fabricated attributed quotes.
 - [ ] `contact.html` still has inline CSS/JS — could refactor to share `work.css`/`work.js` or `styles.css`.

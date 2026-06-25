@@ -12,17 +12,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Contact — KNB Web Solution</title>
 <meta name="description" content="Get in touch with KNB Web Solution. Tell us about your website or online store and we'll send a clear, written proposal after a free consultation — no pressure, no jargon.">
-<link rel="canonical" href="https://knb.solutions/contact.html">
+<link rel="canonical" href="https://knb-solutions.netlify.app/contact.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KNB Web Solution">
 <meta property="og:title" content="Contact — KNB Web Solution">
 <meta property="og:description" content="Get in touch with KNB Web Solution. Tell us about your website or online store and we'll send a clear, written proposal after a free consultation — no pressure, no jargon.">
-<meta property="og:url" content="https://knb.solutions/contact.html">
-<meta property="og:image" content="https://knb.solutions/og-image.png">
+<meta property="og:url" content="https://knb-solutions.netlify.app/contact.html">
+<meta property="og:image" content="https://knb-solutions.netlify.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contact — KNB Web Solution">
 <meta name="twitter:description" content="Get in touch with KNB Web Solution. Tell us about your website or online store and we'll send a clear, written proposal after a free consultation — no pressure, no jargon.">
-<meta name="twitter:image" content="https://knb.solutions/og-image.png">
+<meta name="twitter:image" content="https://knb-solutions.netlify.app/og-image.png">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://s.wp.com" crossorigin>
 <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
@@ -271,7 +271,7 @@
       <div class="contact-layout">
         <!-- FORM -->
         <div class="form-card reveal" id="contactForm">
-          <form id="auditForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <form id="auditForm" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field" novalidate>
             <input type="hidden" name="form-name" value="contact">
             <p class="hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
             <div class="field-row">
@@ -336,8 +336,12 @@
               <label for="message">Tell us a bit more</label>
               <textarea id="message" name="message" placeholder="What are you trying to improve? Any goals, timeline, or examples you like."></textarea>
             </div>
+            <div class="field recaptcha-field">
+              <div data-netlify-recaptcha="true"></div>
+              <span class="field-error" id="recaptcha-err" hidden>Please complete the reCAPTCHA above.</span>
+            </div>
             <button type="submit" class="btn"><span class="dot"></span>Start my project</button>
-            <p class="form-note">We reply within 1 business day. Your details stay private.</p>
+            <p class="form-note">We reply within 1 business day. Your details stay private. Protected by reCAPTCHA.</p>
           </form>
           <div class="form-success" id="formSuccess">
             <div class="check">✓</div>
@@ -538,6 +542,12 @@
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!validate()) return;
+      // require reCAPTCHA when Netlify has rendered it (only renders on the deployed Netlify site)
+      const rc = document.getElementById('recaptcha-err');
+      if (window.grecaptcha && typeof grecaptcha.getResponse === 'function') {
+        if (!grecaptcha.getResponse()) { if (rc) { rc.hidden = false; rc.scrollIntoView({ block: 'center', behavior: 'smooth' }); } return; }
+        if (rc) rc.hidden = true;
+      }
       const btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
       let done = false;

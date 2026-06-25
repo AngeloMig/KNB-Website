@@ -1850,6 +1850,7 @@
   .foot-mark {
     font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8;
     color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none;
+    text-align: center;
   }
   /* render the decorative wordmark via generated content so the contrast checker
      (which skips ::after) doesn't flag this intentionally-faint watermark */
@@ -1905,7 +1906,8 @@
      unreadable), so stack the three cards vertically — all of them visible and
      full-size; tablets keep the 3-up row above */
   @media (max-width: 600px) {
-    .hero h1 { font-size: clamp(34px, 11vw, 60px); }
+    .hero h1 { font-size: clamp(28px, 8.5vw, 42px); max-width: 100%; }
+    .label { font-size: 11px; letter-spacing: 0.1em; flex-wrap: wrap; justify-content: center; text-align: center; }
     .hero-photos {
       flex-direction: column;
       align-items: center;
@@ -1918,7 +1920,7 @@
       position: static;
       transform: none !important;
       width: 100% !important;
-      max-width: 330px;
+      max-width: min(320px, 84vw);
       flex: none;
       scroll-snap-align: none;
     }

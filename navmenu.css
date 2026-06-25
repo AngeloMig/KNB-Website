@@ -126,3 +126,6 @@
 .logo:hover .lw .ld { animation: lwDot 0.55s var(--ease, cubic-bezier(0.16,1,0.3,1)); }
 @keyframes lwDot { 30% { transform: scale(1.7); } 60% { transform: scale(0.9); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .logo .lw, .logo:hover .lw .ch, .logo:hover .lw .ld { animation: none; } }
+
+/* responsive: collapse the desktop nav to the burger wherever the full-width mega-menu can't fit (kills the 861–1080px dead-zone) */
+@media (max-width: 1080px) { .nav-right { display: none; } .burger { display: flex; } }
