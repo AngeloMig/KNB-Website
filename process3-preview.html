@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>3-step "How we work" — 5 directions · KNB</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{ --pcol:#5e8e3e; --ink:#111110; --bg:#f4f3ef; --card:#fff; --muted:#6b6860; --line:#e6e4dd; --ease:cubic-bezier(0.16,1,0.3,1); }
+  *{ box-sizing:border-box; }
+  body{ font-family:'Satoshi',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--ink); margin:0; -webkit-font-smoothing:antialiased; }
+  a{ text-decoration:none; color:inherit; } svg{ display:block; }
+  .page{ max-width:1120px; margin:0 auto; padding:44px 22px 90px; }
+  .head h1{ font-size:clamp(26px,4vw,34px); letter-spacing:-.02em; margin:0 0 8px; }
+  .head p{ color:var(--muted); font-size:15px; line-height:1.6; margin:0 0 20px; max-width:66ch; }
+  .pswitch{ display:inline-flex; gap:5px; background:#fff; border:1px solid var(--line); padding:5px; border-radius:100px; margin-bottom:32px; }
+  .pswitch button{ font:inherit; font-size:13px; font-weight:600; border:0; background:transparent; color:var(--muted); padding:8px 15px; border-radius:100px; cursor:pointer; display:flex; align-items:center; gap:7px; transition:.2s; }
+  .pswitch button img{ width:14px; height:14px; }
+  .pswitch button.on{ background:var(--pcol); color:#fff; }
+  .pswitch button.on img{ filter:brightness(0) invert(1); }
+  .demo{ background:var(--bg); border:1px solid var(--line); border-radius:18px; overflow:hidden; margin-bottom:24px; }
+  .demo-head{ display:flex; align-items:center; gap:13px; padding:15px 20px; border-bottom:1px solid var(--line); background:#fff; }
+  .demo-num{ flex:none; width:30px; height:30px; border-radius:9px; background:var(--pcol); color:#fff; display:grid; place-items:center; font-weight:800; font-size:14px; }
+  .demo-head h2{ font-size:16px; margin:0; letter-spacing:-.01em; }
+  .demo-head p{ font-size:12.5px; color:var(--muted); margin:2px 0 0; }
+  .demo-head .anim{ color:var(--pcol); font-weight:700; }
+  .replay{ margin-left:auto; flex:none; font:inherit; font-size:12.5px; font-weight:600; color:var(--ink); background:var(--bg); border:1px solid var(--line); border-radius:100px; padding:7px 13px; cursor:pointer; transition:.2s; }
+  .replay:hover{ border-color:var(--pcol); color:var(--pcol); }
+  .stage{ padding:48px 40px 54px; }
+  .pv-eyebrow{ display:inline-flex; align-items:center; gap:9px; font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pcol); }
+  .pv-eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--pcol); }
+  .pv-h{ font-size:clamp(24px,3.2vw,36px); font-weight:600; letter-spacing:-.03em; line-height:1.06; margin:12px 0 36px; max-width:18ch; }
+  @media(max-width:640px){ .stage{ padding:30px 20px 36px; } }
+  @keyframes pop{ 0%{ transform:scale(.3); opacity:0 } 60%{ transform:scale(1.12) } 100%{ transform:scale(1); opacity:1 } }
+  @keyframes rise{ from{ opacity:0; transform:translateY(20px) } to{ opacity:1; transform:none } }
+
+  /* ============ V1 — Drawing connector timeline ============ */
+  .v-line{ position:relative; padding-top:6px; }
+  .ln-track{ position:absolute; top:36px; left:16.6%; right:16.6%; height:3px; background:var(--line); border-radius:3px; }
+  .ln-track i{ position:absolute; left:0; top:0; height:100%; width:0; background:var(--pcol); border-radius:3px; }
+  .stage.play .ln-track i{ animation:lnDraw 1.6s var(--ease) .1s forwards; }
+  @keyframes lnDraw{ to{ width:100% } }
+  .ln-comet{ position:absolute; top:32px; left:16.6%; width:11px; height:11px; border-radius:50%; background:var(--pcol); box-shadow:0 0 0 5px color-mix(in srgb,var(--pcol) 22%,transparent); opacity:0; }
+  .stage.play .ln-comet{ animation:lnComet 1.6s var(--ease) .1s forwards; }
+  @keyframes lnComet{ 0%{ left:16.6%; opacity:1 } 92%{ opacity:1 } 100%{ left:83.4%; opacity:0 } }
+  .ln-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; position:relative; }
+  .ln-step{ text-align:center; }
+  .ln-dot{ width:66px; height:66px; border-radius:20px; background:var(--ink); color:#fff; display:grid; place-items:center; font-weight:800; font-size:22px; margin:0 auto 20px; position:relative; z-index:1; box-shadow:0 10px 24px -8px rgba(0,0,0,.45); }
+  .stage.play .ln-dot{ opacity:0; animation:pop .55s var(--ease) both; }
+  .stage.play .ln-step:nth-child(1) .ln-dot{ animation-delay:.2s } .stage.play .ln-step:nth-child(2) .ln-dot{ animation-delay:.7s } .stage.play .ln-step:nth-child(3) .ln-dot{ animation-delay:1.2s }
+  .ln-card{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; transition:transform .35s var(--ease), box-shadow .35s, border-color .35s; }
+  .ln-step:hover .ln-card{ transform:translateY(-6px); box-shadow:0 24px 50px -28px rgba(17,17,16,.4); border-color:color-mix(in srgb,var(--pcol) 40%,#fff); }
+  .ln-ic{ width:42px; height:42px; border-radius:11px; background:color-mix(in srgb,var(--pcol) 12%,#fff); color:var(--pcol); display:grid; place-items:center; margin:0 auto 14px; } .ln-ic svg{ width:21px; height:21px; }
+  .ln-card h4{ font-size:19px; font-weight:600; letter-spacing:-.02em; margin:0 0 7px; }
+  .ln-card p{ font-size:14px; color:var(--muted); line-height:1.55; margin:0; }
+  @media(max-width:700px){ .ln-grid{ grid-template-columns:1fr; gap:18px } .ln-track,.ln-comet{ display:none } }
+
+  /* ============ V2 — Magnetic 3D tilt + spotlight ============ */
+  .v-tilt{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .tl-card{ perspective:900px; opacity:0; transform:translateY(26px); }
+  .stage.play .tl-card{ animation:rise .6s var(--ease) forwards; }
+  .stage.play .tl-card:nth-child(2){ animation-delay:.1s } .stage.play .tl-card:nth-child(3){ animation-delay:.2s }
+  .tl-fx{ position:relative; border-radius:20px; background:#fff; border:1px solid var(--line); padding:30px 28px 28px; overflow:hidden; transform-style:preserve-3d; transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px)); transition:transform .3s var(--ease), box-shadow .35s; }
+  .tl-card:hover .tl-fx{ --ty:-6px; box-shadow:0 34px 64px -34px rgba(17,17,16,.5); }
+  .tl-fx::before{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0; transition:opacity .3s; background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb,var(--pcol) 20%,transparent), transparent 66%); }
+  .tl-card:hover .tl-fx::before{ opacity:1; }
+  .tl-wm{ position:absolute; top:-12px; right:6px; font-size:96px; font-weight:800; letter-spacing:-.05em; color:color-mix(in srgb,var(--pcol) 9%,transparent); line-height:1; transform:translateZ(30px); pointer-events:none; }
+  .tl-ic{ width:54px; height:54px; border-radius:15px; background:var(--ink); color:#fff; display:grid; place-items:center; margin-bottom:18px; transform:translateZ(46px); } .tl-ic svg{ width:26px; height:26px; }
+  .tl-fx h4{ font-size:20px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; transform:translateZ(28px); }
+  .tl-fx p{ font-size:14px; color:var(--muted); line-height:1.55; margin:0; transform:translateZ(16px); }
+  @media(max-width:700px){ .v-tilt{ grid-template-columns:1fr } }
+
+  /* ============ V3 — Auto-advancing guided stepper ============ */
+  .v-guide{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .gd-card{ position:relative; background:#fff; border:1px solid var(--line); border-radius:18px; padding:28px 26px; opacity:.5; transform:translateY(0) scale(.98); transition:opacity .45s var(--ease), transform .45s var(--ease), box-shadow .45s, border-color .45s; cursor:pointer; overflow:hidden; }
+  .gd-card.on{ opacity:1; transform:translateY(-6px) scale(1); box-shadow:0 28px 56px -30px rgba(17,17,16,.4); border-color:color-mix(in srgb,var(--pcol) 45%,#fff); }
+  .gd-top{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .gd-ring{ width:50px; height:50px; flex:none; position:relative; }
+  .gd-ring svg{ width:50px; height:50px; transform:rotate(-90deg); }
+  .gd-ring .rbg{ fill:none; stroke:var(--line); stroke-width:3.5; }
+  .gd-ring .rfg{ fill:none; stroke:var(--pcol); stroke-width:3.5; stroke-linecap:round; stroke-dasharray:100; stroke-dashoffset:100; }
+  .gd-card.on .gd-ring .rfg{ animation:gdRing 4s linear forwards; }
+  @keyframes gdRing{ to{ stroke-dashoffset:0 } }
+  .gd-ring b{ position:absolute; inset:0; display:grid; place-items:center; font-size:16px; font-weight:800; }
+  .gd-ic{ width:40px; height:40px; border-radius:11px; background:color-mix(in srgb,var(--pcol) 12%,#fff); color:var(--pcol); display:grid; place-items:center; } .gd-ic svg{ width:20px; height:20px; }
+  .gd-card h4{ font-size:19px; font-weight:600; letter-spacing:-.02em; margin:0 0 7px; }
+  .gd-card p{ font-size:14px; color:var(--muted); line-height:1.55; margin:0; max-height:0; opacity:0; overflow:hidden; transition:max-height .45s var(--ease), opacity .35s; }
+  .gd-card.on p{ max-height:90px; opacity:1; }
+  @media(max-width:700px){ .v-guide{ grid-template-columns:1fr } .gd-card p{ max-height:90px; opacity:1 } }
+
+  /* ============ V4 — Scroll-pinned progress ============ */
+  .v-pin{ position:relative; height:360px; overflow-y:auto; border-radius:18px; border:1px solid var(--line); background:#fff; scrollbar-width:thin; }
+  .pin-bar{ position:sticky; top:0; height:4px; background:var(--line); z-index:3; }
+  .pin-bar i{ display:block; height:100%; width:0; background:var(--pcol); }
+  .pin-hint{ position:sticky; top:4px; z-index:3; text-align:center; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:8px; background:linear-gradient(#fff,rgba(255,255,255,0)); }
+  .pin-inner{ padding:0 34px 70px; }
+  .pin-step{ display:grid; grid-template-columns:64px 1fr; gap:22px; align-items:start; padding:34px 0; opacity:.4; transform:translateY(14px); transition:opacity .45s var(--ease), transform .45s var(--ease); }
+  .pin-step.on{ opacity:1; transform:none; }
+  .pin-num{ width:64px; height:64px; border-radius:18px; background:var(--ink); color:#fff; display:grid; place-items:center; font-size:22px; font-weight:800; transition:.4s; }
+  .pin-step.on .pin-num{ background:var(--pcol); box-shadow:0 12px 28px -10px color-mix(in srgb,var(--pcol) 70%,transparent); }
+  .pin-step h4{ font-size:21px; font-weight:600; letter-spacing:-.02em; margin:6px 0 8px; }
+  .pin-step p{ font-size:14.5px; color:var(--muted); line-height:1.6; margin:0; max-width:46ch; }
+
+  /* ============ V5 — Isometric depth scene ============ */
+  .v-iso{ perspective:1300px; padding:14px 0; }
+  .iso-scene{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; transform-style:preserve-3d; transform:rotateX(var(--sx,16deg)) rotateY(var(--sy,-14deg)); transition:transform .4s var(--ease); }
+  .iso-card{ position:relative; border-radius:18px; background:#fff; border:1px solid var(--line); padding:28px 26px; transform-style:preserve-3d; box-shadow:0 30px 50px -30px rgba(17,17,16,.4); transition:transform .4s var(--ease), box-shadow .4s; opacity:0; }
+  .stage.play .iso-card{ animation:rise .7s var(--ease) forwards; }
+  .stage.play .iso-card:nth-child(1){ animation-delay:.05s } .stage.play .iso-card:nth-child(2){ animation-delay:.18s } .stage.play .iso-card:nth-child(3){ animation-delay:.31s }
+  .iso-card:nth-child(2){ transform:translateZ(40px); } .iso-card:nth-child(3){ transform:translateZ(80px); }
+  .iso-card:hover{ transform:translateZ(110px) translateY(-4px); box-shadow:0 50px 80px -40px rgba(17,17,16,.55); }
+  .iso-num{ position:absolute; top:18px; right:22px; font-size:50px; font-weight:800; letter-spacing:-.04em; color:color-mix(in srgb,var(--pcol) 12%,transparent); transform:translateZ(30px); line-height:1; }
+  .iso-ic{ width:52px; height:52px; border-radius:14px; background:var(--pcol); color:#fff; display:grid; place-items:center; margin-bottom:18px; transform:translateZ(40px); } .iso-ic svg{ width:26px; height:26px; }
+  .iso-card h4{ font-size:19px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; transform:translateZ(24px); }
+  .iso-card p{ font-size:13.5px; color:var(--muted); line-height:1.55; margin:0; transform:translateZ(12px); }
+  @media(max-width:700px){ .iso-scene{ grid-template-columns:1fr; transform:none } .iso-card,.iso-card:nth-child(2),.iso-card:nth-child(3){ transform:none } }
+
+  /* ============ V6 — 3D flip cards (upgraded) ============ */
+  .v-flip{ position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; perspective:1300px; padding-top:42px; }
+  .fl-rail{ position:absolute; top:16px; left:0; right:0; height:14px; }
+  .fl-rail-line{ position:absolute; top:50%; transform:translateY(-50%); left:16.66%; right:16.66%; height:3px; background:var(--line); border-radius:3px; overflow:hidden; }
+  .fl-rail-line i{ position:absolute; inset:0; width:0; background:var(--pcol); }
+  .stage.play .fl-rail-line i{ animation:lnDraw 1.3s var(--ease) .25s forwards; }
+  .fl-rdot{ position:absolute; top:50%; width:13px; height:13px; border-radius:50%; background:#fff; border:2px solid var(--pcol); transform:translate(-50%,-50%) scale(0); }
+  .stage.play .fl-rdot{ animation:flDot .5s var(--ease) both; }
+  .stage.play .fl-rdot:nth-child(2){ animation-delay:.3s } .stage.play .fl-rdot:nth-child(3){ animation-delay:.6s } .stage.play .fl-rdot:nth-child(4){ animation-delay:.9s }
+  @keyframes flDot{ 0%{ transform:translate(-50%,-50%) scale(.3); opacity:0 } 60%{ transform:translate(-50%,-50%) scale(1.12) } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1 } }
+  .fl-card{ position:relative; height:244px; opacity:0; }
+  .stage.play .fl-card{ animation:rise .6s var(--ease) forwards; }
+  .stage.play .fl-card:nth-child(3){ animation-delay:.1s } .stage.play .fl-card:nth-child(4){ animation-delay:.2s }
+  .fl-tilt{ position:absolute; inset:0; transform-style:preserve-3d; transform:rotateX(var(--tx,0deg)) rotateY(var(--ty,0deg)); transition:transform .4s var(--ease); }
+  .fl-inner{ position:absolute; inset:0; transform-style:preserve-3d; transition:transform .6s var(--ease); }
+  .fl-card.flipped .fl-inner{ transform:rotateY(180deg) scale(1.02); }
+  .fl-tilt{ transition:transform .45s var(--ease); }
+  .fl-card.flipped .fl-tilt{ transition:transform .15s linear; }
+  .fl-face{ position:absolute; inset:0; border-radius:18px; padding:26px; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:translateZ(0); display:flex; flex-direction:column; box-shadow:0 16px 32px -20px rgba(17,17,16,.45); }
+  .fl-front{ background:#fff; border:1px solid var(--line); }
+  .fl-back{ transform:rotateY(180deg); background:var(--ink); color:#fff; justify-content:center; }
+  .fl-edge{ position:absolute; left:0; right:0; bottom:0; height:5px; background:rgba(0,0,0,.16); border-bottom-left-radius:18px; border-bottom-right-radius:18px; }
+  .fl-front .fl-edge{ background:color-mix(in srgb,var(--pcol) 32%,#e7e5de); }
+  .fl-tag{ position:absolute; top:16px; right:16px; z-index:2; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--pcol); background:color-mix(in srgb,var(--pcol) 13%,#fff); border:1px solid color-mix(in srgb,var(--pcol) 24%,#fff); padding:4px 9px; border-radius:100px; }
+  .fl-wm{ position:absolute; bottom:2px; right:14px; font-size:84px; font-weight:800; letter-spacing:-.05em; color:color-mix(in srgb,var(--pcol) 10%,transparent); line-height:1; pointer-events:none; }
+  .fl-badge{ width:52px; height:52px; border-radius:15px; background:var(--ink); color:#fff; display:grid; place-items:center; font-size:21px; font-weight:800; margin-bottom:auto; position:relative; z-index:1; }
+  .fl-front h4{ font-size:20px; font-weight:600; letter-spacing:-.02em; margin:0; position:relative; z-index:1; }
+  .fl-hint{ font-size:12.5px; color:var(--pcol); font-weight:700; margin-top:8px; position:relative; z-index:1; }
+  .fl-back .fl-ic{ width:46px; height:46px; border-radius:12px; background:rgba(255,255,255,.18); color:#fff; display:grid; place-items:center; margin-bottom:16px; } .fl-back .fl-ic svg{ width:23px; height:23px; }
+  .fl-back h4{ font-size:17px; font-weight:600; margin:0 0 6px; } .fl-back p{ font-size:13.5px; color:rgba(255,255,255,.86); line-height:1.5; margin:0; }
+  .fl-cta{ display:inline-flex; align-items:center; gap:7px; margin-top:14px; font-size:13px; font-weight:700; color:#fff; }
+  .fl-cta svg{ transition:transform .3s var(--ease); } .fl-cta:hover svg{ transform:translateX(4px); }
+  .fl-shine{ position:absolute; inset:0; z-index:5; pointer-events:none; border-radius:18px; background:linear-gradient(115deg, transparent 38%, rgba(255,255,255,.5) 50%, transparent 62%); background-size:260% 100%; background-position:155% 0; }
+  .fl-card.flipped .fl-shine{ animation:flShine .85s var(--ease); }
+  @keyframes flShine{ from{ background-position:155% 0 } to{ background-position:-55% 0 } }
+  .fl-back .fl-ic, .fl-back h4, .fl-back p, .fl-back .fl-cta{ opacity:0; transform:translateY(12px); transition:opacity .4s var(--ease), transform .4s var(--ease); }
+  .fl-card.flipped .fl-back .fl-ic{ opacity:1; transform:none; transition-delay:.32s; }
+  .fl-card.flipped .fl-back h4{ opacity:1; transform:none; transition-delay:.4s; }
+  .fl-card.flipped .fl-back p{ opacity:1; transform:none; transition-delay:.48s; }
+  .fl-card.flipped .fl-back .fl-cta{ opacity:1; transform:none; transition-delay:.56s; }
+  @media(max-width:700px){ .v-flip{ grid-template-columns:1fr } .fl-rail{ display:none } }
+
+  /* ============ V7 — Gooey liquid progress ============ */
+  .v-goo .goo-wrap{ position:relative; height:64px; margin-bottom:6px; }
+  .v-goo .goo-nums{ position:absolute; left:8%; right:8%; top:-4px; display:flex; justify-content:space-between; }
+  .v-goo .goo-nums span{ font-size:13px; font-weight:800; color:var(--muted); width:24px; text-align:center; }
+  .v-goo .goo-blobs{ position:absolute; left:8%; right:8%; top:30px; height:18px; filter:url(#goo); }
+  .v-goo .goo-node{ position:absolute; top:0; width:18px; height:18px; border-radius:50%; background:var(--pcol); transform:translateX(-50%); }
+  .v-goo .goo-ball{ position:absolute; top:-3px; left:0; width:24px; height:24px; border-radius:50%; background:var(--pcol); transform:translateX(-50%); }
+  .stage.play .v-goo .goo-ball{ animation:gooMove 3.4s ease-in-out infinite alternate; }
+  @keyframes gooMove{ 0%{ left:0% } 50%{ left:50% } 100%{ left:100% } }
+  .v-goo .goo-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .v-goo .goo-card{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; text-align:center; transition:transform .35s var(--ease), box-shadow .35s; }
+  .v-goo .goo-card:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -28px rgba(17,17,16,.4); }
+  .v-goo .goo-ic{ width:44px; height:44px; border-radius:12px; background:color-mix(in srgb,var(--pcol) 12%,#fff); color:var(--pcol); display:grid; place-items:center; margin:0 auto 14px; } .v-goo .goo-ic svg{ width:22px; height:22px; }
+  .v-goo .goo-card h4{ font-size:18px; font-weight:600; letter-spacing:-.02em; margin:0 0 7px; } .v-goo .goo-card p{ font-size:13.5px; color:var(--muted); line-height:1.5; margin:0; }
+  @media(max-width:700px){ .v-goo .goo-grid{ grid-template-columns:1fr } .v-goo .goo-wrap{ display:none } }
+
+  /* ============ V8 — 3D coverflow carousel ============ */
+  .v-flow{ perspective:1300px; }
+  .flow-stage{ position:relative; height:264px; transform-style:preserve-3d; }
+  .flow-card{ position:absolute; top:0; left:50%; width:320px; margin-left:-160px; height:248px; border-radius:20px; background:#fff; border:1px solid var(--line); padding:30px; box-shadow:0 30px 60px -34px rgba(17,17,16,.5); transition:transform .55s var(--ease), opacity .55s; cursor:pointer; }
+  .flow-num{ position:absolute; top:24px; right:28px; font-size:46px; font-weight:800; letter-spacing:-.04em; color:color-mix(in srgb,var(--pcol) 12%,transparent); line-height:1; }
+  .flow-ic{ width:52px; height:52px; border-radius:14px; background:var(--pcol); color:#fff; display:grid; place-items:center; margin-bottom:18px; } .flow-ic svg{ width:26px; height:26px; }
+  .flow-card h4{ font-size:20px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; } .flow-card p{ font-size:14px; color:var(--muted); line-height:1.55; margin:0; }
+  .flow-ctrl{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:22px; }
+  .flow-arr{ width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:#fff; cursor:pointer; font-size:18px; color:var(--ink); display:grid; place-items:center; transition:.2s; } .flow-arr:hover{ border-color:var(--pcol); color:var(--pcol); }
+  .flow-dots{ display:flex; gap:7px; } .flow-dot{ width:8px; height:8px; border-radius:50%; background:var(--line); transition:.3s; } .flow-dot.on{ background:var(--pcol); width:22px; border-radius:4px; }
+  @media(max-width:700px){ .flow-card{ width:260px; margin-left:-130px } }
+
+  /* ============ V9 — Kinetic giant numbers ============ */
+  .v-kin{ display:grid; grid-template-columns:200px 1fr; gap:38px; align-items:center; min-height:230px; }
+  .kin-num{ position:relative; height:210px; }
+  .kin-fig{ position:absolute; inset:0; display:grid; place-items:center; font-size:200px; font-weight:900; letter-spacing:-.06em; color:var(--pcol); opacity:0; transform:translateY(36%); transition:opacity .55s var(--ease), transform .55s var(--ease); }
+  .kin-fig.on{ opacity:1; transform:none; }
+  .kin-body{ position:relative; min-height:150px; }
+  .kin-step{ position:absolute; inset:0; opacity:0; transform:translateY(18px); transition:opacity .5s var(--ease), transform .5s var(--ease); }
+  .kin-step.on{ opacity:1; transform:none; }
+  .kin-ic{ width:50px; height:50px; border-radius:14px; background:var(--ink); color:#fff; display:grid; place-items:center; margin-bottom:16px; } .kin-ic svg{ width:25px; height:25px; }
+  .kin-step h4{ font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0 0 9px; } .kin-step p{ font-size:15px; color:var(--muted); line-height:1.6; margin:0; max-width:44ch; }
+  @media(max-width:700px){ .v-kin{ grid-template-columns:1fr; gap:6px } .kin-num{ height:130px } .kin-fig{ font-size:120px } }
+
+  /* ============ V10 — Sticky scroll-stack ============ */
+  .v-stack{ position:relative; height:360px; overflow-y:auto; border-radius:18px; border:1px solid var(--line); background:linear-gradient(#fff,#efeee9); }
+  .stk-hint{ position:sticky; top:0; z-index:9; text-align:center; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:10px; background:linear-gradient(#fff,rgba(255,255,255,0)); }
+  .stk-card{ position:sticky; margin:0 26px 22px; border-radius:18px; background:#fff; border:1px solid var(--line); box-shadow:0 24px 44px -30px rgba(17,17,16,.5); padding:26px; display:grid; grid-template-columns:60px 1fr; gap:20px; align-items:center; min-height:150px; }
+  .stk-card:nth-child(2){ top:22px } .stk-card:nth-child(3){ top:40px } .stk-card:nth-child(4){ top:58px }
+  .stk-num{ width:60px; height:60px; border-radius:17px; background:var(--ink); color:#fff; display:grid; place-items:center; font-size:22px; font-weight:800; }
+  .stk-ic{ display:none } .stk-b h4{ font-size:20px; font-weight:600; letter-spacing:-.02em; margin:0 0 7px; } .stk-b p{ font-size:14px; color:var(--muted); line-height:1.55; margin:0; }
+  .stk-end{ height:120px; }
+
+  .foot{ text-align:center; color:var(--muted); font-size:13.5px; margin-top:8px; } .foot b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="g"/><feComposite in="SourceGraphic" in2="g" operator="atop"/></filter></defs></svg>
+<div class="page">
+  <div class="head">
+    <h1>"How we work" 3-step — 5 directions</h1>
+    <p>Five ambitious redesigns of the 3-step section, <b>each with a different animation</b>. Hover and click the cards, and hit <b>↻ Replay</b> to re-watch entrances. #4 is <b>scroll-driven</b> — scroll inside its frame. Switch the platform colour up top.</p>
+    <div class="pswitch">
+      <button data-p="shopify" class="on"><img src="https://cdn.simpleicons.org/shopify/5e8e3e" alt="">Shopify</button>
+      <button data-p="webflow"><img src="https://cdn.simpleicons.org/webflow/4353ff" alt="">Webflow</button>
+      <button data-p="wordpress"><img src="https://cdn.simpleicons.org/wordpress/21759b" alt="">WordPress</button>
+    </div>
+  </div>
+
+  <div class="demo" data-variant="line">
+    <div class="demo-head"><span class="demo-num">1</span><div><h2>Drawing connector timeline</h2><p>Animation: <span class="anim">line draws across + travelling comet + numbered badges pop in sequence</span></p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="tilt">
+    <div class="demo-head"><span class="demo-num">2</span><div><h2>Magnetic 3D tilt</h2><p>Animation: <span class="anim">cursor-tilt with layered depth + spotlight glow</span>, staggered rise-in</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="guide">
+    <div class="demo-head"><span class="demo-num">3</span><div><h2>Auto-guided stepper</h2><p>Animation: <span class="anim">auto-advancing progress ring</span>; active card lifts + reveals its detail (click to jump)</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="pin">
+    <div class="demo-head"><span class="demo-num">4</span><div><h2>Scroll-pinned progress</h2><p>Animation: <span class="anim">progress bar fills as you scroll</span>; steps light up on arrival — scroll inside the frame</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="iso">
+    <div class="demo-head"><span class="demo-num">5</span><div><h2>Isometric depth scene</h2><p>Animation: <span class="anim">3D isometric stack with mouse parallax</span>; cards rise toward you on hover</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+
+  <div class="demo" data-variant="flip">
+    <div class="demo-head"><span class="demo-num">6</span><div><h2>3D flip cards</h2><p>Animation: <span class="anim">cards flip 180° in 3D on hover</span> to reveal the detail on the back; staggered rise-in</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="goo">
+    <div class="demo-head"><span class="demo-num">7</span><div><h2>Gooey liquid progress</h2><p>Animation: <span class="anim">a liquid metaball travels &amp; merges</span> between the step nodes (SVG goo filter)</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="flow">
+    <div class="demo-head"><span class="demo-num">8</span><div><h2>3D coverflow carousel</h2><p>Animation: <span class="anim">cards rotate through a 3D coverflow</span>; active card comes forward — auto-rotates, click/arrows to drive</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="kin">
+    <div class="demo-head"><span class="demo-num">9</span><div><h2>Kinetic giant numbers</h2><p>Animation: <span class="anim">a huge number slides/morphs</span> as the step changes, with the detail beside it — auto-advances</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+  <div class="demo" data-variant="stack">
+    <div class="demo-head"><span class="demo-num">10</span><div><h2>Sticky scroll-stack</h2><p>Animation: <span class="anim">cards stack &amp; pin as you scroll</span> — scroll inside the frame to watch them layer</p></div><button class="replay">↻ Replay</button></div>
+    <div class="stage"><span class="pv-eyebrow">How we work</span><h3 class="pv-h">Simple, clear, and fast.</h3><div class="render"></div></div>
+  </div>
+
+  <p class="foot">All ten are themeable + responsive. Pick a number and I'll ship it (themed per platform). Showiest: <b>#5</b>, <b>#8</b>, <b>#9</b>. Cleanest "process" read: <b>#1</b>.</p>
+</div>
+
+<script>
+  var PLAT={ shopify:['#5e8e3e','shopify','Shopify'], webflow:['#4353ff','webflow','Webflow'], wordpress:['#21759b','wordpress','WordPress'] };
+  var IC={
+    chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+    doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>',
+    rocket:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>'
+  };
+  var S=[
+    {n:'1', t:'Free consultation', cat:'Discovery', d:'We learn your goals and review your current site, if you have one, for quick wins.', i:'chat'},
+    {n:'2', t:'Written proposal', cat:'Scope', d:'A clear scope with deliverables, timeline, and an exact price — no surprises.', i:'doc'},
+    {n:'3', t:'Build & launch', cat:'Delivery', d:'We design, build, test, and launch — then keep it running with a care plan.', i:'rocket'}
+  ];
+  var ARROW='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  function build(v, el){
+    if(v==='line'){
+      el.className='render v-line';
+      el.innerHTML='<div class="ln-track"><i></i></div><span class="ln-comet"></span><div class="ln-grid">'+
+        S.map(function(s){ return '<div class="ln-step"><div class="ln-dot">'+s.n+'</div><div class="ln-card"><span class="ln-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p></div></div>'; }).join('')+'</div>';
+    }
+    else if(v==='tilt'){
+      el.className='render v-tilt';
+      el.innerHTML=S.map(function(s){ return '<div class="tl-card"><div class="tl-fx"><span class="tl-wm">'+s.n+'</span><span class="tl-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p></div></div>'; }).join('');
+      [].slice.call(el.querySelectorAll('.tl-card')).forEach(function(c){ var fx=c.querySelector('.tl-fx');
+        c.addEventListener('pointermove',function(e){ var r=c.getBoundingClientRect(); var x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height; fx.style.setProperty('--ry',((x-.5)*10)+'deg'); fx.style.setProperty('--rx',((.5-y)*10)+'deg'); fx.style.setProperty('--mx',(x*100)+'%'); fx.style.setProperty('--my',(y*100)+'%'); });
+        c.addEventListener('pointerleave',function(){ fx.style.setProperty('--rx','0deg'); fx.style.setProperty('--ry','0deg'); });
+      });
+    }
+    else if(v==='guide'){
+      el.className='render v-guide';
+      el.innerHTML=S.map(function(s,i){ return '<div class="gd-card'+(i===0?' on':'')+'" data-i="'+i+'"><div class="gd-top"><span class="gd-ring"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.9"></circle><circle class="rfg" cx="18" cy="18" r="15.9"></circle></svg><b>'+s.n+'</b></span><span class="gd-ic">'+IC[s.i]+'</span></div><h4>'+s.t+'</h4><p>'+s.d+'</p></div>'; }).join('');
+      var cards=[].slice.call(el.querySelectorAll('.gd-card')), cur=0, timer=null;
+      function set(i){ cur=i; cards.forEach(function(c,j){ c.classList.toggle('on', j===i); }); }
+      function auto(){ clearInterval(timer); timer=setInterval(function(){ set((cur+1)%cards.length); }, 4000); }
+      cards.forEach(function(c){ c.addEventListener('mouseenter',function(){ clearInterval(timer); set(+c.dataset.i); }); c.addEventListener('click',function(){ set(+c.dataset.i); auto(); }); });
+      el.addEventListener('mouseleave', auto);
+      el._onPlay=function(){ set(0); auto(); };
+    }
+    else if(v==='pin'){
+      el.className='render';
+      el.innerHTML='<div class="v-pin"><div class="pin-bar"><i></i></div><div class="pin-hint">↓ scroll</div><div class="pin-inner">'+
+        S.map(function(s){ return '<div class="pin-step"><span class="pin-num">'+s.n+'</span><div><h4>'+s.t+'</h4><p>'+s.d+'</p></div></div>'; }).join('')+'</div></div>';
+      var pin=el.querySelector('.v-pin'), bar=el.querySelector('.pin-bar i'), steps=[].slice.call(el.querySelectorAll('.pin-step'));
+      function upd(){ var h=pin.scrollHeight-pin.clientHeight, p=h>0?pin.scrollTop/h:0; bar.style.width=(p*100)+'%'; steps.forEach(function(st){ st.classList.toggle('on', st.getBoundingClientRect().top - pin.getBoundingClientRect().top < pin.clientHeight*0.6); }); }
+      pin.addEventListener('scroll', function(){ requestAnimationFrame(upd); }, {passive:true});
+      el._onPlay=function(){ pin.scrollTop=0; upd(); };
+      setTimeout(upd,30);
+    }
+    else if(v==='iso'){
+      el.className='render v-iso';
+      el.innerHTML='<div class="iso-scene">'+S.map(function(s){ return '<div class="iso-card"><span class="iso-num">'+s.n+'</span><span class="iso-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p></div>'; }).join('')+'</div>';
+      var scene=el.querySelector('.iso-scene');
+      el.addEventListener('pointermove',function(e){ var r=el.getBoundingClientRect(); var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; scene.style.setProperty('--sy',(-14 - x*12)+'deg'); scene.style.setProperty('--sx',(16 + y*10)+'deg'); });
+      el.addEventListener('pointerleave',function(){ scene.style.setProperty('--sy','-14deg'); scene.style.setProperty('--sx','16deg'); });
+    }
+    else if(v==='flip'){
+      el.className='render v-flip';
+      el.innerHTML='<div class="fl-rail"><span class="fl-rail-line"><i></i></span><span class="fl-rdot" style="left:16.66%"></span><span class="fl-rdot" style="left:50%"></span><span class="fl-rdot" style="left:83.33%"></span></div>'+
+        S.map(function(s){ return '<div class="fl-card"><div class="fl-tilt"><div class="fl-inner">'+
+          '<div class="fl-face fl-front"><span class="fl-tag">'+s.cat+'</span><span class="fl-wm">'+s.n+'</span><span class="fl-badge">'+s.n+'</span><h4>'+s.t+'</h4><span class="fl-hint">Hover to flip &#8594;</span><span class="fl-edge"></span></div>'+
+          '<div class="fl-face fl-back"><span class="fl-shine"></span><span class="fl-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p><a class="fl-cta" href="#">Start '+ARROW+'</a><span class="fl-edge"></span></div>'+
+        '</div></div></div>'; }).join('');
+      var cards=[].slice.call(el.querySelectorAll('.fl-card'));
+      cards.forEach(function(c){
+        var tilt=c.querySelector('.fl-tilt'); c._locked=false;
+        c.addEventListener('mouseenter',function(){ if(!c._locked) c.classList.add('flipped'); });
+        c.addEventListener('mouseleave',function(){ if(!c._locked) c.classList.remove('flipped'); tilt.style.setProperty('--tx','0deg'); tilt.style.setProperty('--ty','0deg'); });
+        c.addEventListener('click',function(e){ e.preventDefault(); c._locked=!c._locked; if(c._locked) c.classList.add('flipped'); else if(!c.matches(':hover')) c.classList.remove('flipped'); });
+        c.addEventListener('pointermove',function(e){ if(!c.classList.contains('flipped')) return; var r=c.getBoundingClientRect(); var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; tilt.style.setProperty('--ty',(x*7)+'deg'); tilt.style.setProperty('--tx',(-y*7)+'deg'); });
+      });
+      el._onPlay=function(){ cards.forEach(function(c,i){ c._locked=false; c.classList.remove('flipped'); setTimeout(function(){ c.classList.add('flipped'); setTimeout(function(){ if(!c._locked && !c.matches(':hover')) c.classList.remove('flipped'); }, 950); }, 750+i*280); }); };
+    }
+    else if(v==='goo'){
+      el.className='render v-goo';
+      el.innerHTML='<div class="goo-wrap"><div class="goo-nums"><span>1</span><span>2</span><span>3</span></div><div class="goo-blobs"><span class="goo-node" style="left:0%"></span><span class="goo-node" style="left:50%"></span><span class="goo-node" style="left:100%"></span><span class="goo-ball"></span></div></div><div class="goo-grid">'+S.map(function(s){ return '<div class="goo-card"><span class="goo-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p></div>'; }).join('')+'</div>';
+    }
+    else if(v==='flow'){
+      el.className='render v-flow';
+      el.innerHTML='<div class="flow-stage">'+S.map(function(s,i){ return '<div class="flow-card" data-i="'+i+'"><span class="flow-num">'+s.n+'</span><span class="flow-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p></div>'; }).join('')+'</div><div class="flow-ctrl"><button type="button" class="flow-arr fprev" aria-label="Previous">&#8249;</button><div class="flow-dots">'+S.map(function(_,i){return '<span class="flow-dot'+(i===0?' on':'')+'"></span>';}).join('')+'</div><button type="button" class="flow-arr fnext" aria-label="Next">&#8250;</button></div>';
+      var cards=[].slice.call(el.querySelectorAll('.flow-card')), dots=[].slice.call(el.querySelectorAll('.flow-dot')), cur=0, n=cards.length, timer=null;
+      function lay(){ cards.forEach(function(c,i){ var o=i-cur; if(o===0){ c.style.transform='translateX(-50%) translateZ(60px)'; c.style.opacity=1; c.style.zIndex=5; } else { var dir=o<0?-1:1; c.style.transform='translateX(calc(-50% + '+(dir*230)+'px)) translateZ(-70px) rotateY('+(-dir*42)+'deg)'; c.style.opacity=Math.abs(o)===1?0.5:0; c.style.zIndex=5-Math.abs(o); } }); dots.forEach(function(d,i){ d.classList.toggle('on',i===cur); }); }
+      function go(i){ cur=(i+n)%n; lay(); }
+      function auto(){ clearInterval(timer); timer=setInterval(function(){ go(cur+1); },3500); }
+      el.querySelector('.fprev').addEventListener('click',function(){ go(cur-1); auto(); });
+      el.querySelector('.fnext').addEventListener('click',function(){ go(cur+1); auto(); });
+      cards.forEach(function(c){ c.addEventListener('click',function(){ go(+c.dataset.i); auto(); }); });
+      el.addEventListener('mouseenter',function(){ clearInterval(timer); }); el.addEventListener('mouseleave',auto);
+      el._onPlay=function(){ cur=0; lay(); auto(); }; lay();
+    }
+    else if(v==='kin'){
+      el.className='render v-kin';
+      el.innerHTML='<div class="kin-num">'+S.map(function(s,i){ return '<span class="kin-fig'+(i===0?' on':'')+'">'+s.n+'</span>'; }).join('')+'</div><div class="kin-body">'+S.map(function(s,i){ return '<div class="kin-step'+(i===0?' on':'')+'"><span class="kin-ic">'+IC[s.i]+'</span><h4>'+s.t+'</h4><p>'+s.d+'</p></div>'; }).join('')+'</div>';
+      var figs=[].slice.call(el.querySelectorAll('.kin-fig')), steps=[].slice.call(el.querySelectorAll('.kin-step')), cur=0, timer=null;
+      function set(i){ cur=i; figs.forEach(function(f,j){ f.classList.toggle('on',j===i); }); steps.forEach(function(s,j){ s.classList.toggle('on',j===i); }); }
+      function auto(){ clearInterval(timer); timer=setInterval(function(){ set((cur+1)%figs.length); },3500); }
+      el.addEventListener('mouseenter',function(){ clearInterval(timer); }); el.addEventListener('mouseleave',auto);
+      el._onPlay=function(){ set(0); auto(); };
+    }
+    else if(v==='stack'){
+      el.className='render';
+      el.innerHTML='<div class="v-stack"><div class="stk-hint">&#8595; scroll to stack</div>'+S.map(function(s){ return '<div class="stk-card"><span class="stk-num">'+s.n+'</span><div class="stk-b"><h4>'+s.t+'</h4><p>'+s.d+'</p></div></div>'; }).join('')+'<div class="stk-end"></div></div>';
+      var sc=el.querySelector('.v-stack'); el._onPlay=function(){ sc.scrollTop=0; };
+    }
+  }
+
+  document.querySelectorAll('.demo').forEach(function(demo){
+    var v=demo.dataset.variant, stage=demo.querySelector('.stage'), render=demo.querySelector('.render');
+    build(v, render);
+    var play=function(){ stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play'); if(render._onPlay) render._onPlay(); };
+    demo.querySelector('.replay').addEventListener('click', play);
+    if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ play(); io.unobserve(e.target); } }); },{threshold:0.3}); io.observe(stage); }
+    else play();
+  });
+  document.querySelectorAll('.pswitch button').forEach(function(b){
+    b.addEventListener('click',function(){ var d=PLAT[b.dataset.p]; document.documentElement.style.setProperty('--pcol',d[0]); document.querySelectorAll('.pswitch button').forEach(function(x){ x.classList.toggle('on',x===b); }); });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing Section Alternatives - KNB Web Solution</title>
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f3ef;
+  --ink: #111110;
+  --muted: #6d6c66;
+  --line: #dedcd4;
+  --card: #fff;
+  --pink: #e83fa0;
+  --green: #6cf09a;
+  --shop: #5e8e3e;
+  --blue: #4353ff;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: clip; scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  overflow-x: clip;
+  font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 24%), rgba(232,63,160,0.11), transparent 30vw),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(17,17,16,0.058) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,17,16,0.058) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.9) 60%, transparent 100%);
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+.wrap { width: min(1240px, calc(100% - 48px)); margin: 0 auto; }
+.topbar {
+  position: sticky;
+  top: 18px;
+  z-index: 60;
+  margin-top: 18px;
+}
+.topbar-in {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(222,220,212,0.78);
+  border-radius: 100px;
+  background: rgba(244,243,239,0.7);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  padding: 0 10px 0 20px;
+  box-shadow: 0 18px 44px rgba(17,17,16,0.07);
+}
+.logo {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+.logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); margin: 0 0 4px 2px; }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(17,17,16,0.12);
+  background: rgba(255,255,255,0.56);
+  border-radius: 100px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.pill-link:hover { transform: translateY(-2px); background: var(--ink); color: var(--bg); }
+
+.hero {
+  min-height: 58vh;
+  display: grid;
+  align-items: center;
+  padding: 78px 0 60px;
+  text-align: center;
+}
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--pink);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+.kicker::before, .kicker::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+.hero h1 {
+  max-width: 1050px;
+  margin: 24px auto 0;
+  font-size: clamp(54px, 10vw, 136px);
+  line-height: 0.86;
+  letter-spacing: -0.075em;
+  font-weight: 520;
+}
+.hero p {
+  max-width: 720px;
+  margin: 28px auto 0;
+  color: var(--muted);
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.45;
+}
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 30px;
+}
+.jump a {
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.58);
+  color: #3e3d39;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.alt {
+  position: relative;
+  padding: 82px 0;
+  border-top: 1px solid rgba(17,17,16,0.12);
+}
+.alt-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+  gap: 34px;
+  align-items: end;
+  margin-bottom: 30px;
+}
+.alt-index {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.58);
+  color: var(--muted);
+  font-weight: 850;
+}
+.alt-title h2 {
+  margin-top: 20px;
+  font-size: clamp(38px, 6vw, 78px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  font-weight: 540;
+}
+.alt-title p, .alt-note {
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+.alt-title p { max-width: 39ch; margin-top: 16px; }
+.alt-note {
+  max-width: 48ch;
+  justify-self: end;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.tags span {
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.56);
+  color: #474642;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 750;
+}
+.surface {
+  position: relative;
+  border: 1px solid rgba(222,220,212,0.86);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(232,63,160,0.10), transparent 22%),
+    rgba(255,255,255,0.52);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 24px 70px rgba(17,17,16,0.07);
+  overflow: hidden;
+}
+.surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(17,17,16,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,17,16,0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(circle at 50% 50%, #000, transparent 76%);
+  pointer-events: none;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 100px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 14px 22px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.ghost-btn {
+  background: rgba(255,255,255,0.62);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.ghost-btn::before { background: var(--pink); }
+.tabs {
+  display: inline-flex;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.66);
+}
+.tabs button {
+  border: 0;
+  border-radius: 100px;
+  background: transparent;
+  color: var(--muted);
+  padding: 10px 18px;
+  font-weight: 780;
+  cursor: pointer;
+}
+.tabs button.active { background: var(--ink); color: var(--bg); }
+.ic {
+  display: inline-grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(17,17,16,0.06);
+  color: var(--ink);
+}
+.ic svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pkg-name { font-weight: 820; letter-spacing: -0.02em; }
+.pkg-for { display: block; color: var(--muted); font-size: 13.5px; margin-top: 3px; }
+.mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.64);
+  color: var(--muted);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.mini::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.mini.green { color: var(--shop); }
+.mini.blue { color: var(--blue); }
+.mini.pink { color: var(--pink); }
+
+/* Alternative 1 */
+.command {
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+}
+.command-left {
+  position: relative;
+  z-index: 1;
+  padding: 34px;
+  border-right: 1px solid rgba(222,220,212,0.86);
+}
+.command-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+.command-list { display: grid; gap: 12px; }
+.command-item {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.74);
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.28s var(--ease), border-color 0.28s var(--ease), background 0.28s var(--ease), box-shadow 0.28s var(--ease);
+}
+.command-item:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(17,17,16,0.07); }
+.command-item.active {
+  border-color: var(--pc, var(--ink));
+  background: color-mix(in srgb, var(--pc, var(--ink)) 10%, #fff);
+}
+.command-item.active .ic { background: var(--pc, var(--ink)); color: #fff; }
+.command-arrow { color: var(--muted); font-weight: 900; }
+.command-right {
+  position: relative;
+  z-index: 1;
+  padding: 42px 44px;
+  display: grid;
+  align-content: start;
+}
+.command-card {
+  position: relative;
+  min-height: 492px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  padding: 34px;
+  overflow: hidden;
+}
+.command-card::before {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -140px;
+  top: -130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--active, var(--ink)) 18%, transparent), transparent 70%);
+}
+.detail-eyebrow {
+  position: relative;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.detail-title {
+  position: relative;
+  max-width: 15ch;
+  margin-top: 22px;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  font-weight: 540;
+}
+.facts { position: relative; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.cols {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 32px;
+}
+.cols h4 {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.cols ul { list-style: none; display: grid; gap: 11px; margin-top: 14px; }
+.cols li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  color: #393834;
+  font-size: 14.5px;
+}
+.cols li::before { content: "+"; color: var(--shop); font-weight: 900; }
+.cols .quoted li::before { content: "x"; color: #c68383; }
+.command-card .btn { margin-top: 32px; }
+
+/* Alternative 2 */
+.matrix { padding: 30px; }
+.matrix-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.matrix-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr repeat(4, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+.mx-cell {
+  min-height: 74px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 16px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+.mx-cell:nth-child(5n) { border-right: 0; }
+.mx-row-last .mx-cell { border-bottom: 0; }
+.mx-head {
+  background: #faf9f6;
+  min-height: 136px;
+  align-content: start;
+}
+.mx-head.pkg {
+  cursor: pointer;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.mx-head.pkg.active {
+  color: #fff;
+  background: linear-gradient(150deg, var(--pc), color-mix(in srgb, var(--pc) 72%, #111110));
+}
+.mx-head.pkg .ic { margin-bottom: 14px; }
+.mx-head.pkg.active .ic { background: rgba(255,255,255,0.16); color: #fff; }
+.mx-label { color: var(--muted); font-size: 13px; font-weight: 800; }
+.mx-value { font-weight: 800; }
+.mx-check { color: var(--shop); font-weight: 900; }
+.mx-maybe { color: var(--muted); font-weight: 850; }
+.matrix-foot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.72);
+  padding: 18px;
+}
+.matrix-foot p { color: var(--muted); font-size: 14px; }
+
+/* Alternative 3 */
+.journey { padding: 34px; }
+.journey-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.journey-track {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.journey-track::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 54px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ink), var(--line));
+  opacity: 0.18;
+}
+.journey-step {
+  position: relative;
+  min-height: 230px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255,255,255,0.72);
+  padding: 18px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.journey-step:hover { transform: translateY(-4px); }
+.journey-step.active {
+  border-color: var(--pc);
+  background: color-mix(in srgb, var(--pc) 10%, #fff);
+}
+.journey-step .num {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 900;
+}
+.journey-step.active .num { background: var(--pc); }
+.journey-step h3 { font-size: 21px; letter-spacing: -0.03em; }
+.journey-step p { color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.journey-drawer {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 24px;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  padding: 28px;
+}
+.drawer-title { font-size: clamp(28px, 4vw, 46px); line-height: 1.02; letter-spacing: -0.05em; font-weight: 540; }
+.drawer-text { color: var(--muted); margin-top: 12px; }
+.drawer-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.drawer-cards div {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #faf9f6;
+  padding: 16px;
+}
+.drawer-cards b { display: block; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.drawer-cards span { font-weight: 760; }
+
+/* Alternative 4 */
+.builder {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  min-height: 660px;
+}
+.builder-main {
+  position: relative;
+  z-index: 1;
+  padding: 34px;
+  border-right: 1px solid var(--line);
+}
+.builder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 26px;
+}
+.build-tile {
+  min-height: 142px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.72);
+  padding: 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.28s var(--ease), background 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+.build-tile:hover { transform: translateY(-3px); }
+.build-tile.active {
+  border-color: var(--pc);
+  background: color-mix(in srgb, var(--pc) 11%, #fff);
+}
+.tile-head { display: flex; justify-content: space-between; gap: 14px; align-items: start; }
+.tile-plus {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted);
+}
+.build-tile.active .tile-plus { background: var(--pc); color: #fff; border-color: var(--pc); }
+.build-tile h3 { margin-top: 14px; font-size: 21px; letter-spacing: -0.03em; }
+.build-tile p { color: var(--muted); font-size: 13.5px; line-height: 1.45; margin-top: 6px; }
+.builder-side {
+  position: relative;
+  z-index: 1;
+  padding: 34px;
+  background: rgba(255,255,255,0.42);
+}
+.brief {
+  position: sticky;
+  top: 110px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: 0 22px 54px rgba(17,17,16,0.07);
+}
+.brief h3 { font-size: 30px; line-height: 1; letter-spacing: -0.04em; }
+.brief-list { display: grid; gap: 10px; list-style: none; margin-top: 20px; }
+.brief-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 10px;
+  color: #44433f;
+  font-size: 14px;
+}
+.brief-list li:last-child { border-bottom: 0; }
+.brief-note {
+  margin-top: 18px;
+  border-radius: 16px;
+  background: #f5f4ef;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.brief .btn { width: 100%; margin-top: 20px; }
+
+/* Alternative 5 */
+.desk {
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 26px;
+  padding: 34px;
+}
+.desk-left {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+.doc-stack {
+  position: relative;
+  min-height: 490px;
+  perspective: 900px;
+}
+.doc {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: #fff;
+  padding: 28px;
+  box-shadow: 0 24px 70px rgba(17,17,16,0.08);
+  transition: transform 0.48s var(--ease), opacity 0.48s var(--ease);
+}
+.doc:nth-child(1) { transform: rotate(-3deg) translate(12px, 32px); opacity: 0.5; }
+.doc:nth-child(2) { transform: rotate(2deg) translate(4px, 16px); opacity: 0.74; }
+.doc:nth-child(3) { transform: rotate(0deg); }
+.doc h3 { font-size: 34px; line-height: 1; letter-spacing: -0.05em; }
+.doc .paper-lines { display: grid; gap: 9px; margin-top: 28px; }
+.paper-lines span {
+  height: 10px;
+  border-radius: 100px;
+  background: #e8e6df;
+}
+.paper-lines span:nth-child(1) { width: 86%; }
+.paper-lines span:nth-child(2) { width: 62%; }
+.paper-lines span:nth-child(3) { width: 74%; }
+.paper-lines span:nth-child(4) { width: 48%; }
+.stamp {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  border: 2px solid var(--pink);
+  border-radius: 14px;
+  color: var(--pink);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  transform: rotate(-8deg);
+}
+.desk-right {
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.7);
+  padding: 28px;
+}
+.desk-list { display: grid; gap: 10px; margin-top: 22px; }
+.desk-option {
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  padding: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+.desk-option.active { border-color: var(--pc); background: color-mix(in srgb, var(--pc) 10%, #fff); }
+.desk-option.active .ic { background: var(--pc); color: #fff; }
+.desk-result {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #111110;
+  color: var(--bg);
+  padding: 22px;
+}
+.desk-result h3 { font-size: 28px; line-height: 1; letter-spacing: -0.04em; }
+.desk-result p { color: rgba(255,255,255,0.68); margin-top: 10px; font-size: 14px; line-height: 1.45; }
+
+@media (max-width: 980px) {
+  .alt-head, .command, .builder, .desk { grid-template-columns: 1fr; }
+  .alt-note { justify-self: start; }
+  .command-left, .builder-main { border-right: 0; border-bottom: 1px solid var(--line); }
+  .journey-track, .builder-grid { grid-template-columns: 1fr 1fr; }
+  .journey-drawer { grid-template-columns: 1fr; }
+  .matrix-grid { min-width: 920px; }
+  .matrix { overflow-x: auto; }
+}
+@media (max-width: 680px) {
+  .wrap { width: min(100% - 28px, 1240px); }
+  .topbar { top: 10px; }
+  .topbar-in { border-radius: 24px; padding: 10px 12px; align-items: flex-start; }
+  .nav-actions { flex-wrap: wrap; justify-content: flex-end; }
+  .pill-link { padding: 9px 12px; font-size: 13px; }
+  .hero { min-height: auto; padding-top: 62px; }
+  .kicker { letter-spacing: 0.18em; font-size: 11.5px; gap: 10px; }
+  .alt { padding: 60px 0; }
+  .command-left, .command-right, .journey, .builder-main, .builder-side, .desk { padding: 20px; }
+  .command-item, .desk-option { grid-template-columns: 46px 1fr; }
+  .command-arrow, .desk-option .command-arrow { display: none; }
+  .cols, .journey-track, .drawer-cards, .builder-grid { grid-template-columns: 1fr; }
+  .matrix-foot { grid-template-columns: 1fr; }
+  .doc-stack { min-height: 390px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+  <header class="topbar wrap">
+    <div class="topbar-in">
+      <a class="logo" href="index.html" aria-label="Back to homepage"><span>K</span><span>N</span><span>B</span><span class="dot"></span></a>
+      <nav class="nav-actions" aria-label="Preview navigation">
+        <a class="pill-link" href="pricing.html">Current pricing</a>
+        <a class="pill-link" href="#alt-1">Alternatives</a>
+        <a class="pill-link" href="#recommendation">Recommendation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div>
+        <p class="kicker">Website Store Packages</p>
+        <h1>Pricing section alternatives.</h1>
+        <p>Five complex directions for the "Pick a starting point" selector shown in your screenshot. These keep the no-public-pricing rule and stay aligned with KNB's homepage style.</p>
+        <div class="jump">
+          <a href="#alt-1">01 Command</a>
+          <a href="#alt-2">02 Matrix</a>
+          <a href="#alt-3">03 Journey</a>
+          <a href="#alt-4">04 Builder</a>
+          <a href="#alt-5">05 Proposal desk</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt wrap" id="alt-1">
+      <div class="alt-head">
+        <div class="alt-title">
+          <span class="alt-index">01</span>
+          <h2>Command selector.</h2>
+          <p>Closest to the current section, but more premium: package list on the left, proposal-style detail panel on the right, richer facts and cleaner hierarchy.</p>
+          <div class="tags"><span>Best current replacement</span><span>Clear UX</span><span>Low risk</span></div>
+        </div>
+        <p class="alt-note">Good if you want to improve the existing structure without making visitors relearn the section.</p>
+      </div>
+      <div class="surface command" data-alt="command">
+        <div class="command-left">
+          <div class="command-top">
+            <div class="tabs"><button class="active" type="button">Website projects</button><button type="button">Care plans</button></div>
+          </div>
+          <div class="command-list" data-package-list></div>
+        </div>
+        <div class="command-right">
+          <div class="command-card" data-command-detail></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt wrap" id="alt-2">
+      <div class="alt-head">
+        <div class="alt-title">
+          <span class="alt-index">02</span>
+          <h2>Comparison matrix.</h2>
+          <p>A decision table with package columns and scope rows. Visitors can scan differences immediately, then select a column for a focused quote CTA.</p>
+          <div class="tags"><span>Most transparent</span><span>Fast comparison</span><span>Good for pricing page</span></div>
+        </div>
+        <p class="alt-note">Best when users are comparing inclusions. It feels less editorial, but it answers practical questions quickly.</p>
+      </div>
+      <div class="surface matrix" data-alt="matrix">
+        <div class="matrix-top">
+          <div class="tabs"><button class="active" type="button">Website projects</button><button type="button">Care plans</button></div>
+          <span class="mini pink">No public prices</span>
+        </div>
+        <div class="matrix-grid" data-matrix></div>
+        <div class="matrix-foot">
+          <p><b data-matrix-title>Starter Website</b> selected. Every package is confirmed in a written proposal after the consultation.</p>
+          <button class="btn" type="button">Get a quote</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt wrap" id="alt-3">
+      <div class="alt-head">
+        <div class="alt-title">
+          <span class="alt-index">03</span>
+          <h2>Package journey.</h2>
+          <p>Turns the packages into a maturity path: start simple, grow the site, sell online, then build custom systems.</p>
+          <div class="tags"><span>Story-driven</span><span>Great homepage fit</span><span>Easy to choose</span></div>
+        </div>
+        <p class="alt-note">This direction feels friendlier than a selector. It explains when each package makes sense without overwhelming the visitor.</p>
+      </div>
+      <div class="surface journey" data-alt="journey">
+        <div class="journey-top">
+          <div class="tabs"><button class="active" type="button">Website projects</button><button type="button">Care plans</button></div>
+          <span class="mini green">Choose by stage</span>
+        </div>
+        <div class="journey-track" data-journey></div>
+        <div class="journey-drawer" data-journey-detail></div>
+      </div>
+    </section>
+
+    <section class="alt wrap" id="alt-4">
+      <div class="alt-head">
+        <div class="alt-title">
+          <span class="alt-index">04</span>
+          <h2>Scope builder.</h2>
+          <p>Instead of choosing a named package first, visitors pick what they need. The section recommends the right starting point in a quote brief.</p>
+          <div class="tags"><span>Most interactive</span><span>Consultative</span><span>Complex but useful</span></div>
+        </div>
+        <p class="alt-note">This is strong if KNB wants the page to feel like a guided consultation, but it needs careful copy to avoid feeling like a form.</p>
+      </div>
+      <div class="surface builder" data-alt="builder">
+        <div class="builder-main">
+          <div class="tabs"><button class="active" type="button">Website projects</button><button type="button">Care plans</button></div>
+          <div class="builder-grid" data-builder></div>
+        </div>
+        <aside class="builder-side">
+          <div class="brief" data-brief></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="alt wrap" id="alt-5">
+      <div class="alt-head">
+        <div class="alt-title">
+          <span class="alt-index">05</span>
+          <h2>Proposal desk.</h2>
+          <p>The section becomes a proposal desk: stacked documents on the left, package options on the right, selected plan becomes the front document.</p>
+          <div class="tags"><span>Most branded</span><span>Editorial</span><span>Memorable</span></div>
+        </div>
+        <p class="alt-note">Best for a premium agency feel. It is less compact than the current layout but much more distinctive.</p>
+      </div>
+      <div class="surface desk" data-alt="desk">
+        <div class="desk-left">
+          <div class="doc-stack">
+            <div class="doc"><h3>Scope notes</h3><div class="paper-lines"><span></span><span></span><span></span><span></span></div></div>
+            <div class="doc"><h3>Launch plan</h3><div class="paper-lines"><span></span><span></span><span></span><span></span></div></div>
+            <div class="doc" data-doc><h3>Starter Website</h3><div class="paper-lines"><span></span><span></span><span></span><span></span></div><span class="stamp">QUOTED</span></div>
+          </div>
+        </div>
+        <div class="desk-right">
+          <div class="tabs"><button class="active" type="button">Website projects</button><button type="button">Care plans</button></div>
+          <div class="desk-list" data-desk-list></div>
+          <div class="desk-result" data-desk-result></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt wrap" id="recommendation">
+      <div class="alt-head">
+        <div class="alt-title">
+          <span class="alt-index">OK</span>
+          <h2>Recommendation.</h2>
+          <p>Use <b>01 Command selector</b> if you want the safest improvement, or <b>03 Package journey</b> if this section will live on the homepage and needs to feel lighter.</p>
+          <div class="tags"><span>01 for pricing page</span><span>03 for homepage</span><span>04 for lead qualification</span></div>
+        </div>
+        <p class="alt-note">My pick for your screenshot is 01: it keeps the current mental model, removes the empty feeling, and makes the right panel feel like a real proposal instead of a plain card.</p>
+      </div>
+    </section>
+  </main>
+
+<script>
+const icon = {
+  starter: '<svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M8 20h8M12 16v4"/></svg>',
+  business: '<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V9l6-4 6 4v12"/><path d="M9 21v-6h6v6"/></svg>',
+  ecom: '<svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg>',
+  app: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M10 10v10"/></svg>'
+};
+
+const packages = [
+  {
+    key: "starter",
+    name: "Starter Website",
+    who: "Small businesses and service sites",
+    accent: "#6d6c66",
+    title: "A clean, professional site ready in weeks.",
+    facts: ["~1-2 weeks", "1 revision", "Launch support"],
+    included: ["1-5 pages, responsive design", "Contact form, navigation and CTAs", "Basic SEO titles, meta and alt text", "One revision, QA and launch support"],
+    quoted: ["Ecommerce checkout", "Custom animation", "Branding or logo", "Full copywriting"]
+  },
+  {
+    key: "business",
+    name: "Business Website",
+    who: "Growing companies, B2B, clinics",
+    accent: "#111110",
+    title: "A stronger site for teams with more to say.",
+    facts: ["~2-4 weeks", "2 revisions", "Content structure"],
+    included: ["5-10 page structure", "Service pages and lead capture", "SEO foundation", "Launch QA and handover"],
+    quoted: ["Complex integrations", "Ongoing content writing", "Booking systems", "Custom web app logic"]
+  },
+  {
+    key: "ecom",
+    name: "Ecommerce Website",
+    who: "Shopify and WooCommerce brands",
+    accent: "#5e8e3e",
+    title: "A store setup for cleaner browsing and checkout.",
+    facts: ["~3-6 weeks", "Store setup", "Product support"],
+    included: ["Collections and product templates", "Cart and checkout setup", "Payments and shipping basics", "Launch support and QA"],
+    quoted: ["Custom apps", "ERP or POS integrations", "Product photography", "Advanced automations"]
+  },
+  {
+    key: "app",
+    name: "Custom Web App",
+    who: "Dashboards, portals, booking, POS",
+    accent: "#4353ff",
+    title: "A scoped system built around how your team works.",
+    facts: ["Discovery first", "Milestones", "Custom proposal"],
+    included: ["Discovery and technical scope", "Core workflows and user roles", "Responsive interface", "Deployment support"],
+    quoted: ["Large data migration", "Complex API integrations", "Ongoing feature sprints", "Managed infrastructure"]
+  }
+];
+
+const scopeTiles = [
+  { key: "starter", title: "Launch a simple site", desc: "Core pages, contact form, responsive setup.", tag: "Starter" },
+  { key: "business", title: "Explain services better", desc: "More pages, stronger structure, lead paths.", tag: "Business" },
+  { key: "ecom", title: "Sell products online", desc: "Collections, products, payments, checkout.", tag: "Ecommerce" },
+  { key: "app", title: "Build a custom workflow", desc: "Dashboards, portals, booking, integrations.", tag: "Custom" },
+  { key: "business", title: "Improve trust", desc: "Content hierarchy, proof, CTAs, SEO basics.", tag: "Business" },
+  { key: "ecom", title: "Clean up checkout", desc: "Store UX, payment setup, shipping basics.", tag: "Ecommerce" }
+];
+
+let active = "starter";
+let matrixActive = "starter";
+let journeyActive = "starter";
+let deskActive = "starter";
+const selectedScopes = new Set(["starter", "business"]);
+
+function pkg(key) {
+  return packages.find(item => item.key === key) || packages[0];
+}
+
+function packageButton(item, mode) {
+  return `<button class="${mode}-item ${item.key === active ? 'active' : ''}" style="--pc:${item.accent}" type="button" data-key="${item.key}">
+    <span class="ic">${icon[item.key]}</span>
+    <span><span class="pkg-name">${item.name}</span><span class="pkg-for">${item.who}</span></span>
+    <span class="command-arrow">-></span>
+  </button>`;
+}
+
+function renderCommand() {
+  document.querySelector("[data-package-list]").innerHTML = packages.map(item => packageButton(item, "command")).join("");
+  const item = pkg(active);
+  const detail = document.querySelector("[data-command-detail]");
+  detail.style.setProperty("--active", item.accent);
+  detail.innerHTML = `
+    <span class="ic" style="background:${item.accent};color:#fff">${icon[item.key]}</span>
+    <div class="detail-eyebrow">${item.name}</div>
+    <h3 class="detail-title">${item.title}</h3>
+    <div class="facts">${item.facts.map((fact, i) => `<span class="mini ${i === 0 ? 'green' : ''}">${fact}</span>`).join("")}</div>
+    <div class="cols">
+      <div><h4>Included</h4><ul>${item.included.map(x => `<li>${x}</li>`).join("")}</ul></div>
+      <div class="quoted"><h4>Quoted separately</h4><ul>${item.quoted.map(x => `<li>${x}</li>`).join("")}</ul></div>
+    </div>
+    <button class="btn" type="button">Get a quote</button>`;
+}
+
+function renderMatrix() {
+  const rows = [
+    ["Pages / scope", ["1-5 pages", "5-10 pages", "Store pages", "Custom scope"]],
+    ["Best for", ["Small services", "Growing teams", "Online stores", "Systems"]],
+    ["SEO basics", ["Yes", "Yes", "Yes", "Scoped"]],
+    ["Checkout", ["Quoted", "Quoted", "Included", "Scoped"]],
+    ["Integrations", ["Quoted", "Light", "Apps", "Custom"]],
+    ["Launch support", ["Yes", "Yes", "Yes", "Yes"]]
+  ];
+  const head = `<div class="mx-cell mx-head"><span class="mx-label">Compare</span><span class="mx-value">Choose a fit</span></div>` +
+    packages.map(item => `<button class="mx-cell mx-head pkg ${item.key === matrixActive ? 'active' : ''}" style="--pc:${item.accent}" type="button" data-matrix-key="${item.key}"><span class="ic">${icon[item.key]}</span><span class="pkg-name">${item.name}</span><span class="pkg-for">${item.who}</span></button>`).join("");
+  const body = rows.map((row, ri) => {
+    const last = ri === rows.length - 1 ? " mx-row-last" : "";
+    return `<div class="mx-cell${last}"><span class="mx-label">${row[0]}</span></div>` +
+      row[1].map(value => `<div class="mx-cell${last}"><span class="${value === 'Yes' || value === 'Included' ? 'mx-check' : 'mx-maybe'}">${value}</span></div>`).join("");
+  }).join("");
+  document.querySelector("[data-matrix]").innerHTML = head + body;
+  document.querySelector("[data-matrix-title]").textContent = pkg(matrixActive).name;
+}
+
+function renderJourney() {
+  document.querySelector("[data-journey]").innerHTML = packages.map((item, index) => `<button class="journey-step ${item.key === journeyActive ? 'active' : ''}" style="--pc:${item.accent}" type="button" data-journey-key="${item.key}">
+    <span class="num">0${index + 1}</span>
+    <h3>${item.name}</h3>
+    <p>${item.who}</p>
+  </button>`).join("");
+  const item = pkg(journeyActive);
+  document.querySelector("[data-journey-detail]").innerHTML = `
+    <div><span class="mini" style="color:${item.accent}">${item.name}</span><h3 class="drawer-title">${item.title}</h3><p class="drawer-text">Pick this when the project matches this stage. The final scope still gets confirmed after a consultation.</p></div>
+    <div class="drawer-cards"><div><b>Includes</b><span>${item.included[0]}</span></div><div><b>Timeline</b><span>${item.facts[0]}</span></div><div><b>Support</b><span>${item.facts[2]}</span></div><div><b>Next step</b><span>Written proposal</span></div></div>`;
+}
+
+function renderBuilder() {
+  document.querySelector("[data-builder]").innerHTML = scopeTiles.map((tile, index) => `<button class="build-tile ${selectedScopes.has(tile.key) ? 'active' : ''}" style="--pc:${pkg(tile.key).accent}" type="button" data-scope="${tile.key}-${index}" data-key="${tile.key}">
+    <span class="tile-head"><span class="mini" style="color:${pkg(tile.key).accent}">${tile.tag}</span><span class="tile-plus">${selectedScopes.has(tile.key) ? '-' : '+'}</span></span>
+    <h3>${tile.title}</h3>
+    <p>${tile.desc}</p>
+  </button>`).join("");
+  const scores = {};
+  selectedScopes.forEach(key => { scores[key] = (scores[key] || 0) + 1; });
+  const recommended = Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] || "starter";
+  const item = pkg(recommended);
+  document.querySelector("[data-brief]").innerHTML = `
+    <span class="mini" style="color:${item.accent}">Recommended</span>
+    <h3>${item.name}</h3>
+    <ul class="brief-list">${Array.from(selectedScopes).map(key => `<li><span>${pkg(key).name}</span><b>fit</b></li>`).join("") || "<li><span>Select needs</span><b>empty</b></li>"}</ul>
+    <div class="brief-note">This is a recommendation only. KNB can confirm the final package and quoted extras after a short consultation.</div>
+    <button class="btn" type="button">Start with this</button>`;
+}
+
+function renderDesk() {
+  document.querySelector("[data-desk-list]").innerHTML = packages.map(item => `<button class="desk-option ${item.key === deskActive ? 'active' : ''}" style="--pc:${item.accent}" type="button" data-desk-key="${item.key}">
+    <span class="ic">${icon[item.key]}</span>
+    <span><span class="pkg-name">${item.name}</span><span class="pkg-for">${item.who}</span></span>
+    <span class="command-arrow">-></span>
+  </button>`).join("");
+  const item = pkg(deskActive);
+  document.querySelector("[data-doc]").querySelector("h3").textContent = item.name;
+  document.querySelector("[data-desk-result]").innerHTML = `<span class="mini" style="color:${item.accent}">Proposal fit</span><h3>${item.title}</h3><p>${item.included.slice(0, 2).join(". ")}. Extras are quoted separately when needed.</p>`;
+}
+
+function renderAll() {
+  renderCommand();
+  renderMatrix();
+  renderJourney();
+  renderBuilder();
+  renderDesk();
+}
+
+document.addEventListener("click", (event) => {
+  const command = event.target.closest("[data-key]");
+  if (command && command.classList.contains("command-item")) {
+    active = command.dataset.key;
+    renderCommand();
+  }
+  const matrix = event.target.closest("[data-matrix-key]");
+  if (matrix) {
+    matrixActive = matrix.dataset.matrixKey;
+    renderMatrix();
+  }
+  const journey = event.target.closest("[data-journey-key]");
+  if (journey) {
+    journeyActive = journey.dataset.journeyKey;
+    renderJourney();
+  }
+  const scope = event.target.closest("[data-scope]");
+  if (scope) {
+    const key = scope.dataset.key;
+    if (selectedScopes.has(key)) selectedScopes.delete(key);
+    else selectedScopes.add(key);
+    renderBuilder();
+  }
+  const desk = event.target.closest("[data-desk-key]");
+  if (desk) {
+    deskActive = desk.dataset.deskKey;
+    renderDesk();
+  }
+});
+
+document.addEventListener("pointermove", (event) => {
+  document.documentElement.style.setProperty("--mx", `${event.clientX}px`);
+  document.documentElement.style.setProperty("--my", `${event.clientY}px`);
+});
+
+renderAll();
+</script>
+</body>
+</html>

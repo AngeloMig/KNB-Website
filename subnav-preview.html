@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Second-nav — 5 directions · KNB</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{ --pcol:#4353ff; --ink:#111110; --bg:#f4f3ef; --muted:#6b6860; --line:#e6e4dd; --ease:cubic-bezier(0.16,1,0.3,1); }
+  *{ box-sizing:border-box; }
+  body{ font-family:'Satoshi',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--ink); margin:0; -webkit-font-smoothing:antialiased; }
+  a{ text-decoration:none; color:inherit; cursor:pointer; }
+
+  .page{ max-width:1060px; margin:0 auto; padding:44px 20px 90px; }
+  .head h1{ font-size:clamp(26px,4vw,34px); letter-spacing:-.02em; margin:0 0 8px; }
+  .head p{ color:var(--muted); font-size:15px; line-height:1.6; margin:0 0 20px; max-width:64ch; }
+  .pswitch{ display:inline-flex; gap:5px; background:#fff; border:1px solid var(--line); padding:5px; border-radius:100px; margin-bottom:34px; }
+  .pswitch button{ font:inherit; font-size:13px; font-weight:600; border:0; background:transparent; color:var(--muted); padding:8px 15px; border-radius:100px; cursor:pointer; display:flex; align-items:center; gap:7px; transition:.2s; }
+  .pswitch button img{ width:14px; height:14px; }
+  .pswitch button.on{ background:var(--pcol); color:#fff; }
+  .pswitch button.on img{ filter:brightness(0) invert(1); }
+
+  .demo{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; margin-bottom:26px; }
+  .demo-head{ display:flex; align-items:flex-start; gap:13px; padding:16px 20px; border-bottom:1px solid var(--line); }
+  .demo-num{ flex:none; width:30px; height:30px; border-radius:9px; background:var(--pcol); color:#fff; display:grid; place-items:center; font-weight:800; font-size:14px; }
+  .demo-head h2{ font-size:17px; margin:0; letter-spacing:-.01em; }
+  .demo-head p{ font-size:13px; color:var(--muted); margin:3px 0 0; line-height:1.5; }
+  .viewport{ height:440px; overflow-y:auto; position:relative; background:linear-gradient(#fbfaf7,#f4f3ef); scroll-behavior:smooth; }
+
+  /* faux main nav (shared) */
+  .fmn{ position:sticky; top:8px; z-index:50; display:flex; justify-content:center; }
+  .fmn .pill{ display:flex; align-items:center; gap:16px; height:46px; padding:0 6px 0 16px; border-radius:100px; background:rgba(255,255,255,.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid var(--line); box-shadow:0 10px 26px -10px rgba(0,0,0,.18); }
+  .fmn b{ font-weight:900; font-size:15px; display:inline-flex; align-items:flex-end; }
+  .fmn .kd{ width:5px; height:5px; border-radius:50%; background:#ff2d8b; margin:0 0 4px 2px; }
+  .fmn-links{ display:flex; gap:11px; } .fmn-links a{ font-size:12.5px; color:#5a574f; }
+  .fmn-cta{ background:var(--ink); color:#fff; font-size:12px; padding:8px 13px; border-radius:100px; }
+  @media(max-width:600px){ .fmn-links{ display:none; } }
+
+  /* shared content sections */
+  .d-sec{ padding:30px 26px; min-height:300px; border-top:1px solid var(--line); }
+  .d-sec .k{ font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--pcol); }
+  .d-sec h3{ font-size:22px; margin:7px 0 11px; letter-spacing:-.02em; }
+  .d-sec p{ color:var(--muted); font-size:14px; line-height:1.6; max-width:58ch; margin:0 0 9px; }
+
+  /* ===== V1 — floating segmented pill ===== */
+  .sn1{ position:sticky; top:60px; z-index:40; display:flex; justify-content:center; padding:8px 0; pointer-events:none; }
+  .sn1 .seg{ pointer-events:auto; display:flex; align-items:center; gap:2px; background:#fff; border:1px solid var(--line); border-radius:100px; padding:5px; box-shadow:0 14px 32px -16px rgba(0,0,0,.34); }
+  .sn1 .seg-brand{ display:flex; align-items:center; gap:7px; padding:0 6px 0 10px; font-weight:800; font-size:13px; }
+  .sn1 .seg-brand img{ width:15px; }
+  .sn1 .seg-div{ width:1px; height:20px; background:var(--line); margin:0 4px; }
+  .sn1 .seg a{ font-size:13px; font-weight:600; color:var(--muted); padding:7px 14px; border-radius:100px; transition:background .2s,color .2s; }
+  .sn1 .seg a:hover{ color:var(--ink); }
+  .sn1 .seg a.active{ background:var(--pcol); color:#fff; }
+  .sn1 .seg-cta{ background:var(--ink); color:#fff; margin-left:3px; }
+  .sn1 .seg-cta:hover{ color:#fff; }
+
+  /* ===== V2 — underline tabs (minimal) ===== */
+  .sn2{ position:sticky; top:60px; z-index:40; position:sticky; background:rgba(250,249,246,.9); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+  .sn2-wrap{ position:relative; }
+  .sn2 .prog2{ position:absolute; left:0; right:0; top:0; height:2px; }
+  .sn2 .prog2 i{ display:block; height:100%; width:0; background:color-mix(in srgb,var(--pcol) 55%,transparent); }
+  .sn2 .bar2{ display:flex; align-items:center; gap:14px; padding:0 22px; height:51px; }
+  .sn2 .b2-brand{ display:flex; align-items:center; gap:7px; font-weight:800; font-size:13.5px; margin-right:auto; }
+  .sn2 .b2-brand img{ width:15px; }
+  .sn2 .tabs{ position:relative; display:flex; gap:2px; }
+  .sn2 .tabs a{ font-size:13.5px; font-weight:600; color:var(--muted); padding:15px 13px; transition:color .2s; }
+  .sn2 .tabs a:hover{ color:var(--ink); }
+  .sn2 .tabs a.active{ color:var(--pcol); }
+  .sn2 .uind{ position:absolute; bottom:0; left:0; height:2px; background:var(--pcol); width:0; transition:transform .32s var(--ease), width .32s var(--ease); }
+  .sn2 .b2-cta{ font-size:13px; font-weight:700; color:var(--pcol); }
+
+  /* ===== V3 — vertical side rail ===== */
+  .rail-wrap{ position:sticky; top:0; height:0; z-index:30; }
+  .sn3{ position:absolute; right:18px; top:148px; display:flex; flex-direction:column; gap:7px; align-items:flex-end; }
+  .sn3 a{ display:flex; align-items:center; gap:9px; font-size:12.5px; font-weight:600; color:var(--muted); }
+  .sn3 .lbl{ opacity:0; transform:translateX(8px); transition:.25s var(--ease); background:#fff; border:1px solid var(--line); padding:3px 10px; border-radius:100px; box-shadow:0 5px 14px rgba(0,0,0,.07); white-space:nowrap; }
+  .sn3 a:hover .lbl, .sn3 a.active .lbl{ opacity:1; transform:none; }
+  .sn3 a.active .lbl{ color:var(--pcol); }
+  .sn3 .dt{ width:10px; height:10px; border-radius:50%; background:#cfcdc5; transition:.25s var(--ease); flex:none; }
+  .sn3 a:hover .dt{ background:#a9a69d; }
+  .sn3 a.active .dt{ background:var(--pcol); box-shadow:0 0 0 4px color-mix(in srgb,var(--pcol) 22%,transparent); }
+
+  /* ===== V4 — numbered stepper ===== */
+  .sn4{ position:sticky; top:60px; z-index:40; background:rgba(250,249,246,.93); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line); padding-top:12px; }
+  .sn4 .steps{ list-style:none; margin:0 auto; padding:0 26px; display:flex; justify-content:space-between; position:relative; max-width:560px; }
+  .sn4 .steps::before{ content:""; position:absolute; left:60px; right:60px; top:15px; height:2px; background:var(--line); }
+  .sn4 .steps li{ position:relative; z-index:1; }
+  .sn4 .steps a{ display:flex; flex-direction:column; align-items:center; gap:7px; font-size:11.5px; font-weight:600; color:var(--muted); padding:0 8px 12px; background:linear-gradient(rgba(250,249,246,.93),rgba(250,249,246,.93)); }
+  .sn4 .num{ width:30px; height:30px; border-radius:50%; border:2px solid var(--line); background:#fff; display:grid; place-items:center; font-size:12px; font-weight:800; transition:.25s var(--ease); }
+  .sn4 a.active{ color:var(--pcol); }
+  .sn4 a.active .num{ border-color:var(--pcol); background:var(--pcol); color:#fff; }
+  .sn4 .prog4{ height:3px; background:transparent; }
+  .sn4 .prog4 i{ display:block; height:100%; width:0; background:var(--pcol); transition:width .12s linear; }
+
+  /* ===== V5 — bold chips + progress ring ===== */
+  .sn5{ position:sticky; top:60px; z-index:40; background:#fff; border-bottom:1px solid var(--line); box-shadow:0 8px 20px -14px rgba(0,0,0,.28); }
+  .sn5 .bar5{ display:flex; align-items:center; gap:14px; padding:0 20px; height:56px; }
+  .sn5 .b5-brand{ display:flex; align-items:center; gap:7px; font-weight:800; font-size:13.5px; }
+  .sn5 .b5-brand img{ width:16px; }
+  .sn5 .chips{ display:flex; gap:7px; margin:0 auto; }
+  .sn5 .chips a{ font-size:13px; font-weight:600; color:var(--muted); padding:8px 15px; border-radius:100px; border:1px solid var(--line); transition:.2s; }
+  .sn5 .chips a:hover{ border-color:var(--pcol); color:var(--pcol); }
+  .sn5 .chips a.active{ background:var(--pcol); border-color:var(--pcol); color:#fff; }
+  .sn5 .ring{ position:relative; width:38px; height:38px; flex:none; }
+  .sn5 .ring svg{ width:38px; height:38px; transform:rotate(-90deg); }
+  .sn5 .ring .rbg{ fill:none; stroke:var(--line); stroke-width:3; }
+  .sn5 .ring .rfg{ fill:none; stroke:var(--pcol); stroke-width:3; stroke-linecap:round; stroke-dasharray:100; stroke-dashoffset:100; transition:stroke-dashoffset .12s linear; }
+  .sn5 .ring span{ position:absolute; inset:0; display:grid; place-items:center; font-size:9px; font-weight:800; color:var(--pcol); }
+  @media(max-width:600px){ .sn5 .b5-brand span,.sn2 .b2-brand span{ display:none; } }
+
+  .foot{ text-align:center; color:var(--muted); font-size:13.5px; margin-top:10px; }
+  .foot b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="head">
+    <h1>Second nav — 5 directions</h1>
+    <p>Five alternative designs for the in-page platform sub-nav. <b>Scroll inside each frame</b> to watch it stick beneath the main nav and highlight the section you're in. Use the switcher to preview each platform's colour. Tell me the number you like.</p>
+    <div class="pswitch">
+      <button data-p="shopify"><img src="https://cdn.simpleicons.org/shopify/5e8e3e" alt="">Shopify</button>
+      <button data-p="webflow" class="on"><img src="https://cdn.simpleicons.org/webflow/4353ff" alt="">Webflow</button>
+      <button data-p="wordpress"><img src="https://cdn.simpleicons.org/wordpress/21759b" alt="">WordPress</button>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <div class="demo">
+    <div class="demo-head"><span class="demo-num">1</span><div><h2>Floating segmented pill</h2><p>A detached, centered control that rhymes with the main nav pill. Active item fills with the platform colour. Bold, app-like.</p></div></div>
+    <div class="viewport">
+      <nav class="sn1"><div class="seg"><span class="seg-brand"><img class="plogo" src="https://cdn.simpleicons.org/webflow/4353ff" alt=""><b class="pname">Webflow</b></span><span class="seg-div"></span><a data-target="overview">Overview</a><a data-target="process">Process</a><a data-target="work">Work</a><a data-target="faq">FAQ</a><a class="seg-cta">Start →</a></div></nav>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="demo">
+    <div class="demo-head"><span class="demo-num">2</span><div><h2>Underline tabs (minimal)</h2><p>Barely-there bar; a coloured underline slides to the active tab and a thin progress line fills along the top. Editorial and quiet.</p></div></div>
+    <div class="viewport">
+      <nav class="sn2"><div class="sn2-wrap"><div class="prog2"><i data-progress></i></div><div class="bar2"><span class="b2-brand"><img class="plogo" src="https://cdn.simpleicons.org/webflow/4353ff" alt=""><span class="pname">Webflow</span></span><div class="tabs"><a data-target="overview">Overview</a><a data-target="process">Process</a><a data-target="work">Work</a><a data-target="faq">FAQ</a><span class="uind"></span></div><a class="b2-cta">Start →</a></div></div></nav>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="demo">
+    <div class="demo-head"><span class="demo-num">3</span><div><h2>Vertical side rail</h2><p>Dots pinned to the right edge — labels appear on hover/active. Lives on a different axis, so it can <b>never</b> collide with the main nav.</p></div></div>
+    <div class="viewport">
+      <div class="rail-wrap"><nav class="sn3"><a data-target="overview"><span class="lbl">Overview</span><span class="dt"></span></a><a data-target="process"><span class="lbl">Process</span><span class="dt"></span></a><a data-target="work"><span class="lbl">Work</span><span class="dt"></span></a><a data-target="faq"><span class="lbl">FAQ</span><span class="dt"></span></a></nav></div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="demo">
+    <div class="demo-head"><span class="demo-num">4</span><div><h2>Numbered stepper</h2><p>Reads like a journey: 01 → 04 along a connecting line, active step circled in the platform colour, progress bar underneath. Ties into the "process" story.</p></div></div>
+    <div class="viewport">
+      <nav class="sn4"><ol class="steps"><li><a data-target="overview"><span class="num">01</span>Overview</a></li><li><a data-target="process"><span class="num">02</span>Process</a></li><li><a data-target="work"><span class="num">03</span>Work</a></li><li><a data-target="faq"><span class="num">04</span>FAQ</a></li></ol><div class="prog4"><i data-progress></i></div></nav>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="demo">
+    <div class="demo-head"><span class="demo-num">5</span><div><h2>Chips + progress ring</h2><p>Brand on the left, pill chips that fill with colour when active, and a live circular read-progress ring on the right. Colourful and playful.</p></div></div>
+    <div class="viewport">
+      <nav class="sn5"><div class="bar5"><span class="b5-brand"><img class="plogo" src="https://cdn.simpleicons.org/webflow/4353ff" alt=""><span class="pname">Webflow</span></span><div class="chips"><a data-target="overview">Overview</a><a data-target="process">Process</a><a data-target="work">Work</a><a data-target="faq">FAQ</a></div><div class="ring"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.9155"></circle><circle class="rfg" data-progress cx="18" cy="18" r="15.9155"></circle></svg><span data-progress-text>0%</span></div></div></nav>
+    </div>
+  </div>
+
+  <p class="foot">All five are themeable and responsive. Pick one (or mix — e.g. <b>2 + 5</b>) and I'll ship it to the Shopify / Webflow / WordPress pages.</p>
+</div>
+
+<script>
+  var PLAT={ shopify:['#5e8e3e','shopify','Shopify'], webflow:['#4353ff','webflow','Webflow'], wordpress:['#21759b','wordpress','WordPress'] };
+  var FMN='<div class="fmn"><div class="pill"><b>KNB<i class="kd"></i></b><span class="fmn-links"><a>Work</a><a>Pricing</a><a>About</a><a>Contact</a></span><a class="fmn-cta">Start your project</a></div></div>';
+  var SECS=[
+    ['overview','When this platform is the right call','Secure, low-maintenance and easy to run day to day — the right base for what you are building.'],
+    ['process','How we build, step by step','A clear four-step path: audit and plan, design, build, then launch and train your team.'],
+    ['work','Selected projects','A selection of recent sites we have designed, built and shipped on this platform.'],
+    ['faq','Common questions','Timelines, self-management, migrations and ongoing support — the questions clients ask most.']
+  ];
+  function sectionsHTML(){ return SECS.map(function(s){ return '<section class="d-sec" data-sec="'+s[0]+'"><span class="k">'+s[0]+'</span><h3>'+s[1]+'.</h3><p>'+s[2]+'</p><p>Scroll on to watch the second nav stay put beneath the main nav and highlight the section you are reading.</p></section>'; }).join(''); }
+
+  document.querySelectorAll('.demo .viewport').forEach(function(vp){
+    vp.insertAdjacentHTML('afterbegin', FMN);
+    vp.insertAdjacentHTML('beforeend', sectionsHTML());
+    var links=[].slice.call(vp.querySelectorAll('[data-target]'));
+    var secs={}; vp.querySelectorAll('.d-sec').forEach(function(s){ secs[s.dataset.sec]=s; });
+    function upd(){
+      var st=vp.scrollTop, h=vp.scrollHeight-vp.clientHeight, p=h>0?Math.min(1,Math.max(0,st/h)):0;
+      vp.querySelectorAll('[data-progress]').forEach(function(el){
+        if(el.tagName.toLowerCase()==='circle'){ el.style.strokeDashoffset=(100*(1-p)); }
+        else { el.style.width=(p*100)+'%'; }
+      });
+      vp.querySelectorAll('[data-progress-text]').forEach(function(el){ el.textContent=Math.round(p*100)+'%'; });
+      var act=links.length?links[0].dataset.target:null;
+      links.forEach(function(a){ var s=secs[a.dataset.target]; if(s && (s.offsetTop - st) <= 130) act=a.dataset.target; });
+      links.forEach(function(a){ a.classList.toggle('active', a.dataset.target===act); });
+      var ind=vp.querySelector('.uind'), actEl=vp.querySelector('.tabs [data-target].active');
+      if(ind && actEl){ ind.style.width=actEl.offsetWidth+'px'; ind.style.transform='translateX('+actEl.offsetLeft+'px)'; }
+    }
+    links.forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); var s=secs[a.dataset.target]; if(s) vp.scrollTo({ top:s.offsetTop-66, behavior:'smooth' }); }); });
+    vp.addEventListener('scroll', upd, { passive:true });
+    window.addEventListener('resize', upd);
+    setTimeout(upd, 40);
+  });
+
+  document.querySelectorAll('.pswitch button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var d=PLAT[b.dataset.p];
+      document.documentElement.style.setProperty('--pcol', d[0]);
+      document.querySelectorAll('.pname').forEach(function(e){ e.textContent=d[2]; });
+      document.querySelectorAll('.plogo').forEach(function(e){ e.src='https://cdn.simpleicons.org/'+d[1]+'/'+d[0].slice(1); });
+      document.querySelectorAll('.pswitch button').forEach(function(x){ x.classList.toggle('on', x===b); });
+    });
+  });
+</script>
+</body>
+</html>

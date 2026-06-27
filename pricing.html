@@ -12,12 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pricing &amp; Packages — KNB Web Solution</title>
 <meta name="description" content="Packages and care plans for Shopify, WordPress, Webflow and custom websites. Every project is quoted in a written proposal after a free consultation. Take the 30-second quiz to find your fit.">
-<link rel="canonical" href="https://knb-solutions.netlify.app/pricing.html">
+<link rel="canonical" href="https://knb-solutions.netlify.app/pricing">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KNB Web Solution">
 <meta property="og:title" content="Pricing &amp; Packages — KNB Web Solution">
 <meta property="og:description" content="Packages and care plans for Shopify, WordPress, Webflow and custom websites. Every project is quoted in a written proposal after a free consultation. Take the 30-second quiz to find your fit.">
-<meta property="og:url" content="https://knb-solutions.netlify.app/pricing.html">
+<meta property="og:url" content="https://knb-solutions.netlify.app/pricing">
 <meta property="og:image" content="https://knb-solutions.netlify.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pricing &amp; Packages — KNB Web Solution">
@@ -30,6 +30,7 @@
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="work.css">
+<link rel="stylesheet" href="packages.css">
 <link rel="stylesheet" href="testimonials.css">
 <style>
   .block { padding: 70px 0; position: relative; }
@@ -96,15 +97,33 @@
   .addon .aq { grid-column: 2; grid-row: 3; display: inline-flex; align-items: center; gap: 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
   .addon .aq::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; flex: none; }
 
-  .pr-note { margin-top: 34px; background: linear-gradient(180deg, #f6f5f1, #efeee8); border: 1px solid var(--line); border-radius: 18px; padding: 28px 30px; position: relative; overflow: hidden; }
-  .pr-note::before { content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--line); }
-  .pr-note h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #e83fa0; }
-  .gtk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 34px; margin-top: 20px; }
-  .gtk { display: flex; align-items: flex-start; gap: 14px; }
-  .gtk-ic { flex: none; width: 40px; height: 40px; border-radius: 11px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; }
-  .gtk-ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-  .gtk-t { font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; }
-  .gtk-d { color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 3px; }
+  /* #8 — optional extras + good to know, 50/50 */
+  .extras-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 54px; align-items: stretch; }
+  .extras-card, .pr-note { position: relative; background: var(--card, #fff); border: 1px solid var(--line); border-radius: 20px; padding: 28px 30px; margin: 0; overflow: hidden; transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+  .extras-card::after, .pr-note::after { content: ""; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(232,63,160,0.07), transparent 70%); pointer-events: none; }
+  .extras-card:hover, .pr-note:hover { transform: translateY(-3px); border-color: rgba(17,17,16,0.14); box-shadow: 0 26px 54px -34px rgba(17,17,16,0.42); }
+  .extras-card { display: flex; flex-direction: column; }
+  .ex-head { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+  .ex-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); }
+  .ex-ic svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .extras-card h4, .pr-note h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; margin: 0; }
+  .extras-card > p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 16px; }
+  .extras-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .extras-chips span { font-size: 12.5px; font-weight: 500; color: var(--ink); background: rgba(17,17,16,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; transition: border-color .25s ease, background .25s ease, transform .25s ease; }
+  .extras-chips span:hover { border-color: rgba(232,63,160,0.4); background: rgba(232,63,160,0.05); transform: translateY(-1px); }
+  .extras-foot { margin-top: auto; }
+  .extras-foot .btn { align-self: flex-start; }
+  .ex-note { margin: 14px 0 0; font-size: 12px; font-weight: 500; color: #e83fa0; display: flex; align-items: center; gap: 8px; }
+  .ex-note::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: #e83fa0; }
+  .gtk-grid { display: flex; flex-direction: column; gap: 0; margin-top: 0; }
+  .gtk { display: flex; align-items: flex-start; gap: 14px; padding: 15px 0; border-top: 1px solid var(--line); }
+  .gtk:first-child { border-top: 0; padding-top: 2px; }
+  .gtk:last-child { padding-bottom: 2px; }
+  .gtk-ic { flex: none; width: 38px; height: 38px; border-radius: 11px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; transition: background .25s ease, color .25s ease; }
+  .gtk:hover .gtk-ic { background: rgba(232,63,160,0.09); color: #e83fa0; }
+  .gtk-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .gtk-t { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; }
+  .gtk-d { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin-top: 3px; }
 
   /* care plans */
   .care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
@@ -133,7 +152,7 @@
   .quiz-back { background: none; border: none; color: rgba(255,255,255,0.6); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 18px; }
   .quiz-back:hover { color: #fff; }
   /* result */
-  .quiz-res .qr-kicker { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #e83fa0; font-weight: 700; }
+  .quiz-res .qr-kicker { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; font-weight: 700; }
   .quiz-res h3 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 600; letter-spacing: -0.02em; margin: 10px 0 8px; color: #fff; }
   .quiz-res p { color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.5; }
   .quiz-res .qr-care { margin-top: 14px; font-size: 14px; color: rgba(255,255,255,0.78); }
@@ -172,7 +191,7 @@
 
   @media (max-width: 860px) { .howit { grid-template-columns: 1fr; } .care-grid, .addons { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 760px) {
-    .pr-grid, .care-grid, .addons, .gtk-grid { grid-template-columns: 1fr; }
+    .pr-grid, .care-grid, .addons, .extras-row { grid-template-columns: 1fr; }
     .pr-sticky { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; padding: 12px 16px; background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); gap: 12px; align-items: center; justify-content: space-between; }
     .pr-sticky span { font-size: 13px; font-weight: 600; }
     .pr-sticky .btn { padding: 11px 18px; }
@@ -337,7 +356,10 @@
 
   <main>
 
-  <header id="main" class="page-hero pr-hero">
+  <header id="main" class="page-hero pr-hero" style="--pcol:#111110;">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-grid-spot" id="gridSpot" aria-hidden="true"></div>
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="eyebrow reveal">Pricing &amp; packages</div>
       <h1 class="reveal">Packages built around your scope.</h1>
@@ -348,10 +370,20 @@
   <!-- #6 HOW PRICING WORKS -->
   <section class="block" style="padding-top:20px;">
     <div class="wrap">
-      <div class="howit stagger">
-        <div class="step reveal"><div class="sn">1</div><h3>Free consultation</h3><p>We learn your goals and review your current site, if you have one, for quick wins.</p></div>
-        <div class="step reveal"><div class="sn">2</div><h3>Written proposal</h3><p>A clear scope with deliverables, timeline, and an exact price — no surprises.</p></div>
-        <div class="step reveal"><div class="sn">3</div><h3>Build &amp; launch</h3><p>We design, build, test, and launch — then keep it running with a care plan.</p></div>
+      <div class="v-flip" style="--pcol:#e83fa0;">
+        <div class="fl-rail"><span class="fl-rail-line"><i></i></span><span class="fl-rdot" style="left:16.66%"></span><span class="fl-rdot" style="left:50%"></span><span class="fl-rdot" style="left:83.33%"></span></div>
+        <div class="fl-card"><div class="fl-tilt"><div class="fl-inner">
+          <div class="fl-face fl-front"><span class="fl-tag">Discovery</span><span class="fl-wm">1</span><span class="fl-badge">1</span><h4>Free consultation</h4><span class="fl-hint">Hover to flip &#8594;</span><span class="fl-edge"></span></div>
+          <div class="fl-face fl-back"><span class="fl-shine"></span><span class="fl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><h4>Free consultation</h4><p>We learn your goals and review your current site, if you have one, for quick wins.</p><a class="fl-cta" href="contact.html">Start <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="fl-edge"></span></div>
+        </div></div></div>
+        <div class="fl-card"><div class="fl-tilt"><div class="fl-inner">
+          <div class="fl-face fl-front"><span class="fl-tag">Scope</span><span class="fl-wm">2</span><span class="fl-badge">2</span><h4>Written proposal</h4><span class="fl-hint">Hover to flip &#8594;</span><span class="fl-edge"></span></div>
+          <div class="fl-face fl-back"><span class="fl-shine"></span><span class="fl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg></span><h4>Written proposal</h4><p>A clear scope with deliverables, timeline, and an exact price — no surprises.</p><a class="fl-cta" href="contact.html">Start <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="fl-edge"></span></div>
+        </div></div></div>
+        <div class="fl-card"><div class="fl-tilt"><div class="fl-inner">
+          <div class="fl-face fl-front"><span class="fl-tag">Delivery</span><span class="fl-wm">3</span><span class="fl-badge">3</span><h4>Build &amp; launch</h4><span class="fl-hint">Hover to flip &#8594;</span><span class="fl-edge"></span></div>
+          <div class="fl-face fl-back"><span class="fl-shine"></span><span class="fl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span><h4>Build &amp; launch</h4><p>We design, build, test, and launch — then keep it running with a care plan.</p><a class="fl-cta" href="contact.html">Start <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="fl-edge"></span></div>
+        </div></div></div>
       </div>
     </div>
   </section>
@@ -372,170 +404,34 @@
           <p>Fixed-scope packages for standard websites and stores. Custom systems are always quoted after a discovery call.</p>
         </div>
 
-        <div class="psel reveal">
-          <div class="psel-list" role="tablist" aria-label="Choose a package">
-            <button class="psel-item active" role="tab" aria-selected="true" data-pkg="starter">
-              <span class="pi-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
-              <span class="pi-text"><span class="pi-name">Starter Website</span><span class="pi-who">Small businesses &amp; service sites</span></span>
-              <span class="pi-arrow" aria-hidden="true">→</span>
-            </button>
-            <button class="psel-item pc-business" role="tab" aria-selected="false" data-pkg="business">
-              <span class="pi-tag">Popular</span>
-              <span class="pi-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
-              <span class="pi-text"><span class="pi-name">Business Website</span><span class="pi-who">Growing companies, B2B, clinics</span></span>
-              <span class="pi-arrow" aria-hidden="true">→</span>
-            </button>
-            <button class="psel-item pc-ecom" role="tab" aria-selected="false" data-pkg="ecom">
-              <span class="pi-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span>
-              <span class="pi-text"><span class="pi-name">Ecommerce Website</span><span class="pi-who">Shopify &amp; WooCommerce brands</span></span>
-              <span class="pi-arrow" aria-hidden="true">→</span>
-            </button>
-            <button class="psel-item pc-app" role="tab" aria-selected="false" data-pkg="app">
-              <span class="pi-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
-              <span class="pi-text"><span class="pi-name">Custom Web App</span><span class="pi-who">Dashboards, portals, booking, POS</span></span>
-              <span class="pi-arrow" aria-hidden="true">→</span>
-            </button>
-          </div>
+        <div class="v-md" id="pkgSelect" style="margin-top:30px;"></div>
 
-          <div class="psel-detail">
-            <div class="psel-panel on" data-panel="starter">
-              <span class="pp-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
-              <span class="pp-kicker">Starter Website</span>
-              <h3>A clean, professional site — ready in weeks.</h3>
-              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
-              <div class="pp-facts"><span>~1–2 weeks</span><span>1 revision</span><span>Launch support</span></div>
-              <div class="pp-cols">
-                <div><h4>Included</h4><ul class="pp-inc">
-                  <li>1–5 pages, responsive design</li>
-                  <li>Contact form, navigation &amp; CTAs</li>
-                  <li>Basic SEO (titles, meta, alt text)</li>
-                  <li>One revision, QA &amp; launch support</li>
-                </ul></div>
-                <div><h4>Quoted separately</h4><ul class="pp-exc">
-                  <li>Ecommerce checkout</li>
-                  <li>Custom animation</li>
-                  <li>Branding / logo</li>
-                  <li>Full copywriting</li>
-                </ul></div>
-              </div>
-              <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+        <!-- #8 OPTIONAL EXTRAS + GOOD TO KNOW (50/50) -->
+        <div class="extras-row reveal">
+          <div class="extras-card">
+            <div class="ex-head">
+              <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+              <h4>Optional extras</h4>
             </div>
-
-            <div class="psel-panel pc-business" data-panel="business">
-              <span class="pp-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
-              <span class="pp-kicker">Business Website · Most popular</span>
-              <h3>More pages, more credibility, more leads.</h3>
-              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
-              <div class="pp-facts"><span>~2–4 weeks</span><span>2 revisions</span><span>14–30 days support</span></div>
-              <div class="pp-cols">
-                <div><h4>Included</h4><ul class="pp-inc">
-                  <li>5–12 pages, custom layouts</li>
-                  <li>Discovery, sitemap &amp; CTA strategy</li>
-                  <li>CMS so your team can edit</li>
-                  <li>On-page SEO, analytics &amp; Search Console</li>
-                  <li>Two revisions &amp; 14–30 days support</li>
-                </ul></div>
-                <div><h4>Quoted separately</h4><ul class="pp-exc">
-                  <li>Ecommerce checkout</li>
-                  <li>Custom app features</li>
-                  <li>Advanced integrations</li>
-                  <li>Large copywriting scope</li>
-                </ul></div>
-              </div>
-              <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
+            <p>Branding, copywriting, photography, multi-language, integrations and more — add any to your project, quoted by scope.</p>
+            <div class="extras-chips">
+              <span>Branding</span><span>Copywriting</span><span>Photography</span><span>Multi-language</span><span>Integrations</span><span>+ more</span>
             </div>
-
-            <div class="psel-panel pc-ecom" data-panel="ecom">
-              <span class="pp-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span>
-              <span class="pp-kicker">Ecommerce Website</span>
-              <h3>A store built to turn browsers into buyers.</h3>
-              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
-              <div class="pp-facts"><span>~3–5 weeks</span><span>Product upload</span><span>14–30 days support</span></div>
-              <div class="pp-cols">
-                <div><h4>Included</h4><ul class="pp-inc">
-                  <li>Store audit &amp; journey planning</li>
-                  <li>Core store pages + product upload</li>
-                  <li>Payment, shipping &amp; app setup</li>
-                  <li>Ecommerce SEO, mobile QA &amp; training</li>
-                </ul></div>
-                <div><h4>Quoted separately</h4><ul class="pp-exc">
-                  <li>Custom Shopify apps</li>
-                  <li>ERP / POS integration</li>
-                  <li>Large catalog import</li>
-                  <li>Product photography</li>
-                </ul></div>
-              </div>
-              <a href="contact.html" class="btn"><span class="dot"></span>Get a quote</a>
-            </div>
-
-            <div class="psel-panel pc-app" data-panel="app">
-              <span class="pp-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
-              <span class="pp-kicker">Custom Web App</span>
-              <h3>Custom software shaped around how you work.</h3>
-              <div class="pp-quote"><span class="pq-dot"></span>Quoted to your scope</div>
-              <div class="pp-facts"><span>Scoped timeline</span><span>Roles &amp; admin</span><span>30 days support</span></div>
-              <div class="pp-cols">
-                <div><h4>Included</h4><ul class="pp-inc">
-                  <li>Technical discovery &amp; workflow mapping</li>
-                  <li>Wireframes, custom build &amp; admin</li>
-                  <li>Integrations (payments, CRM, APIs…)</li>
-                  <li>Testing, deployment, docs &amp; training</li>
-                </ul></div>
-                <div><h4>Quoted separately</h4><ul class="pp-exc">
-                  <li>Features outside the scope</li>
-                  <li>Unplanned integrations</li>
-                  <li>Hosting &amp; third-party fees</li>
-                  <li>Heavy data migration</li>
-                </ul></div>
-              </div>
-              <a href="contact.html" class="btn"><span class="dot"></span>Request a quote</a>
+            <div class="extras-foot">
+              <button type="button" class="btn ghost" data-addons>Browse all add-ons →</button>
+              <p class="ex-note">Every add-on is optional and quoted to your scope.</p>
             </div>
           </div>
-        </div>
 
-        <!-- #2 COMPARISON TABLE -->
-        <div class="sec-intro reveal r-right" style="margin-top:54px;">
-          <div class="eyebrow">Compare at a glance</div>
-          <h2 style="font-size:clamp(22px,3vw,32px);">What's in each package</h2>
-        </div>
-        <div class="cmp-wrap reveal">
-          <table class="cmp">
-            <thead>
-              <tr><th>Feature</th><th>Starter</th><th class="feat">Business</th><th>Ecommerce</th><th>Custom App</th></tr>
-            </thead>
-            <tbody>
-              <tr><th>Pages / screens</th><td>1–5</td><td class="feat">5–12</td><td>Store pages</td><td>App screens</td></tr>
-              <tr><th>Custom design</th><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-              <tr><th>CMS (edit content)</th><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-              <tr><th>Ecommerce / checkout</th><td class="no">—</td><td class="feat no">—</td><td class="yes">✓</td><td>Optional</td></tr>
-              <tr><th>SEO setup</th><td>Basic</td><td class="feat">On-page</td><td>Ecommerce</td><td class="no">—</td></tr>
-              <tr><th>Integrations</th><td class="no">—</td><td class="feat">Basic</td><td>Apps</td><td>Custom</td></tr>
-              <tr><th>Revisions</th><td>1</td><td class="feat">2</td><td>2</td><td>Scoped</td></tr>
-              <tr><th>Support after launch</th><td>Launch</td><td class="feat">14–30 days</td><td>14–30 days</td><td>30 days</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- #8 ADD-ONS -->
-        <div class="sec-intro reveal r-left" style="margin-top:54px;">
-          <div class="eyebrow">Optional extras</div>
-          <h2 style="font-size:clamp(22px,3vw,32px);">Add-ons, quoted separately</h2>
-        </div>
-        <div class="addons stagger">
-          <div class="addon reveal"><span class="addon-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><div class="an">Extra pages</div><div class="ad">More templates or landing pages beyond the package.</div><span class="aq">Quoted per page</span></div>
-          <div class="addon reveal"><span class="addon-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div class="an">Copywriting</div><div class="ad">Full website copy written for your audience.</div><span class="aq">Quoted by scope</span></div>
-          <div class="addon reveal"><span class="addon-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg></span><div class="an">Branding &amp; logo</div><div class="ad">Logo, colours, and brand direction.</div><span class="aq">Quoted by scope</span></div>
-          <div class="addon reveal"><span class="addon-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.2"/><path d="M8.5 7l1.3-2h4.4l1.3 2"/></svg></span><div class="an">Product photography</div><div class="ad">Studio or lifestyle shots for your store.</div><span class="aq">Quoted by scope</span></div>
-          <div class="addon reveal"><span class="addon-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg></span><div class="an">Content migration</div><div class="ad">Moving large amounts of content or products.</div><span class="aq">Quoted by volume</span></div>
-          <div class="addon reveal"><span class="addon-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><div class="an">Advanced integrations</div><div class="ad">ERP, POS, CRM, or custom API connections.</div><span class="aq">Quoted by scope</span></div>
-        </div>
-
-        <div class="pr-note reveal">
-          <h4>Good to know</h4>
+          <div class="pr-note">
+          <div class="ex-head">
+            <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+            <h4>Good to know</h4>
+          </div>
           <div class="gtk-grid">
             <div class="gtk">
-              <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
-              <div><div class="gtk-t">Written proposal</div><div class="gtk-d">Every project is quoted in writing after a free consultation.</div></div>
+              <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+              <div><div class="gtk-t">Timelines</div><div class="gtk-d">Most projects launch in 2–6 weeks — the exact window is confirmed in your written proposal.</div></div>
             </div>
             <div class="gtk">
               <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11.5h1V16h1"/></svg></span>
@@ -549,6 +445,7 @@
               <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
               <div><div class="gtk-t">Payment terms</div><div class="gtk-d">50% to start, 30% at design approval, 20% before launch.</div></div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -935,5 +832,6 @@
   </script>
   <script src="testimonials.js"></script>
   <script src="navmenu.js"></script>
+  <script src="packages.js"></script>
 </body>
 </html>

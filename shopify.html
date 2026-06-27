@@ -12,12 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Shopify Work — KNB Web Solution</title>
 <meta name="description" content="Shopify store design, revamps, and ecommerce builds by KNB Web Solution — conversion-focused product pages, fast mobile checkout, and storefronts that are easy to manage.">
-<link rel="canonical" href="https://knb-solutions.netlify.app/shopify.html">
+<link rel="canonical" href="https://knb-solutions.netlify.app/shopify">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KNB Web Solution">
 <meta property="og:title" content="Shopify Work — KNB Web Solution">
 <meta property="og:description" content="Shopify store design, revamps, and ecommerce builds by KNB Web Solution — conversion-focused product pages, fast mobile checkout, and storefronts that are easy to manage.">
-<meta property="og:url" content="https://knb-solutions.netlify.app/shopify.html">
+<meta property="og:url" content="https://knb-solutions.netlify.app/shopify">
 <meta property="og:image" content="https://knb-solutions.netlify.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shopify Work — KNB Web Solution">
@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="work.css">
 <link rel="stylesheet" href="testimonials.css">
 <style>
+  :root{ --pcol: #5e8e3e; --plogo: url("https://cdn.simpleicons.org/shopify/5e8e3e"); }
   .page-hero .eyebrow::before { background: #5e8e3e; }
   .plat-pill { display:inline-flex; align-items:center; gap:8px; background:#eaf1e2; color:#3f6024; border:1px solid #cfe0bd; font-size:13px; font-weight:700; letter-spacing:0.04em; padding:6px 12px; border-radius:100px; }
   .plat-pill img { width:15px; }
@@ -45,14 +46,228 @@
 
   <main>
 
-  <header id="main" class="page-hero">
+  <header id="main" class="page-hero hero-split">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-grid-spot" id="gridSpot" aria-hidden="true"></div>
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
     <div class="wrap">
+      <div class="hero-copy">
       <div class="crumbs reveal"><a href="portfolio.html">Portfolio</a> <span>/</span> <span>Shopify</span></div>
       <div class="eyebrow reveal"><span class="plat-pill"><img src="https://cdn.simpleicons.org/shopify" alt="">Shopify</span></div>
-      <h1 class="reveal">Shopify store revamps &amp; builds.</h1>
+      <h1 class="reveal">Shopify stores, built to <span class="rot" id="heroRotator" data-words="sell,convert,scale,grow"><span class="rot-word">sell</span></span>.</h1>
       <p class="lead reveal">Conversion-focused storefronts on Shopify — cleaner product pages, faster load, and checkout flows that make buying easy.</p>
+      <div class="hero-stats reveal">
+        <div class="hs"><b><span data-num="6">0</span></b><span>Shopify stores shipped</span></div>
+        <div class="hs"><b><span data-num="44">0</span></b><span>Projects launched in total</span></div>
+        <div class="hs"><b><span data-num="18" data-suffix="+">0</span></b><span>Industries served</span></div>
+      </div>
+      </div>
+      <div class="hero-mock reveal r-right" aria-hidden="true">
+        <div class="bw">
+          <div class="bw-bar"><span></span><span></span><span></span><b>lightmybricks.com</b></div>
+          <div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=900" alt=""></div>
+        </div>
+      </div>
     </div>
   </header>
+
+  <!-- hero keyword marquee -->
+  <div class="plat-mq" aria-hidden="true"><div class="plat-mq-track">
+    <span>Store revamps</span><span>Product pages</span><span>Fast checkout</span><span>Apps &amp; integrations</span><span>Migration</span><span>Conversion-focused</span>
+    <span>Store revamps</span><span>Product pages</span><span>Fast checkout</span><span>Apps &amp; integrations</span><span>Migration</span><span>Conversion-focused</span>
+  </div></div>
+
+  <!-- selected projects (moved up — work first) -->
+  <section class="work projects" id="work">
+    <div class="wrap">
+      <div class="work-head reveal"><h2 class="sec-head">Selected Shopify projects</h2><a href="contact.html" class="btn ghost">Start a project →</a></div>
+      <div class="pj-grid">
+
+        <article class="pj-card featured reveal" data-plat="shopify" data-tags="shopify ecommerce" data-title="Light My Bricks" data-url="https://www.lightmybricks.com/" data-scope="Ecommerce store for LED lighting kits — a clean, product-focused storefront with an easy buying flow." data-plain="Shopify">
+          <span class="pj-num">01</span>
+          <div class="pj-frame">
+            <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">www.lightmybricks.com</span></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Light My Bricks — Shopify store by KNB Web Solution" decoding="async" data-shot="https://www.lightmybricks.com/"></div>
+            <button type="button" class="pj-open" aria-label="View details for Light My Bricks">View details</button>
+            <a href="https://www.lightmybricks.com/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
+          </div>
+          <div class="pj-meta">
+            <div class="pj-top"><h3>Light My Bricks</h3><a href="https://www.lightmybricks.com/" target="_blank" rel="noopener" class="pj-live">Live ↗</a></div>
+            <p class="pj-result">Shopify store for LED lighting kits — clean, product-focused storefront.</p>
+            <div class="pj-tags"><span class="pj-chip pj-plat">Shopify</span><span class="pj-chip">Ecommerce</span><span class="pj-chip pj-type">Retail</span></div>
+          </div>
+        </article>
+
+        <article class="pj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-title="Cacao Collective" data-url="https://www.cacaocollective.com.au/" data-scope="Craft-chocolate brand store with a simple, mobile-first buying flow." data-plain="Shopify">
+          <span class="pj-num">02</span>
+          <div class="pj-frame">
+            <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">www.cacaocollective.com.au</span></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Cacao Collective — Shopify store by KNB Web Solution" decoding="async" data-shot="https://www.cacaocollective.com.au/"></div>
+            <button type="button" class="pj-open" aria-label="View details for Cacao Collective">View details</button>
+            <a href="https://www.cacaocollective.com.au/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
+          </div>
+          <div class="pj-meta">
+            <div class="pj-top"><h3>Cacao Collective</h3><a href="https://www.cacaocollective.com.au/" target="_blank" rel="noopener" class="pj-live">Live ↗</a></div>
+            <p class="pj-result">Craft chocolate brand store with a simple, mobile-first buying flow.</p>
+            <div class="pj-tags"><span class="pj-chip pj-plat">Shopify</span><span class="pj-chip">Ecommerce</span><span class="pj-chip pj-type">Food &amp; drink</span></div>
+          </div>
+        </article>
+
+        <article class="pj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-title="Omenz" data-url="https://omenz.com.au/" data-scope="Apparel storefront with a clean product-browsing experience on Shopify." data-plain="Shopify">
+          <span class="pj-num">03</span>
+          <div class="pj-frame">
+            <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">omenz.com.au</span></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Omenz — Shopify store by KNB Web Solution" decoding="async" data-shot="https://omenz.com.au/"></div>
+            <button type="button" class="pj-open" aria-label="View details for Omenz">View details</button>
+            <a href="https://omenz.com.au/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
+          </div>
+          <div class="pj-meta">
+            <div class="pj-top"><h3>Omenz</h3><a href="https://omenz.com.au/" target="_blank" rel="noopener" class="pj-live">Live ↗</a></div>
+            <p class="pj-result">Apparel storefront &amp; product browsing on Shopify.</p>
+            <div class="pj-tags"><span class="pj-chip pj-plat">Shopify</span><span class="pj-chip">Ecommerce</span><span class="pj-chip pj-type">Apparel</span></div>
+          </div>
+        </article>
+
+        <article class="pj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-title="Thirsty Squirrel" data-url="https://thirstysquirrel.com.au/" data-scope="Beverage-brand Shopify store with a bold, on-brand storefront." data-plain="Shopify">
+          <span class="pj-num">04</span>
+          <div class="pj-frame">
+            <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">thirstysquirrel.com.au</span></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Thirsty Squirrel — Shopify store by KNB Web Solution" decoding="async" data-shot="https://thirstysquirrel.com.au/"></div>
+            <button type="button" class="pj-open" aria-label="View details for Thirsty Squirrel">View details</button>
+            <a href="https://thirstysquirrel.com.au/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
+          </div>
+          <div class="pj-meta">
+            <div class="pj-top"><h3>Thirsty Squirrel</h3><a href="https://thirstysquirrel.com.au/" target="_blank" rel="noopener" class="pj-live">Live ↗</a></div>
+            <p class="pj-result">Shopify store for a beverage brand.</p>
+            <div class="pj-tags"><span class="pj-chip pj-plat">Shopify</span><span class="pj-chip">Ecommerce</span><span class="pj-chip pj-type">Beverage</span></div>
+          </div>
+        </article>
+
+        <article class="pj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-title="Rise Outdoor" data-url="https://riseoutdoor.com.au/" data-scope="Outdoor-gear Shopify store built for easy browsing and checkout." data-plain="Shopify">
+          <span class="pj-num">05</span>
+          <div class="pj-frame">
+            <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">riseoutdoor.com.au</span></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Rise Outdoor — Shopify store by KNB Web Solution" decoding="async" data-shot="https://riseoutdoor.com.au/"></div>
+            <button type="button" class="pj-open" aria-label="View details for Rise Outdoor">View details</button>
+            <a href="https://riseoutdoor.com.au/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
+          </div>
+          <div class="pj-meta">
+            <div class="pj-top"><h3>Rise Outdoor</h3><a href="https://riseoutdoor.com.au/" target="_blank" rel="noopener" class="pj-live">Live ↗</a></div>
+            <p class="pj-result">Shopify store for outdoor gear.</p>
+            <div class="pj-tags"><span class="pj-chip pj-plat">Shopify</span><span class="pj-chip">Ecommerce</span><span class="pj-chip pj-type">Outdoor</span></div>
+          </div>
+        </article>
+
+        <article class="pj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-title="Salon Store" data-url="https://www.salon.store/" data-scope="Beauty &amp; salon-products Shopify store with a tidy catalogue." data-plain="Shopify">
+          <span class="pj-num">06</span>
+          <div class="pj-frame">
+            <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">www.salon.store</span></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Salon Store — Shopify store by KNB Web Solution" decoding="async" data-shot="https://www.salon.store/"></div>
+            <button type="button" class="pj-open" aria-label="View details for Salon Store">View details</button>
+            <a href="https://www.salon.store/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
+          </div>
+          <div class="pj-meta">
+            <div class="pj-top"><h3>Salon Store</h3><a href="https://www.salon.store/" target="_blank" rel="noopener" class="pj-live">Live ↗</a></div>
+            <p class="pj-result">Shopify store for salon &amp; beauty products.</p>
+            <div class="pj-tags"><span class="pj-chip pj-plat">Shopify</span><span class="pj-chip">Ecommerce</span><span class="pj-chip pj-type">Beauty</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- project detail modal + live preview -->
+    <div class="pj-modal" id="pjModal" hidden>
+      <div class="pjm-backdrop" data-close></div>
+      <div class="pjm-dialog" role="dialog" aria-modal="true" aria-labelledby="pjmTitle">
+        <button type="button" class="pjm-x" data-close aria-label="Close">✕</button>
+        <button type="button" class="pjm-nav pjm-prev" id="pjmPrev" aria-label="Previous project">‹</button>
+        <button type="button" class="pjm-nav pjm-next" id="pjmNext" aria-label="Next project">›</button>
+        <div class="pjm-stage">
+          <div class="pjm-bar"><i></i><i></i><i></i><span class="pjm-url" id="pjmUrl"></span>
+            <span class="pjm-toggle">
+              <button type="button" class="pjm-tab active" data-view="shot">Screenshot</button>
+              <button type="button" class="pjm-tab" data-view="live">Live preview</button>
+            </span>
+          </div>
+          <div class="pjm-shotwrap"><img class="pjm-img" id="pjmImg" alt=""></div>
+          <div class="pjm-livewrap" hidden>
+            <iframe class="pjm-iframe" id="pjmFrame" title="Live preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
+            <div class="pjm-loading" id="pjmLoading" hidden><span class="pjm-spin" aria-hidden="true"></span>Loading live site…</div>
+            <p class="pjm-livebar">Some sites block embedding — if it's blank, <a id="pjmOpen" target="_blank" rel="noopener">open the live site ↗</a> or <button type="button" class="pjm-linkbtn" id="pjmBackShot">view the screenshot</button>.</p>
+            <div class="pjm-fallback" id="pjmFallback" hidden>
+              <span class="pjm-fb-ico" aria-hidden="true">🔌</span>
+              <h4>Couldn't load the live site</h4>
+              <p>The preview didn't respond. View the full-resolution screenshot, or open the real site in a new tab.</p>
+              <div class="pjm-fb-actions">
+                <a class="btn" id="pjmOpenBig" target="_blank" rel="noopener"><span class="dot"></span>Open live site ↗</a>
+                <button type="button" class="btn-ghost" id="pjmBackShot2">View screenshot</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pjm-info">
+          <span class="pjm-eyebrow" id="pjmPlat"></span>
+          <h3 id="pjmTitle"></h3>
+          <p class="pjm-scope" id="pjmScope"></p>
+          <div class="pjm-tags" id="pjmTags"></div>
+          <dl class="pjm-meta">
+            <div><dt>Platform</dt><dd id="pjmMetaPlat">—</dd></div>
+            <div><dt>Focus</dt><dd id="pjmMetaFocus">—</dd></div>
+            <div><dt>Live at</dt><dd id="pjmMetaUrl">—</dd></div>
+          </dl>
+          <div class="pjm-actions">
+            <a class="btn" id="pjmLive" target="_blank" rel="noopener"><span class="dot"></span>Visit live site</a>
+            <a class="btn-ghost" id="pjmCase" hidden>Read case study <b>→</b></a>
+          </div>
+          <p class="pjm-hint" aria-hidden="true">← → browse · Esc to close</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- why this platform -->
+  <section class="why-plat" id="overview">
+    <div class="why-glow" id="whyGlow" aria-hidden="true"></div>
+    <div class="wrap"><div class="why-grid">
+      <div class="why-main reveal">
+        <span class="eyebrow"><span class="dot"></span>Is Shopify right for you?</span>
+        <h2>When Shopify is the right call.</h2>
+        <p class="lead2">Shopify is the fastest route to a secure, low-maintenance online store. It handles payments, inventory and scaling for you — so you spend time selling, not fixing.</p>
+        <ul class="why-proof">
+          <li><b>6</b> stores shipped</li>
+          <li><b>100%</b> client-managed</li>
+          <li><b>2–4 wks</b> typical build</li>
+        </ul>
+        <div class="why-fit">
+          <span class="why-fit-q">What are you building?</span>
+          <div class="why-seg" role="group" aria-label="What are you building?">
+            <button type="button" class="on" data-fit="store" data-verdict="<b>✓ Shopify is a great fit.</b> Secure checkout, easy to manage, and built to scale as you grow.">An online store</button>
+            <button type="button" data-fit="content" data-verdict="<b>Shopify is built for selling.</b> For a content-led marketing site, Webflow or WordPress may suit you better — see the options →">Mostly content</button>
+            <button type="button" data-fit="both" data-verdict="<b>You can do both on Shopify.</b> Sell products and run pages — or pair it with a CMS. We'll advise in your free consultation.">A bit of both</button>
+          </div>
+          <p class="why-verdict" id="whyVerdict" aria-live="polite"><b>✓ Shopify is a great fit.</b> Secure checkout, easy to manage, and built to scale as you grow.</p>
+        </div>
+        <div class="why-fits">
+          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span><div><b>Online stores</b><small>Sell products with a secure, hosted checkout.</small></div></div>
+          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 7h6v6"/></svg></span><div><b>Growing brands</b><small>Scales with your traffic, sales and catalogue.</small></div></div>
+          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div><b>Product catalogues</b><small>Variants, collections and inventory, handled.</small></div></div>
+          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg></span><div><b>Subscriptions</b><small>Recurring orders and memberships via apps.</small></div></div>
+        </div>
+      </div>
+      <aside class="why-side reveal r-right">
+        <a class="why-shot" href="https://www.lightmybricks.com/" target="_blank" rel="noopener" aria-label="Visit Light My Bricks — a Shopify store built by KNB Web Solution">
+          <span class="why-shot-tag">★ Featured Shopify store</span>
+          <div class="bw"><div class="bw-bar"><span></span><span></span><span></span><b>lightmybricks.com</b></div><div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=900" alt="Light My Bricks — Shopify store by KNB Web Solution"></div></div>
+        </a>
+        <div class="why-cross">
+          <span class="why-cross-h">Not sure? Other options</span>
+          <a href="webflow.html" class="why-pick" style="--c:#4353ff"><img src="https://cdn.simpleicons.org/webflow/4353ff" alt="" width="22" height="22" loading="lazy"><span class="wp-t"><b>Webflow</b><small>Design-led marketing sites with motion.</small></span><i>&#8594;</i></a>
+          <a href="wordpress.html" class="why-pick" style="--c:#21759b"><img src="https://cdn.simpleicons.org/wordpress/21759b" alt="" width="22" height="22" loading="lazy"><span class="wp-t"><b>WordPress</b><small>Content-heavy sites &amp; flexible WooCommerce.</small></span><i>&#8594;</i></a>
+        </div>
+      </aside>
+    </div></div>
+  </section>
 
   <!-- WHAT WE DO -->
   <section class="svc">
@@ -61,28 +276,25 @@
         <span class="eyebrow">What we do</span>
         <h2>Everything your Shopify store needs.</h2>
       </div>
-      <div class="svc-grid">
-        <div class="svc-card reveal"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span><h3>Store design & revamp</h3><p>Clean, on-brand storefronts built to turn browsers into buyers.</p></div>
-        <div class="svc-card reveal"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 11 3.8A2 2 0 0 0 9.6 3H4a1 1 0 0 0-1 1v5.6a2 2 0 0 0 .6 1.4l9.6 9.6a2 2 0 0 0 2.8 0l4.6-4.6a2 2 0 0 0 0-2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span><h3>Products & collections</h3><p>Products, variants, collections, and the apps your store needs.</p></div>
-        <div class="svc-card reveal"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span><h3>Checkout &amp; payments</h3><p>Fast, mobile-first checkout with the right payment and shipping setup.</p></div>
-        <div class="svc-card reveal"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9-.1z"/><path d="M19 2s-4 1-7 4-4 7-4 7l3 3s4-1 7-4 4-7 4-7l-3-3z"/></svg></span><h3>Launch &amp; training</h3><p>Migration, testing, go-live — and how to run the store yourself.</p></div>
+      <div class="svc-cards">
+        <article class="svc-card reveal"><div class="svc-fx"><span class="svc-shine"></span><span class="svc-cover"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=760&h=560&fit=crop&q=80" alt=""><span class="svc-tag">Design</span><span class="svc-cover-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span></span><div class="svc-cbody"><span class="svc-wm">01</span><span class="svc-step">STEP 01</span><h3>Store design &amp; revamp</h3><p>Clean, on-brand storefronts built to turn browsers into buyers.</p><a class="svc-cta" href="contact.html">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article>
+        <article class="svc-card reveal"><div class="svc-fx"><span class="svc-shine"></span><span class="svc-cover"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=760&h=560&fit=crop&q=80" alt=""><span class="svc-tag">Catalogue</span><span class="svc-cover-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 11 3.8A2 2 0 0 0 9.6 3H4a1 1 0 0 0-1 1v5.6a2 2 0 0 0 .6 1.4l9.6 9.6a2 2 0 0 0 2.8 0l4.6-4.6a2 2 0 0 0 0-2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span></span><div class="svc-cbody"><span class="svc-wm">02</span><span class="svc-step">STEP 02</span><h3>Products &amp; collections</h3><p>Products, variants, collections, and the apps your store needs.</p><a class="svc-cta" href="contact.html">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article>
+        <article class="svc-card reveal"><div class="svc-fx"><span class="svc-shine"></span><span class="svc-cover"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=760&h=560&fit=crop&q=80" alt=""><span class="svc-tag">Payments</span><span class="svc-cover-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span></span><div class="svc-cbody"><span class="svc-wm">03</span><span class="svc-step">STEP 03</span><h3>Checkout &amp; payments</h3><p>Fast, mobile-first checkout with the right payment and shipping setup.</p><a class="svc-cta" href="contact.html">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article>
+        <article class="svc-card reveal"><div class="svc-fx"><span class="svc-shine"></span><span class="svc-cover"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=760&h=560&fit=crop&q=80" alt=""><span class="svc-tag">Launch</span><span class="svc-cover-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9-.1z"/><path d="M19 2s-4 1-7 4-4 7-4 7l3 3s4-1 7-4 4-7 4-7l-3-3z"/></svg></span></span><div class="svc-cbody"><span class="svc-wm">04</span><span class="svc-step">STEP 04</span><h3>Launch &amp; training</h3><p>Migration, testing, go-live — and how to run the store yourself.</p><a class="svc-cta" href="contact.html">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article>
       </div>
     </div>
   </section>
 
-  <section class="work">
-    <div class="wrap">
-      <div class="work-head reveal"><h2>Selected Shopify projects</h2><a href="contact.html" class="btn ghost">Start a project →</a></div>
-      <div class="proj-grid cols-3">
-        <a href="https://www.lightmybricks.com/" target="_blank" rel="noopener" class="proj-card feat reveal" data-plat="shopify"><span class="view-tag">Visit site →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=720" alt="Light My Bricks — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Light My Bricks</h3><span class="cat">Ecommerce · LED kits</span></div><span class="proj-scope">Shopify store for LED lighting kits</span></div></a>
-        <a href="https://www.cacaocollective.com.au/" target="_blank" rel="noopener" class="proj-card reveal" data-plat="shopify"><span class="view-tag">Visit site →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=720" alt="Cacao Collective — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Cacao Collective</h3><span class="cat">Ecommerce · Food</span></div><span class="proj-scope">Craft chocolate Shopify store</span></div></a>
-        <a href="https://omenz.com.au/" target="_blank" rel="noopener" class="proj-card reveal" data-plat="shopify"><span class="view-tag">Visit site →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fomenz.com.au%2F?w=720" alt="Omenz — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Omenz</h3><span class="cat">Ecommerce · Apparel</span></div><span class="proj-scope">Shopify storefront &amp; product browsing</span></div></a>
-        <a href="https://thirstysquirrel.com.au/" target="_blank" rel="noopener" class="proj-card reveal" data-plat="shopify"><span class="view-tag">Visit site →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fthirstysquirrel.com.au%2F?w=720" alt="Thirsty Squirrel — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Thirsty Squirrel</h3><span class="cat">Ecommerce · Drinks</span></div><span class="proj-scope">Shopify store for a beverage brand</span></div></a>
-        <a href="https://riseoutdoor.com.au/" target="_blank" rel="noopener" class="proj-card reveal" data-plat="shopify"><span class="view-tag">Visit site →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=720" alt="Rise Outdoor — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Rise Outdoor</h3><span class="cat">Ecommerce · Outdoor</span></div><span class="proj-scope">Shopify store for outdoor gear</span></div></a>
-        <a href="https://www.salon.store/" target="_blank" rel="noopener" class="proj-card reveal" data-plat="shopify"><span class="view-tag">Visit site →</span><div class="proj-img"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.salon.store%2F?w=720" alt="Salon Store — Shopify project by KNB Web Solution"></div><div class="proj-meta"><div class="proj-top"><h3>Salon Store</h3><span class="cat">Ecommerce · Beauty</span></div><span class="proj-scope">Shopify store for salon products</span></div></a>
-      </div>
-    </div>
-  </section>
+  <section class="process" id="process"><div class="proc-wm" aria-hidden="true">PROCESS</div><div class="wrap">
+    <div class="proc-head reveal"><span class="eyebrow">How we work</span><h2 class="sec-head">How we build on Shopify</h2></div>
+    <div class="proc-arrows" id="procArrows" aria-hidden="true"></div>
+    <ol class="proc-steps">
+      <li class="reveal"><span class="proc-n">01</span><h3>Audit & plan</h3><p>We review your store, goals and competitors, then map the build.</p></li>
+      <li class="reveal"><span class="proc-n">02</span><h3>Design</h3><p>On-brand product pages and a layout built to convert.</p></li>
+      <li class="reveal"><span class="proc-n">03</span><h3>Build & apps</h3><p>Theme development, the right apps, payments and shipping.</p></li>
+      <li class="reveal"><span class="proc-n">04</span><h3>Launch & train</h3><p>Testing, go-live, and showing your team how to run it.</p></li>
+    </ol>
+  </div></section>
 
   <!-- TESTIMONIALS (shared marquee — testimonials.css / testimonials.js) -->
   <section class="talt testi-wall" id="testiWall">
@@ -108,6 +320,33 @@
     </div>
   </div>
 
+  <section class="plat-compare"><div class="wrap">
+    <div class="pc-head reveal"><span class="eyebrow">Not sure which?</span><h2>Pick the right platform</h2></div>
+    <div class="pc-grid">
+      <div class="pc-card is-this reveal"><span class="pc-here">You&#39;re here</span><img class="pc-ic" src="https://cdn.simpleicons.org/shopify/5e8e3e" alt=""><h3>Shopify</h3><p>Best for selling products online — secure, low-maintenance stores.</p><span class="pc-go">You&#39;re on this page</span></div>
+      <a class="pc-card reveal" href="webflow.html"><img class="pc-ic" src="https://cdn.simpleicons.org/webflow/4353ff" alt=""><h3>Webflow</h3><p>Best for design-led marketing & brand sites with smooth motion.</p><span class="pc-go">Explore Webflow <i>&#8594;</i></span></a>
+      <a class="pc-card reveal" href="wordpress.html"><img class="pc-ic" src="https://cdn.simpleicons.org/wordpress/21759b" alt=""><h3>WordPress</h3><p>Best for content-heavy sites, blogs & flexible WooCommerce.</p><span class="pc-go">Explore WordPress <i>&#8594;</i></span></a>
+    </div>
+  </div></section>
+
+  <!-- platform FAQ (homepage 2-column style) -->
+  <section class="faq" id="faq"><div class="wrap">
+    <div class="faq-grid">
+      <aside class="faq-aside reveal">
+        <span class="faq-eyebrow"><span class="dot"></span>FAQ</span>
+        <h2 class="sec-head">Shopify questions</h2>
+        <p>Everything worth knowing before we build your store. Still unsure? Ask us directly — it's free.</p>
+        <a href="contact.html" class="btn"><span class="dot"></span>Book a free consultation</a>
+      </aside>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item reveal"><div class="faq-q">Can I manage the store myself after launch?<span class="ic" aria-hidden="true">+</span></div><div class="faq-a"><p>Yes — Shopify is built for it. We set everything up and show you how to add products, run promos and edit pages without touching code.</p></div></div>
+        <div class="faq-item reveal"><div class="faq-q">Do you migrate from another platform?<span class="ic" aria-hidden="true">+</span></div><div class="faq-a"><p>We migrate stores from WooCommerce, Wix, Squarespace and others — products, content and (where possible) your URLs, so you keep your SEO.</p></div></div>
+        <div class="faq-item reveal"><div class="faq-q">How long does a Shopify store take?<span class="ic" aria-hidden="true">+</span></div><div class="faq-a"><p>Most stores take about 2–4 weeks depending on the number of products and features. We confirm the exact timeline in your written proposal.</p></div></div>
+        <div class="faq-item reveal"><div class="faq-q">Which apps and integrations do you set up?<span class="ic" aria-hidden="true">+</span></div><div class="faq-a"><p>Whatever your store needs — email, reviews, subscriptions, shipping and analytics. We keep the stack lean so the store stays fast.</p></div></div>
+      </div>
+    </div>
+  </div></section>
+
   <section class="cta-strip">
     <div class="wrap">
       <div class="ctaC reveal r-scale">
@@ -130,6 +369,10 @@
 
   <footer id="footer">
     <div class="wrap">
+      <div class="foot-cta">
+        <h2>Let's build a store <em>worth selling on.</em></h2>
+        <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+      </div>
       <div class="foot-top">
         <div class="foot-brand">
           <div class="logo">KNB<i class="lgdot"></i></div>

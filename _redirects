@@ -1,0 +1,10 @@
+# Clean URLs — strip the .html extension (Netlify serves /contact from contact.html)
+/index.html        /            301!
+/portfolio.html    /portfolio   301!
+/pricing.html      /pricing     301!
+/about.html        /about       301!
+/contact.html      /contact     301!
+/shopify.html      /shopify     301!
+/webflow.html      /webflow     301!
+/wordpress.html    /wordpress   301!
+/case-study.html   /case-study  301!

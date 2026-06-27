@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Card Alternatives - KNB Web Solution</title>
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f3ef;
+  --ink: #111110;
+  --muted: #6d6c66;
+  --line: #dedcd4;
+  --card: #fff;
+  --pink: #e83fa0;
+  --green: #6cf09a;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --c1: #7fb85b;
+  --c2: #5a8a37;
+  --accent: #5e8e3e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: clip; scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  font-family: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 20%), rgba(232,63,160,0.12), transparent 30vw),
+    var(--bg);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(17,17,16,0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,17,16,0.065) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.9) 54%, transparent 100%);
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(232,63,160,0.55) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(108,240,154,0.38) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle, rgba(17,17,16,0.22) 0 1.4px, transparent 2.4px);
+  background-position: 7vw 18vh, 73vw 11vh, 84vw 70vh;
+  background-size: 420px 360px, 520px 460px, 480px 420px;
+  opacity: 0.42;
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; }
+button, textarea { font: inherit; }
+.wrap { width: min(1240px, calc(100% - 48px)); margin: 0 auto; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.topbar {
+  position: sticky;
+  top: 18px;
+  z-index: 50;
+  margin-top: 18px;
+}
+.topbar-in {
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid rgba(222,220,212,0.78);
+  border-radius: 100px;
+  background: rgba(244,243,239,0.68);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  padding: 0 10px 0 20px;
+  box-shadow: 0 18px 44px rgba(17,17,16,0.07);
+}
+.logo {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+.logo .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  margin: 0 0 4px 2px;
+}
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.pill-link, .copy-btn {
+  border: 1px solid rgba(17,17,16,0.12);
+  background: rgba(255,255,255,0.54);
+  color: var(--ink);
+  border-radius: 100px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.pill-link:hover, .copy-btn:hover { transform: translateY(-2px); background: var(--ink); color: var(--bg); }
+
+.hero {
+  position: relative;
+  min-height: 84vh;
+  display: grid;
+  align-items: center;
+  padding: 78px 0 60px;
+}
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+.hero-kicker::before, .hero-kicker::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+.hero h1 {
+  margin: 24px auto 0;
+  max-width: 1120px;
+  text-align: center;
+  font-size: clamp(58px, 11vw, 146px);
+  line-height: 0.86;
+  letter-spacing: -0.075em;
+  font-weight: 500;
+}
+.hero-lead {
+  max-width: 720px;
+  margin: 28px auto 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.45;
+}
+.platform-switch {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+.platform-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.58);
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.28s var(--ease), background 0.28s var(--ease), color 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+.platform-btn img { width: 18px; height: 18px; }
+.platform-btn:hover { transform: translateY(-2px); color: var(--ink); }
+.platform-btn.active {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.quick-stack {
+  position: relative;
+  height: 390px;
+  margin: 52px auto 0;
+  max-width: 930px;
+  perspective: 900px;
+}
+.ghost-card {
+  position: absolute;
+  top: 38px;
+  width: 240px;
+  height: 300px;
+  border-radius: 16px;
+  background: linear-gradient(155deg, var(--g1), var(--g2));
+  box-shadow: 0 30px 80px rgba(17,17,16,0.14);
+  opacity: 0.8;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.ghost-card::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 22px;
+  bottom: 26px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.ghost-card::after {
+  content: "";
+  position: absolute;
+  width: 130%;
+  aspect-ratio: 1;
+  right: -44%;
+  bottom: -34%;
+  background: var(--wm) center / contain no-repeat;
+  opacity: 0.16;
+}
+.ghost-card:nth-child(1) { --g1:#5169ff; --g2:#2d40d6; --wm:url("https://cdn.simpleicons.org/webflow/ffffff"); left: 0; transform: rotate(-5deg) translateZ(-30px); }
+.ghost-card:nth-child(2) { --g1:#7fb85b; --g2:#5a8a37; --wm:url("https://cdn.simpleicons.org/shopify/ffffff"); left: calc(50% - 120px); top: 8px; opacity: 1; transform: translateZ(40px); }
+.ghost-card:nth-child(3) { --g1:#2b85ac; --g2:#1c5e7e; --wm:url("https://cdn.simpleicons.org/wordpress/ffffff"); right: 0; transform: rotate(5deg) translateZ(-30px); }
+
+.section-head {
+  padding: 92px 0 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: end;
+}
+.section-head h2 {
+  max-width: 760px;
+  font-size: clamp(42px, 7vw, 84px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  font-weight: 520;
+}
+.section-note {
+  max-width: 370px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.concept-list {
+  display: grid;
+  gap: 26px;
+  padding-bottom: 90px;
+}
+.concept {
+  --rx: 0deg;
+  --ry: 0deg;
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: minmax(290px, 0.78fr) minmax(360px, 1.22fr);
+  gap: 28px;
+  align-items: stretch;
+  border-top: 1px solid rgba(17,17,16,0.13);
+  padding: 28px 0 0;
+}
+.concept-copy {
+  position: sticky;
+  top: 112px;
+  align-self: start;
+  padding: 26px 0 0;
+}
+.num {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.55);
+  color: var(--muted);
+  font-weight: 800;
+}
+.concept h3 {
+  margin-top: 28px;
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  font-weight: 560;
+}
+.concept-copy p {
+  margin-top: 16px;
+  color: var(--muted);
+  max-width: 36ch;
+  font-size: 15.5px;
+  line-height: 1.45;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+.tags span {
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.48);
+  color: #44433f;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.stage {
+  position: relative;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  border: 1px solid rgba(222,220,212,0.78);
+  background:
+    radial-gradient(circle at 26% 18%, rgba(255,255,255,0.78), transparent 22%),
+    linear-gradient(135deg, rgba(255,255,255,0.58), rgba(255,255,255,0.20));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+  overflow: hidden;
+  perspective: 900px;
+}
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(17,17,16,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,17,16,0.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(circle at 50% 50%, #000, transparent 78%);
+}
+.stage::after {
+  content: attr(data-title);
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  color: rgba(17,17,16,0.08);
+  font-size: clamp(54px, 8vw, 110px);
+  line-height: 0.8;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  pointer-events: none;
+}
+.shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 64px;
+  width: 300px;
+  height: 86px;
+  border-radius: 50%;
+  background: rgba(17,17,16,0.24);
+  filter: blur(30px);
+  transform: translateX(-50%);
+  opacity: 0.35;
+  transition: transform 0.7s var(--ease), opacity 0.7s var(--ease);
+}
+.concept:hover .shadow,
+.concept.is-active .shadow {
+  transform: translateX(-50%) scale(0.82);
+  opacity: 0.22;
+}
+
+.demo-card {
+  position: relative;
+  z-index: 2;
+  width: min(330px, 70vw);
+  height: 414px;
+  border-radius: 16px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.8s var(--ease);
+}
+.concept:hover .demo-card,
+.concept.is-active .demo-card {
+  transform: rotateX(calc(var(--rx) * 0.4)) rotateY(calc(var(--ry) * 0.4));
+}
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  color: #fff;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--c1), var(--c2));
+  border: 1px solid rgba(255,255,255,0.26);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.face::before {
+  content: "";
+  position: absolute;
+  width: 135%;
+  aspect-ratio: 1;
+  right: -42%;
+  bottom: -30%;
+  background: var(--icon-url) center / contain no-repeat;
+  opacity: 0.15;
+}
+.face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(105deg, rgba(255,255,255,0.24), transparent 25%, transparent 72%, rgba(0,0,0,0.18)),
+    radial-gradient(circle at 24% 18%, rgba(255,255,255,0.24), transparent 26%);
+  mix-blend-mode: screen;
+}
+.brand-badge {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.36);
+  background: rgba(255,255,255,0.15);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.brand-badge img { width: 31px; height: 31px; }
+.stars {
+  position: absolute;
+  top: 24px;
+  right: 22px;
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 100px;
+  background: rgba(0,0,0,0.17);
+  padding: 6px 12px;
+  color: #ffd66b;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+.front-title {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 32px;
+}
+.front-title b {
+  display: block;
+  font-size: 36px;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+.front-title span {
+  display: block;
+  margin-top: 12px;
+  max-width: 22ch;
+  color: rgba(255,255,255,0.86);
+  font-size: 14px;
+  font-weight: 600;
+}
+.back-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px 26px;
+}
+.kicker {
+  align-self: flex-start;
+  border: 1px solid rgba(255,255,255,0.32);
+  border-radius: 100px;
+  background: rgba(0,0,0,0.16);
+  padding: 6px 11px;
+  color: rgba(255,255,255,0.8);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.back-content h4 {
+  margin-top: 12px;
+  font-size: 25px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 750;
+}
+.back-content ul {
+  display: grid;
+  gap: 10px;
+  margin-top: 2px;
+  list-style: none;
+}
+.back-content li {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  font-weight: 700;
+}
+.back-content li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffd66b;
+  box-shadow: 0 0 0 4px rgba(255,214,107,0.18);
+}
+.mini-cta {
+  margin-top: auto;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+/* Alternative 1 */
+.alt-1 .flip-body {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.95s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.alt-1 .back { transform: rotateY(180deg); }
+.alt-1 .edge {
+  position: absolute;
+  top: 8px;
+  right: -9px;
+  bottom: 8px;
+  width: 18px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.28), rgba(255,255,255,0.36), rgba(0,0,0,0.18));
+  opacity: 0;
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  transition: opacity 0.2s ease;
+}
+.concept:hover .alt-1 .flip-body,
+.concept.is-active .alt-1 .flip-body { transform: rotateY(180deg) rotateX(1.5deg); }
+.concept:hover .alt-1 .edge,
+.concept.is-active .alt-1 .edge { opacity: 0.8; }
+
+/* Alternative 2 */
+.alt-2 { transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(0); }
+.alt-2 .base {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(155deg, var(--c1), var(--c2));
+  overflow: hidden;
+  color: #fff;
+}
+.alt-2 .base::before {
+  content: "";
+  position: absolute;
+  width: 138%;
+  aspect-ratio: 1;
+  right: -44%;
+  bottom: -34%;
+  background: var(--icon-url) center / contain no-repeat;
+  opacity: 0.14;
+}
+.alt-2 .panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--c1), var(--c2));
+  transition: transform 0.86s cubic-bezier(0.65, 0, 0.35, 1), filter 0.86s cubic-bezier(0.65, 0, 0.35, 1);
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.alt-2 .panel.left {
+  left: 0;
+  border-radius: 16px 0 0 16px;
+  transform-origin: left center;
+}
+.alt-2 .panel.right {
+  right: 0;
+  border-radius: 0 16px 16px 0;
+  transform-origin: right center;
+}
+.alt-2 .panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.08);
+}
+.alt-2 .panel-content {
+  position: absolute;
+  inset: 0;
+  width: 200%;
+}
+.alt-2 .panel.right .panel-content { right: 0; }
+.alt-2 .hinge {
+  position: absolute;
+  inset: 10px auto 10px 50%;
+  width: 1px;
+  background: rgba(255,255,255,0.34);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+  opacity: 0.65;
+  transform: translateX(-50%);
+}
+.concept:hover .alt-2 .panel.left,
+.concept.is-active .alt-2 .panel.left {
+  transform: rotateY(-72deg);
+  filter: brightness(0.88);
+}
+.concept:hover .alt-2 .panel.right,
+.concept.is-active .alt-2 .panel.right {
+  transform: rotateY(72deg);
+  filter: brightness(0.82);
+}
+
+/* Alternative 3 */
+.alt-3 .layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform 0.78s var(--ease), opacity 0.78s var(--ease), filter 0.78s var(--ease);
+}
+.alt-3 .layer:nth-child(1) { transform: translateZ(32px); }
+.alt-3 .layer:nth-child(2) {
+  transform: translateZ(10px) translate(8px, 8px);
+  opacity: 0.75;
+  filter: saturate(0.85);
+}
+.alt-3 .layer:nth-child(3) {
+  transform: translateZ(-12px) translate(16px, 16px);
+  opacity: 0.45;
+  filter: saturate(0.7);
+}
+.alt-3 .blueprint {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(155deg, var(--c1), var(--c2)),
+    linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px);
+  background-blend-mode: normal, screen, screen;
+  background-size: auto, 28px 28px, 28px 28px;
+  color: #fff;
+  overflow: hidden;
+}
+.alt-3 .blueprint::before {
+  content: "";
+  position: absolute;
+  width: 135%;
+  aspect-ratio: 1;
+  right: -42%;
+  bottom: -30%;
+  background: var(--icon-url) center / contain no-repeat;
+  opacity: 0.12;
+}
+.alt-3 .blueprint .back-content { opacity: 0; transform: translateY(20px); transition: opacity 0.45s var(--ease), transform 0.45s var(--ease); }
+.concept:hover .alt-3 .layer:nth-child(1),
+.concept.is-active .alt-3 .layer:nth-child(1) { transform: translateZ(48px) rotateY(-18deg) translateX(-24px); }
+.concept:hover .alt-3 .layer:nth-child(2),
+.concept.is-active .alt-3 .layer:nth-child(2) { transform: translateZ(14px) rotateY(-8deg) translate(16px, 12px); opacity: 0.65; }
+.concept:hover .alt-3 .layer:nth-child(3),
+.concept.is-active .alt-3 .layer:nth-child(3) { transform: translateZ(-24px) rotateY(6deg) translate(34px, 22px); opacity: 1; filter: saturate(1); }
+.concept:hover .alt-3 .blueprint .back-content,
+.concept.is-active .alt-3 .blueprint .back-content { opacity: 1; transform: none; transition-delay: 0.18s; }
+
+/* Alternative 4 */
+.alt-4 {
+  transform-style: preserve-3d;
+}
+.alt-4 .cube {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.alt-4 .cube-face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  color: #fff;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--c1), var(--c2));
+  border: 1px solid rgba(255,255,255,0.24);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.alt-4 .cube-front { transform: translateZ(23px); }
+.alt-4 .cube-back { transform: rotateX(-90deg) translateZ(207px) translateY(-184px); }
+.alt-4 .cube-top {
+  height: 46px;
+  bottom: auto;
+  transform-origin: top center;
+  transform: rotateX(90deg) translateZ(23px);
+  background: linear-gradient(90deg, rgba(255,255,255,0.34), rgba(0,0,0,0.18));
+}
+.console-lines {
+  position: absolute;
+  inset: 106px 24px auto;
+  display: grid;
+  gap: 10px;
+}
+.console-lines span {
+  height: 10px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.24);
+}
+.console-lines span:nth-child(1) { width: 84%; }
+.console-lines span:nth-child(2) { width: 58%; }
+.console-lines span:nth-child(3) { width: 72%; }
+.mini-dashboard {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.mini-dashboard span {
+  min-height: 58px;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.13);
+  padding: 10px;
+  color: rgba(255,255,255,0.82);
+  font-size: 10px;
+  font-weight: 800;
+}
+.mini-dashboard b {
+  display: block;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.concept:hover .alt-4 .cube,
+.concept.is-active .alt-4 .cube { transform: rotateX(90deg); }
+
+/* Alternative 5 */
+.alt-5 .peel-card {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  color: #fff;
+  background: linear-gradient(155deg, var(--c1), var(--c2));
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.alt-5 .peel-card::before {
+  content: "";
+  position: absolute;
+  width: 135%;
+  aspect-ratio: 1;
+  right: -42%;
+  bottom: -30%;
+  background: var(--icon-url) center / contain no-repeat;
+  opacity: 0.15;
+}
+.alt-5 .peel-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(155deg, var(--c1), var(--c2));
+  clip-path: polygon(0 0, 100% 0, 100% 76%, 72% 100%, 0 100%);
+  transform-origin: right bottom;
+  transition: transform 0.82s cubic-bezier(0.65, 0, 0.35, 1), clip-path 0.82s cubic-bezier(0.65, 0, 0.35, 1), filter 0.82s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.alt-5 .peel-cover::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.45), rgba(0,0,0,0.22));
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+.alt-5 .peel-back {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 28px 26px;
+  background:
+    linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px),
+    linear-gradient(150deg, var(--c2), var(--c1));
+  background-size: 24px 24px, 24px 24px, auto;
+  opacity: 0.2;
+  transform: translateY(20px) scale(0.96);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.alt-5 .signature {
+  margin-top: auto;
+  display: grid;
+  gap: 8px;
+}
+.alt-5 .signature span {
+  height: 9px;
+  width: 76%;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.28);
+}
+.alt-5 .signature span:nth-child(2) { width: 48%; }
+.concept:hover .alt-5 .peel-cover,
+.concept.is-active .alt-5 .peel-cover {
+  clip-path: polygon(0 0, 100% 0, 100% 42%, 42% 100%, 0 100%);
+  transform: rotateX(5deg) rotateY(-18deg) translateZ(34px);
+  filter: brightness(0.9);
+}
+.concept:hover .alt-5 .peel-cover::after,
+.concept.is-active .alt-5 .peel-cover::after { opacity: 1; }
+.concept:hover .alt-5 .peel-back,
+.concept.is-active .alt-5 .peel-back { opacity: 1; transform: none; transition-delay: 0.18s; }
+
+.prompt-section {
+  padding: 90px 0 120px;
+  border-top: 1px solid rgba(17,17,16,0.13);
+}
+.prompt-box {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(320px, 1.28fr);
+  gap: 28px;
+  align-items: start;
+}
+.prompt-copy h2 {
+  font-size: clamp(38px, 6vw, 76px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  font-weight: 540;
+}
+.prompt-copy p {
+  max-width: 34ch;
+  margin-top: 18px;
+  color: var(--muted);
+}
+.prompt-panel {
+  border: 1px solid rgba(17,17,16,0.12);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.62);
+  box-shadow: 0 24px 70px rgba(17,17,16,0.08);
+  overflow: hidden;
+}
+.prompt-panel textarea {
+  display: block;
+  width: 100%;
+  min-height: 420px;
+  resize: vertical;
+  border: 0;
+  outline: none;
+  padding: 22px;
+  background: transparent;
+  color: #22211f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.58;
+}
+.prompt-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding: 12px;
+}
+.copy-status {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .topbar { top: 10px; }
+  .top-actions .pill-link:first-child { display: none; }
+  .quick-stack { height: 320px; }
+  .ghost-card { width: 200px; height: 250px; }
+  .ghost-card:nth-child(2) { left: calc(50% - 100px); }
+  .concept, .prompt-box, .section-head {
+    grid-template-columns: 1fr;
+  }
+  .concept-copy {
+    position: relative;
+    top: auto;
+    padding-top: 6px;
+  }
+  .stage { min-height: 500px; }
+}
+@media (max-width: 680px) {
+  .wrap { width: min(100% - 28px, 1240px); }
+  .topbar-in { height: auto; min-height: 58px; border-radius: 24px; padding: 10px 12px; align-items: flex-start; }
+  .top-actions { flex-wrap: wrap; justify-content: flex-end; }
+  .pill-link, .copy-btn, .platform-btn { font-size: 13px; padding: 9px 12px; }
+  .hero { min-height: auto; padding-top: 62px; }
+  .hero-kicker { letter-spacing: 0.22em; gap: 12px; font-size: 12px; }
+  .quick-stack { display: none; }
+  .section-head { padding-top: 60px; }
+  .concept { min-height: auto; gap: 16px; }
+  .stage { min-height: 455px; }
+  .demo-card { width: min(300px, 82vw); height: 376px; }
+  .back-content h4 { font-size: 22px; }
+  .alt-4 .cube-back { transform: rotateX(-90deg) translateZ(188px) translateY(-166px); }
+}
+@media (hover: none) {
+  .concept.is-active .alt-1 .flip-body { transform: rotateY(180deg) rotateX(1.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .concept:hover .alt-1 .flip-body,
+  .concept.is-active .alt-1 .flip-body,
+  .concept:hover .alt-4 .cube,
+  .concept.is-active .alt-4 .cube {
+    transform: none;
+  }
+}
+</style>
+</head>
+<body>
+  <header class="topbar wrap">
+    <div class="topbar-in">
+      <a class="logo" href="index.html" aria-label="Back to homepage"><span>K</span><span>N</span><span>B</span><span class="dot"></span></a>
+      <div class="top-actions">
+        <a class="pill-link" href="index.html">Homepage</a>
+        <a class="pill-link" href="#prompt">Prompt</a>
+        <a class="pill-link" href="#alternatives">Alternatives</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div>
+        <p class="hero-kicker">Design Build Convert</p>
+        <h1>Hero card interaction alternatives.</h1>
+        <p class="hero-lead">Five richer directions for the homepage platform card hover. Use the platform pills to recolor every concept, then hover or tap each preview.</p>
+        <div class="platform-switch" role="group" aria-label="Choose preview platform">
+          <button class="platform-btn active" type="button" data-platform="shopify"><img alt="" src="https://cdn.simpleicons.org/shopify/ffffff">Shopify</button>
+          <button class="platform-btn" type="button" data-platform="webflow"><img alt="" src="https://cdn.simpleicons.org/webflow/4353ff">Webflow</button>
+          <button class="platform-btn" type="button" data-platform="wordpress"><img alt="" src="https://cdn.simpleicons.org/wordpress/21759b">WordPress</button>
+        </div>
+        <div class="quick-stack" aria-hidden="true">
+          <div class="ghost-card" data-label="Webflow"></div>
+          <div class="ghost-card" data-label="Shopify"></div>
+          <div class="ghost-card" data-label="WordPress"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="alternatives">
+      <div class="section-head">
+        <h2>Five possible upgrades.</h2>
+        <p class="section-note">These are intentionally overbuilt so the strongest behavior can be pulled into the real hero later.</p>
+      </div>
+
+      <div class="concept-list">
+        <article class="concept">
+          <div class="concept-copy">
+            <span class="num">01</span>
+            <h3>Physical edge flip</h3>
+            <p>A cleaner version of the current idea: full card body rotates, edge catches light, and the back keeps the current compact service summary.</p>
+            <div class="tags"><span>Closest to current</span><span>3D edge</span><span>Low risk</span></div>
+          </div>
+          <div class="stage" data-title="EDGE">
+            <span class="shadow"></span>
+            <div class="demo-card alt-1">
+              <div class="flip-body">
+                <div class="face front">
+                  <span class="brand-badge"><img class="brand-icon" alt=""></span>
+                  <span class="stars">★★★★★</span>
+                  <p class="front-title"><b class="brand-name">Shopify</b><span class="brand-desc">Store revamps and ecommerce builds</span></p>
+                </div>
+                <div class="face back">
+                  <div class="back-content">
+                    <span class="kicker">Best for</span>
+                    <h4 class="best-copy">Online stores that need cleaner product pages and easier checkout.</h4>
+                    <ul class="bullet-list"></ul>
+                    <span class="mini-cta">View work -></span>
+                  </div>
+                </div>
+                <span class="edge"></span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="concept">
+          <div class="concept-copy">
+            <span class="num">02</span>
+            <h3>Split-door reveal</h3>
+            <p>The front opens from the center like two hinged panels. It feels more premium and reveals the back without a full 180-degree spin.</p>
+            <div class="tags"><span>High clarity</span><span>Hinged panels</span><span>Less dizzy</span></div>
+          </div>
+          <div class="stage" data-title="SPLIT">
+            <span class="shadow"></span>
+            <div class="demo-card alt-2">
+              <div class="base">
+                <div class="back-content">
+                  <span class="kicker">Inside the build</span>
+                  <h4 class="best-copy">Online stores that need cleaner product pages and easier checkout.</h4>
+                  <ul class="bullet-list"></ul>
+                  <span class="mini-cta">Open platform work -></span>
+                </div>
+              </div>
+              <div class="panel left"><div class="panel-content"><span class="brand-badge"><img class="brand-icon" alt=""></span><p class="front-title"><b class="brand-name">Shopify</b><span class="brand-desc">Store revamps and ecommerce builds</span></p></div></div>
+              <div class="panel right"><div class="panel-content"><span class="stars">★★★★★</span></div></div>
+              <span class="hinge"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="concept">
+          <div class="concept-copy">
+            <span class="num">03</span>
+            <h3>Layered blueprint stack</h3>
+            <p>The card separates into layers: brand surface, service layer, and blueprint back. It makes the build feel technical without leaving the playful hero style.</p>
+            <div class="tags"><span>Most complex</span><span>Layered motion</span><span>Technical feel</span></div>
+          </div>
+          <div class="stage" data-title="LAYERS">
+            <span class="shadow"></span>
+            <div class="demo-card alt-3">
+              <div class="layer">
+                <div class="face front">
+                  <span class="brand-badge"><img class="brand-icon" alt=""></span>
+                  <span class="stars">★★★★★</span>
+                  <p class="front-title"><b class="brand-name">Shopify</b><span class="brand-desc">Store revamps and ecommerce builds</span></p>
+                </div>
+              </div>
+              <div class="layer"><div class="face"></div></div>
+              <div class="layer">
+                <div class="blueprint">
+                  <div class="back-content">
+                    <span class="kicker">Build map</span>
+                    <h4 class="best-copy">Online stores that need cleaner product pages and easier checkout.</h4>
+                    <ul class="bullet-list"></ul>
+                    <span class="mini-cta">Review scope -></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="concept">
+          <div class="concept-copy">
+            <span class="num">04</span>
+            <h3>Command cube</h3>
+            <p>A cube-like rotation: the front folds upward into a back-facing command panel with proof chips and service stats. Strongest for a more digital/product feel.</p>
+            <div class="tags"><span>Dashboard energy</span><span>Cube turn</span><span>Proof-forward</span></div>
+          </div>
+          <div class="stage" data-title="CUBE">
+            <span class="shadow"></span>
+            <div class="demo-card alt-4">
+              <div class="cube">
+                <div class="cube-face cube-front">
+                  <span class="brand-badge"><img class="brand-icon" alt=""></span>
+                  <span class="stars">★★★★★</span>
+                  <div class="console-lines"><span></span><span></span><span></span></div>
+                  <p class="front-title"><b class="brand-name">Shopify</b><span class="brand-desc">Store revamps and ecommerce builds</span></p>
+                </div>
+                <div class="cube-face cube-back">
+                  <div class="back-content">
+                    <span class="kicker">Command panel</span>
+                    <h4 class="best-copy">Online stores that need cleaner product pages and easier checkout.</h4>
+                    <div class="mini-dashboard"><span><b>01</b>Plan</span><span><b>02</b>Build</span><span><b>03</b>Launch</span></div>
+                    <span class="mini-cta">View workflow -></span>
+                  </div>
+                </div>
+                <div class="cube-face cube-top"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="concept">
+          <div class="concept-copy">
+            <span class="num">05</span>
+            <h3>Peel-back brief</h3>
+            <p>The card behaves like a project brief: the front corner peels and exposes a gridded service sheet underneath. More editorial, less literal card flip.</p>
+            <div class="tags"><span>Editorial</span><span>Memorable</span><span>Less expected</span></div>
+          </div>
+          <div class="stage" data-title="PEEL">
+            <span class="shadow"></span>
+            <div class="demo-card alt-5">
+              <div class="peel-card">
+                <div class="peel-back">
+                  <div class="back-content">
+                    <span class="kicker">Project brief</span>
+                    <h4 class="best-copy">Online stores that need cleaner product pages and easier checkout.</h4>
+                    <ul class="bullet-list"></ul>
+                    <div class="signature"><span></span><span></span></div>
+                  </div>
+                </div>
+                <div class="peel-cover">
+                  <span class="brand-badge"><img class="brand-icon" alt=""></span>
+                  <span class="stars">★★★★★</span>
+                  <p class="front-title"><b class="brand-name">Shopify</b><span class="brand-desc">Store revamps and ecommerce builds</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="prompt-section wrap" id="prompt">
+      <div class="prompt-box">
+        <div class="prompt-copy">
+          <h2>Copy-paste prompt.</h2>
+          <p>Use this if you want to ask for another full pass from scratch. It describes the design target, constraints, and expected output.</p>
+        </div>
+        <div class="prompt-panel">
+          <textarea id="promptText" spellcheck="false">We are improving the KNB Web Solution homepage hero platform cards. The site is a static HTML/CSS/JS marketing website for a Philippines-based web design and development agency. The homepage uses an off-white grid background (#f4f3ef), near-black ink (#111110), pink accent (#e83fa0), green status dot (#6cf09a), Satoshi font, oversized editorial type, floating platform cards, subtle particles, and a playful but premium design language.
+
+Current hero concept:
+- Three platform cards: Webflow left, Shopify center, WordPress right.
+- Cards are colorful platform gradients with large translucent platform watermark logos.
+- Cards float and tilt, spread across the KNB Web Solution headline, and lift above the headline on hover.
+- Each card links to its platform work page.
+- Front shows platform logo, star badge, slot availability, name, short description, feature icons, and View work CTA.
+- Hover currently explores a back-of-card reveal with "Best for", short fit sentence, three bullets, and CTA.
+
+Goal:
+Create five significantly better alternatives for the hover/tap interaction of these platform cards. Do not make tiny variations. Each alternative should be a distinct interaction direction with a clear design reason. Make the ideas complex, polished, and aligned with the existing homepage. The output should be a standalone preview page, not a vague explanation.
+
+Design requirements:
+- Keep the KNB homepage visual language: off-white grid, large editorial headings, colorful platform cards, Satoshi font, restrained black/pink/green accents, platform-specific blue/green/teal gradients.
+- Do not use generic landing-page cards or stock-looking UI.
+- Avoid clutter, fake pricing, sales guarantees, and fabricated metrics.
+- Use Shopify, Webflow, and WordPress as switchable platform states if possible.
+- The interactions should feel premium and physical: real perspective, transform-style preserve-3d, backface visibility, lighting, edge thickness, grounded shadows, and smooth easing.
+- Include reduced-motion fallbacks.
+- Make hover work on desktop and tap/click work on touch.
+- Make sure text fits inside the cards at desktop and mobile widths.
+- Keep the page static: pure HTML, CSS, and vanilla JS. No build step.
+
+Create these five alternatives:
+1. A physical edge flip where the full card body rotates with a visible side edge, face lighting, and clean back content.
+2. A split-door reveal where the front opens from the center as two hinged panels and reveals the service summary inside.
+3. A layered blueprint stack where the card separates into multiple depth layers and reveals a technical build map.
+4. A command-cube card where the card rotates like a cube into a dashboard/proof panel.
+5. A peel-back project brief where the front corner folds away and reveals a gridded service sheet underneath.
+
+For each alternative include:
+- A large interactive preview card.
+- A short concept name.
+- A short design rationale.
+- Tags describing strengths.
+- Platform-colored styling.
+- Front and back content that could realistically fit the KNB homepage.
+
+Also include a final recommendation: which option should replace the current homepage card interaction and why. Prioritize the solution that feels premium, clear, smooth, and not distracting from the main CTA.</textarea>
+          <div class="prompt-tools">
+            <span class="copy-status" id="copyStatus">Prompt ready</span>
+            <button class="copy-btn" type="button" id="copyPrompt">Copy prompt</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<script>
+const PLATFORM = {
+  shopify: {
+    name: "Shopify",
+    desc: "Store revamps and ecommerce builds",
+    icon: "https://cdn.simpleicons.org/shopify/ffffff",
+    iconColor: "https://cdn.simpleicons.org/shopify/5e8e3e",
+    c1: "#7fb85b",
+    c2: "#5a8a37",
+    accent: "#5e8e3e",
+    best: "Online stores that need cleaner product pages and easier checkout.",
+    bullets: ["Store setup or revamp", "Products, collections, and apps", "Payments, checkout, launch support"]
+  },
+  webflow: {
+    name: "Webflow",
+    desc: "Custom, modern website design",
+    icon: "https://cdn.simpleicons.org/webflow/ffffff",
+    iconColor: "https://cdn.simpleicons.org/webflow/4353ff",
+    c1: "#5169ff",
+    c2: "#2d40d6",
+    accent: "#4353ff",
+    best: "Polished marketing sites your team can edit without code.",
+    bullets: ["Custom visual design", "Responsive Webflow build", "CMS, SEO, and launch setup"]
+  },
+  wordpress: {
+    name: "WordPress",
+    desc: "WooCommerce and business sites",
+    icon: "https://cdn.simpleicons.org/wordpress/ffffff",
+    iconColor: "https://cdn.simpleicons.org/wordpress/21759b",
+    c1: "#2b85ac",
+    c2: "#1c5e7e",
+    accent: "#21759b",
+    best: "Business sites and shops that need easy content control.",
+    bullets: ["WordPress setup or rebuild", "Pages, blog, and WooCommerce", "SEO basics, security, care plan"]
+  }
+};
+
+const root = document.documentElement;
+const buttons = [...document.querySelectorAll(".platform-btn")];
+const cards = [...document.querySelectorAll(".demo-card")];
+
+function setPlatform(key) {
+  const data = PLATFORM[key];
+  root.style.setProperty("--c1", data.c1);
+  root.style.setProperty("--c2", data.c2);
+  root.style.setProperty("--accent", data.accent);
+  root.style.setProperty("--icon-url", `url("${data.icon}")`);
+  buttons.forEach(btn => btn.classList.toggle("active", btn.dataset.platform === key));
+  buttons.forEach(btn => {
+    const platform = PLATFORM[btn.dataset.platform];
+    btn.querySelector("img").src = btn.dataset.platform === key ? platform.icon : platform.iconColor;
+  });
+
+  document.querySelectorAll(".brand-name").forEach(el => { el.textContent = data.name; });
+  document.querySelectorAll(".brand-desc").forEach(el => { el.textContent = data.desc; });
+  document.querySelectorAll(".brand-icon").forEach(img => { img.src = data.icon; img.alt = ""; });
+  document.querySelectorAll(".best-copy").forEach(el => { el.textContent = data.best; });
+  document.querySelectorAll(".bullet-list").forEach(list => {
+    list.innerHTML = data.bullets.map(item => `<li>${item}</li>`).join("");
+  });
+}
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => setPlatform(btn.dataset.platform));
+});
+
+document.addEventListener("pointermove", (event) => {
+  root.style.setProperty("--mx", `${event.clientX}px`);
+  root.style.setProperty("--my", `${event.clientY}px`);
+});
+
+document.querySelectorAll(".concept").forEach(concept => {
+  concept.addEventListener("pointermove", (event) => {
+    const stage = concept.querySelector(".stage");
+    const rect = stage.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    concept.style.setProperty("--ry", `${x * 8}deg`);
+    concept.style.setProperty("--rx", `${y * -7}deg`);
+  });
+  concept.addEventListener("pointerleave", () => {
+    concept.style.setProperty("--ry", "0deg");
+    concept.style.setProperty("--rx", "0deg");
+  });
+  concept.addEventListener("click", (event) => {
+    if (event.target.closest("button, a, textarea")) return;
+    concept.classList.toggle("is-active");
+  });
+});
+
+const copyButton = document.getElementById("copyPrompt");
+const promptText = document.getElementById("promptText");
+const copyStatus = document.getElementById("copyStatus");
+copyButton.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(promptText.value);
+    copyStatus.textContent = "Copied";
+  } catch (error) {
+    promptText.focus();
+    promptText.select();
+    copyStatus.textContent = "Select and copy manually";
+  }
+  window.setTimeout(() => { copyStatus.textContent = "Prompt ready"; }, 1800);
+});
+
+setPlatform("shopify");
+</script>
+</body>
+</html>

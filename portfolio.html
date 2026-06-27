@@ -12,12 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Portfolio — KNB Web Solution</title>
 <meta name="description" content="Websites and online stores KNB Web Solution has designed and built — Shopify revamps, Webflow sites, and WordPress / WooCommerce builds for growing businesses. Filter the work by platform.">
-<link rel="canonical" href="https://knb-solutions.netlify.app/portfolio.html">
+<link rel="canonical" href="https://knb-solutions.netlify.app/portfolio">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KNB Web Solution">
 <meta property="og:title" content="Portfolio — KNB Web Solution">
 <meta property="og:description" content="Websites and online stores KNB Web Solution has designed and built — Shopify revamps, Webflow sites, and WordPress / WooCommerce builds for growing businesses. Filter the work by platform.">
-<meta property="og:url" content="https://knb-solutions.netlify.app/portfolio.html">
+<meta property="og:url" content="https://knb-solutions.netlify.app/portfolio">
 <meta property="og:image" content="https://knb-solutions.netlify.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Portfolio — KNB Web Solution">
@@ -45,8 +45,8 @@
   .ind-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   /* modal prev / next */
   .pfm-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,0.92); color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 0.25s, transform 0.25s; }
-  .pfm-prev { left: -23px; } .pfm-next { right: -23px; }
-  .pfm-nav:hover { background: #fff; transform: translateY(-50%) scale(1.06); }
+  .pfm-prev { left: 14px; } .pfm-next { right: 14px; }
+  .pfm-nav:hover { background: #fff; transform: translateY(-50%) scale(1.06); box-shadow: 0 8px 22px rgba(0,0,0,0.16); }
   @media (max-width: 860px) { .pfm-prev { left: 8px; } .pfm-next { right: 8px; } }
   /* modal share + actions wrap */
   .pfm-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
@@ -69,15 +69,30 @@
   <main>
 
   <!-- HERO -->
-  <header id="main" class="page-hero">
+  <header id="main" class="page-hero hero-split" style="--pcol:#111110;">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-grid-spot" id="gridSpot" aria-hidden="true"></div>
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
     <div class="wrap">
-      <div class="eyebrow reveal">Our work</div>
-      <h1 class="reveal">Websites &amp; stores we've built.</h1>
-      <p class="lead reveal">Shopify revamps, Webflow builds, and WordPress sites for growing businesses — filter the work below or dive into a platform.</p>
-      <div class="pf-stats reveal">
-        <div class="pf-stat"><span class="num" data-count="44">0</span><span class="lbl">Projects shipped</span></div>
-        <div class="pf-stat"><span class="num" data-count="3">0</span><span class="lbl">Platforms</span></div>
-        <div class="pf-stat"><span class="num" data-count="12" data-suffix="+">0</span><span class="lbl">Industries served</span></div>
+      <div class="hero-copy">
+        <div class="eyebrow reveal">Our work</div>
+        <h1 class="reveal">Websites &amp; stores we've built.</h1>
+        <p class="lead reveal">Shopify revamps, Webflow builds, and WordPress sites for growing businesses — filter the work below or dive into a platform.</p>
+        <div class="pf-stats reveal">
+          <div class="pf-stat"><span class="num" data-count="44">0</span><span class="lbl">Projects shipped</span></div>
+          <div class="pf-stat"><span class="num" data-count="3">0</span><span class="lbl">Platforms</span></div>
+          <div class="pf-stat"><span class="num" data-count="12" data-suffix="+">0</span><span class="lbl">Industries served</span></div>
+        </div>
+      </div>
+      <div class="hero-mock hero-stack reveal r-right" aria-hidden="true">
+        <div class="bw bw-back">
+          <div class="bw-bar"><span></span><span></span><span></span><b>feedbird.com</b></div>
+          <div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=820" alt=""></div>
+        </div>
+        <div class="bw bw-front">
+          <div class="bw-bar"><span></span><span></span><span></span><b>lightmybricks.com</b></div>
+          <div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=820" alt=""></div>
+        </div>
       </div>
     </div>
   </header>
