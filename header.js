@@ -46,7 +46,7 @@
               </div>
             </div>
           </div>
-          <a href="pricing.html"${act('pricing')}>Pricing</a>
+          <a href="pricing.html"${act('pricing')}>Packages</a>
           <a href="about.html"${act('about')}>About</a>
           <a href="contact.html"${act('contact')}>Contact</a>
         </div>
@@ -58,7 +58,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="portfolio.html">Portfolio</a>
     <div class="mm-plats"><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
-    <a href="pricing.html">Pricing</a>
+    <a href="pricing.html">Packages</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
     <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions &#8594;</a>
