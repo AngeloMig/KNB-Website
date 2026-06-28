@@ -257,16 +257,25 @@
     background: var(--dot-color, #e83fa0);
   }
   .hero h1 {
-    font-size: clamp(46px, 9vw, 128px);
-    line-height: 0.96;
-    letter-spacing: -0.035em;
+    font-size: clamp(29px, 4.9vw, 58px);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
     font-weight: 500;
-    margin: 22px auto 0;
-    max-width: 16ch;
+    margin: 18px auto 0;
+    max-width: 22ch;
     align-self: center;
     text-align: center;
     position: relative;
     z-index: 2;
+  }
+  .hero-micro {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 14px 0 0;
+    max-width: 48ch;
+    text-transform: none;
+    letter-spacing: normal;
   }
   .hero h1 .hword { display: inline-block; white-space: nowrap; }
   .hero h1 .hch { display: inline-block; will-change: transform; }
@@ -1028,8 +1037,40 @@
 
   /* ---------- STATS ---------- */
   .stats {
-    padding: 110px 0;
+    padding: 84px 0;
   }
+  /* trust points (replaces numeric stats) */
+  .trust-points {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .trust-point {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .trust-point .tp-ic {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: rgba(94, 142, 62, 0.14);
+    color: #2f7d4f;
+    display: grid;
+    place-items: center;
+  }
+  .trust-point .tp-ic svg { width: 17px; height: 17px; }
+  @media (max-width: 900px) { .trust-points { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 540px) { .trust-points { grid-template-columns: 1fr; } }
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
