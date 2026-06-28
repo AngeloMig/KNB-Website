@@ -1485,7 +1485,7 @@
 
   /* ---------- PROCESS ---------- */
   .process { padding: 100px 0; }
-  .steps4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 60px; }
+  .steps4 { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 60px; }
   .step { border-top: 1px solid var(--line); padding-top: 24px; }
   .step .sn { font-size: 14px; color: var(--muted); font-weight: 600; }
   .step h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-top: 14px; }
@@ -1859,6 +1859,11 @@
   }
   .foot-cta h2 { font-size: clamp(30px, 5vw, 60px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.02; max-width: 14ch; }
   .foot-cta h2 em { font-style: normal; color: #e83fa0; }
+  .foot-cta-l { max-width: 30ch; }
+  .foot-cta-sub { color: rgba(255,255,255,0.66); font-size: 16px; line-height: 1.6; max-width: 46ch; margin: 14px 0 0; }
+  .foot-cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .foot-cta-ghost { color: #fff; border-color: rgba(255,255,255,0.32); }
+  .foot-cta-ghost:hover { border-color: #fff; }
   .foot-cta-btn { background: var(--bg); color: var(--ink); }
   .foot-cta-btn .dot { background: #6cf09a; }
   .foot-cta-btn:hover { background: #fff; }
