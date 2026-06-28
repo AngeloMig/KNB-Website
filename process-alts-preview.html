@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process section — 5 alternatives (preview)</title>
+<style>
+  :root{
+    --bg:#f4f2ec; --ink:#111110; --muted:#6b6a64; --line:#e3e1d8; --card:#fff;
+    --grn:#5e8e3e; --pink:#e83fa0; --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Satoshi",Inter,system-ui,-apple-system,sans-serif; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; }
+  svg{ display:block; }
+
+  /* page chrome */
+  .pg-head{ padding:56px 0 14px; }
+  .pg-eyebrow{ font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--pink); }
+  .pg-head h1{ font-size:clamp(28px,4vw,44px); font-weight:600; letter-spacing:-.03em; margin:12px 0 8px; }
+  .pg-head p{ color:var(--muted); font-size:16px; line-height:1.6; max-width:64ch; margin:0; }
+  .pg-nav{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .pg-nav a{ font-size:13px; font-weight:600; text-decoration:none; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:100px; padding:8px 14px; transition:border-color .2s,transform .2s; }
+  .pg-nav a:hover{ border-color:rgba(17,17,16,.32); transform:translateY(-1px); }
+
+  .demo{ padding:40px 0 4px; border-top:1px solid var(--line); margin-top:46px; }
+  .demo-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:30px; }
+  .demo-head .t{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .demo-head .num{ font-size:13px; font-weight:800; color:var(--pink); letter-spacing:.06em; }
+  .demo-head h2{ font-size:20px; font-weight:650; letter-spacing:-.02em; margin:0; }
+  .demo-head .desc{ font-size:13.5px; color:var(--muted); }
+  .replay{ flex:none; font-family:inherit; font-size:12.5px; font-weight:700; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:100px; padding:8px 15px; cursor:pointer; transition:border-color .2s,transform .2s; }
+  .replay:hover{ border-color:rgba(17,17,16,.32); transform:translateY(-1px); }
+  .stage{ position:relative; background:linear-gradient(180deg,#faf9f5,#f1efe8); border:1px solid var(--line); border-radius:24px; padding:clamp(30px,5vw,64px); overflow:hidden; }
+  .stage.dark{ background:#111110; color:var(--bg); border-color:#26251f; }
+
+  .sec-eyebrow{ display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--pink); }
+  .sec-eyebrow::before{ content:""; width:8px; height:8px; border-radius:50%; background:var(--grn); }
+  .dark .sec-eyebrow{ color:#ff7ec8; }
+  .sec-h{ font-size:clamp(26px,3.4vw,40px); font-weight:600; letter-spacing:-.03em; line-height:1.05; margin:14px 0 0; }
+  .ic svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* =========================================================
+     1 — ZIGZAG TIMELINE
+  ========================================================= */
+  .d1{ position:relative; max-width:820px; margin:46px auto 8px; }
+  .d1-spine{ position:absolute; left:50%; top:6px; bottom:6px; width:2px; transform:translateX(-50%); background:var(--line); border-radius:2px; }
+  .d1-spine i{ position:absolute; inset:0; background:var(--ink); transform:scaleY(0); transform-origin:top; transition:transform 1.6s var(--ease); }
+  .d1.play .d1-spine i{ transform:scaleY(1); }
+  .d1-row{ position:relative; display:grid; grid-template-columns:1fr 1fr; align-items:center; min-height:118px; }
+  .d1-node{ position:absolute; left:50%; top:34px; width:46px; height:46px; border-radius:50%; transform:translate(-50%,0) scale(0); background:var(--card); border:1px solid var(--line); display:grid; place-items:center; color:var(--ink); box-shadow:0 8px 22px -12px rgba(17,17,16,.5); transition:transform .55s var(--ease); z-index:2; }
+  .d1.play .d1-node{ transform:translate(-50%,0) scale(1); }
+  .d1-row:nth-child(2) .d1-node{ transition-delay:.25s; } .d1-row:nth-child(3) .d1-node{ transition-delay:.5s; }
+  .d1-row:nth-child(4) .d1-node{ transition-delay:.75s; } .d1-row:nth-child(5) .d1-node{ transition-delay:1s; }
+  .d1-card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 22px; opacity:0; transition:opacity .6s var(--ease),transform .6s var(--ease); }
+  .d1-row.l .d1-card{ grid-column:1; margin-right:54px; text-align:right; transform:translateX(28px); }
+  .d1-row.r .d1-card{ grid-column:2; margin-left:54px; transform:translateX(-28px); }
+  .d1.play .d1-card{ opacity:1; transform:none; }
+  .d1-row:nth-child(2) .d1-card{ transition-delay:.25s; } .d1-row:nth-child(3) .d1-card{ transition-delay:.5s; }
+  .d1-row:nth-child(4) .d1-card{ transition-delay:.75s; } .d1-row:nth-child(5) .d1-card{ transition-delay:1s; }
+  .d1-n{ font-size:12px; font-weight:800; letter-spacing:.08em; color:var(--pink); }
+  .d1-card h3{ font-size:18px; font-weight:650; letter-spacing:-.02em; margin:4px 0 6px; }
+  .d1-card p{ font-size:13.5px; color:var(--muted); line-height:1.5; margin:0; }
+
+  /* =========================================================
+     2 — HORIZONTAL JOURNEY RAIL
+  ========================================================= */
+  .d2{ margin-top:50px; }
+  .d2-rail{ position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .d2-track{ position:absolute; top:27px; left:12.5%; right:12.5%; height:3px; background:var(--line); border-radius:3px; overflow:hidden; }
+  .d2-track i{ position:absolute; inset:0; width:100%; background:linear-gradient(90deg,var(--grn),var(--ink)); transform:scaleX(0); transform-origin:left; transition:transform 1.8s var(--ease); }
+  .d2.play .d2-track i{ transform:scaleX(1); }
+  .d2-step{ position:relative; text-align:center; }
+  .d2-dot{ position:relative; z-index:2; width:56px; height:56px; border-radius:50%; margin:0 auto; background:var(--card); border:1px solid var(--line); display:grid; place-items:center; font-size:14px; font-weight:800; color:var(--ink); transform:scale(0); transition:transform .5s var(--ease); }
+  .d2.play .d2-step:nth-child(1) .d2-dot{ transition-delay:.1s; } .d2.play .d2-step:nth-child(2) .d2-dot{ transition-delay:.5s; }
+  .d2.play .d2-step:nth-child(3) .d2-dot{ transition-delay:.9s; } .d2.play .d2-step:nth-child(4) .d2-dot{ transition-delay:1.3s; }
+  .d2.play .d2-dot{ transform:scale(1); }
+  .d2-card{ margin-top:20px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px 18px; opacity:0; transform:translateY(14px); transition:opacity .55s var(--ease),transform .55s var(--ease),border-color .3s; }
+  .d2.play .d2-step:nth-child(1) .d2-card{ transition-delay:.2s; } .d2.play .d2-step:nth-child(2) .d2-card{ transition-delay:.6s; }
+  .d2.play .d2-step:nth-child(3) .d2-card{ transition-delay:1s; } .d2.play .d2-step:nth-child(4) .d2-card{ transition-delay:1.4s; }
+  .d2.play .d2-card{ opacity:1; transform:none; }
+  .d2-card:hover{ border-color:rgba(17,17,16,.3); }
+  .d2-ic{ width:42px; height:42px; border-radius:12px; background:#f4f3ef; border:1px solid var(--line); display:grid; place-items:center; margin:0 auto 12px; }
+  .d2-card h3{ font-size:17px; font-weight:650; letter-spacing:-.02em; margin:0 0 6px; }
+  .d2-card p{ font-size:13px; color:var(--muted); line-height:1.5; margin:0; }
+
+  /* =========================================================
+     3 — STICKY STACKED PANELS (scroll inside)
+  ========================================================= */
+  .d3-scroll{ height:440px; overflow-y:auto; border-radius:18px; border:1px solid var(--line); background:#fff; padding:0 0 60px; scroll-snap-type:y proximity; }
+  .d3-intro{ padding:26px 28px 8px; position:sticky; top:0; background:#fff; z-index:6; border-bottom:1px solid var(--line); }
+  .d3-intro small{ color:var(--muted); font-size:12.5px; }
+  .d3-panel{ position:sticky; top:62px; margin:18px; border-radius:18px; padding:30px 32px; color:#fff; scroll-snap-align:start; box-shadow:0 -10px 30px -20px rgba(0,0,0,.5); }
+  .d3-panel:nth-child(2){ background:#1f1d18; top:62px; }
+  .d3-panel:nth-child(3){ background:#3a3326; top:78px; }
+  .d3-panel:nth-child(4){ background:#4a5e33; top:94px; }
+  .d3-panel:nth-child(5){ background:#7a2b58; top:110px; }
+  .d3-top{ display:flex; align-items:center; justify-content:space-between; }
+  .d3-n{ font-size:46px; font-weight:700; letter-spacing:-.04em; line-height:1; opacity:.5; }
+  .d3-ic{ width:46px; height:46px; border-radius:13px; background:rgba(255,255,255,.14); display:grid; place-items:center; }
+  .d3-panel h3{ font-size:24px; font-weight:600; letter-spacing:-.02em; margin:24px 0 8px; }
+  .d3-panel p{ font-size:14.5px; line-height:1.55; margin:0; max-width:52ch; color:rgba(255,255,255,.82); }
+  .d3-hint{ text-align:center; font-size:12.5px; color:var(--muted); margin:14px 0 0; }
+
+  /* =========================================================
+     4 — RADIAL ORBIT
+  ========================================================= */
+  .d4{ position:relative; width:min(560px,100%); aspect-ratio:1/.82; margin:30px auto 0; }
+  .d4-ring{ position:absolute; left:50%; top:50%; width:300px; height:300px; transform:translate(-50%,-50%); border:1px dashed rgba(17,17,16,.18); border-radius:50%; animation:spin 40s linear infinite; }
+  @keyframes spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+  .d4-hub{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.6); width:128px; height:128px; border-radius:50%; background:var(--ink); color:var(--bg); display:grid; place-items:center; text-align:center; z-index:3; opacity:0; transition:opacity .5s var(--ease),transform .5s var(--ease); }
+  .d4.play .d4-hub{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+  .d4-hub b{ font-size:18px; font-weight:650; letter-spacing:-.02em; }
+  .d4-hub span{ display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-top:3px; }
+  .d4-step{ position:absolute; width:208px; background:var(--card); border:1px solid var(--line); border-radius:15px; padding:15px 17px; box-shadow:0 14px 34px -20px rgba(17,17,16,.5); opacity:0; transition:opacity .55s var(--ease),transform .55s var(--ease); }
+  .d4-step .h{ display:flex; align-items:center; gap:9px; }
+  .d4-ic{ width:32px; height:32px; border-radius:9px; background:#f4f3ef; border:1px solid var(--line); display:grid; place-items:center; }
+  .d4-step h3{ font-size:15px; font-weight:650; letter-spacing:-.02em; margin:0; }
+  .d4-step p{ font-size:12px; color:var(--muted); line-height:1.45; margin:9px 0 0; }
+  .d4-step .qn{ position:absolute; top:-10px; right:-10px; width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff; font-size:11px; font-weight:800; display:grid; place-items:center; }
+  .d4-s1{ left:50%; top:0; transform:translate(-50%,-24px); }       .d4.play .d4-s1{ transform:translate(-50%,0); opacity:1; transition-delay:.15s; }
+  .d4-s2{ right:0; top:50%; transform:translate(24px,-50%); }        .d4.play .d4-s2{ transform:translate(0,-50%); opacity:1; transition-delay:.35s; }
+  .d4-s3{ left:50%; bottom:0; transform:translate(-50%,24px); }      .d4.play .d4-s3{ transform:translate(-50%,0); opacity:1; transition-delay:.55s; }
+  .d4-s4{ left:0; top:50%; transform:translate(-24px,-50%); }        .d4.play .d4-s4{ transform:translate(0,-50%); opacity:1; transition-delay:.75s; }
+  .d4-spokes{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+  .d4-spokes line{ stroke:rgba(17,17,16,.2); stroke-width:1.5; stroke-dasharray:5 6; stroke-dashoffset:200; transition:stroke-dashoffset 1.2s var(--ease); }
+  .d4.play .d4-spokes line{ stroke-dashoffset:0; }
+
+  /* =========================================================
+     5 — DIAGONAL STAIRCASE
+  ========================================================= */
+  .d5{ position:relative; padding:14px 0 10px; }
+  .d5-step{ position:relative; width:min(560px,90%); margin:0 0 -6px; display:flex; gap:20px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px 26px; box-shadow:0 18px 40px -28px rgba(17,17,16,.5); opacity:0; transform:translateY(26px); transition:opacity .6s var(--ease),transform .6s var(--ease); }
+  .d5.play .d5-step{ opacity:1; transform:none; }
+  .d5-step:nth-child(1){ margin-left:0%; }   .d5.play .d5-step:nth-child(1){ transition-delay:.05s; }
+  .d5-step:nth-child(2){ margin-left:14%; }  .d5.play .d5-step:nth-child(2){ transition-delay:.25s; }
+  .d5-step:nth-child(3){ margin-left:28%; }  .d5.play .d5-step:nth-child(3){ transition-delay:.45s; }
+  .d5-step:nth-child(4){ margin-left:42%; }  .d5.play .d5-step:nth-child(4){ transition-delay:.65s; }
+  .d5-bn{ position:absolute; right:18px; top:-22px; font-size:84px; font-weight:800; letter-spacing:-.05em; line-height:1; color:rgba(17,17,16,.05); z-index:0; }
+  .d5-ic{ flex:none; width:46px; height:46px; border-radius:13px; background:var(--ink); color:var(--bg); display:grid; place-items:center; position:relative; z-index:1; }
+  .d5-tx{ position:relative; z-index:1; }
+  .d5-tx .s{ font-size:12px; font-weight:800; letter-spacing:.08em; color:var(--pink); }
+  .d5-tx h3{ font-size:18px; font-weight:650; letter-spacing:-.02em; margin:3px 0 6px; }
+  .d5-tx p{ font-size:13.5px; color:var(--muted); line-height:1.5; margin:0; max-width:46ch; }
+
+  @media(max-width:780px){
+    .d1-row{ grid-template-columns:1fr; }
+    .d1-spine{ left:23px; } .d1-node{ left:23px; }
+    .d1-row.l .d1-card,.d1-row.r .d1-card{ grid-column:1; margin:0 0 0 58px; text-align:left; transform:translateY(20px); }
+    .d2-rail{ grid-template-columns:1fr 1fr; gap:26px 16px; } .d2-track{ display:none; }
+    .d4{ aspect-ratio:auto; height:auto; } .d4-ring,.d4-spokes,.d4-hub{ display:none; }
+    .d4-step{ position:static !important; width:100% !important; transform:none !important; opacity:1 !important; margin-bottom:12px; }
+    .d5-step{ width:100%; margin-left:0 !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="pg-head">
+      <div class="pg-eyebrow">Preview · internal</div>
+      <h1>Process section — 5 alternatives</h1>
+      <p>Five non-column treatments for the about-page process (“A calmer path from idea to launch”). Each animates on scroll — use <b>Replay</b> to re-run. Same four steps throughout. Tell me which to ship.</p>
+      <nav class="pg-nav">
+        <a href="#a1">1 · Zigzag timeline</a>
+        <a href="#a2">2 · Journey rail</a>
+        <a href="#a3">3 · Sticky stack</a>
+        <a href="#a4">4 · Radial orbit</a>
+        <a href="#a5">5 · Diagonal staircase</a>
+      </nav>
+    </header>
+
+    <!-- 1 ZIGZAG TIMELINE -->
+    <section class="demo" id="a1">
+      <div class="demo-head">
+        <div class="t"><span class="num">01</span><h2>Zigzag timeline</h2><span class="desc">central spine draws down, nodes + alternating cards pop in</span></div>
+        <button class="replay" data-replay="d1">↻ Replay</button>
+      </div>
+      <div class="stage">
+        <div class="sec-eyebrow">How it works</div>
+        <h2 class="sec-h">A calmer path from idea to launch</h2>
+        <div class="d1" id="d1">
+          <div class="d1-spine"><i></i></div>
+          <div class="d1-row l">
+            <div class="d1-card"><div class="d1-n">STEP 01</div><h3>Free consultation</h3><p>We talk through the goal, current site, platform, and timeline.</p></div>
+            <span class="d1-node ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          </div>
+          <div class="d1-row r">
+            <span class="d1-node ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>
+            <div class="d1-card"><div class="d1-n">STEP 02</div><h3>Scope &amp; proposal</h3><p>A written plan: pages, features, responsibilities, timeline, exclusions.</p></div>
+          </div>
+          <div class="d1-row l">
+            <div class="d1-card"><div class="d1-n">STEP 03</div><h3>Design &amp; build</h3><p>Structure, visuals, responsive layouts, integrations, CMS/store setup.</p></div>
+            <span class="d1-node ic"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+          </div>
+          <div class="d1-row r">
+            <span class="d1-node ic"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 4s4 0 6 2 2 6 2 6l-8 5-7-7z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg></span>
+            <div class="d1-card"><div class="d1-n">STEP 04</div><h3>QA, launch &amp; support</h3><p>We test, polish, publish, hand over, and stay on through care plans.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 JOURNEY RAIL -->
+    <section class="demo" id="a2">
+      <div class="demo-head">
+        <div class="t"><span class="num">02</span><h2>Journey rail</h2><span class="desc">horizontal rail fills left→right, nodes then cards rise</span></div>
+        <button class="replay" data-replay="d2">↻ Replay</button>
+      </div>
+      <div class="stage">
+        <div class="sec-eyebrow">How it works</div>
+        <h2 class="sec-h">A calmer path from idea to launch</h2>
+        <div class="d2" id="d2">
+          <div class="d2-rail">
+            <div class="d2-track"><i></i></div>
+            <div class="d2-step">
+              <div class="d2-dot">01</div>
+              <div class="d2-card"><div class="d2-ic ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Free consultation</h3><p>Goal, current site, platform, timeline, and the help that’s useful.</p></div>
+            </div>
+            <div class="d2-step">
+              <div class="d2-dot">02</div>
+              <div class="d2-card"><div class="d2-ic ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div><h3>Scope &amp; proposal</h3><p>A practical written plan with deliverables and what’s quoted separately.</p></div>
+            </div>
+            <div class="d2-step">
+              <div class="d2-dot">03</div>
+              <div class="d2-card"><div class="d2-ic ic"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></div><h3>Design &amp; build</h3><p>Structure, visuals, responsive layouts, integrations, CMS/store setup.</p></div>
+            </div>
+            <div class="d2-step">
+              <div class="d2-dot">04</div>
+              <div class="d2-card"><div class="d2-ic ic"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 4s4 0 6 2 2 6 2 6l-8 5-7-7z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg></div><h3>QA, launch &amp; support</h3><p>Test, polish, publish, hand over, and stay on through care plans.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 STICKY STACK -->
+    <section class="demo" id="a3">
+      <div class="demo-head">
+        <div class="t"><span class="num">03</span><h2>Sticky stack</h2><span class="desc">scroll inside — panels pin and stack over each other</span></div>
+        <button class="replay" data-replay="d3">↻ Reset scroll</button>
+      </div>
+      <div class="stage" style="padding:0;">
+        <div class="d3-scroll" id="d3">
+          <div class="d3-intro"><div class="sec-eyebrow">How it works</div><h2 class="sec-h" style="font-size:24px;margin-top:8px;">A calmer path from idea to launch</h2><small>↓ scroll — each step stacks</small></div>
+          <div class="d3-panel"><div class="d3-top"><span class="d3-n">01</span><span class="d3-ic ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div><h3>Free consultation</h3><p>We talk through the goal, current site, platform, timeline, and the kind of help that would actually be useful.</p></div>
+          <div class="d3-panel"><div class="d3-top"><span class="d3-n">02</span><span class="d3-ic ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span></div><h3>Scope &amp; proposal</h3><p>A practical written plan covering pages, features, responsibilities, timeline, and what is quoted separately.</p></div>
+          <div class="d3-panel"><div class="d3-top"><span class="d3-n">03</span><span class="d3-ic ic"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span></div><h3>Design &amp; build</h3><p>We create the structure, visuals, responsive layouts, integrations, and CMS/store setup needed for launch.</p></div>
+          <div class="d3-panel"><div class="d3-top"><span class="d3-n">04</span><span class="d3-ic ic"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 4s4 0 6 2 2 6 2 6l-8 5-7-7z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg></span></div><h3>QA, launch &amp; support</h3><p>We test, polish, publish, hand over the essentials, and can stay involved through care plans.</p></div>
+        </div>
+      </div>
+      <p class="d3-hint">Pinned-stack works best as a scroll moment inside the page.</p>
+    </section>
+
+    <!-- 4 RADIAL ORBIT -->
+    <section class="demo" id="a4">
+      <div class="demo-head">
+        <div class="t"><span class="num">04</span><h2>Radial orbit</h2><span class="desc">a launch hub with steps orbiting + dashed spokes drawing</span></div>
+        <button class="replay" data-replay="d4">↻ Replay</button>
+      </div>
+      <div class="stage">
+        <div class="sec-eyebrow">How it works</div>
+        <h2 class="sec-h">A calmer path from idea to launch</h2>
+        <div class="d4" id="d4">
+          <svg class="d4-spokes" viewBox="0 0 560 460" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="280" y1="230" x2="280" y2="46"></line>
+            <line x1="280" y1="230" x2="456" y2="230"></line>
+            <line x1="280" y1="230" x2="280" y2="414"></line>
+            <line x1="280" y1="230" x2="104" y2="230"></line>
+          </svg>
+          <div class="d4-ring"></div>
+          <div class="d4-hub"><div><b>Launch</b><span>the goal</span></div></div>
+          <div class="d4-step d4-s1"><span class="qn">1</span><div class="h"><span class="d4-ic ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><h3>Free consultation</h3></div><p>Goal, current site, platform, timeline.</p></div>
+          <div class="d4-step d4-s2"><span class="qn">2</span><div class="h"><span class="d4-ic ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><h3>Scope &amp; proposal</h3></div><p>A clear written plan and exclusions.</p></div>
+          <div class="d4-step d4-s3"><span class="qn">3</span><div class="h"><span class="d4-ic ic"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><h3>Design &amp; build</h3></div><p>Layouts, integrations, CMS/store setup.</p></div>
+          <div class="d4-step d4-s4"><span class="qn">4</span><div class="h"><span class="d4-ic ic"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 4s4 0 6 2 2 6 2 6l-8 5-7-7z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg></span><h3>QA &amp; support</h3></div><p>Test, publish, hand over, care plans.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 DIAGONAL STAIRCASE -->
+    <section class="demo" id="a5">
+      <div class="demo-head">
+        <div class="t"><span class="num">05</span><h2>Diagonal staircase</h2><span class="desc">steps cascade down-right with big ghost numbers</span></div>
+        <button class="replay" data-replay="d5">↻ Replay</button>
+      </div>
+      <div class="stage">
+        <div class="sec-eyebrow">How it works</div>
+        <h2 class="sec-h">A calmer path from idea to launch</h2>
+        <div class="d5" id="d5" style="margin-top:34px;">
+          <div class="d5-step"><span class="d5-bn">01</span><span class="d5-ic ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div class="d5-tx"><div class="s">STEP 01</div><h3>Free consultation</h3><p>We talk through the goal, current site, platform, timeline, and the help that’s useful.</p></div></div>
+          <div class="d5-step"><span class="d5-bn">02</span><span class="d5-ic ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><div class="d5-tx"><div class="s">STEP 02</div><h3>Scope &amp; proposal</h3><p>A practical written plan: pages, features, responsibilities, timeline, exclusions.</p></div></div>
+          <div class="d5-step"><span class="d5-bn">03</span><span class="d5-ic ic"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><div class="d5-tx"><div class="s">STEP 03</div><h3>Design &amp; build</h3><p>Structure, visuals, responsive layouts, integrations, and CMS/store setup.</p></div></div>
+          <div class="d5-step"><span class="d5-bn">04</span><span class="d5-ic ic"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 4s4 0 6 2 2 6 2 6l-8 5-7-7z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg></span><div class="d5-tx"><div class="s">STEP 04</div><h3>QA, launch &amp; support</h3><p>We test, polish, publish, hand over, and stay involved through care plans.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div style="height:80px;"></div>
+  </div>
+
+  <script>
+    // play on scroll-in
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('play'); } });
+    }, { threshold:0.25 });
+    ['d1','d2','d4','d5'].forEach(function(id){ var el=document.getElementById(id); if(el) io.observe(el); });
+
+    // replay buttons
+    document.addEventListener('click', function(e){
+      var b = e.target.closest('[data-replay]'); if(!b) return;
+      var el = document.getElementById(b.getAttribute('data-replay')); if(!el) return;
+      if(el.id==='d3'){ el.scrollTo({top:0,behavior:'smooth'}); return; }
+      el.classList.remove('play'); void el.offsetWidth; el.classList.add('play');
+    });
+  </script>
+</body>
+</html>

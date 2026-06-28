@@ -40,6 +40,15 @@
     --maxw: 1240px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+  .addons-summary { margin: 0 0 22px; padding: 20px 22px; background: #faf9f5; border: 1px solid var(--line); border-radius: 16px; }
+  .as-head { display: flex; align-items: flex-start; gap: 13px; }
+  .as-ic { flex: none; width: 38px; height: 38px; border-radius: 10px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; }
+  .as-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .as-title { font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+  .as-sub { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+  .as-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .as-chip { font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -152,10 +161,24 @@
   .contact h1 { font-size: clamp(44px, 8vw, 104px); line-height: 0.96; letter-spacing: -0.04em; font-weight: 500; margin: 20px 0 0; max-width: 14ch; }
   .contact .lead { font-size: clamp(17px, 1.6vw, 20px); color: var(--muted); max-width: 46ch; margin-top: 22px; }
 
-  .contact-layout { display: grid; grid-template-columns: 1.25fr 0.9fr; gap: 56px; margin-top: 64px; align-items: start; }
+  .contact-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.72fr); gap: 52px; margin-top: 64px; align-items: start; }
+  .contact-layout > aside { position: sticky; top: 100px; }
 
   /* form */
-  .form-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 36px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+  .form-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 34px; box-shadow: 0 28px 58px rgba(17,17,16,0.06); }
+  .form-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 28px; }
+  .step-tab { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 999px; background: #faf9f6; color: var(--muted); font: inherit; cursor: pointer; transition: background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease); }
+  .step-tab .num { flex: none; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(17,17,16,0.07); color: var(--muted); font-size: 11px; font-weight: 700; }
+  .step-tab span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .step-tab.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .step-tab.active .num { background: var(--bg); color: var(--ink); }
+  .form-step { display: none; }
+  .form-step.active { display: block; animation: stepIn 0.32s var(--ease); }
+  @keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .form-section { padding-top: 0; margin-top: 0; border-top: 0; }
+  .form-section-head { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; }
+  .form-section-head .num { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 700; letter-spacing: 0; }
+  .form-section-head b { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
   .field { margin-bottom: 22px; }
   .field label { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; }
   .field input, .field select, .field textarea {
@@ -175,13 +198,123 @@
     outline: none; border-color: var(--ink); background-color: #fff; box-shadow: 0 0 0 4px rgba(17,17,16,0.06);
   }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .service-select-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .service-workbench { display: block; }
+  /* project type as a dropdown (same card design) so the details go full-width */
+  .service-dd { position: relative; margin-bottom: 20px; z-index: 20; }
+  .service-dd-trigger { width: 100%; display: grid; grid-template-columns: 38px 1fr auto; gap: 12px; align-items: center; text-align: left; padding: 13px; border: 1px solid var(--line); border-radius: 14px; background: #faf9f6; color: var(--ink); font: inherit; cursor: pointer; transition: background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+  .service-dd-trigger:hover { background: #fff; border-color: rgba(17,17,16,0.24); }
+  .service-dd.open .service-dd-trigger { background: #fff; border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .service-dd-trigger .svc-ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: rgba(17,17,16,0.06); color: var(--ink); }
+  .service-dd-trigger .svc-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .service-dd-trigger.has-value .svc-ic { background: var(--ink); color: var(--bg); }
+  .service-dd-trigger .dd-text b { display: block; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+  .service-dd-trigger .dd-text small { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; line-height: 1.25; }
+  .service-dd-trigger .dd-chev { color: var(--muted); display: grid; place-items: center; transition: transform 0.3s var(--ease); }
+  .service-dd-trigger .dd-chev svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .service-dd.open .dd-chev { transform: rotate(180deg); }
+  .service-dd-menu { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 40; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 26px 54px -22px rgba(17,17,16,0.45); padding: 10px; display: none; }
+  .service-dd.open .service-dd-menu { display: block; animation: detailIn 0.22s var(--ease); }
+  .service-picker { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+  @media (max-width: 560px) { .service-picker { grid-template-columns: 1fr; } }
+  .service-card { width: 100%; display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; text-align: left; padding: 13px; border: 1px solid var(--line); border-radius: 14px; background: #faf9f6; color: var(--ink); font: inherit; cursor: pointer; transition: background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease); }
+  .service-card:hover { background: #fff; border-color: rgba(17,17,16,0.24); transform: translateY(-1px); }
+  .service-card.active { background: #fff; border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink), 0 16px 30px -26px rgba(17,17,16,0.55); }
+  .service-card .svc-ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: rgba(17,17,16,0.06); color: var(--ink); }
+  .service-card .svc-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .service-card b { display: block; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+  .service-card small { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; line-height: 1.25; }
+  .service-card.active .svc-ic { background: var(--ink); color: var(--bg); }
+  .service-picker.invalid .service-card { border-color: #d12e6b; }
+  .service-dd-trigger.invalid { border-color: #d12e6b; }
+  .project-details { position: relative; margin: 0 0 22px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 18px 42px -34px rgba(17,17,16,0.34); }
+  .project-details[hidden] { display: none; }
+  .details-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding-bottom: 18px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .details-kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; white-space: nowrap; }
+  .details-kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; }
+  .details-head p { color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 48ch; }
+  .detail-panel { display: none; animation: detailIn 0.34s var(--ease); }
+  .detail-panel.active { display: block; }
+  @keyframes detailIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .detail-panel .field:last-child { margin-bottom: 0; }
+  .field.recommended > label::after { content: "Helpful"; display: inline-flex; margin-left: 8px; padding: 2px 7px; border-radius: 999px; background: rgba(232,63,160,0.08); color: #e83fa0; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; vertical-align: middle; }
+  .choice-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .check-card { display: inline-flex; align-items: center; gap: 8px; min-height: 0; padding: 9px 13px; border: 1px solid var(--line); border-radius: 999px; background: #faf9f6; color: var(--ink); font-size: 13.5px; font-weight: 600; line-height: 1.15; cursor: pointer; transition: border-color 0.25s var(--ease), background 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease); }
+  .field label.check-card { display: inline-flex; align-items: center; margin-bottom: 0; color: var(--ink); font-size: 13.5px; font-weight: 600; letter-spacing: 0; line-height: 1.15; text-transform: none; }
+  .check-card:hover { border-color: rgba(17,17,16,0.24); background: #fff; transform: translateY(-1px); }
+  .check-card:has(input:checked) { border-color: var(--ink); background: #fff; box-shadow: inset 0 0 0 1px var(--ink), 0 12px 28px -24px rgba(17,17,16,0.5); }
+  .check-card.is-checked { border-color: var(--ink); background: #fff; box-shadow: inset 0 0 0 1px var(--ink), 0 12px 28px -24px rgba(17,17,16,0.5); }
+  .field label.check-card.is-checked { border-color: var(--ink); background: #fff; box-shadow: inset 0 0 0 1px var(--ink), 0 12px 28px -24px rgba(17,17,16,0.5); }
+  .check-card input { flex: none; width: 15px; height: 15px; margin: 0; accent-color: #e83fa0; }
+  .timeline-segments { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .time-seg { position: relative; min-height: 52px; display: flex; align-items: center; justify-content: center; padding: 11px 9px; border: 1px solid var(--line); border-radius: 14px; background: #faf9f6; color: var(--ink); text-align: center; font-size: 13px; font-weight: 700; line-height: 1.2; cursor: pointer; transition: background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease); }
+  .time-seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .time-seg:hover { background: #fff; border-color: rgba(17,17,16,0.24); transform: translateY(-1px); }
+  .time-seg.is-checked { background: var(--ink); border-color: var(--ink); color: var(--bg); box-shadow: 0 14px 28px -24px rgba(17,17,16,0.8); }
+  /* timeline as a clean selectable list (one container, hairline rows) */
+  .time-list { border: 1px solid var(--line); border-radius: 16px; background: #fff; overflow: hidden; }
+  .time-list .time-row { position: relative; display: grid; grid-template-columns: 38px 1fr 20px; gap: 14px; align-items: center; margin: 0; padding: 15px 18px; border-top: 1px solid var(--line); cursor: pointer; color: var(--ink); text-transform: none; transition: background 0.2s var(--ease); }
+  .time-row:first-child { border-top: 0; }
+  .time-row input { position: absolute; opacity: 0; pointer-events: none; }
+  .time-row:hover { background: #faf9f6; }
+  .time-row.is-checked { background: color-mix(in srgb, var(--ink) 3.5%, #fff); }
+  .time-row.is-checked::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--ink); }
+  .time-row .tr-ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); transition: background 0.2s, color 0.2s; }
+  .time-row .tr-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .time-row.is-checked .tr-ic { background: var(--ink); color: var(--bg); }
+  .tr-t { min-width: 0; display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+  .tr-t b { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+  .tr-t small { font-size: 13px; color: var(--muted); text-transform: none; letter-spacing: 0; }
+  .tr-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; transition: border-color 0.2s; }
+  .tr-radio::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); transform: scale(0); transition: transform 0.2s var(--ease); }
+  .time-row.is-checked .tr-radio { border-color: var(--ink); }
+  .time-row.is-checked .tr-radio::after { transform: scale(1); }
+  @media (max-width: 480px) { .time-row { padding: 14px 15px; } .tr-t { gap: 2px 9px; } }
+  /* compact pill row (preferred contact) with icons */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill-row .time-seg { min-height: 0; padding: 10px 16px; display: inline-flex; align-items: center; gap: 8px; }
+  .pill-row .time-seg svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; }
+  .pill-row .time-seg.is-checked svg { opacity: 1; }
+  /* timing intro line */
+  .timing-intro { color: var(--muted); font-size: 14px; line-height: 1.5; margin: -4px 0 20px; max-width: 52ch; }
+  .notes-disclosure { margin-top: 6px; border: 1px solid var(--line); border-radius: 14px; background: #faf9f6; overflow: hidden; }
+  .notes-disclosure summary { cursor: pointer; list-style: none; padding: 14px 16px; font-size: 14px; font-weight: 700; color: var(--ink); }
+  .notes-disclosure summary::-webkit-details-marker { display: none; }
+  .notes-disclosure summary::after { content: "+"; float: right; color: var(--muted); font-weight: 700; }
+  .notes-disclosure[open] summary::after { content: "−"; }
+  .notes-disclosure .field { margin: 0; padding: 0 14px 14px; }
+  .request-summary { margin: 22px 0 0; padding: 20px 22px; border-radius: 16px; background: #f5f4ef; }
+  .request-summary .summary-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .request-summary .summary-kicker { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+  .request-summary .summary-kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+  .request-summary .summary-ready { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); transition: color 0.25s; }
+  .request-summary .summary-ready::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--muted); transition: background 0.25s; }
+  .request-summary .summary-ready.is-ready { color: #1f9d57; }
+  .request-summary .summary-ready.is-ready::before { background: #34c759; box-shadow: 0 0 0 3px rgba(52,199,89,0.18); }
+  .summary-list { list-style: none; display: grid; gap: 0; margin: 0; padding: 0; }
+  .summary-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; padding: 12px 0; border-bottom: 1px solid rgba(17,17,16,0.06); font-size: 13.5px; }
+  .summary-list li:first-child { padding-top: 0; }
+  .summary-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .summary-list span { color: var(--muted); font-weight: 500; flex: none; }
+  .summary-list .sl-k { display: inline-flex; align-items: center; gap: 10px; }
+  .summary-list .sl-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; flex: none; transition: background 0.2s, border-color 0.2s; }
+  .summary-list li.is-filled .sl-dot { background: var(--ink); border-color: var(--ink); }
+  .summary-list b { text-align: right; font-weight: 700; color: var(--ink); }
+  .summary-list li.is-pending b { color: #a8a59c; font-weight: 600; }
+  .step-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 26px; }
+  .step-nav .btn { width: auto; margin-top: 0; }
+  .btn-quiet { background: transparent; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .btn-quiet:hover { background: #fff; box-shadow: none; }
+  .btn-quiet .dot { background: var(--ink); }
+  .form-actions { padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--line); }
   .form-card .btn { width: 100%; margin-top: 6px; }
+  .form-card .step-nav .btn { width: auto; min-width: 158px; }
   .form-note { font-size: 13px; color: var(--muted); margin-top: 16px; text-align: center; }
   .field .req { color: #e83fa0; }
   .field .opt { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 12px; }
   .field-error { display: block; margin-top: 7px; font-size: 13px; font-weight: 600; color: #d12e6b; }
   .field-error[hidden] { display: none; }
-  .field.invalid input, .field.invalid select { border-color: #d12e6b; box-shadow: 0 0 0 4px rgba(209,46,107,0.10); }
+  .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: #d12e6b; box-shadow: 0 0 0 4px rgba(209,46,107,0.10); }
   .hidden-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .form-success {
     display: none; text-align: center; padding: 40px 10px;
@@ -229,7 +362,7 @@
   .socials { display: flex; gap: 12px; margin-top: 4px; }
   .socials a { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 15px; transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease); }
   .socials a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); transform: translateY(-3px); }
-  .foot-mark { font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none; }
+  .foot-mark { font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none; text-align: center; }
   .foot-mark::after { content: "KNB"; }
   .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); font-size: 14px; }
   .foot-bottom-r { display: flex; gap: 24px; align-items: center; }
@@ -244,7 +377,16 @@
     .burger { display: flex; }
     .contact { padding: 120px 0 70px; }
     .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    .contact-layout > aside { position: static; top: auto; }
     .field-row { grid-template-columns: 1fr; }
+    .form-progress { grid-template-columns: 1fr; }
+    .service-workbench { grid-template-columns: 1fr; }
+    .timeline-segments { grid-template-columns: 1fr 1fr; }
+    .details-head { display: block; }
+    .details-head p { margin-top: 8px; }
+    .choice-grid { display: flex; }
+    .step-nav { flex-direction: column-reverse; }
+    .form-card .step-nav .btn { width: 100%; }
     .form-card { padding: 26px; }
   }
 </style>
@@ -273,75 +415,487 @@
         <div class="form-card reveal" id="contactForm">
           <form id="auditForm" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field" novalidate>
             <input type="hidden" name="form-name" value="contact">
+            <input type="hidden" name="addons" id="addonsField">
             <p class="hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
-            <div class="field-row">
-              <div class="field">
-                <label for="name">Your name <span class="req" aria-hidden="true">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" autocomplete="name" required aria-required="true" aria-describedby="name-err">
-                <span class="field-error" id="name-err" hidden>Please enter your name.</span>
+
+            <div class="addons-summary" id="addonsSummary" hidden>
+              <div class="as-head">
+                <span class="as-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></span>
+                <div>
+                  <div class="as-title">Add-ons you picked</div>
+                  <div class="as-sub">Carried over from pricing — we’ll include these in your written quote.</div>
+                </div>
               </div>
-              <div class="field">
-                <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
-                <input type="email" id="email" name="email" placeholder="you@business.com" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="email-err">
-                <span class="field-error" id="email-err" hidden>Please enter a valid email address.</span>
-              </div>
+              <div class="as-chips" id="addonsChips"></div>
             </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="company">Company <span class="opt">(optional)</span></label>
-                <input type="text" id="company" name="company" placeholder="Your business name" autocomplete="organization">
+            <div class="form-progress" aria-label="Quote request progress">
+              <button type="button" class="step-tab active" data-step-target="0"><span class="num">01</span><span>Contact</span></button>
+              <button type="button" class="step-tab" data-step-target="1"><span class="num">02</span><span>Project</span></button>
+              <button type="button" class="step-tab" data-step-target="2"><span class="num">03</span><span>Timing</span></button>
+            </div>
+
+            <div class="form-section form-step active" data-step="0">
+              <div class="form-section-head"><span class="num">01</span><b>Contact info</b></div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="name">Your name <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" autocomplete="name" required aria-required="true" aria-describedby="name-err">
+                  <span class="field-error" id="name-err" hidden>Please enter your name.</span>
+                </div>
+                <div class="field">
+                  <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+                  <input type="email" id="email" name="email" placeholder="you@business.com" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="email-err">
+                  <span class="field-error" id="email-err" hidden>Please enter a valid email address.</span>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="company">Company <span class="opt">(optional)</span></label>
+                  <input type="text" id="company" name="company" placeholder="Your business name" autocomplete="organization">
+                </div>
+                <div class="field">
+                  <label for="phone">Phone / WhatsApp <span class="opt">(optional)</span></label>
+                  <input type="tel" id="phone" name="phone" placeholder="+63 9XX XXX XXXX" autocomplete="tel" inputmode="tel">
+                </div>
               </div>
               <div class="field">
                 <label for="site">Website or store URL <span class="opt">(optional)</span></label>
                 <input type="url" id="site" name="site" placeholder="yourstore.com" autocomplete="url" inputmode="url">
               </div>
-            </div>
-            <div class="field">
-              <label for="service">What do you need?</label>
-              <select id="service" name="service">
-                <option value="" disabled selected>Select one…</option>
-                <option>Shopify store revamp</option>
-                <option>New Shopify / ecommerce store</option>
-                <option>WordPress / WooCommerce site</option>
-                <option>Webflow website</option>
-                <option>Business website / redesign</option>
-                <option>Maintenance &amp; support</option>
-                <option>Custom web app</option>
-                <option>Not sure yet — need advice</option>
-              </select>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="size">Project size</label>
-                <select id="size" name="project_size">
-                  <option value="" disabled selected>Select one…</option>
-                  <option>Small — a few pages / quick refresh</option>
-                  <option>Mid — full site or store build</option>
-                  <option>Large — complex build or ongoing work</option>
-                  <option>Not sure yet</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="timeline">Timeline</label>
-                <select id="timeline" name="timeline">
-                  <option value="" disabled selected>Select one…</option>
-                  <option>As soon as possible</option>
-                  <option>Within 1–3 months</option>
-                  <option>In 3–6 months</option>
-                  <option>Just exploring</option>
-                </select>
+              <div class="step-nav">
+                <span></span>
+                <button type="button" class="btn" data-next-step><span class="dot"></span>Next: project type</button>
               </div>
             </div>
-            <div class="field">
-              <label for="message">Tell us a bit more</label>
-              <textarea id="message" name="message" placeholder="What are you trying to improve? Any goals, timeline, or examples you like."></textarea>
+
+            <div class="form-section form-step" data-step="1">
+              <div class="form-section-head"><span class="num">02</span><b>Project type</b></div>
+              <div class="field service-select-field">
+                <label for="service">What do you need?</label>
+                <select id="service" name="service" aria-describedby="service-err">
+                  <option value="" disabled selected>Select one…</option>
+                  <option data-detail="shopify-revamp">Shopify store revamp</option>
+                  <option data-detail="new-shopify">New Shopify / ecommerce store</option>
+                  <option data-detail="wordpress">WordPress / WooCommerce site</option>
+                  <option data-detail="webflow">Webflow website</option>
+                  <option data-detail="business">Business website / redesign</option>
+                  <option data-detail="maintenance">Maintenance &amp; support</option>
+                  <option data-detail="custom-app">Custom web app</option>
+                  <option data-detail="advice">Not sure yet — need advice</option>
+                </select>
+                <span class="field-error" id="service-err" hidden>Please choose the closest project type.</span>
+              </div>
+              <div class="service-workbench">
+                <div class="service-dd" id="serviceDD">
+                  <button type="button" class="service-dd-trigger" id="serviceDDTrigger" aria-haspopup="true" aria-expanded="false" aria-controls="serviceDDMenu">
+                    <span class="svc-ic" id="ddIcon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+                    <span class="dd-text"><b id="ddTitle">Select a project type</b><small id="ddSub">Pick what you need help with</small></span>
+                    <span class="dd-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                  </button>
+                  <div class="service-dd-menu" id="serviceDDMenu">
+                <div class="service-picker" id="servicePicker" aria-label="Choose what you need">
+                  <button type="button" class="service-card" data-service-option="Shopify store revamp"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 7h13l-1.5 9h-10z"/><path d="M7 7 6.3 4H3"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg></span><span><b>Shopify revamp</b><small>Improve an existing store</small></span></button>
+                  <button type="button" class="service-card" data-service-option="New Shopify / ecommerce store"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5z"/><path d="M9 8a3 3 0 0 1 6 0"/><path d="M12 13v4"/><path d="M10 15h4"/></svg></span><span><b>New store</b><small>Launch ecommerce from scratch</small></span></button>
+                  <button type="button" class="service-card" data-service-option="WordPress / WooCommerce site"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M4 9h16"/><path d="M7 9l3.5 10"/><path d="M17 9l-3.5 10"/></svg></span><span><b>WordPress</b><small>CMS or WooCommerce build</small></span></button>
+                  <button type="button" class="service-card" data-service-option="Webflow website"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M7 12h10"/><path d="M9 16h6"/><path d="M4 5h16v14H4z"/></svg></span><span><b>Webflow</b><small>Polished marketing or CMS site</small></span></button>
+                  <button type="button" class="service-card" data-service-option="Business website / redesign"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg></span><span><b>Business site</b><small>Redesign or new company site</small></span></button>
+                  <button type="button" class="service-card" data-service-option="Maintenance & support"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6z"/><path d="m9 12 2 2 4-5"/></svg></span><span><b>Maintenance</b><small>Fixes, updates, support</small></span></button>
+                  <button type="button" class="service-card" data-service-option="Custom web app"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h3v3H8z"/><path d="M14 9h2"/><path d="M14 13h2"/><path d="M8 16h8"/></svg></span><span><b>Custom app</b><small>Dashboards, portals, systems</small></span></button>
+                  <button type="button" class="service-card" data-service-option="Not sure yet — need advice"><span class="svc-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 18h.01"/><path d="M9.2 9a3 3 0 1 1 5.1 2.1c-1.3 1-2.3 1.8-2.3 3.4"/><circle cx="12" cy="12" r="9"/></svg></span><span><b>Need advice</b><small>Help choosing the right path</small></span></button>
+                </div>
+                  </div>
+                </div>
+                <span class="field-error" id="service-card-err" hidden>Please choose the closest project type.</span>
+                <div class="project-details" id="projectDetails" hidden>
+                <div class="details-head">
+                  <span class="details-kicker">Project details</span>
+                  <p id="detailsIntro">A few focused questions help us prepare a useful first reply.</p>
+                </div>
+
+              <div class="detail-panel" data-detail-panel="shopify-revamp" data-intro="Tell us what is not working in the current Shopify store so we can focus the first review.">
+                <div class="field recommended">
+                  <label>What needs improvement?</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Design / branding"><span>Design / branding</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Conversion rate"><span>Conversion rate</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Mobile experience"><span>Mobile experience</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Product pages"><span>Product pages</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Cart / checkout flow"><span>Cart / checkout flow</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Speed / performance"><span>Speed / performance</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Apps / integrations"><span>Apps / integrations</span></label>
+                    <label class="check-card"><input type="checkbox" name="shopify_revamp_priorities[]" value="Not sure yet"><span>Not sure yet</span></label>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="shopifyTheme">Theme or setup</label>
+                    <select id="shopifyTheme" name="shopify_theme_setup">
+                      <option value="" selected>Select one…</option>
+                      <option>Shopify theme</option>
+                      <option>Custom theme</option>
+                      <option>Page builder app</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="shopifyProducts">Product count</label>
+                    <select id="shopifyProducts" name="shopify_product_count">
+                      <option value="" selected>Select one…</option>
+                      <option>1–20 products</option>
+                      <option>21–100 products</option>
+                      <option>100+ products</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label for="shopifyGoal">Main goal for the revamp</label>
+                  <textarea id="shopifyGoal" name="shopify_revamp_goal" placeholder="Example: cleaner design, faster site, better product pages, easier checkout, more confidence for customers."></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="new-shopify" data-intro="For a new ecommerce build, we need to understand the catalogue, selling setup, and launch readiness.">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="newStoreProducts">Expected product count</label>
+                    <select id="newStoreProducts" name="new_store_product_count">
+                      <option value="" selected>Select one…</option>
+                      <option>1–20 products</option>
+                      <option>21–100 products</option>
+                      <option>100+ products</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="brandAssets">Brand assets</label>
+                    <select id="brandAssets" name="brand_assets_status">
+                      <option value="" selected>Select one…</option>
+                      <option>Logo and brand assets ready</option>
+                      <option>Some assets ready</option>
+                      <option>Need branding help</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label>Ecommerce features needed</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="ecommerce_features[]" value="Online payments"><span>Online payments</span></label>
+                    <label class="check-card"><input type="checkbox" name="ecommerce_features[]" value="Shipping setup"><span>Shipping setup</span></label>
+                    <label class="check-card"><input type="checkbox" name="ecommerce_features[]" value="Product migration"><span>Product migration</span></label>
+                    <label class="check-card"><input type="checkbox" name="ecommerce_features[]" value="Subscriptions"><span>Subscriptions</span></label>
+                    <label class="check-card"><input type="checkbox" name="ecommerce_features[]" value="Email marketing"><span>Email marketing</span></label>
+                    <label class="check-card"><input type="checkbox" name="ecommerce_features[]" value="App integrations"><span>App integrations</span></label>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label for="storeLaunchNotes">Launch notes</label>
+                  <textarea id="storeLaunchNotes" name="new_store_launch_notes" placeholder="What are you selling, where will you ship, and what needs to be ready for launch?"></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="wordpress" data-intro="For WordPress or WooCommerce, the key is knowing whether this is content, commerce, or a custom feature build.">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="wpType">Project type</label>
+                    <select id="wpType" name="wordpress_project_type">
+                      <option value="" selected>Select one…</option>
+                      <option>Business website</option>
+                      <option>WooCommerce store</option>
+                      <option>Blog / publication</option>
+                      <option>Existing site redesign</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="wpContent">Content status</label>
+                    <select id="wpContent" name="wordpress_content_status">
+                      <option value="" selected>Select one…</option>
+                      <option>Content is ready</option>
+                      <option>Some content is ready</option>
+                      <option>Need copywriting help</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label>Features needed</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="wordpress_features[]" value="Editable CMS pages"><span>Editable CMS pages</span></label>
+                    <label class="check-card"><input type="checkbox" name="wordpress_features[]" value="WooCommerce checkout"><span>WooCommerce checkout</span></label>
+                    <label class="check-card"><input type="checkbox" name="wordpress_features[]" value="Booking / appointments"><span>Booking / appointments</span></label>
+                    <label class="check-card"><input type="checkbox" name="wordpress_features[]" value="Forms / lead capture"><span>Forms / lead capture</span></label>
+                    <label class="check-card"><input type="checkbox" name="wordpress_features[]" value="Memberships / accounts"><span>Memberships / accounts</span></label>
+                    <label class="check-card"><input type="checkbox" name="wordpress_features[]" value="SEO migration"><span>SEO migration</span></label>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label for="wpNotes">WordPress notes</label>
+                  <textarea id="wpNotes" name="wordpress_notes" placeholder="Mention plugins, hosting, old-site issues, or any must-have functionality."></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="webflow" data-intro="For Webflow, we look at page structure, CMS editing needs, and the level of motion/design polish.">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="webflowType">Website type</label>
+                    <select id="webflowType" name="webflow_site_type">
+                      <option value="" selected>Select one…</option>
+                      <option>Marketing website</option>
+                      <option>CMS website</option>
+                      <option>Portfolio / landing page</option>
+                      <option>Existing Webflow redesign</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="webflowMotion">Animation level</label>
+                    <select id="webflowMotion" name="webflow_animation_level">
+                      <option value="" selected>Select one…</option>
+                      <option>Simple and clean</option>
+                      <option>Some scroll / hover motion</option>
+                      <option>Highly interactive</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="webflowPages">Approx. pages</label>
+                    <select id="webflowPages" name="webflow_page_count">
+                      <option value="" selected>Select one…</option>
+                      <option>1 landing page</option>
+                      <option>2–5 pages</option>
+                      <option>6–10 pages</option>
+                      <option>10+ pages</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="webflowEditor">Who updates content?</label>
+                    <select id="webflowEditor" name="webflow_content_editor">
+                      <option value="" selected>Select one…</option>
+                      <option>KNB only</option>
+                      <option>Our team will edit</option>
+                      <option>Both</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label for="webflowExamples">Examples or style direction</label>
+                  <textarea id="webflowExamples" name="webflow_examples" placeholder="Share sites you like, brands you admire, or the kind of feeling the site should have."></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="business" data-intro="For business sites, we focus on goals, pages, content readiness, and what the redesign needs to fix.">
+                <div class="field recommended">
+                  <label>Main business website goals</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="business_goals[]" value="More enquiries"><span>More enquiries</span></label>
+                    <label class="check-card"><input type="checkbox" name="business_goals[]" value="Cleaner redesign"><span>Cleaner redesign</span></label>
+                    <label class="check-card"><input type="checkbox" name="business_goals[]" value="Better mobile experience"><span>Better mobile experience</span></label>
+                    <label class="check-card"><input type="checkbox" name="business_goals[]" value="Stronger trust / credibility"><span>Stronger trust / credibility</span></label>
+                    <label class="check-card"><input type="checkbox" name="business_goals[]" value="SEO foundations"><span>SEO foundations</span></label>
+                    <label class="check-card"><input type="checkbox" name="business_goals[]" value="Faster site"><span>Faster site</span></label>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="businessPages">Approx. pages</label>
+                    <select id="businessPages" name="business_page_count">
+                      <option value="" selected>Select one…</option>
+                      <option>1 landing page</option>
+                      <option>2–5 pages</option>
+                      <option>6–10 pages</option>
+                      <option>10+ pages</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="businessAssets">Content / assets</label>
+                    <select id="businessAssets" name="business_assets_status">
+                      <option value="" selected>Select one…</option>
+                      <option>Ready to go</option>
+                      <option>Partly ready</option>
+                      <option>Need copy or images</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="businessReferences">Competitors or examples</label>
+                  <textarea id="businessReferences" name="business_references" placeholder="Share competitors, reference sites, or what your current website should do better."></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="maintenance" data-intro="For support work, the most useful details are platform, urgency, and the type of help needed.">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="maintenancePlatform">Platform</label>
+                    <select id="maintenancePlatform" name="maintenance_platform">
+                      <option value="" selected>Select one…</option>
+                      <option>Shopify</option>
+                      <option>WordPress / WooCommerce</option>
+                      <option>Webflow</option>
+                      <option>Custom website / app</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="maintenanceUrgency">Urgency</label>
+                    <select id="maintenanceUrgency" name="maintenance_urgency">
+                      <option value="" selected>Select one…</option>
+                      <option>Urgent fix</option>
+                      <option>This week</option>
+                      <option>This month</option>
+                      <option>Ongoing support</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label>Support needed</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="maintenance_needs[]" value="Bug fixes"><span>Bug fixes</span></label>
+                    <label class="check-card"><input type="checkbox" name="maintenance_needs[]" value="Content updates"><span>Content updates</span></label>
+                    <label class="check-card"><input type="checkbox" name="maintenance_needs[]" value="Plugin / app updates"><span>Plugin / app updates</span></label>
+                    <label class="check-card"><input type="checkbox" name="maintenance_needs[]" value="Speed / performance"><span>Speed / performance</span></label>
+                    <label class="check-card"><input type="checkbox" name="maintenance_needs[]" value="Security / backups"><span>Security / backups</span></label>
+                    <label class="check-card"><input type="checkbox" name="maintenance_needs[]" value="Analytics / tracking"><span>Analytics / tracking</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="maintenanceNotes">Support notes</label>
+                  <textarea id="maintenanceNotes" name="maintenance_notes" placeholder="Tell us what changed, what broke, or what you want handled every month."></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="custom-app" data-intro="For custom systems, we need the workflow, user roles, features, and any tools it must connect to.">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="appType">App type</label>
+                    <select id="appType" name="custom_app_type">
+                      <option value="" selected>Select one…</option>
+                      <option>Dashboard / reporting</option>
+                      <option>Client portal</option>
+                      <option>Booking / scheduling</option>
+                      <option>POS / internal tool</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="appStage">Project stage</label>
+                    <select id="appStage" name="custom_app_stage">
+                      <option value="" selected>Select one…</option>
+                      <option>Idea only</option>
+                      <option>Rough workflow mapped</option>
+                      <option>Existing system to replace</option>
+                      <option>Ready for discovery</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field recommended">
+                  <label>Core features</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="custom_app_features[]" value="User accounts"><span>User accounts</span></label>
+                    <label class="check-card"><input type="checkbox" name="custom_app_features[]" value="Admin dashboard"><span>Admin dashboard</span></label>
+                    <label class="check-card"><input type="checkbox" name="custom_app_features[]" value="Payments"><span>Payments</span></label>
+                    <label class="check-card"><input type="checkbox" name="custom_app_features[]" value="CRM / records"><span>CRM / records</span></label>
+                    <label class="check-card"><input type="checkbox" name="custom_app_features[]" value="Automations"><span>Automations</span></label>
+                    <label class="check-card"><input type="checkbox" name="custom_app_features[]" value="Third-party integrations"><span>Third-party integrations</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="appIntegrations">Tools it should connect to</label>
+                  <input type="text" id="appIntegrations" name="custom_app_integrations" placeholder="Example: Shopify, Xero, Airtable, Google Sheets, Stripe">
+                </div>
+                <div class="field">
+                  <label for="appNotes">Workflow notes</label>
+                  <textarea id="appNotes" name="custom_app_notes" placeholder="What should the app help people do? Who uses it? What happens first, next, and last?"></textarea>
+                </div>
+              </div>
+
+              <div class="detail-panel" data-detail-panel="advice" data-intro="If you are not sure what you need yet, tell us where you are stuck and we will point you in the right direction.">
+                <div class="field recommended">
+                  <label>What do you need help deciding?</label>
+                  <div class="choice-grid">
+                    <label class="check-card"><input type="checkbox" name="advice_topics[]" value="Choosing a platform"><span>Choosing a platform</span></label>
+                    <label class="check-card"><input type="checkbox" name="advice_topics[]" value="New site vs redesign"><span>New site vs redesign</span></label>
+                    <label class="check-card"><input type="checkbox" name="advice_topics[]" value="Ecommerce setup"><span>Ecommerce setup</span></label>
+                    <label class="check-card"><input type="checkbox" name="advice_topics[]" value="Scope / budget fit"><span>Scope / budget fit</span></label>
+                    <label class="check-card"><input type="checkbox" name="advice_topics[]" value="Maintenance / support"><span>Maintenance / support</span></label>
+                    <label class="check-card"><input type="checkbox" name="advice_topics[]" value="Not sure where to start"><span>Not sure where to start</span></label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="adviceStage">Where are you now?</label>
+                  <select id="adviceStage" name="advice_stage">
+                    <option value="" selected>Select one…</option>
+                    <option>Have an existing site</option>
+                    <option>Starting a new business</option>
+                    <option>Launching a new offer</option>
+                    <option>Just exploring</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="adviceNotes">What is the situation?</label>
+                  <textarea id="adviceNotes" name="advice_notes" placeholder="Tell us what you are trying to figure out. We can recommend the right starting point."></textarea>
+                </div>
+              </div>
             </div>
-            <div class="field recaptcha-field">
-              <div data-netlify-recaptcha="true"></div>
-              <span class="field-error" id="recaptcha-err" hidden>Please complete the reCAPTCHA above.</span>
             </div>
-            <button type="submit" class="btn"><span class="dot"></span>Start my project</button>
-            <p class="form-note">We reply within 1 business day. Your details stay private. Protected by reCAPTCHA.</p>
+              <div class="step-nav">
+                <button type="button" class="btn btn-quiet" data-prev-step><span class="dot"></span>Back</button>
+                <button type="button" class="btn" data-next-step><span class="dot"></span>Next: timing</button>
+              </div>
+            </div>
+
+            <div class="form-section form-step" data-step="2">
+              <div class="form-section-head"><span class="num">03</span><b>Timing &amp; notes</b></div>
+              <p class="timing-intro">Last step — tell us your timeline and the best way to reach you, then send. We reply within one business day.</p>
+              <div class="field">
+                <label id="timingQ">When do you want to launch?</label>
+                <div class="time-list" id="timeList">
+                  <label class="time-row"><input type="radio" name="timeline" value="As soon as possible"><span class="tr-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span><span class="tr-t"><b>ASAP</b><small>Ready to start now</small></span><span class="tr-radio" aria-hidden="true"></span></label>
+                  <label class="time-row"><input type="radio" name="timeline" value="Within 1–3 months"><span class="tr-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span><span class="tr-t"><b>1–3 months</b><small>Planning ahead</small></span><span class="tr-radio" aria-hidden="true"></span></label>
+                  <label class="time-row"><input type="radio" name="timeline" value="In 3–6 months"><span class="tr-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="tr-t"><b>3–6 months</b><small>Mapping it out</small></span><span class="tr-radio" aria-hidden="true"></span></label>
+                  <label class="time-row"><input type="radio" name="timeline" value="Just exploring"><span class="tr-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></span><span class="tr-t"><b>Just exploring</b><small>Gathering ideas</small></span><span class="tr-radio" aria-hidden="true"></span></label>
+                </div>
+              </div>
+              <div class="field">
+                <label>Preferred contact method <span class="opt">(optional)</span></label>
+                <div class="pill-row">
+                  <label class="time-seg"><input type="radio" name="preferred_contact" value="Email"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Email</span></label>
+                  <label class="time-seg"><input type="radio" name="preferred_contact" value="WhatsApp"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg><span>WhatsApp</span></label>
+                  <label class="time-seg"><input type="radio" name="preferred_contact" value="Phone call"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Phone call</span></label>
+                </div>
+              </div>
+              <details class="notes-disclosure">
+                <summary>Add more context</summary>
+                <div class="field">
+                  <label for="message">Anything else? <span class="opt">(optional)</span></label>
+                  <textarea id="message" name="message" placeholder="Notes, constraints, references, or context not covered above."></textarea>
+                </div>
+              </details>
+              <div class="request-summary" aria-live="polite">
+                <div class="summary-head">
+                  <span class="summary-kicker">Your request</span>
+                  <span class="summary-ready" id="summaryReady">In progress</span>
+                </div>
+                <ul class="summary-list" id="requestSummary"></ul>
+              </div>
+              <div class="form-actions">
+                <div class="field recaptcha-field">
+                  <div data-netlify-recaptcha="true"></div>
+                  <span class="field-error" id="recaptcha-err" hidden>Please complete the reCAPTCHA above.</span>
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="btn btn-quiet" data-prev-step><span class="dot"></span>Back</button>
+                  <button type="submit" class="btn"><span class="dot"></span>Start my project</button>
+                </div>
+                <p class="form-note">We reply within 1 business day. Your details stay private. Protected by reCAPTCHA.</p>
+              </div>
+            </div>
           </form>
           <div class="form-success" id="formSuccess">
             <div class="check">✓</div>
@@ -516,7 +1070,268 @@
     const form = document.getElementById('auditForm');
     const nameEl = document.getElementById('name');
     const emailEl = document.getElementById('email');
+    const serviceEl = document.getElementById('service');
+    const projectDetails = document.getElementById('projectDetails');
+    const detailsIntro = document.getElementById('detailsIntro');
+    const detailPanels = projectDetails ? Array.from(projectDetails.querySelectorAll('.detail-panel')) : [];
+    const servicePicker = document.getElementById('servicePicker');
+    const serviceCards = servicePicker ? Array.from(servicePicker.querySelectorAll('.service-card')) : [];
+    const serviceCardErr = document.getElementById('service-card-err');
+    const steps = Array.from(form.querySelectorAll('.form-step'));
+    const stepTabs = Array.from(form.querySelectorAll('.step-tab'));
+    const summaryList = document.getElementById('requestSummary');
+    let currentStep = 0;
     const emailOK = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    function selectedServiceOption() {
+      return serviceEl?.selectedOptions?.[0] || null;
+    }
+
+    function selectServiceByValue(value) {
+      if (!serviceEl) return;
+      const option = Array.from(serviceEl.options).find((opt) => opt.textContent.trim() === value);
+      if (!option) return;
+      serviceEl.value = option.value || option.textContent;
+      serviceEl.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function syncProjectDetails() {
+      if (!serviceEl || !projectDetails) return;
+      const key = selectedServiceOption()?.dataset.detail || '';
+      const label = selectedServiceOption()?.textContent.trim() || '';
+      projectDetails.hidden = !key;
+      servicePicker?.classList.toggle('invalid', false);
+      if (serviceCardErr) serviceCardErr.hidden = true;
+      serviceCards.forEach((card) => {
+        const active = card.dataset.serviceOption === label;
+        card.classList.toggle('active', active);
+        card.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      detailPanels.forEach((panel) => {
+        const active = panel.dataset.detailPanel === key;
+        panel.classList.toggle('active', active);
+        panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+        panel.querySelectorAll('input, select, textarea').forEach((control) => {
+          control.disabled = !active;
+        });
+        if (active && detailsIntro) detailsIntro.textContent = panel.dataset.intro || 'A few focused questions help us prepare a useful first reply.';
+      });
+      updateSummary();
+    }
+    serviceEl?.addEventListener('change', syncProjectDetails);
+    serviceCards.forEach((card) => {
+      card.addEventListener('click', () => selectServiceByValue(card.dataset.serviceOption));
+    });
+    syncProjectDetails();
+
+    // project-type dropdown (custom, card-styled)
+    (function () {
+      const ddWrap = document.getElementById('serviceDD');
+      const ddTrigger = document.getElementById('serviceDDTrigger');
+      const ddIcon = document.getElementById('ddIcon');
+      const ddTitle = document.getElementById('ddTitle');
+      const ddSub = document.getElementById('ddSub');
+      if (!ddWrap || !ddTrigger) return;
+      const close = () => { ddWrap.classList.remove('open'); ddTrigger.setAttribute('aria-expanded', 'false'); };
+      const open = () => { ddWrap.classList.add('open'); ddTrigger.setAttribute('aria-expanded', 'true'); };
+      const updateTrigger = () => {
+        const active = serviceCards.find((c) => c.classList.contains('active'));
+        if (active) {
+          ddIcon.innerHTML = active.querySelector('.svc-ic').innerHTML;
+          ddTitle.textContent = active.querySelector('b').textContent;
+          ddSub.textContent = active.querySelector('small').textContent;
+          ddTrigger.classList.add('has-value');
+          ddTrigger.classList.remove('invalid');
+        } else {
+          ddTitle.textContent = 'Select a project type';
+          ddSub.textContent = 'Pick what you need help with';
+          ddTrigger.classList.remove('has-value');
+        }
+      };
+      ddTrigger.addEventListener('click', (e) => { e.stopPropagation(); ddWrap.classList.contains('open') ? close() : open(); });
+      serviceCards.forEach((c) => c.addEventListener('click', close));
+      serviceEl?.addEventListener('change', updateTrigger);
+      document.addEventListener('click', (e) => { if (!ddWrap.contains(e.target)) close(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+      updateTrigger();
+    })();
+
+    document.querySelectorAll('.check-card input[type="checkbox"]').forEach((box) => {
+      const sync = () => box.closest('.check-card')?.classList.toggle('is-checked', box.checked);
+      box.addEventListener('change', sync);
+      sync();
+    });
+
+    // per-project-type timeline question + options (rendered into #timeList)
+    const TI = {
+      zap: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>',
+      cal: '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+      clock: '<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+      compass: '<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>'
+    };
+    const LAUNCH = [
+      { v: 'As soon as possible', l: 'ASAP', s: 'Ready to start now', i: 'zap' },
+      { v: 'Within 1–3 months', l: '1–3 months', s: 'Planning ahead', i: 'cal' },
+      { v: 'In 3–6 months', l: '3–6 months', s: 'Mapping it out', i: 'clock' },
+      { v: 'Just exploring', l: 'Just exploring', s: 'Gathering ideas', i: 'compass' }
+    ];
+    const MAINT = [
+      { v: 'Right away', l: 'Right away', s: 'Something needs attention now', i: 'zap' },
+      { v: 'Within a few days', l: 'Within a few days', s: 'Soon, not an emergency', i: 'cal' },
+      { v: 'Ongoing / monthly care', l: 'Ongoing care', s: 'Regular monthly support', i: 'clock' },
+      { v: 'Just planning ahead', l: 'Just planning', s: 'Lining up support for later', i: 'compass' }
+    ];
+    const ADVICE = [
+      { v: 'Ready to start soon', l: 'Soon', s: 'Ready to move once I decide', i: 'zap' },
+      { v: 'Next few months', l: 'Next few months', s: 'Planning the next step', i: 'cal' },
+      { v: 'Later this year', l: 'Later this year', s: 'Further out', i: 'clock' },
+      { v: 'Just researching', l: 'Just researching', s: 'Gathering information', i: 'compass' }
+    ];
+    const TIMING = {
+      'shopify-revamp': { q: 'When do you want the revamp live?', o: LAUNCH },
+      'new-shopify': { q: 'When do you want to launch the store?', o: LAUNCH },
+      'wordpress': { q: 'When do you want the site live?', o: LAUNCH },
+      'webflow': { q: 'When do you want the site live?', o: LAUNCH },
+      'business': { q: 'When do you want the new site live?', o: LAUNCH },
+      'custom-app': { q: 'When do you want to start the build?', o: LAUNCH },
+      'maintenance': { q: 'How soon do you need help?', o: MAINT },
+      'advice': { q: 'What’s your timeframe?', o: ADVICE },
+      '': { q: 'When do you want to launch?', o: LAUNCH }
+    };
+    function renderTiming() {
+      const list = document.getElementById('timeList');
+      const qEl = document.getElementById('timingQ');
+      if (!list || !qEl) return;
+      const key = selectedServiceOption()?.dataset.detail || '';
+      const cfg = TIMING[key] || TIMING[''];
+      const prev = form.querySelector('input[name="timeline"]:checked')?.value;
+      qEl.textContent = cfg.q;
+      list.innerHTML = cfg.o.map((o) =>
+        '<label class="time-row"><input type="radio" name="timeline" value="' + o.v + '"' + (o.v === prev ? ' checked' : '') + '>' +
+        '<span class="tr-ic">' + TI[o.i] + '</span>' +
+        '<span class="tr-t"><b>' + o.l + '</b><small>' + o.s + '</small></span>' +
+        '<span class="tr-radio" aria-hidden="true"></span></label>'
+      ).join('');
+      list.querySelectorAll('.time-row').forEach((el) => el.classList.toggle('is-checked', !!el.querySelector('input')?.checked));
+      updateSummary();
+    }
+    serviceEl?.addEventListener('change', renderTiming);
+
+    // is-checked toggle for timeline rows + contact pills (delegated, survives re-render)
+    form.addEventListener('change', (e) => {
+      if (e.target && e.target.matches && e.target.matches('.time-row input[type="radio"], .time-seg input[type="radio"]')) {
+        document.querySelectorAll('.time-row, .time-seg').forEach((el) => {
+          el.classList.toggle('is-checked', !!el.querySelector('input')?.checked);
+        });
+      }
+    });
+    document.querySelectorAll('.time-row, .time-seg').forEach((el) => {
+      el.classList.toggle('is-checked', !!el.querySelector('input')?.checked);
+    });
+    renderTiming();
+
+    form.addEventListener('input', updateSummary);
+    form.addEventListener('change', updateSummary);
+
+    function showStep(index) {
+      currentStep = Math.max(0, Math.min(index, steps.length - 1));
+      steps.forEach((step, i) => step.classList.toggle('active', i === currentStep));
+      stepTabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === currentStep);
+        tab.setAttribute('aria-current', i === currentStep ? 'step' : 'false');
+      });
+      updateSummary();
+    }
+
+    function validStep(index) {
+      if (index === 0) return validate();
+      if (index === 1 && !selectedServiceOption()?.dataset.detail) {
+        servicePicker?.classList.add('invalid');
+        document.getElementById('serviceDDTrigger')?.classList.add('invalid');
+        if (serviceCardErr) serviceCardErr.hidden = false;
+        document.getElementById('serviceDD')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return false;
+      }
+      return true;
+    }
+
+    form.querySelectorAll('[data-next-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!validStep(currentStep)) return;
+        showStep(currentStep + 1);
+      });
+    });
+    form.querySelectorAll('[data-prev-step]').forEach((btn) => {
+      btn.addEventListener('click', () => showStep(currentStep - 1));
+    });
+    stepTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = Number(tab.dataset.stepTarget || 0);
+        if (target > currentStep) {
+          for (let i = currentStep; i < target; i += 1) {
+            if (!validStep(i)) { showStep(i); return; }
+          }
+        }
+        showStep(target);
+      });
+    });
+
+    function readActiveDetails() {
+      const panel = document.querySelector('.detail-panel.active');
+      if (!panel) return 'Not selected yet';
+      const values = [];
+      panel.querySelectorAll('input, select, textarea').forEach((el) => {
+        if (el.disabled) return;
+        if (el.type === 'checkbox') {
+          if (el.checked) values.push(el.value);
+          return;
+        }
+        if (el.tagName === 'SELECT') {
+          const text = el.selectedOptions[0]?.textContent.trim();
+          if (text && text !== 'Select one…') values.push(text);
+          return;
+        }
+        if (el.value.trim()) values.push(el.value.trim());
+      });
+      return values.slice(0, 4).join(', ') || 'Details pending';
+    }
+
+    function updateSummary() {
+      if (!summaryList) return;
+      const service = selectedServiceOption()?.dataset.detail ? selectedServiceOption().textContent.trim() : 'Not selected yet';
+      const timeline = form.querySelector('input[name="timeline"]:checked')?.value || 'Not selected yet';
+      const contact = form.querySelector('input[name="preferred_contact"]:checked')?.value;
+      const site = document.getElementById('site')?.value.trim() || 'No URL added';
+      const notes = document.getElementById('message')?.value.trim();
+      const rows = [
+        ['Service', service],
+        ['Current URL', site],
+        ['Details', readActiveDetails()],
+        ['Timeline', timeline]
+      ];
+      if (contact) rows.push(['Preferred contact', contact]);
+      if (notes) rows.push(['Extra notes', notes]);
+      const esc = (s) => s.replace(/[<>&]/g, (c) => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+      const PENDING = ['Not selected yet', 'No URL added', 'Details pending', ''];
+      summaryList.innerHTML = rows.map(([k, v]) => {
+        const pend = PENDING.indexOf(v) !== -1;
+        return '<li class="' + (pend ? 'is-pending' : 'is-filled') + '"><span class="sl-k"><i class="sl-dot"></i>' + k + '</span><b>' + esc(v) + '</b></li>';
+      }).join('');
+      // live readiness badge — reflects whether the form can actually be sent
+      const core = [
+        !!(nameEl && nameEl.value.trim()),
+        emailOK(emailEl ? emailEl.value.trim() : ''),
+        !!selectedServiceOption()?.dataset.detail
+      ];
+      const done = core.filter(Boolean).length;
+      const ready = done === core.length;
+      const badge = document.getElementById('summaryReady');
+      if (badge) {
+        badge.classList.toggle('is-ready', ready);
+        badge.textContent = ready ? 'Ready to send' : (done + ' of ' + core.length + ' ready');
+      }
+    }
+    showStep(0);
 
     function setError(el, show) {
       const field = el.closest('.field');
@@ -541,7 +1356,8 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!validate()) return;
+      if (!validate()) { showStep(0); return; }
+      if (!selectedServiceOption()?.dataset.detail) { showStep(1); validStep(1); return; }
       // require reCAPTCHA when Netlify has rendered it (only renders on the deployed Netlify site)
       const rc = document.getElementById('recaptcha-err');
       if (window.grecaptcha && typeof grecaptcha.getResponse === 'function') {
@@ -567,5 +1383,27 @@
     });
   </script>
   <script src="navmenu.js"></script>
+  <script>
+    // Carry selected add-ons from the pricing popup (?addons=A, B, C) into the form.
+    (function () {
+      var raw = new URLSearchParams(location.search).get('addons');
+      if (!raw) { return; }
+      var items = raw.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      if (!items.length) { return; }
+      var field = document.getElementById('addonsField');
+      if (field) { field.value = items.join(', '); }
+      var box = document.getElementById('addonsSummary');
+      var chips = document.getElementById('addonsChips');
+      if (box && chips) {
+        items.forEach(function (x) {
+          var c = document.createElement('span');
+          c.className = 'as-chip';
+          c.textContent = x;
+          chips.appendChild(c);
+        });
+        box.hidden = false;
+      }
+    })();
+  </script>
 </body>
 </html>

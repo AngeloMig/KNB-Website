@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radial orbit — everything combined</title>
+<style>
+  :root{ --bg:#f4f2ec; --ink:#111110; --muted:#6b6a64; --line:#e3e1d8; --card:#fff; --grn:#5e8e3e; --pink:#e83fa0; --ease:cubic-bezier(.16,1,.3,1); }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Satoshi",Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+  svg{ display:block; }
+
+  .pg-head{ padding:52px 0 8px; }
+  .pg-eyebrow{ font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--pink); }
+  .pg-head h1{ font-size:clamp(26px,4vw,40px); font-weight:600; letter-spacing:-.03em; margin:12px 0 8px; }
+  .pg-head p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:66ch; margin:0; }
+  .legend{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .legend span{ font-size:12px; font-weight:600; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:100px; padding:6px 12px; }
+  .legend span b{ color:var(--pink); }
+
+  .demo-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin:40px 0 8px; }
+  .demo-head h2{ font-size:18px; font-weight:650; margin:0; }
+  .replay{ font-family:inherit; font-size:12.5px; font-weight:700; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:100px; padding:8px 15px; cursor:pointer; }
+  .replay:hover{ border-color:rgba(17,17,16,.32); }
+
+  .stage{ position:relative; background:linear-gradient(180deg,#faf9f5,#efeee8); border:1px solid var(--line); border-radius:26px; padding:clamp(26px,4vw,46px); overflow:hidden; }
+  .sec-eyebrow{ display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--pink); }
+  .sec-eyebrow::before{ content:""; width:8px; height:8px; border-radius:50%; background:var(--grn); }
+  .sec-h{ font-size:clamp(24px,3.2vw,38px); font-weight:600; letter-spacing:-.03em; margin:14px 0 0; }
+
+  /* ----- ORBIT ----- */
+  .orbit-stage{ perspective:1200px; margin:24px auto 4px; }
+  .orbit{ position:relative; width:min(610px,100%); aspect-ratio:1/1; margin:0 auto; transform-style:preserve-3d; transition:transform .4s var(--ease); will-change:transform; }
+  .orbit > svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+
+  .o-ticks{ fill:none; stroke:rgba(17,17,16,.18); stroke-width:9; stroke-dasharray:1.5 13; transform-origin:300px 300px; animation:spin 60s linear infinite; }
+  .o-ring{ fill:none; stroke:rgba(17,17,16,.10); stroke-width:1.5; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .o-arc{ fill:none; stroke:url(#og); stroke-width:3; stroke-linecap:round; stroke-dasharray:900; stroke-dashoffset:900; }
+  .play .o-arc{ transition:stroke-dashoffset 1.8s var(--ease); stroke-dashoffset:0; }
+  .o-spoke{ stroke:rgba(17,17,16,.16); stroke-width:1.5; stroke-dasharray:4 6; stroke-dashoffset:120; }
+  .play .o-spoke{ transition:stroke-dashoffset 1s var(--ease) .4s; stroke-dashoffset:0; }
+  .o-node{ fill:var(--card); stroke:rgba(17,17,16,.25); stroke-width:2; transform-box:fill-box; transform-origin:center; }
+  .o-pulse{ fill:none; stroke:var(--grn); stroke-width:2; opacity:0; transform-box:fill-box; transform-origin:center; }
+  .play .o-pulse{ animation:nodePulse 4.8s var(--ease) infinite; }
+  .o-pulse.p1{ animation-delay:.25s; } .o-pulse.p2{ animation-delay:1.45s; } .o-pulse.p3{ animation-delay:2.65s; } .o-pulse.p4{ animation-delay:3.85s; }
+  @keyframes nodePulse{ 0%{ opacity:.7; transform:scale(1);} 22%{ opacity:0; transform:scale(2.4);} 100%{ opacity:0; transform:scale(2.4);} }
+  .o-comet{ fill:var(--ink); filter:drop-shadow(0 0 6px rgba(17,17,16,.5)); opacity:0; }
+  .play .o-comet{ opacity:1; }
+
+  .o-hub{ position:absolute; left:50%; top:50%; width:31%; aspect-ratio:1; transform:translate(-50%,-50%) scale(.5); border-radius:50%; background:radial-gradient(circle at 35% 30%, #2a2823, #111110); color:var(--bg); display:grid; place-items:center; text-align:center; z-index:4; opacity:0; box-shadow:0 18px 50px -18px rgba(17,17,16,.7); }
+  .play .o-hub{ animation:hubIgnite .8s var(--ease) .9s forwards; }
+  @keyframes hubIgnite{ to{ opacity:1; transform:translate(-50%,-50%) scale(1); } }
+  .o-hub::after{ content:""; position:absolute; inset:-6px; border-radius:50%; border:1px solid rgba(94,142,62,.5); opacity:0; }
+  .play .o-hub::after{ animation:hubGlow 3.4s var(--ease) 2.2s infinite; }
+  @keyframes hubGlow{ 0%{ opacity:.6; transform:scale(1);} 60%{ opacity:0; transform:scale(1.16);} 100%{opacity:0;} }
+  .o-hub .hl{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+  .o-hub b{ display:block; font-size:clamp(15px,2vw,19px); font-weight:650; letter-spacing:-.02em; margin-top:4px; line-height:1.1; padding:0 8px; }
+
+  .o-card{ --tone:var(--ink); position:absolute; width:42%; max-width:250px; min-height:122px; display:grid; grid-template-columns:50px minmax(0,1fr); gap:13px; align-items:start; background:rgba(255,255,255,.9); border:1px solid rgba(17,17,16,.13); border-radius:6px; padding:16px 18px 16px 16px; box-shadow:0 18px 42px -28px rgba(17,17,16,.48); opacity:0; z-index:3; cursor:default; overflow:hidden; transition:transform .35s var(--ease),border-color .3s,box-shadow .3s,background .3s,color .3s; will-change:transform,opacity; }
+  .o-card::before{ content:""; position:absolute; inset:0 auto 0 0; width:5px; background:var(--tone); opacity:.88; transform:scaleY(.34); transform-origin:50% 0; transition:transform .45s var(--ease),opacity .3s; }
+  .o-card::after{ content:attr(data-n); position:absolute; right:9px; bottom:-20px; color:rgba(17,17,16,.045); font-size:104px; line-height:.8; font-weight:900; letter-spacing:-.08em; pointer-events:none; transition:color .3s; }
+  .play .o-card{ animation:cardIn .55s var(--ease) forwards; }
+  .o-c1{ --tone:#5e8e3e; left:50%; top:0; transform:translate(-50%,-30px); } .play .o-c1{ animation-delay:.4s; }
+  .o-c2{ --tone:#e83fa0; right:-78px; top:50%; transform:translate(30px,-50%); }  .play .o-c2{ animation-delay:.8s; }
+  .o-c3{ --tone:#111110; left:50%; bottom:0; transform:translate(-50%,30px); } .play .o-c3{ animation-delay:1.2s; }
+  .o-c4{ --tone:#6d6c66; left:-78px; top:50%; transform:translate(-30px,-50%); }   .play .o-c4{ animation-delay:1.6s; }
+  @keyframes cardIn{ to{ opacity:1; transform:translate(var(--tx,-50%),var(--ty,0)); } }
+  .o-c1{ --tx:-50%; --ty:0; } .o-c3{ --tx:-50%; --ty:0; } .o-c2{ --tx:0; --ty:-50%; } .o-c4{ --tx:0; --ty:-50%; }
+  .o-card.on{ background:var(--ink); color:var(--bg); border-color:rgba(17,17,16,.9); box-shadow:0 34px 78px -24px rgba(17,17,16,.72); z-index:5; }
+  .o-card.on::before{ opacity:1; transform:scaleY(1); }
+  .o-card.on::after{ color:rgba(255,255,255,.07); }
+  .o-c1.on{ transform:translate(-50%,-8px); } .o-c3.on{ transform:translate(-50%,8px); }
+  .o-c2.on{ transform:translate(12px,-50%); } .o-c4.on{ transform:translate(-12px,-50%); }
+  .o-card .h{ display:contents; }
+  .o-ic{ grid-column:1; grid-row:1 / span 3; width:46px; height:46px; border-radius:50%; background:color-mix(in srgb, var(--tone) 10%, #f4f3ef); border:1px solid color-mix(in srgb, var(--tone) 28%, var(--line)); display:grid; place-items:center; color:var(--tone); transition:background .25s,color .25s,border-color .25s,transform .35s var(--ease); }
+  .o-card.on .o-ic{ background:#fff; border-color:#fff; color:var(--ink); transform:translateY(-2px) scale(1.04); }
+  .o-ic svg{ position:static; inset:auto; width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.85; stroke-linecap:round; stroke-linejoin:round; overflow:visible; }
+  .o-qn{ position:absolute; top:12px; right:12px; min-width:34px; height:22px; padding:0 8px; border-radius:2px; background:color-mix(in srgb, var(--tone) 12%, #f4f3ef); color:var(--ink); border:1px solid color-mix(in srgb, var(--tone) 28%, var(--line)); font-size:10.5px; font-weight:850; display:grid; place-items:center; transition:background .3s,color .3s,border-color .3s; }
+  .o-card.on .o-qn{ background:#fff; color:var(--ink); border-color:#fff; }
+  .o-tag{ grid-column:2; display:inline-flex; align-items:center; gap:7px; width:fit-content; margin:0 42px 2px 0; color:var(--tone); font-size:10.5px; font-weight:850; letter-spacing:.13em; text-transform:uppercase; transition:color .3s; }
+  .o-tag::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--tone); transition:background .3s; }
+  .o-card.on .o-tag{ color:var(--pink); }
+  .o-card.on .o-tag::before{ background:var(--pink); }
+  .o-card h3{ grid-column:2; font-size:clamp(15px,1.4vw,17.5px); font-weight:800; letter-spacing:-.03em; line-height:1.05; margin:0; }
+  .o-card p{ grid-column:2; font-size:12.2px; color:var(--muted); line-height:1.45; margin:8px 0 0; transition:color .3s; }
+  .o-card.on p{ color:rgba(244,243,239,.74); }
+
+  @media(prefers-reduced-motion:reduce){
+    .o-ticks{ animation:none; } .o-arc{ stroke-dashoffset:0; } .o-spoke{ stroke-dashoffset:0; }
+    .o-comet{ display:none; } .o-pulse{ display:none; }
+    .o-hub{ opacity:1; transform:translate(-50%,-50%) scale(1); animation:none; }
+    .o-card{ opacity:1; animation:none; }
+    .o-c1{ transform:translate(-50%,0);} .o-c3{ transform:translate(-50%,0);} .o-c2{ transform:translate(0,-50%);} .o-c4{ transform:translate(0,-50%);}
+  }
+  @media(max-width:680px){
+    .orbit > svg, .o-hub{ display:none; }
+    .orbit{ aspect-ratio:auto; display:grid; gap:12px; }
+    .o-card{ position:static; width:100%; max-width:none; min-height:0; transform:translateY(14px); opacity:0; animation:none; }
+    .play .o-card{ animation:cardInMobile .55s var(--ease) forwards; }
+    .o-card p{ max-height:80px; opacity:1; margin-top:9px; }
+  }
+  @keyframes cardInMobile{ to{ opacity:1; transform:none; } }
+  @media(max-width:680px) and (prefers-reduced-motion:reduce){
+    .o-card{ opacity:1; transform:none !important; }
+    .play .o-card{ animation:none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="pg-head">
+      <div class="pg-eyebrow">Preview · internal</div>
+      <h1>Radial orbit — everything combined</h1>
+      <p>One orbit folding in the compatible design ideas (sequential ring path, compass ticks, interactive focus, depth) and <b>all five</b> animations. Hover a step to focus it; the hub mirrors it and the whole orbit tilts toward your cursor. Use Replay to re-run the entrance.</p>
+      <div class="legend">
+        <span><b>Design</b> · sequential path + compass ticks + focus + depth</span>
+        <span><b>Anim 1</b> draw-on</span>
+        <span><b>Anim 2</b> comet lights nodes</span>
+        <span><b>Anim 3</b> scroll reveal</span>
+        <span><b>Anim 4</b> magnetic hover + parallax</span>
+        <span><b>Anim 5</b> hub ignite + idle spin</span>
+      </div>
+    </header>
+
+    <div class="demo-head">
+      <h2>The combined orbit</h2>
+      <button class="replay" id="replay">↻ Replay entrance</button>
+    </div>
+
+    <div class="stage">
+      <div class="sec-eyebrow">How it works</div>
+      <h2 class="sec-h">A calmer path from idea to launch</h2>
+
+      <div class="orbit-stage">
+        <div class="orbit" id="orbit">
+          <svg viewBox="0 0 600 600" aria-hidden="true">
+            <defs>
+              <linearGradient id="og" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#5e8e3e"/><stop offset="1" stop-color="#111110"/>
+              </linearGradient>
+            </defs>
+            <circle class="o-ticks" cx="300" cy="300" r="232"/>
+            <circle class="o-ring" cx="300" cy="300" r="190"/>
+            <!-- spokes hub->node -->
+            <line class="o-spoke" x1="300" y1="300" x2="300" y2="110"/>
+            <line class="o-spoke" x1="300" y1="300" x2="490" y2="300"/>
+            <line class="o-spoke" x1="300" y1="300" x2="300" y2="490"/>
+            <line class="o-spoke" x1="300" y1="300" x2="110" y2="300"/>
+            <!-- sequential arc path 1->2->3->4 (clockwise 270deg) -->
+            <path id="arcPath" class="o-arc" d="M300,110 A190,190 0 0 1 490,300 A190,190 0 0 1 300,490 A190,190 0 0 1 110,300"/>
+            <!-- node markers + pulses -->
+            <circle class="o-node" cx="300" cy="110" r="6"/><circle class="o-pulse p1" cx="300" cy="110" r="6"/>
+            <circle class="o-node" cx="490" cy="300" r="6"/><circle class="o-pulse p2" cx="490" cy="300" r="6"/>
+            <circle class="o-node" cx="300" cy="490" r="6"/><circle class="o-pulse p3" cx="300" cy="490" r="6"/>
+            <circle class="o-node" cx="110" cy="300" r="6"/><circle class="o-pulse p4" cx="110" cy="300" r="6"/>
+            <!-- comet riding the arc -->
+            <circle class="o-comet" r="6">
+              <animateMotion id="cometMotion" dur="4.8s" begin="indefinite" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+                <mpath href="#arcPath"/>
+              </animateMotion>
+            </circle>
+          </svg>
+
+          <div class="o-hub" id="hub"><div><span class="hl" id="hubLabel">The goal</span><b id="hubTitle">Launch</b></div></div>
+
+          <div class="o-card o-c1" data-n="1" data-t="Free consultation" data-l="Step 01" tabindex="0">
+            <span class="o-qn">01</span>
+            <div class="h"><span class="o-ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="o-tag">Step 01</span><h3>Free consultation</h3></div>
+            <p>Goal, current site, platform, timeline, and the help that’s actually useful.</p>
+          </div>
+          <div class="o-card o-c2" data-n="2" data-t="Scope &amp; proposal" data-l="Step 02" tabindex="0">
+            <span class="o-qn">02</span>
+            <div class="h"><span class="o-ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><span class="o-tag">Step 02</span><h3>Scope &amp; proposal</h3></div>
+            <p>A written plan: pages, features, responsibilities, timeline, and exclusions.</p>
+          </div>
+          <div class="o-card o-c3" data-n="3" data-t="Design &amp; build" data-l="Step 03" tabindex="0">
+            <span class="o-qn">03</span>
+            <div class="h"><span class="o-ic"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><span class="o-tag">Step 03</span><h3>Design &amp; build</h3></div>
+            <p>Structure, visuals, responsive layouts, integrations, and CMS/store setup.</p>
+          </div>
+          <div class="o-card o-c4" data-n="4" data-t="QA, launch &amp; support" data-l="Step 04" tabindex="0">
+            <span class="o-qn">04</span>
+            <div class="h"><span class="o-ic"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 4s4 0 6 2 2 6 2 6l-8 5-7-7z"/><circle cx="14.5" cy="9.5" r="1.5"/></svg></span><span class="o-tag">Step 04</span><h3>QA, launch &amp; support</h3></div>
+            <p>We test, polish, publish, hand over, and stay involved through care plans.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height:80px;"></div>
+  </div>
+
+  <script>
+    var orbit = document.getElementById('orbit');
+    var hubT = document.getElementById('hubTitle'), hubL = document.getElementById('hubLabel');
+    var cards = Array.prototype.slice.call(orbit.querySelectorAll('.o-card'));
+    var cometMotion = document.getElementById('cometMotion');
+    var defT = 'Launch', defL = 'The goal';
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var hoverLock = false;
+    var tourIntroTimer = 0;
+    var tourTimer = 0;
+    var tourStopTimer = 0;
+
+    function setActive(card){
+      cards.forEach(function(x){ x.classList.remove('on'); });
+      if(card){
+        card.classList.add('on');
+        hubT.innerHTML = card.getAttribute('data-t'); hubL.textContent = card.getAttribute('data-l');
+      } else {
+        hubT.textContent = defT; hubL.textContent = defL;
+      }
+    }
+
+    function stopTour(){
+      clearTimeout(tourIntroTimer);
+      clearInterval(tourTimer);
+      clearTimeout(tourStopTimer);
+      tourIntroTimer = 0; tourTimer = 0; tourStopTimer = 0;
+    }
+
+    function startTour(){
+      if(reduce || !cards.length) return;
+      stopTour();
+      var i = 0;
+      function tick(){
+        if(hoverLock) return;
+        setActive(cards[i % cards.length]);
+        i += 1;
+      }
+      tourIntroTimer = setTimeout(function(){
+        tick();
+        tourTimer = setInterval(tick, 1180);
+      }, 1100);
+      tourStopTimer = setTimeout(function(){
+        stopTour();
+        if(!hoverLock) setActive(null);
+      }, 6200);
+    }
+
+    function playEntrance(){
+      orbit.classList.remove('play');
+      hoverLock = false;
+      setActive(null);
+      stopTour();
+      void orbit.offsetWidth;
+      orbit.classList.add('play');
+      if(cometMotion && cometMotion.beginElement && !reduce){
+        setTimeout(function(){ cometMotion.beginElement(); }, 420);
+      }
+      startTour();
+    }
+
+    // Anim 3 — reveal on scroll
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es, io){
+        es.forEach(function(e){ if(e.isIntersecting){ playEntrance(); io.unobserve(e.target); } });
+      }, { threshold:0.15 }).observe(orbit);
+    } else {
+      setTimeout(playEntrance, 300);
+    }
+
+    // Anim 4 — magnetic hover focus + parallax
+    cards.forEach(function(c){
+      c.addEventListener('mouseenter', function(){
+        hoverLock = true;
+        setActive(c);
+      });
+      c.addEventListener('mouseleave', function(){
+        hoverLock = false;
+        setActive(null);
+      });
+      c.addEventListener('focus', function(){ hoverLock = true; setActive(c); });
+      c.addEventListener('blur', function(){ hoverLock = false; setActive(null); });
+    });
+    var stage = orbit.parentElement;
+    var finePointer = window.matchMedia('(pointer:fine)').matches;
+    var raf = 0, nextTilt = '';
+    if(!reduce && finePointer){
+      stage.addEventListener('pointermove', function(e){
+        var r = orbit.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width/2)) / r.width;
+        var dy = (e.clientY - (r.top + r.height/2)) / r.height;
+        nextTilt = 'rotateX(' + (-dy*7).toFixed(2) + 'deg) rotateY(' + (dx*7).toFixed(2) + 'deg)';
+        if(!raf){
+          raf = requestAnimationFrame(function(){
+            orbit.style.transform = nextTilt;
+            raf = 0;
+          });
+        }
+      });
+      stage.addEventListener('pointerleave', function(){ orbit.style.transform = ''; });
+    }
+
+    // replay
+    document.getElementById('replay').addEventListener('click', function(){
+      playEntrance();
+    });
+  </script>
+</body>
+</html>

@@ -100,18 +100,20 @@
   /* #8 — optional extras + good to know, 50/50 */
   .extras-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 54px; align-items: stretch; }
   .extras-card, .pr-note { position: relative; background: var(--card, #fff); border: 1px solid var(--line); border-radius: 20px; padding: 28px 30px; margin: 0; overflow: hidden; transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
-  .extras-card::after, .pr-note::after { content: ""; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(232,63,160,0.07), transparent 70%); pointer-events: none; }
+  .extras-card::after, .pr-note::after { content: ""; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(17,17,16,0.03), transparent 70%); pointer-events: none; }
   .extras-card:hover, .pr-note:hover { transform: translateY(-3px); border-color: rgba(17,17,16,0.14); box-shadow: 0 26px 54px -34px rgba(17,17,16,0.42); }
   .extras-card { display: flex; flex-direction: column; }
   .ex-head { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
   .ex-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); }
   .ex-ic svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .extras-card h4, .pr-note h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; margin: 0; }
-  .extras-card > p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 16px; }
-  .extras-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
-  .extras-chips span { font-size: 12.5px; font-weight: 500; color: var(--ink); background: rgba(17,17,16,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; transition: border-color .25s ease, background .25s ease, transform .25s ease; }
-  .extras-chips span:hover { border-color: rgba(232,63,160,0.4); background: rgba(232,63,160,0.05); transform: translateY(-1px); }
-  .extras-foot { margin-top: auto; }
+  .ex-count { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--muted); background: rgba(17,17,16,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; letter-spacing: 0.01em; }
+  .ex-count--n { color: var(--muted); background: rgba(17,17,16,0.04); border-color: var(--line); }
+  .extras-card > p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 18px; }
+  .ex-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 11px 16px; }
+  .ex-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+  .ex-plus { flex: none; width: 21px; height: 21px; border-radius: 7px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); font-weight: 700; font-size: 14px; line-height: 1; }
+  .extras-foot { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); }
   .extras-foot .btn { align-self: flex-start; }
   .ex-note { margin: 14px 0 0; font-size: 12px; font-weight: 500; color: #e83fa0; display: flex; align-items: center; gap: 8px; }
   .ex-note::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: #e83fa0; }
@@ -120,7 +122,7 @@
   .gtk:first-child { border-top: 0; padding-top: 2px; }
   .gtk:last-child { padding-bottom: 2px; }
   .gtk-ic { flex: none; width: 38px; height: 38px; border-radius: 11px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; transition: background .25s ease, color .25s ease; }
-  .gtk:hover .gtk-ic { background: rgba(232,63,160,0.09); color: #e83fa0; }
+  .gtk:hover .gtk-ic { background: rgba(17,17,16,0.09); color: var(--ink); }
   .gtk-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
   .gtk-t { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; }
   .gtk-d { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin-top: 3px; }
@@ -141,31 +143,59 @@
   .quiz-sec > .wrap { position: relative; z-index: 1; }
   .quiz-sec .sec-intro h2 { color: var(--bg); }
   .quiz-sec .sec-intro p { color: rgba(255,255,255,0.7); }
-  .quiz { max-width: 640px; margin: 30px auto 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 34px 34px 30px; }
-  .quiz-prog { display: flex; gap: 6px; margin-bottom: 22px; }
-  .quiz-prog span { height: 4px; flex: 1; border-radius: 4px; background: rgba(255,255,255,0.18); transition: background 0.3s; }
-  .quiz-prog span.on { background: #e83fa0; }
-  .quiz-q { font-size: clamp(20px, 2.6vw, 26px); font-weight: 500; letter-spacing: -0.02em; margin-bottom: 20px; }
-  .quiz-opts { display: grid; gap: 10px; }
-  .quiz-opt { text-align: left; font-family: inherit; font-size: 15.5px; font-weight: 600; color: var(--bg); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 12px; padding: 15px 18px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
-  .quiz-opt:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.35); transform: translateX(3px); }
-  .quiz-back { background: none; border: none; color: rgba(255,255,255,0.6); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 18px; }
+  .quiz { max-width: 660px; margin: 30px auto 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14); border-radius: 22px; padding: 30px 32px 28px; }
+  .quiz-top { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .quiz-prog { display: flex; gap: 6px; flex: 1; }
+  .quiz-prog span { height: 4px; flex: 1; border-radius: 4px; background: rgba(255,255,255,0.16); transition: background 0.3s; }
+  .quiz-prog span.on { background: rgba(255,255,255,0.92); }
+  .quiz-count { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); white-space: nowrap; }
+  .quiz-count b { color: #fff; }
+  .quiz-q { font-size: clamp(20px, 2.6vw, 26px); font-weight: 500; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .quiz-hint { font-size: 13px; color: rgba(255,255,255,0.5); margin: 0 0 18px; }
+  .quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .quiz-opts.one { grid-template-columns: 1fr; }
+  .quiz-opt { position: relative; display: flex; align-items: flex-start; gap: 13px; text-align: left; font-family: inherit; color: var(--bg); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.16); border-radius: 14px; padding: 15px 34px 15px 15px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .quiz-opt:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+  .quiz-opt.sel { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.6); transform: none; }
+  .qo-ic { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,0.09); color: #fff; transition: background 0.2s; }
+  .qo-ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .quiz-opt:hover .qo-ic, .quiz-opt.sel .qo-ic { background: rgba(255,255,255,0.18); }
+  .qo-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 1px; }
+  .qo-label { font-size: 15px; font-weight: 600; }
+  .qo-sub { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.5); line-height: 1.35; }
+  .qo-kbd { position: absolute; top: 10px; right: 11px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 5px; padding: 1px 5px; line-height: 1.5; }
+  #quizBody.slide-l .quiz-q, #quizBody.slide-l .quiz-hint, #quizBody.slide-l .quiz-opts { animation: qSlideR 0.42s var(--ease, ease) both; }
+  #quizBody.slide-r .quiz-q, #quizBody.slide-r .quiz-hint, #quizBody.slide-r .quiz-opts { animation: qSlideL 0.42s var(--ease, ease) both; }
+  @keyframes qSlideR { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+  @keyframes qSlideL { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+  .quiz-back { background: none; border: none; color: rgba(255,255,255,0.6); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 18px; padding: 0; }
   .quiz-back:hover { color: #fff; }
+  @keyframes quizIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   /* result */
-  .quiz-res .qr-kicker { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; font-weight: 700; }
-  .quiz-res h3 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 600; letter-spacing: -0.02em; margin: 10px 0 8px; color: #fff; }
-  .quiz-res p { color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.5; }
-  .quiz-res .qr-care { margin-top: 14px; font-size: 14px; color: rgba(255,255,255,0.78); }
-  .quiz-res .qr-care b { color: #fff; }
-  .quiz-res .qr-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-  .quiz-res .btn { background: var(--bg); color: var(--ink); }
-  .quiz-res .btn:hover { background: #fff; }
-  .quiz-res .qr-extras { margin-top: 16px; }
-  .quiz-res .qr-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 700; }
-  .quiz-res .qr-extras ul { list-style: none; margin-top: 8px; display: grid; gap: 6px; }
-  .quiz-res .qr-extras li { position: relative; padding-left: 22px; font-size: 14px; color: rgba(255,255,255,0.85); }
-  .quiz-res .qr-extras li::before { content: "✓"; position: absolute; left: 0; color: #6cf09a; font-weight: 700; }
-  .quiz-res .qr-extras b { color: #fff; }
+  .quiz-res { animation: quizIn 0.45s var(--ease, ease); }
+  .qr-head { display: flex; align-items: flex-start; gap: 16px; }
+  .qr-ic { flex: none; width: 54px; height: 54px; border-radius: 14px; background: rgba(255,255,255,0.1); display: grid; place-items: center; color: #fff; }
+  .qr-ic svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .qr-kicker { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 700; }
+  .quiz-res h3 { font-size: clamp(24px, 3.2vw, 32px); font-weight: 600; letter-spacing: -0.02em; margin: 6px 0 7px; color: #fff; }
+  .qr-desc { color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.5; margin: 0; }
+  .qr-why { margin-top: 12px; font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,0.62); display: flex; gap: 9px; }
+  .qr-why::before { content: ""; flex: none; width: 3px; border-radius: 3px; background: rgba(255,255,255,0.3); }
+  .qr-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .qr-chips span { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 5px 11px; }
+  .qr-extras { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); }
+  .qr-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; }
+  .qr-extras ul { list-style: none; margin-top: 10px; display: grid; gap: 7px; }
+  .qr-extras li { position: relative; padding-left: 24px; font-size: 14px; color: rgba(255,255,255,0.85); }
+  .qr-extras li::before { content: "✓"; position: absolute; left: 0; color: rgba(255,255,255,0.55); font-weight: 700; }
+  .qr-extras b { color: #fff; }
+  .qr-care { margin-top: 14px; font-size: 14px; color: rgba(255,255,255,0.78); }
+  .qr-care b { color: #fff; }
+  .qr-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .qr-actions .btn { background: var(--bg); color: var(--ink); }
+  .qr-actions .btn:hover { background: #fff; }
+  .qr-actions .btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+  .qr-actions .btn.ghost:hover { background: rgba(255,255,255,0.08); }
 
   /* #9 — trust band */
   .trust { text-align: center; }
@@ -412,13 +442,19 @@
             <div class="ex-head">
               <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
               <h4>Optional extras</h4>
+              <span class="ex-count">13 add-ons</span>
             </div>
-            <p>Branding, copywriting, photography, multi-language, integrations and more — add any to your project, quoted by scope.</p>
-            <div class="extras-chips">
-              <span>Branding</span><span>Copywriting</span><span>Photography</span><span>Multi-language</span><span>Integrations</span><span>+ more</span>
-            </div>
+            <p>Add any of these to your project — each is scoped and quoted on its own, so you only pay for what you need.</p>
+            <ul class="ex-list">
+              <li><span class="ex-plus">+</span>Branding &amp; identity</li>
+              <li><span class="ex-plus">+</span>Copywriting</li>
+              <li><span class="ex-plus">+</span>Product photography</li>
+              <li><span class="ex-plus">+</span>Multi-language</li>
+              <li><span class="ex-plus">+</span>Integrations</li>
+              <li><span class="ex-plus">+</span>Memberships</li>
+            </ul>
             <div class="extras-foot">
-              <button type="button" class="btn ghost" data-addons>Browse all add-ons →</button>
+              <button type="button" class="btn ghost" data-addons>Browse all add-ons<span class="addons-badge" data-addons-count hidden></span> →</button>
               <p class="ex-note">Every add-on is optional and quoted to your scope.</p>
             </div>
           </div>
@@ -427,6 +463,7 @@
           <div class="ex-head">
             <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
             <h4>Good to know</h4>
+            <span class="ex-count ex-count--n">No fine print</span>
           </div>
           <div class="gtk-grid">
             <div class="gtk">
@@ -520,7 +557,10 @@
         <p>Answer 6 quick questions and we'll point you to the right package — and the extras you'll likely need.</p>
       </div>
       <div class="quiz reveal r-scale">
-        <div class="quiz-prog" id="quizProg"></div>
+        <div class="quiz-top">
+          <div class="quiz-prog" id="quizProg"></div>
+          <div class="quiz-count" id="quizCount"></div>
+        </div>
         <div id="quizBody"></div>
       </div>
     </div>
@@ -659,42 +699,43 @@
     (function () {
       const body = document.getElementById('quizBody');
       const prog = document.getElementById('quizProg');
+      const count = document.getElementById('quizCount');
       if (!body) return;
 
       const QUESTIONS = [
-        { key: 'type', q: 'What are you building?', opts: [
-          { label: 'A simple website', val: 'starter' },
-          { label: 'A bigger business website', val: 'business' },
-          { label: 'An online store', val: 'ecom' },
-          { label: 'A custom tool, dashboard or portal', val: 'app' } ] },
-        { key: 'scope', q: 'Roughly how big is it?', opts: [
-          { label: 'A few pages (1–5)', val: 'small' },
-          { label: 'A full site (6–12 pages)', val: 'med' },
-          { label: 'Lots of pages or a product catalog', val: 'large' },
-          { label: 'Not sure yet', val: 'unsure' } ] },
-        { key: 'feature', q: 'Which sounds most like you?', opts: [
-          { label: 'I sell products or take payments', val: 'payments' },
-          { label: 'I take bookings or appointments', val: 'booking' },
-          { label: 'I publish content (blog, news, resources)', val: 'content' },
-          { label: 'Mainly an info / brochure site', val: 'info' } ] },
-        { key: 'update', q: 'Who will keep it updated after launch?', opts: [
-          { label: 'My team — we want to edit it ourselves', val: 'team' },
-          { label: 'You handle updates for us', val: 'us' },
-          { label: 'Not sure yet', val: 'unsure' } ] },
-        { key: 'ready', q: 'What do you already have ready?', opts: [
-          { label: 'Brand and content are ready', val: 'ready' },
-          { label: 'I need branding / logo help', val: 'branding' },
-          { label: 'I need help writing the copy', val: 'copy' },
-          { label: 'I need both', val: 'both' } ] },
-        { key: 'care', q: 'Want us to maintain it after launch?', opts: [
-          { label: 'Yes — ongoing care', val: 'yes' },
-          { label: 'No — just the build', val: 'no' } ] }
+        { key: 'type', q: 'What are you building?', hint: 'Pick the closest — we’ll refine it in your proposal.', opts: [
+          { label: 'A simple website', sub: 'A few pages to look credible online', val: 'starter' },
+          { label: 'A bigger business website', sub: 'More pages, a blog or CMS, lead capture', val: 'business' },
+          { label: 'An online store', sub: 'Sell products and take payments', val: 'ecom' },
+          { label: 'A custom tool or dashboard', sub: 'A portal, app or internal system', val: 'app' } ] },
+        { key: 'scope', q: 'Roughly how big is it?', hint: 'A rough idea is fine — nothing is locked in.', opts: [
+          { label: 'A few pages', sub: 'Around 1–5 pages', val: 'small' },
+          { label: 'A full site', sub: 'Around 6–12 pages', val: 'med' },
+          { label: 'Large or catalog', sub: 'Lots of pages or many products', val: 'large' },
+          { label: 'Not sure yet', sub: 'We’ll help you scope it', val: 'unsure' } ] },
+        { key: 'feature', q: 'Which sounds most like you?', hint: 'Choose your main goal for the site.', opts: [
+          { label: 'I sell products or take payments', sub: 'Cart, checkout and products', val: 'payments' },
+          { label: 'I take bookings or appointments', sub: 'Calendars and scheduling', val: 'booking' },
+          { label: 'I publish content', sub: 'Blog, news or resources', val: 'content' },
+          { label: 'Mainly an info site', sub: 'Brochure, about and contact', val: 'info' } ] },
+        { key: 'update', q: 'Who updates it after launch?', hint: 'This decides whether you need a CMS.', opts: [
+          { label: 'My team edits it ourselves', sub: 'We want an easy editor / CMS', val: 'team' },
+          { label: 'You handle updates for us', sub: 'Hands-off — leave it to KNB', val: 'us' },
+          { label: 'Not sure yet', sub: 'We’ll recommend an approach', val: 'unsure' } ] },
+        { key: 'ready', q: 'What do you already have ready?', hint: 'It’s normal to need help here — that’s what add-ons are for.', opts: [
+          { label: 'Brand and content are ready', sub: 'Logo, copy and images sorted', val: 'ready' },
+          { label: 'I need branding / logo help', sub: 'Add branding as an extra', val: 'branding' },
+          { label: 'I need help writing the copy', sub: 'Add copywriting as an extra', val: 'copy' },
+          { label: 'I need both', sub: 'Branding and copywriting', val: 'both' } ] },
+        { key: 'care', q: 'Want us to maintain it after launch?', hint: 'Updates, backups, security and support.', opts: [
+          { label: 'Yes — ongoing care', sub: 'We keep it secure and updated', val: 'yes' },
+          { label: 'No — just the build', sub: 'Hand it over at launch', val: 'no' } ] }
       ];
       const PKG = {
-        starter:  { name: 'Starter Website',   desc: 'A clean, professional site for small businesses that need a solid online presence.', care: 'Basic Care' },
-        business: { name: 'Business Website',   desc: 'More pages, a CMS, and lead-generation structure for growing companies.', care: 'Standard Support' },
-        ecom:     { name: 'Ecommerce Website',  desc: 'A Shopify or WooCommerce store built around products, mobile shopping, and conversion.', care: 'Growth Support' },
-        app:      { name: 'Custom Web App',     desc: 'A custom dashboard, portal, or tool built around exactly how you work.', care: 'Custom System Support' }
+        starter:  { id: 'starter',  name: 'Starter Website',   icon: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg>', chips: ['1–5 pages', 'Launch in 1–2 weeks', 'Mobile-ready'], desc: 'A clean, professional site for small businesses that need a solid online presence.', care: 'Basic Care' },
+        business: { id: 'business', name: 'Business Website',  icon: '<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01M10 21v-4h4v4"/></svg>', chips: ['6–12 pages', 'CMS / blog', 'Lead capture'], desc: 'More pages, a CMS, and lead-generation structure for growing companies.', care: 'Standard Support' },
+        ecom:     { id: 'ecom',     name: 'Ecommerce Website', icon: '<svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.2a1.6 1.6 0 0 0 1.6-1.3L22 7H6"/></svg>', chips: ['Products & checkout', 'Shopify / Woo', 'Built to convert'], desc: 'A Shopify or WooCommerce store built around products, mobile shopping, and conversion.', care: 'Growth Support' },
+        app:      { id: 'app',      name: 'Custom Web App',    icon: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>', chips: ['Dashboards & portals', 'Custom logic', 'Scoped to you'], desc: 'A custom dashboard, portal, or tool built around exactly how you work.', care: 'Custom System Support' }
       };
 
       let step = 0;
@@ -705,6 +746,7 @@
       }
       function setProg() {
         [...prog.children].forEach((s, i) => s.classList.toggle('on', i <= step));
+        if (count) count.innerHTML = '<b>' + String(step + 1).padStart(2, '0') + '</b> / ' + String(QUESTIONS.length).padStart(2, '0');
       }
       function recommend() {
         let rec = answers.type || 'business';
@@ -714,47 +756,127 @@
         if (rec === 'business' && answers.scope === 'small') rec = 'starter';
         return rec;
       }
-      function renderQuestion() {
+      const KEYS = ['A', 'B', 'C', 'D'];
+      const ICONS = {
+        starter: '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>',
+        business: '<svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M10 21v-4h4v4"/></svg>',
+        ecom: '<svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.2a1.6 1.6 0 0 0 1.6-1.3L22 7H6"/></svg>',
+        app: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+        small: '<svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6"/></svg>',
+        med: '<svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>',
+        large: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="5" rx="1"/><rect x="14" y="4" width="7" height="5" rx="1"/><rect x="3" y="13" width="7" height="5" rx="1"/><rect x="14" y="13" width="7" height="5" rx="1"/></svg>',
+        unsure: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 0 1 4.7 1.1c0 1.7-2.2 2-2.2 3.7"/><path d="M12 17h.01"/></svg>',
+        payments: '<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+        booking: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+        content: '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+        info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11.5h1V16h1"/></svg>',
+        team: '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5.5a3 3 0 0 1 0 5.8M21.5 20a5.5 5.5 0 0 0-4-5.2"/></svg>',
+        us: '<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+        ready: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>',
+        branding: '<svg viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg>',
+        copy: '<svg viewBox="0 0 24 24"><path d="M4 7V5h16v2M9 5v14M7 19h4"/></svg>',
+        both: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+        yes: '<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+        no: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>'
+      };
+      function animate(dir) {
+        body.classList.remove('slide-l', 'slide-r');
+        void body.offsetWidth;
+        body.classList.add(dir < 0 ? 'slide-r' : 'slide-l');
+      }
+      function renderQuestion(dir) {
         const item = QUESTIONS[step];
         setProg();
         body.innerHTML =
-          '<div class="quiz-q">' + item.q + '</div><div class="quiz-opts">' +
-          item.opts.map((o) => '<button class="quiz-opt" data-val="' + o.val + '">' + o.label + '</button>').join('') +
+          '<div class="quiz-q">' + item.q + '</div>' +
+          (item.hint ? '<div class="quiz-hint">' + item.hint + '</div>' : '') +
+          '<div class="quiz-opts' + (item.opts.length > 2 ? '' : ' one') + '">' +
+          item.opts.map((o, i) => '<button class="quiz-opt" data-val="' + o.val + '"><span class="qo-ic">' + (ICONS[o.val] || '') + '</span><span class="qo-text"><span class="qo-label">' + o.label + '</span>' + (o.sub ? '<span class="qo-sub">' + o.sub + '</span>' : '') + '</span><span class="qo-kbd">' + KEYS[i] + '</span></button>').join('') +
           '</div>' + (step > 0 ? '<button class="quiz-back">← Back</button>' : '');
+        animate(dir);
         body.querySelectorAll('.quiz-opt').forEach((b) => b.addEventListener('click', () => {
+          if (b.classList.contains('sel')) return;
+          body.querySelectorAll('.quiz-opt').forEach((x) => x.classList.remove('sel'));
+          b.classList.add('sel');
           answers[item.key] = b.dataset.val;
-          if (step < QUESTIONS.length - 1) { step++; renderQuestion(); }
-          else renderResult();
+          setTimeout(() => {
+            if (step < QUESTIONS.length - 1) { step++; renderQuestion(1); }
+            else renderResult();
+          }, 170);
         }));
         const back = body.querySelector('.quiz-back');
-        if (back) back.addEventListener('click', () => { step--; renderQuestion(); });
+        if (back) back.addEventListener('click', () => { step--; renderQuestion(-1); });
       }
+      document.addEventListener('keydown', (e) => {
+        const tag = (e.target && e.target.tagName) || '';
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
+        const quiz = document.querySelector('.quiz');
+        if (!quiz) return;
+        const opts = [...body.querySelectorAll('.quiz-opt')];
+        if (!opts.length) return;
+        const r = quiz.getBoundingClientRect();
+        const inView = r.top < window.innerHeight * 0.65 && r.bottom > window.innerHeight * 0.2;
+        if (!inView && !quiz.contains(document.activeElement)) return;
+        let idx = -1;
+        if (/^[1-9]$/.test(e.key)) idx = parseInt(e.key, 10) - 1;
+        else { const L = e.key.toUpperCase(); if (/^[A-D]$/.test(L)) idx = L.charCodeAt(0) - 65; }
+        if (idx >= 0 && idx < opts.length) { e.preventDefault(); opts[idx].click(); }
+      });
       function renderResult() {
         prog.querySelectorAll('span').forEach((s) => s.classList.add('on'));
-        const p = PKG[recommend()];
+        if (count) count.innerHTML = '<b>Done</b>';
+        const key = recommend();
+        const p = PKG[key];
         const extras = [];
         if (answers.update === 'team') extras.push('A <b>CMS</b> so your team can edit content');
         if (answers.feature === 'content') extras.push('A <b>blog / content</b> section');
         if (answers.ready === 'branding' || answers.ready === 'both') extras.push('<b>Branding &amp; logo</b> (add-on)');
         if (answers.ready === 'copy' || answers.ready === 'both') extras.push('<b>Copywriting</b> (add-on)');
+        if (answers.feature === 'booking') extras.push('<b>Booking &amp; scheduling</b> (add-on)');
+        const addonNames = [];
+        if (answers.ready === 'branding' || answers.ready === 'both') addonNames.push('Branding & logo');
+        if (answers.ready === 'copy' || answers.ready === 'both') addonNames.push('Copywriting');
+        if (answers.feature === 'booking') addonNames.push('Booking & scheduling');
         const extrasHtml = extras.length
           ? '<div class="qr-extras"><span class="qr-label">Likely to include</span><ul>' + extras.map((e) => '<li>' + e + '</li>').join('') + '</ul></div>'
           : '';
         const careLine = answers.care === 'yes'
           ? '<div class="qr-care">Pair it with our <b>' + p.care + '</b> plan to keep it running after launch.</div>'
           : '';
+        const careBtn = answers.care === 'yes'
+          ? '<button type="button" class="btn ghost" id="qrCare">Set up ongoing care →</button>'
+          : '';
+        const quoteHref = 'contact.html' + (addonNames.length ? ('?addons=' + encodeURIComponent(addonNames.join(', '))) : '');
+        const bits = [];
+        if (answers.feature === 'payments') bits.push('you’re selling products');
+        else if (answers.feature === 'booking') bits.push('you need bookings');
+        else if (answers.feature === 'content') bits.push('you’ll publish content regularly');
+        if (answers.scope === 'large') bits.push('it’s a larger build');
+        else if (answers.scope === 'small') bits.push('it’s a smaller site');
+        if (answers.update === 'team') bits.push('your team will edit it');
+        const joinNice = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+        const whyHtml = bits.length ? '<div class="qr-why"><span>Because ' + joinNice(bits) + ', this is the best place to start. We confirm the exact scope in your written proposal.</span></div>' : '';
         body.innerHTML =
           '<div class="quiz-res">' +
-            '<span class="qr-kicker">Your recommended starting point</span>' +
-            '<h3>' + p.name + '</h3>' +
-            '<p>' + p.desc + '</p>' +
+            '<div class="qr-head"><span class="qr-ic">' + p.icon + '</span>' +
+              '<div><span class="qr-kicker">Your starting point</span><h3>' + p.name + '</h3><p class="qr-desc">' + p.desc + '</p></div></div>' +
+            whyHtml +
+            '<div class="qr-chips">' + p.chips.map((c) => '<span>' + c + '</span>').join('') + '</div>' +
             extrasHtml + careLine +
             '<div class="qr-actions">' +
-              '<a href="contact.html" class="btn"><span class="dot"></span>Get my quote</a>' +
-              '<button class="quiz-back" id="quizRetake">↻ Retake quiz</button>' +
+              '<a href="' + quoteHref + '" class="btn" id="qrQuote"><span class="dot"></span>Get my quote</a>' +
+              '<button type="button" class="btn ghost" id="qrSee">See ' + p.name + ' →</button>' +
+              careBtn +
+              '<button class="quiz-back" id="quizRetake">↻ Retake</button>' +
             '</div>' +
           '</div>';
-        body.querySelector('#quizRetake').addEventListener('click', () => { step = 0; for (const k in answers) delete answers[k]; renderQuestion(); });
+        const see = body.querySelector('#qrSee');
+        if (see) see.addEventListener('click', () => { if (window.KNBpkg) window.KNBpkg.select(key); });
+        const quote = body.querySelector('#qrQuote');
+        if (quote && addonNames.length) quote.addEventListener('click', () => { if (window.KNBpkg) window.KNBpkg.addAddons(addonNames); });
+        const careB = body.querySelector('#qrCare');
+        if (careB) careB.addEventListener('click', () => { const t = document.getElementById('tab-care'); if (t) { t.click(); const panel = document.getElementById('panel-care') || t; panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+        body.querySelector('#quizRetake').addEventListener('click', () => { step = 0; for (const k in answers) delete answers[k]; renderQuestion(-1); });
       }
       buildProg();
       renderQuestion();

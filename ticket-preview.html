@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTA ticket — design options · KNB</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f4f3ef;--ink:#111110;--muted:#6d6c66;--line:#dedcd4;--card:#fff;--pink:#e83fa0;--green:#6cf09a;--ease:cubic-bezier(0.16,1,0.3,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Satoshi",system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+  svg{display:block}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--ink);border:none;border-radius:100px;padding:14px 24px;cursor:pointer;text-decoration:none;transition:transform .3s var(--ease),background .3s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+
+  .pv-top{position:sticky;top:0;z-index:50;background:rgba(244,243,239,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .pv-top .wrap{display:flex;align-items:center;gap:18px;height:60px;max-width:1100px}
+  .pv-logo{font-weight:900;letter-spacing:-.02em;font-size:20px}.pv-logo i{color:var(--pink)}
+  .pv-tag{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .pv-jump{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .pv-jump a{font-size:12.5px;font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--card);padding:7px 12px;border-radius:100px;transition:all .25s var(--ease)}
+  .pv-jump a:hover{border-color:var(--ink);transform:translateY(-1px)}
+  @media(max-width:760px){.pv-jump{display:none}}
+  .pv-intro{padding:58px 0 6px;text-align:center}
+  .pv-intro h1{font-size:clamp(28px,5vw,46px);font-weight:500;letter-spacing:-.03em;line-height:1.05;max-width:20ch;margin:14px auto 0}
+  .pv-intro p{color:var(--muted);max-width:54ch;margin:14px auto 0;font-size:16px}
+  .pv-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--pink)}
+  .pv-eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pink)}
+
+  .opt{--sec:var(--bg);padding:78px 0;border-top:1px solid var(--line)}
+  .opt:nth-child(even){--sec:#efeee9;background:#efeee9}
+  .opt-label{display:flex;align-items:baseline;gap:14px;margin-bottom:42px}
+  .opt-num{font-size:13px;font-weight:800;letter-spacing:.1em;color:var(--pink)}
+  .opt-name{font-size:20px;font-weight:700;letter-spacing:-.02em}
+  .opt-desc{font-size:13.5px;color:var(--muted);margin-left:auto;max-width:40ch;text-align:right}
+  @media(max-width:640px){.opt-desc{display:none}}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  .tk-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--pink)}
+  .tk-eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pink)}
+  .tk-h{font-size:clamp(26px,3.4vw,38px);font-weight:600;letter-spacing:-.03em;margin:14px 0 0;line-height:1.05}
+  .tk-p{color:var(--muted);font-size:15.5px;line-height:1.6;margin:12px 0 0;max-width:42ch}
+  .tk-trust{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+  .tk-trust li{font-size:12px;font-weight:600;color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:6px 12px;border-radius:100px;display:inline-flex;gap:7px;align-items:center}
+  .tk-trust li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+  .tk-free{display:block;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .tk-serial{font-size:11px;font-weight:700;letter-spacing:.18em;color:#b4b1a7;font-feature-settings:"tnum"}
+
+  /* ===== V1 — perforated ticket (notches + rip-lift stub) ===== */
+  .tk1{display:grid;grid-template-columns:1fr 270px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 60px -36px rgba(17,17,16,.4);max-width:880px;margin:0 auto;position:relative}
+  .tk1-main{padding:clamp(30px,4vw,46px)}
+  .tk1-stub{position:relative;padding:clamp(30px,4vw,40px) 30px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;transform-origin:left center;transition:transform .5s var(--ease),box-shadow .5s var(--ease);background:linear-gradient(180deg,#fff,#fbfaf7)}
+  .tk1-perf{position:absolute;left:0;top:14px;bottom:14px;border-left:2px dashed var(--line)}
+  .tk1-stub::before,.tk1-stub::after{content:"";position:absolute;left:-13px;width:26px;height:26px;border-radius:50%;background:var(--sec);border:1px solid var(--line)}
+  .tk1-stub::before{top:-14px}.tk1-stub::after{bottom:-14px}
+  .tk1:hover .tk1-stub{transform:perspective(900px) rotateY(-10deg) translateX(4px);box-shadow:-26px 0 40px -30px rgba(17,17,16,.5)}
+  .tk1-stub .btn{background:var(--pink)}
+  .tk1-stub .btn .dot{background:#fff}
+  @media(max-width:680px){.tk1{grid-template-columns:1fr}.tk1-perf{left:14px;right:14px;top:0;bottom:auto;border-left:0;border-top:2px dashed var(--line)}.tk1-stub::before{top:-13px;left:-14px}.tk1-stub::after{top:-13px;bottom:auto;left:auto;right:-14px}.tk1:hover .tk1-stub{transform:none}}
+
+  /* ===== V2 — boarding pass ===== */
+  .tk2{display:grid;grid-template-columns:1fr 230px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(17,17,16,.4);max-width:900px;margin:0 auto;position:relative}
+  .tk2-main{padding:clamp(28px,3.5vw,42px)}
+  .tk2-rowm{display:flex;gap:30px;margin-top:22px}
+  .tk2-f .k{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .tk2-f .v{font-size:16px;font-weight:700;margin-top:4px}
+  .tk2-stub{position:relative;background:var(--ink);color:var(--bg);padding:28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:16px;text-align:center;border-left:2px dashed rgba(255,255,255,.25)}
+  .tk2-stub::before,.tk2-stub::after{content:"";position:absolute;left:-12px;width:24px;height:24px;border-radius:50%;background:var(--sec)}
+  .tk2-stub::before{top:-12px}.tk2-stub::after{bottom:-12px}
+  .tk2-stub .tk-free{color:rgba(244,243,239,.7)}
+  .tk2-barcode{width:100%;height:46px;background:repeating-linear-gradient(90deg,var(--bg) 0 2px,transparent 2px 4px,var(--bg) 4px 7px,transparent 7px 9px,var(--bg) 9px 12px,transparent 12px 16px);border-radius:3px;position:relative;overflow:hidden}
+  .tk2-barcode::after{content:"";position:absolute;top:0;left:-40%;width:30%;height:100%;background:linear-gradient(90deg,transparent,rgba(232,63,160,.7),transparent);animation:scan 2.6s var(--ease) infinite}
+  .tk2-stub .btn{background:var(--pink);width:100%;justify-content:center}.tk2-stub .btn .dot{background:#fff}
+  @media(max-width:680px){.tk2{grid-template-columns:1fr}.tk2-stub{border-left:0;border-top:2px dashed rgba(255,255,255,.25)}.tk2-stub::before{top:-12px}.tk2-stub::after{bottom:auto;top:-12px;left:auto;right:-12px}}
+
+  /* ===== V3 — admit one (vertical stub + punch hole + marching border) ===== */
+  .tk3{display:grid;grid-template-columns:1fr 96px;background:var(--card);border-radius:20px;max-width:840px;margin:0 auto;position:relative;box-shadow:0 30px 60px -36px rgba(17,17,16,.4)}
+  .tk3 .march{position:absolute;inset:6px;border-radius:14px;pointer-events:none}
+  .tk3 .march rect{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:10 8;animation:march 14s linear infinite;opacity:.28}
+  .tk3-main{padding:clamp(30px,4vw,46px);position:relative;z-index:1}
+  .tk3-admit{font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:var(--pink)}
+  .tk3-stub{position:relative;border-left:2px dashed var(--line);display:flex;align-items:center;justify-content:center}
+  .tk3-stub span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .tk3-stub::before,.tk3-stub::after{content:"";position:absolute;left:-12px;width:24px;height:24px;border-radius:50%;background:var(--sec)}
+  .tk3-stub::before{top:-12px}.tk3-stub::after{bottom:-12px}
+  .tk3-hole{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:var(--sec);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+  .tk3 .btn{background:var(--ink);margin-top:22px}
+  @media(max-width:680px){.tk3{grid-template-columns:1fr}.tk3-stub{display:none}}
+
+  /* ===== V4 — peel-corner coupon ===== */
+  .tk4{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(34px,4.5vw,52px);max-width:760px;margin:0 auto;overflow:hidden;box-shadow:0 30px 60px -36px rgba(17,17,16,.4)}
+  .tk4::before{content:"";position:absolute;inset:14px;border:2px dashed var(--line);border-radius:12px;pointer-events:none}
+  .tk4-peelmsg{position:absolute;top:0;right:0;width:120px;height:120px;display:grid;place-items:start end;padding:14px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--green);clip-path:polygon(100% 0,0 0,100% 100%);text-align:right}
+  .tk4-peel{position:absolute;top:0;right:0;width:120px;height:120px;background:linear-gradient(225deg,#fff 50%,#efeee9 50%);clip-path:polygon(100% 0,0 0,100% 100%);transform-origin:top right;transition:transform .5s var(--ease);box-shadow:-6px 6px 14px -6px rgba(0,0,0,.3)}
+  .tk4:hover .tk4-peel{transform:rotate(-18deg) scale(1.06)}
+  .tk4 .tk-h{max-width:none}
+  .tk4 .btn{background:var(--pink);margin-top:24px}.tk4 .btn .dot{background:#fff}
+  .tk4-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:24px}
+
+  /* ===== V5 — receipt slip ===== */
+  .tk5{position:relative;background:var(--card);max-width:430px;margin:0 auto;padding:34px 34px 40px;box-shadow:0 30px 60px -36px rgba(17,17,16,.4);font-feature-settings:"tnum"}
+  .tk5::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:12px;background:var(--card);-webkit-mask:repeating-linear-gradient(135deg,#000 0 9px,transparent 9px 18px);mask:repeating-linear-gradient(135deg,#000 0 9px,transparent 9px 18px)}
+  .tk5-top{text-align:center;border-bottom:1.5px dashed var(--line);padding-bottom:18px}
+  .tk5-store{font-size:18px;font-weight:800;letter-spacing:.04em}
+  .tk5-sub{font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
+  .tk5-rows{margin:16px 0;display:grid;gap:9px}
+  .tk5-li{display:flex;justify-content:space-between;font-size:13.5px}
+  .tk5-li span{color:var(--muted)}.tk5-li b{font-weight:700}
+  .tk5-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px dashed var(--line);padding-top:14px;margin-top:14px}
+  .tk5-total .lbl{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+  .tk5-total .amt{font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--pink)}
+  .tk5-bc{height:44px;margin:18px 0 16px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 9px,var(--ink) 9px 12px,transparent 12px 17px)}
+  .tk5-serial{text-align:center;font-size:11px;letter-spacing:.24em;color:var(--muted)}
+  .tk5 .btn{background:var(--ink);width:100%;justify-content:center;margin-top:20px}
+
+  .pv-foot{padding:60px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+  <div class="pv-top"><div class="wrap">
+    <span class="pv-logo">KNB<i>.</i></span><span class="pv-tag">CTA ticket — design options</span>
+    <nav class="pv-jump"><a href="#o1">01 Perforated</a><a href="#o2">02 Boarding</a><a href="#o3">03 Admit one</a><a href="#o4">04 Peel</a><a href="#o5">05 Receipt</a></nav>
+  </div></div>
+
+  <header class="pv-intro"><div class="wrap">
+    <span class="pv-eyebrow">5 directions</span>
+    <h1>Five ways to revamp the CTA ticket.</h1>
+    <p>Same offer — five animated coupon/ticket treatments in the KNB language. Hover each to feel the motion, then pick one to ship.</p>
+  </div></header>
+
+  <!-- 01 perforated -->
+  <section class="opt" id="o1"><div class="wrap">
+    <div class="opt-label"><span class="opt-num">OPTION 01</span><span class="opt-name">Perforated ticket</span><span class="opt-desc">Punched notches + a stub that tears away in 3D on hover.</span></div>
+    <div class="tk1 reveal">
+      <div class="tk1-main">
+        <span class="tk-eyebrow">Get started</span>
+        <h2 class="tk-h">Ready to start your project?</h2>
+        <p class="tk-p">We'll review your current site — or scope a new one — and show practical next steps before you commit to a full build.</p>
+        <ul class="tk-trust"><li>Free</li><li>No obligation</li><li>Clear written proposal</li></ul>
+      </div>
+      <div class="tk1-stub"><span class="tk1-perf"></span>
+        <span class="tk-free">Free consultation</span>
+        <a href="contact.html" class="btn"><span class="dot"></span>Start your project</a>
+        <span class="tk-serial">NO. KNB-0044</span>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 02 boarding pass -->
+  <section class="opt" id="o2"><div class="wrap">
+    <div class="opt-label"><span class="opt-num">OPTION 02</span><span class="opt-name">Boarding pass</span><span class="opt-desc">Airline-pass layout with micro-fields + a scanning barcode.</span></div>
+    <div class="tk2 reveal">
+      <div class="tk2-main">
+        <span class="tk-eyebrow">Boarding your project</span>
+        <h2 class="tk-h">Ready to start your project?</h2>
+        <div class="tk2-rowm">
+          <div class="tk2-f"><div class="k">Platform</div><div class="v">Your choice</div></div>
+          <div class="tk2-f"><div class="k">Timeline</div><div class="v">2–6 weeks</div></div>
+          <div class="tk2-f"><div class="k">Proposal</div><div class="v">Written</div></div>
+        </div>
+        <ul class="tk-trust"><li>Free</li><li>No obligation</li></ul>
+      </div>
+      <div class="tk2-stub">
+        <span class="tk-free">Boarding pass</span>
+        <div class="tk2-barcode"></div>
+        <a href="contact.html" class="btn"><span class="dot"></span>Start now</a>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 03 admit one -->
+  <section class="opt" id="o3"><div class="wrap">
+    <div class="opt-label"><span class="opt-num">OPTION 03</span><span class="opt-name">Admit one</span><span class="opt-desc">Event-ticket vibe — vertical stub, punch hole, marching border.</span></div>
+    <div class="tk3 reveal">
+      <svg class="march" preserveAspectRatio="none" viewBox="0 0 100 100"><rect x="1" y="1" width="98" height="98" rx="13"/></svg>
+      <div class="tk3-main">
+        <span class="tk3-admit">★ Admit one</span>
+        <h2 class="tk-h">One free consultation</h2>
+        <p class="tk-p">Bring your site or your idea. We'll review it, talk through options, and send a clear written proposal — no obligation.</p>
+        <a href="contact.html" class="btn"><span class="dot"></span>Claim your consultation</a>
+      </div>
+      <div class="tk3-stub"><span>Free · KNB-0044</span><span class="tk3-hole"></span></div>
+    </div>
+  </div></section>
+
+  <!-- 04 peel -->
+  <section class="opt" id="o4"><div class="wrap">
+    <div class="opt-label"><span class="opt-num">OPTION 04</span><span class="opt-name">Peel coupon</span><span class="opt-desc">A folded corner that peels back on hover to reveal the offer.</span></div>
+    <div class="tk4 reveal">
+      <span class="tk4-peelmsg">Free</span>
+      <span class="tk4-peel"></span>
+      <span class="tk-eyebrow">Get started</span>
+      <h2 class="tk-h">Ready to start your project?</h2>
+      <p class="tk-p">We'll review your current site — or scope a new one — and show practical next steps before you commit. Peel the corner — it's on us.</p>
+      <div class="tk4-row">
+        <a href="contact.html" class="btn"><span class="dot"></span>Start your project</a>
+        <ul class="tk-trust" style="margin:0"><li>No obligation</li><li>Written proposal</li></ul>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 05 receipt -->
+  <section class="opt" id="o5"><div class="wrap">
+    <div class="opt-label"><span class="opt-num">OPTION 05</span><span class="opt-name">Receipt slip</span><span class="opt-desc">A thermal-receipt slip — itemised, zig-zag edge, total ₱0.</span></div>
+    <div class="tk5 reveal">
+      <div class="tk5-top"><div class="tk5-store">KNB WEB SOLUTION</div><div class="tk5-sub">Order summary</div></div>
+      <div class="tk5-rows">
+        <div class="tk5-li"><span>Free consultation</span><b>₱0.00</b></div>
+        <div class="tk5-li"><span>Site review</span><b>₱0.00</b></div>
+        <div class="tk5-li"><span>Written proposal</span><b>₱0.00</b></div>
+        <div class="tk5-li"><span>Obligation</span><b>None</b></div>
+      </div>
+      <div class="tk5-total"><span class="lbl">Total today</span><span class="amt">₱0</span></div>
+      <div class="tk5-bc"></div>
+      <div class="tk5-serial">KNB-0044 · 2026</div>
+      <a href="contact.html" class="btn"><span class="dot"></span>Start your project</a>
+    </div>
+  </div></section>
+
+  <div class="pv-foot wrap">KNB Web Solution · internal preview — not indexed</div>
+
+<script>
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.2});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTA ticket improvements — 5 options · KNB</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f3ef; --ink:#111110; --muted:#6d6c66; --line:#dedcd4; --card:#fff;
+    --pink:#e83fa0; --green:#6cf09a; --sage:#5e8e3e; --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Satoshi",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.45}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  .top{position:sticky;top:0;z-index:50;background:rgba(244,243,239,.86);border-bottom:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .top .wrap{height:62px;display:flex;align-items:center;gap:18px}
+  .logo{font-size:20px;font-weight:900;letter-spacing:-.04em}.logo i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pink);margin-left:3px}
+  .tag{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .jump{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .jump a{font-size:12.5px;font-weight:750;background:#fff;border:1px solid var(--line);border-radius:100px;padding:7px 12px}
+  .jump a:hover{border-color:rgba(17,17,16,.35)}
+  @media(max-width:820px){.jump{display:none}}
+
+  .intro{padding:60px 0 14px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:var(--pink)}
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sage)}
+  .intro h1{font-size:clamp(34px,5.5vw,68px);font-weight:600;letter-spacing:-.05em;line-height:.96;margin:15px 0 0;max-width:12ch}
+  .intro p{font-size:16px;color:var(--muted);line-height:1.65;max-width:65ch;margin-top:18px}
+  .notes{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+  .notes span{font-size:12.5px;font-weight:750;background:#fff;border:1px solid var(--line);border-radius:100px;padding:7px 13px}
+  .notes b{color:var(--pink)}
+
+  .demo{padding:56px 0;border-top:1px solid var(--line)}
+  .demo-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px}
+  .demo-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .demo-title .num{font-size:13px;font-weight:900;letter-spacing:.1em;color:var(--pink)}
+  .demo-title h2{font-size:23px;font-weight:750;letter-spacing:-.025em}
+  .demo-head p{font-size:13.5px;color:var(--muted);max-width:44ch;text-align:right}
+  @media(max-width:720px){.demo-head{align-items:flex-start;flex-direction:column}.demo-head p{text-align:left}}
+
+  .stage{display:grid;place-items:center;min-height:430px;border:1px solid var(--line);border-radius:24px;background:#efeee9;padding:clamp(28px,5vw,70px);overflow:hidden;position:relative}
+  .stage::after{content:"";position:absolute;right:-110px;bottom:-130px;width:360px;height:360px;border-radius:50%;background:rgba(232,63,160,.12);filter:blur(40px);pointer-events:none}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:100px;background:var(--ink);color:#fff;font:inherit;font-size:15.5px;font-weight:800;padding:15px 25px;transition:transform .3s var(--ease),background .3s,box-shadow .3s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(17,17,16,.2)}
+  .btn.pink{background:var(--pink)}
+  .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .mini{display:flex;gap:10px;flex-wrap:wrap;list-style:none;margin-top:22px}
+  .mini li{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:var(--muted)}
+  .mini li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .cap{font-size:12px;font-weight:850;letter-spacing:.18em;text-transform:uppercase;color:var(--pink)}
+  .cap.dot{display:inline-flex;align-items:center;gap:10px}.cap.dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pink)}
+  .headline{font-size:clamp(30px,4.6vw,58px);font-weight:600;letter-spacing:-.055em;line-height:1.02}
+  .copy{font-size:16px;color:var(--muted);line-height:1.62;margin-top:15px;max-width:50ch}
+  .serial{font-size:11px;font-weight:800;letter-spacing:.18em;color:#aaa69c;font-feature-settings:"tnum"}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* 1. Premium split ticket */
+  .v1{width:min(960px,100%);display:grid;grid-template-columns:1fr 310px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 34px 80px -44px rgba(17,17,16,.52);position:relative;overflow:hidden}
+  .v1-main{padding:clamp(32px,5vw,56px)}
+  .v1-main .headline{max-width:15ch;margin-top:18px}
+  .v1-stub{position:relative;display:grid;place-items:center;text-align:center;padding:40px 30px;border-left:2px dashed var(--line);background:#fbfaf7}
+  .v1-stub::before,.v1-stub::after{content:"";position:absolute;left:-15px;width:30px;height:30px;border-radius:50%;background:#efeee9;border:1px solid var(--line)}
+  .v1-stub::before{top:-16px}.v1-stub::after{bottom:-16px}
+  .v1-card{display:grid;gap:16px;justify-items:center}
+  .v1-icon{width:58px;height:58px;border-radius:18px;background:var(--ink);color:#fff;display:grid;place-items:center}
+  .v1-icon svg{width:27px;height:27px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .v1-stub b{font-size:14px;letter-spacing:.16em;text-transform:uppercase}
+  .v1:hover .v1-stub{animation:stubLift .55s var(--ease)}
+
+  /* 2. Proposal desk */
+  .v2{width:min(980px,100%);display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 34px 80px -44px rgba(17,17,16,.52);overflow:hidden}
+  .v2-left{padding:clamp(32px,5vw,56px)}
+  .v2-left .headline{margin-top:18px;max-width:13ch}
+  .v2-right{position:relative;padding:34px;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:18px}
+  .v2-right::before{content:"";position:absolute;inset:18px;border:1px dashed rgba(255,255,255,.22);border-radius:14px;pointer-events:none}
+  .v2-folder{position:relative;background:#fff;color:var(--ink);border-radius:14px;padding:22px 20px;box-shadow:0 24px 46px -30px rgba(0,0,0,.7)}
+  .v2-folder::before{content:"";position:absolute;left:20px;top:-12px;width:116px;height:24px;border-radius:10px 10px 0 0;background:#fff;border:1px solid rgba(255,255,255,.2);border-bottom:0}
+  .v2-folder small{font-size:11px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:var(--pink)}
+  .v2-folder h3{font-size:24px;font-weight:750;letter-spacing:-.035em;line-height:1;margin-top:8px}
+  .v2-lines{display:grid;gap:8px;margin-top:16px}.v2-lines i{height:8px;border-radius:8px;background:#ebe9e2}.v2-lines i:nth-child(2){width:76%}.v2-lines i:nth-child(3){width:54%}
+  .v2-right .btn{position:relative;z-index:1;background:var(--pink)}
+
+  /* 3. Claim band */
+  .v3{width:min(940px,100%);display:grid;grid-template-columns:170px 1fr 260px;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 34px 80px -44px rgba(17,17,16,.52);overflow:hidden}
+  .v3-band{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;position:relative}
+  .v3-band span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:900;letter-spacing:.24em;text-transform:uppercase}
+  .v3-body{padding:clamp(32px,5vw,52px)}
+  .v3-body .headline{font-size:clamp(28px,4vw,48px);margin-top:14px}
+  .v3-action{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;text-align:center;padding:32px 26px;border-left:2px dashed var(--line);position:relative}
+  .v3-action::before,.v3-action::after{content:"";position:absolute;left:-13px;width:26px;height:26px;border-radius:50%;background:#efeee9;border:1px solid var(--line)}
+  .v3-action::before{top:-14px}.v3-action::after{bottom:-14px}
+  .v3-badge{width:74px;height:74px;border-radius:50%;border:2px dashed var(--pink);display:grid;place-items:center;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);animation:slowSpin 18s linear infinite}
+
+  /* 4. Compact command card */
+  .v4{width:min(900px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 34px 80px -44px rgba(17,17,16,.52)}
+  .v4-inner{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:clamp(26px,4vw,42px)}
+  .v4-copy{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start}
+  .v4-ic{width:58px;height:58px;border-radius:16px;background:#f4f3ef;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink)}
+  .v4-ic svg{width:27px;height:27px}
+  .v4-copy .headline{font-size:clamp(28px,4vw,46px);margin-top:10px}
+  .v4-side{display:grid;gap:10px;justify-items:end}
+  .v4-chip{font-size:12px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .v4-hotkeys{display:flex;gap:7px}.v4-hotkeys kbd{font:inherit;font-size:12px;font-weight:850;background:#f4f3ef;border:1px solid var(--line);border-bottom-width:2px;border-radius:8px;padding:6px 9px}
+
+  /* 5. Stamp panel */
+  .v5{width:min(960px,100%);display:grid;grid-template-columns:1fr 280px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 34px 80px -44px rgba(17,17,16,.52);position:relative;overflow:hidden}
+  .v5::before{content:"";position:absolute;inset:12px;border:2px dashed rgba(17,17,16,.18);border-radius:3px;pointer-events:none}
+  .v5-main{padding:clamp(34px,5vw,58px);position:relative;z-index:1}
+  .v5-main .headline{margin-top:16px;max-width:15ch}
+  .v5-stamp{position:relative;z-index:1;border-left:1px solid var(--line);display:grid;place-items:center;padding:32px}
+  .stamp{width:174px;height:174px;border-radius:50%;border:2px solid var(--pink);display:grid;place-items:center;text-align:center;color:var(--pink);transform:rotate(-10deg)}
+  .stamp span{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;line-height:1.45}
+  .stamp b{display:block;font-size:28px;letter-spacing:-.04em;color:var(--ink);margin-top:6px}
+  .v5-stamp .btn{margin-top:24px;background:var(--pink)}
+
+  @keyframes stubLift{45%{transform:perspective(900px) rotateY(-10deg) translateX(5px)}}
+  @keyframes slowSpin{to{transform:rotate(360deg)}}
+  @media(max-width:760px){
+    .stage{padding:28px 18px}
+    .v1,.v2,.v3,.v5{grid-template-columns:1fr}
+    .v1-stub,.v3-action,.v5-stamp{border-left:0;border-top:2px dashed var(--line)}
+    .v1-stub::before,.v3-action::before{top:-14px;left:-14px}
+    .v1-stub::after,.v3-action::after{top:-14px;bottom:auto;left:auto;right:-14px}
+    .v3-band{display:none}
+    .v4-inner{grid-template-columns:1fr}.v4-copy{grid-template-columns:1fr}.v4-side{justify-items:start}
+    .headline{font-size:32px}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+  <nav class="top"><div class="wrap"><span class="logo">KNB<i></i></span><span class="tag">CTA ticket improvements</span><div class="jump"><a href="#v1">Premium</a><a href="#v2">Desk</a><a href="#v3">Claim</a><a href="#v4">Command</a><a href="#v5">Stamp</a></div></div></nav>
+
+  <main class="wrap">
+    <header class="intro">
+      <div class="eyebrow">Preview · internal</div>
+      <h1>Five better CTA ticket options.</h1>
+      <p>These stay close to the current homepage CTA section, but improve the visual weight, stub design, information hierarchy, and action area.</p>
+      <div class="notes"><span><b>1</b> Premium split</span><span><b>2</b> Proposal desk</span><span><b>3</b> Claim band</span><span><b>4</b> Command card</span><span><b>5</b> Stamp panel</span></div>
+    </header>
+
+    <section class="demo" id="v1">
+      <div class="demo-head"><div class="demo-title"><span class="num">01</span><h2>Premium Split Ticket</h2></div><p>Closest to the current section, but with a stronger consultation stub and better object feel.</p></div>
+      <div class="stage"><div class="v1 reveal">
+        <div class="v1-main"><span class="cap dot">Get started</span><h3 class="headline">Let's build something that works.</h3><p class="copy">Tell us about your project or store. We'll start with a free consultation and a clear written proposal.</p><ul class="mini"><li>Free</li><li>No obligation</li><li>Practical advice</li></ul></div>
+        <div class="v1-stub"><div class="v1-card"><span class="v1-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><b>Free consultation</b><a class="btn pink" href="contact.html">Start your project <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a><span class="serial">KNB-0044</span></div></div>
+      </div></div>
+    </section>
+
+    <section class="demo" id="v2">
+      <div class="demo-head"><div class="demo-title"><span class="num">02</span><h2>Proposal Desk</h2></div><p>Turns the CTA into a “project brief” moment instead of just a button and dashed divider.</p></div>
+      <div class="stage"><div class="v2 reveal">
+        <div class="v2-left"><span class="cap dot">Get started</span><h3 class="headline">Tell us what you want to build.</h3><p class="copy">We'll shape the first scope, flag what matters, and send a written proposal before build starts.</p><ul class="mini"><li>Free call</li><li>Scope notes</li><li>Clear next step</li></ul></div>
+        <div class="v2-right"><div class="v2-folder"><small>Project brief</small><h3>Free consultation</h3><div class="v2-lines"><i></i><i></i><i></i></div></div><a class="btn pink" href="contact.html">Start your project <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div></div>
+    </section>
+
+    <section class="demo" id="v3">
+      <div class="demo-head"><div class="demo-title"><span class="num">03</span><h2>Claim Band</h2></div><p>A more ticket-like version with a vertical brand band and a real detachable claim side.</p></div>
+      <div class="stage"><div class="v3 reveal">
+        <div class="v3-band"><span>KNB · Web Solution</span></div>
+        <div class="v3-body"><span class="cap dot">Get started</span><h3 class="headline">Let's build something that works.</h3><p class="copy">Bring the idea, current site, or store problem. We'll help you choose the cleanest next move.</p><ul class="mini"><li>Free</li><li>No obligation</li><li>Practical advice</li></ul></div>
+        <div class="v3-action"><div class="v3-badge">Claim</div><span class="cap">Free consultation</span><a class="btn pink" href="contact.html">Start your project <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div></div>
+    </section>
+
+    <section class="demo" id="v4">
+      <div class="demo-head"><div class="demo-title"><span class="num">04</span><h2>Command Card</h2></div><p>Less coupon, more modern operating panel. Useful if the ticket metaphor still feels too decorative.</p></div>
+      <div class="stage"><div class="v4 reveal">
+        <div class="v4-inner">
+          <div class="v4-copy"><span class="v4-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><div><span class="cap">Project intake</span><h3 class="headline">Start with a clear scope.</h3><p class="copy">A free consultation, practical notes, and a written proposal for the work ahead.</p></div></div>
+          <div class="v4-side"><span class="v4-chip">Free consultation</span><div class="v4-hotkeys"><kbd>⌘</kbd><kbd>→</kbd></div><a class="btn pink" href="contact.html">Start your project</a></div>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="demo" id="v5">
+      <div class="demo-head"><div class="demo-title"><span class="num">05</span><h2>Stamped Proposal Pass</h2></div><p>Editorial ticket feel with a bold stamp area instead of the empty right side in the current section.</p></div>
+      <div class="stage"><div class="v5 reveal">
+        <div class="v5-main"><span class="cap dot">Get started</span><h3 class="headline">Let's build something that works.</h3><p class="copy">Tell us about your project or store. We'll start with a free consultation and a clear written proposal.</p><ul class="mini"><li>Free</li><li>No obligation</li><li>Practical advice</li></ul></div>
+        <div class="v5-stamp"><div><div class="stamp"><span>Approved for<br><b>₱0</b><br>consultation</span></div><a class="btn pink" href="contact.html">Start your project</a></div></div>
+      </div></div>
+    </section>
+  </main>
+
+<script>
+  const reveals=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target);}});},{threshold:.18});
+    reveals.forEach((el)=>io.observe(el));
+  }else{
+    reveals.forEach((el)=>el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
