@@ -1,97 +1,20 @@
 gsap.registerPlugin(ScrollTrigger);
 
-    /* ---- Hero floating dust particles (drift up + parallax depth + cursor) ---- */
-    (function () {
-      const canvas = document.getElementById('heroParticles');
-      if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const ctx = canvas.getContext('2d');
-      const hero = canvas.parentElement;
-      const DPR = Math.min(window.devicePixelRatio || 1, 2);
-      let w = 0, h = 0, particles = [], mx = 0, my = 0, rafId;
-
-      // pink-forward palette (pink weighted, plus a few neutrals/accents)
-      const palette = [
-        '232,63,160', '232,63,160', '232,63,160',  // pink (weighted)
-        '17,17,16',                                  // neutral ink
-        '96,132,255', '39,196,153', '255,168,84'     // blue / teal / amber accents
-      ];
-      const spawn = (anywhere) => {
-        const depth = Math.random();                 // 0 = far/slow/faint, 1 = near/fast/bold
-        return {
-          x: Math.random() * w,
-          y: anywhere ? Math.random() * h : h + 12,
-          r: 0.6 + depth * 2.2,
-          vy: 0.15 + depth * 0.65,
-          drift: (Math.random() - 0.5) * 0.3,
-          alpha: 0.10 + depth * 0.34,
-          rgb: palette[Math.floor(Math.random() * palette.length)],
-          depth
-        };
-      };
-
-      function resize() {
-        w = hero.clientWidth; h = hero.clientHeight;
-        canvas.width = w * DPR; canvas.height = h * DPR;
-        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        const count = Math.round(Math.min(75, w / 18));
-        particles = Array.from({ length: count }, () => spawn(true));
-      }
-
-      function tick() {
-        ctx.clearRect(0, 0, w, h);
-        for (const p of particles) {
-          p.y -= p.vy;
-          p.x += p.drift;
-          if (p.y < -12) Object.assign(p, spawn(false));
-          const px = p.x + mx * p.depth * 28;        // nearer particles react more to cursor
-          const py = p.y + my * p.depth * 16;
-          ctx.beginPath();
-          ctx.arc(px, py, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + p.rgb + ',' + p.alpha + ')';
-          ctx.fill();
-        }
-        rafId = requestAnimationFrame(tick);
-      }
-
-      hero.addEventListener('mousemove', (e) => {
-        const r = hero.getBoundingClientRect();
-        mx = (e.clientX - r.left) / r.width - 0.5;
-        my = (e.clientY - r.top) / r.height - 0.5;
-      });
-      hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
-      let rt;
-      window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 200); });
-
-      // decorative — start after the browser is idle so it doesn't compete with first paint / LCP
-      const start = () => { resize(); cancelAnimationFrame(rafId); tick(); };
-      if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 900 });
-      else setTimeout(start, 250);
-    })();
-
-    /* ---- Hero grid cursor spotlight (#4) ---- */
-    (function () {
-      const spot = document.getElementById('gridSpot');
-      const heroEl = document.querySelector('.hero');
-      if (!spot || !heroEl || matchMedia('(hover: none)').matches) return;
-      heroEl.addEventListener('mousemove', (e) => {
-        const r = heroEl.getBoundingClientRect();
-        spot.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        spot.style.setProperty('--my', (e.clientY - r.top) + 'px');
-        spot.classList.add('active');
-      });
-      heroEl.addEventListener('mouseleave', () => spot.classList.remove('active'));
-    })();
+    /* hero particles + grid spotlight: shared implementation in ambient.js */
 
     /* ---- Magnetic buttons (pull toward cursor + scale) ---- */
     if (!matchMedia('(hover: none)').matches) {
-      document.querySelectorAll('.btn, .nav-cta, .btn-ghost').forEach((btn) => {
+      document.querySelectorAll('.btn, .nav-cta, .btn-ghost, .v3-help a, .proc-cta').forEach((btn) => {
         // Buttons inside a card are full-width, so use a gentler pull and clamp
         // the travel to keep them within the card's padding.
         const inCard = !!btn.closest('.plan');
-        const strength = inCard ? 0.18 : 0.32;
-        const maxMove = inCard ? 8 : 60;
-        const hoverScale = inCard ? 1.03 : 1.05;
+        // bento helper CTA: magnetic pull only, no size change
+        const flat = !!btn.closest('.v3-help');
+        // process "step zero" card: a big card — gentle pull + tiny scale
+        const bigCard = btn.classList.contains('proc-cta');
+        const strength = bigCard ? 0.2 : (flat ? 0.25 : (inCard ? 0.18 : 0.32));
+        const maxMove = bigCard ? 22 : (flat ? 26 : (inCard ? 8 : 60));
+        const hoverScale = bigCard ? 1.02 : (flat ? 1 : (inCard ? 1.03 : 1.05));
         const clamp = (v) => Math.max(-maxMove, Math.min(maxMove, v));
         // Drive x, y AND scale through persistent quickTo tweens. These are
         // reusable and never kill one another, so the magnetic effect keeps
@@ -117,16 +40,8 @@ gsap.registerPlugin(ScrollTrigger);
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
     window.addEventListener('scroll', onScroll); onScroll();
 
-    /* ---- Mobile menu ---- */
-    const burger = document.getElementById('burger');
-    const menu = document.getElementById('mobileMenu');
-    burger.addEventListener('click', () => {
-      burger.classList.toggle('open');
-      menu.classList.toggle('open');
-    });
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      burger.classList.remove('open'); menu.classList.remove('open');
-    }));
+    /* Mobile menu toggle now lives in navmenu.js (loaded on every page) — single
+       source of truth for a11y state + scroll lock. */
 
     /* ---- Hero polaroids: centered fanned stack, load-in + parallax ---- */
     const isMobile = window.innerWidth <= 860;
@@ -210,59 +125,18 @@ gsap.registerPlugin(ScrollTrigger);
 
     }
 
-    /* ---- Headline: split into letters → load reveal + cursor-reactive lift (#5) ---- */
+    /* ---- Headline: mask reveal on load (title slides up from behind its own edge) ---- */
     (function () {
       const title = document.getElementById('heroTitle');
       if (!title) return;
-      // The H1 is the LCP element: skip the JS split entirely for reduced-motion users
-      // (plain text paints instantly), and never gate first paint on the reveal.
+      // The H1 is the LCP element — skip the reveal for reduced-motion users (paints instantly).
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      requestAnimationFrame(function build() {
-      const text = title.textContent;
-      title.textContent = '';
-      const letters = [];
-      // Wrap each WORD in an inline-block span so the headline only ever breaks
-      // between words. Without this the per-letter inline-block letter spans can
-      // break mid-word on narrow screens (e.g. "Solutio" / "n").
-      text.split(' ').forEach((word, wi, arr) => {
-        const wEl = document.createElement('span');
-        wEl.className = 'hword';
-        [...word].forEach((ch) => {
-          const s = document.createElement('span');
-          s.className = 'hch';
-          s.textContent = ch;
-          wEl.appendChild(s);
-          letters.push(s);
-        });
-        title.appendChild(wEl);
-        if (wi < arr.length - 1) title.appendChild(document.createTextNode(' '));
-      });
-
-      // load reveal — letters rise + fade in, staggered (uses yPercent so cursor can own y)
-      gsap.from(letters, {
-        yPercent: 120, autoAlpha: 0, duration: 0.85, ease: 'power4.out', stagger: 0.035
-      });
-
-      // cursor-reactive — letters lift / scale toward the pointer
-      if (!matchMedia('(hover: none)').matches) {
-        const heroEl = document.querySelector('.hero');
-        const yqt = letters.map((s) => gsap.quickTo(s, 'y', { duration: 0.45, ease: 'power3' }));
-        const sqt = letters.map((s) => gsap.quickTo(s, 'scale', { duration: 0.45, ease: 'power3' }));
-        const MAX = 150;
-        heroEl.addEventListener('mousemove', (e) => {
-          letters.forEach((s, i) => {
-            const r = s.getBoundingClientRect();
-            const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-            const f = Math.max(0, 1 - Math.hypot(e.clientX - cx, e.clientY - cy) / MAX);
-            yqt[i](-f * 22);
-            sqt[i](1 + f * 0.16);
-          });
-        });
-        heroEl.addEventListener('mouseleave', () => {
-          letters.forEach((_, i) => { yqt[i](0); sqt[i](1); });
-        });
-      }
-      });
+      const inner = document.createElement('span');
+      inner.className = 'hero-mask-in';
+      while (title.firstChild) inner.appendChild(title.firstChild);
+      title.appendChild(inner);
+      title.style.overflow = 'hidden';
+      gsap.from(inner, { yPercent: 110, duration: 1, ease: 'power4.out', delay: 0.08 });
     })();
 
     /* ---- Hero rotating service word (#4) ---- */
@@ -271,7 +145,10 @@ gsap.registerPlugin(ScrollTrigger);
       if (!rot) return;
       const word = rot.querySelector('.rot-word');
       if (!word) return;
-      const words = ['Shopify stores', 'Webflow sites', 'WooCommerce shops', 'custom web apps'];
+      const words = rot.dataset.words
+        ? rot.dataset.words.split(',').map((s) => s.trim()).filter(Boolean)
+        : ['Shopify stores', 'Webflow sites', 'WooCommerce shops', 'custom web apps'];
+      if (words.length < 2) return;
       let i = 0;
       setInterval(() => {
         word.classList.add('out');
@@ -297,9 +174,12 @@ gsap.registerPlugin(ScrollTrigger);
         scrollTrigger: { trigger: el, start: 'top 80%' }
       });
     });
-    // grouped staggers for service rows + stats
-    [['.srv-row', 0.12], ['.stat', 0.12]].forEach(([sel, st]) => {
-      gsap.to(gsap.utils.toArray(sel), {
+    // grouped stagger for stats (the old .srv-row services layout is now the
+    // .v3-card bento — .srv-row was stale and warned; guard skips absent selectors)
+    [['.stat', 0.12]].forEach(([sel, st]) => {
+      const els = gsap.utils.toArray(sel);
+      if (!els.length) return;
+      gsap.to(els, {
         y: 0, opacity: 1, duration: 0.85, ease: 'power3.out', stagger: st,
         scrollTrigger: { trigger: sel, start: 'top 82%' }
       });
@@ -310,12 +190,21 @@ gsap.registerPlugin(ScrollTrigger);
 
     // PROCESS — heading slides in; the steps flow in left→right tied to scroll
     gsap.set('.process .sec-head', { opacity: 0, x: -55, y: 0 });
+    gsap.set('.process .proc-intro, .process .proc-cta', { opacity: 0, y: 26 });
     ScrollTrigger.create({ ...once('.process'),
-      onEnter: () => gsap.to('.process .sec-head', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }) });
-    gsap.set('.process .step', { opacity: 0, x: -90, y: 0 });
-    gsap.to('.process .step', {
+      onEnter: () => {
+        gsap.to('.process .sec-head', { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.to('.process .proc-intro, .process .proc-cta', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.1, delay: 0.12 });
+      } });
+    // steps slide in on scroll; each node lights + its connector fills in sync with
+    // the step's scroll-driven arrival (was a fixed wall-clock timer, which desynced)
+    const procSteps = gsap.utils.toArray('.process .step');
+    gsap.set(procSteps, { opacity: 0, x: -90, y: 0 });
+    gsap.to(procSteps, {
       opacity: 1, x: 0, ease: 'none', stagger: 0.4,
-      scrollTrigger: { trigger: '.process', start: 'top 82%', end: 'center 48%', scrub: 0.6 }
+      scrollTrigger: { trigger: '.process', start: 'top 82%', end: 'center 48%', scrub: 0.6,
+        onUpdate: (self) => { const p = self.progress; procSteps.forEach((s, i) => s.classList.toggle('is-active', p >= (i + 0.5) / procSteps.length)); }
+      }
     });
     // big "PROCESS" watermark drifts left → right as you scroll through the section
     gsap.fromTo('.process-wm', { x: -180 }, {
@@ -329,11 +218,11 @@ gsap.registerPlugin(ScrollTrigger);
       onEnter: () => gsap.to('.projects .reveal', { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger: 0.1 }) });
 
     // PLANS / Solutions — #7 choreographed: heading → toggle → cards stagger → aside slides in
-    gsap.set('.plans .sec-head, .plans .solu-toggle', { opacity: 0, y: 30 });
+    gsap.set('.plans .sec-head, .plans .plans-sub, .plans .solu-toggle, .plans .plans-incl', { opacity: 0, y: 30 });
     gsap.set('.plans .sol-item', { opacity: 0, y: 22 });
     gsap.set('.plans .sol-aside', { opacity: 0, x: 36 });
     ScrollTrigger.create({ ...once('.plans'), onEnter: () => {
-      gsap.to('.plans .sec-head, .plans .solu-toggle', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
+      gsap.to('.plans .sec-head, .plans .plans-sub, .plans .solu-toggle, .plans .plans-incl', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
       gsap.to('.plans .sol-item', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06, delay: 0.15 });
       gsap.to('.plans .sol-aside', { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', delay: 0.3 });
     } });
@@ -347,24 +236,87 @@ gsap.registerPlugin(ScrollTrigger);
       const ind = toggle && toggle.querySelector('.solu-ind');
       const plans = document.querySelector('.plans');
       const moveInd = (tab) => { if (ind && tab) { ind.style.width = tab.offsetWidth + 'px'; ind.style.transform = 'translateX(' + tab.offsetLeft + 'px)'; } };
+
+      // "Every … includes" strip — swap label + items to suit the active tab
+      const incl = document.querySelector('.plans-incl');
+      const inclK = incl && incl.querySelector('.pi-k');
+      const inclTrack = incl && incl.querySelector('.pi-track');
+      const INCL = {
+        web: { label: 'Every package includes', items: ['Free consultation &amp; written proposal', 'Mobile-first, fast &amp; SEO-ready build', 'Hands-on support through launch', 'Optional care plan after you go live'] },
+        care: { label: 'Every care plan includes', items: ['Set block of monthly support time', 'Edits, updates &amp; backups', 'Ongoing monitoring &amp; fixes', 'Move up or down anytime'] }
+      };
+      const CHK = '<span class="pi-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>';
+      const setIncl = (solu) => {
+        const set = INCL[solu]; if (!incl || !set) return;
+        if (inclK) inclK.textContent = set.label;
+        // Repeat items so each half always overflows the marquee width (short care
+        // items would otherwise leave a blank gap and look cut off as they scroll).
+        // Only the first set is "real"; every repeat is aria-hidden so screen readers
+        // and the reduced-motion fallback see just the 4 unique items.
+        const real = set.items.map((t) => '<li>' + CHK + t + '</li>').join('');
+        const ghost = set.items.map((t) => '<li aria-hidden="true">' + CHK + t + '</li>').join('');
+        if (inclTrack) inclTrack.innerHTML = real + ghost + ghost + ghost;
+        incl.setAttribute('aria-label', 'Included with ' + (solu === 'care' ? 'every care plan' : 'every package'));
+      };
+
       const activate = (t) => {
         tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
         panels.forEach((p) => p.classList.toggle('on', p.dataset.soluPanel === t.dataset.solu));
+        setIncl(t.dataset.solu);
         moveInd(t);
         if (plans) { plans.classList.remove('bloom'); void plans.offsetWidth; plans.classList.add('bloom'); } // #9 re-bloom (existing keyframe)
       };
       tabs.forEach((t) => t.addEventListener('click', () => activate(t)));
       const initInd = () => moveInd(tabs.find((t) => t.classList.contains('active')) || tabs[0]);
+      setIncl((tabs.find((t) => t.classList.contains('active')) || tabs[0]).dataset.solu);
       initInd();
       if (toggle) toggle.classList.add('ready');
       window.addEventListener('load', initInd);
       window.addEventListener('resize', initInd);
     })();
 
+    // Plans header decoration: cursor parallax (KNB + dots) + pink dot spotlight
+    (function () {
+      const section = document.querySelector('.plans');
+      const deco = section && section.querySelector('.plans-deco');
+      const mark = deco && deco.querySelector('.pd-mark');
+      if (!deco || !mark) return;
+      if (matchMedia('(hover: none)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      gsap.set(mark, { yPercent: -50 }); // preserve vertical centering under GSAP transforms
+      const decoX = gsap.quickTo(deco, 'x', { duration: 0.8, ease: 'power3' });
+      const decoY = gsap.quickTo(deco, 'y', { duration: 0.8, ease: 'power3' });
+      const markX = gsap.quickTo(mark, 'x', { duration: 0.6, ease: 'power3' });
+      const markY = gsap.quickTo(mark, 'y', { duration: 0.6, ease: 'power3' });
+
+      let raf = 0, px = 0, py = 0, nx = 0, ny = 0;
+      section.addEventListener('mousemove', (e) => {
+        px = e.clientX; py = e.clientY;
+        const sr = section.getBoundingClientRect();
+        nx = (px - (sr.left + sr.width / 2)) / sr.width;   // -0.5..0.5
+        ny = (py - (sr.top + sr.height / 2)) / sr.height;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+      section.addEventListener('mouseleave', () => {
+        deco.style.setProperty('--mx', '-300px');
+        deco.style.setProperty('--my', '-300px');
+        decoX(0); decoY(0); markX(0); markY(0);
+      });
+      function apply() {
+        raf = 0;
+        const r = deco.getBoundingClientRect();
+        deco.style.setProperty('--mx', (px - r.left) + 'px'); // spotlight follows cursor in deco space
+        deco.style.setProperty('--my', (py - r.top) + 'px');
+        decoX(nx * 14); decoY(ny * 10);   // dots drift with the pointer
+        markX(nx * 30); markY(ny * 20);    // wordmark drifts more → depth
+      }
+    })();
+
     // Solutions: hover (or focus) a plan → animate its details into the right aside
     (function () {
       const FACT = {
-        'Starter Website': '~1–2 weeks', 'Business Website': '~2–4 weeks', 'Ecommerce Website': '~3–5 weeks', 'Custom Web App': 'Scoped per project',
+        // canonical timelines — keep in sync with packages.js meta (pricing page)
+        'Starter Website': '~1–2 weeks', 'Business Website': '~3–4 weeks', 'Ecommerce Website': '~4–6 weeks', 'Custom Web App': 'Scoped per project',
         'Basic Care': 'Monthly retainer', 'Standard Support': 'Monthly retainer', 'Growth Support': 'Rollover included', 'Premium Support': 'Rollover included', 'Custom System Support': 'Tailored coverage'
       };
       document.querySelectorAll('.solu-panel').forEach((panel) => {
@@ -387,9 +339,19 @@ gsap.registerPlugin(ScrollTrigger);
           if (link) link.setAttribute('href', item.getAttribute('href')); // deep-link to this plan on pricing.html
           requestAnimationFrame(() => requestAnimationFrame(() => aside.classList.remove('swapping')));
         };
+        const hoverable = matchMedia('(hover: hover)');
         items.forEach((item) => {
           item.addEventListener('mouseenter', () => show(item));
           item.addEventListener('focus', () => show(item));
+          // Touch / no-hover: the aside can't be revealed by hover, so the first tap
+          // shows this plan's details (and scrolls them into view); a second tap on the
+          // plan you're already viewing follows the link through to pricing.html.
+          item.addEventListener('click', (e) => {
+            if (hoverable.matches || item.classList.contains('active')) return;
+            e.preventDefault();
+            show(item);
+            aside.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          });
         });
         show(items[0]);
       });
@@ -609,19 +571,6 @@ gsap.registerPlugin(ScrollTrigger);
       });
     })();
 
-    /* ---- Process chevrons: full-width band, pop wave flows left → right ---- */
-    (function () {
-      const wrap = document.getElementById('procArrows');
-      if (!wrap) return;
-      const chev = '<svg viewBox="0 0 11 18"><path d="M1.5 1.5 L9 9 L1.5 16.5"/></svg>';
-      const build = () => {
-        const n = Math.max(10, Math.floor(window.innerWidth / 46));
-        wrap.innerHTML = Array.from({ length: n }, (_, i) =>
-          chev.replace('<svg', `<svg style="animation-delay:${(i * 0.075).toFixed(3)}s"`)).join('');
-      };
-      build();
-      let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 200); });
-    })();
 
     /* ---- Projects: unified filter (platform + goal + clickable chips + count + #work= hash) ---- */
     (function () {
@@ -859,24 +808,49 @@ gsap.registerPlugin(ScrollTrigger);
       });
     })();
 
-    /* ---- FAQ accordion ---- */
-    document.querySelectorAll('#faqList .faq-item').forEach((item) => {
-      const q = item.querySelector('.faq-q');
-      const a = item.querySelector('.faq-a');
-      q.addEventListener('click', () => {
-        const isOpen = item.classList.contains('open');
-        // close all
-        document.querySelectorAll('#faqList .faq-item').forEach((it) => {
-          it.classList.remove('open');
-          it.querySelector('.faq-a').style.maxHeight = null;
+    /* ---- FAQ accordion (accessible: real buttons + ARIA, one open at a time) ---- */
+    (function () {
+      const items = document.querySelectorAll('#faqList .faq-item');
+      if (!items.length) return;
+
+      function closeItem(item) {
+        const btn = item.querySelector('.faq-q');
+        const panel = item.querySelector('.faq-a');
+        item.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        // Remove the collapsed answer from the accessibility tree so screen
+        // readers don't read hidden answers during a linear read.
+        panel.setAttribute('aria-hidden', 'true');
+        panel.style.maxHeight = null;
+      }
+      function openItem(item) {
+        const btn = item.querySelector('.faq-q');
+        const panel = item.querySelector('.faq-a');
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.removeAttribute('aria-hidden');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+
+      items.forEach((item) => {
+        item.querySelector('.faq-q').addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          items.forEach(closeItem);
+          if (!isOpen) openItem(item);
         });
-        // open this one (unless it was already open)
-        if (!isOpen) {
-          item.classList.add('open');
-          a.style.maxHeight = a.scrollHeight + 'px';
-        }
       });
-    });
+
+      // Open the first question by default so the section leads with visible content.
+      openItem(items[0]);
+
+      // Keep the open panel sized correctly if the layout reflows (resize, font swap).
+      let rt;
+      const recalc = () => {
+        const open = document.querySelector('#faqList .faq-item.open .faq-a');
+        if (open) open.style.maxHeight = open.scrollHeight + 'px';
+      };
+      window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(recalc, 120); });
+    })();
 
     /* ---- Footer: back to top (smooth, no hash) ---- */
     (function () {

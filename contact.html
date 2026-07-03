@@ -23,10 +23,32 @@
 <meta name="twitter:title" content="Contact — KNB Web Solution">
 <meta name="twitter:description" content="Get in touch with KNB Web Solution. Tell us about your website or online store and we'll send a clear, written proposal after a free consultation — no pressure, no jargon.">
 <meta name="twitter:image" content="https://knb-solutions.netlify.app/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact — KNB Web Solution",
+  "url": "https://knb-solutions.netlify.app/contact",
+  "description": "Get in touch with KNB Web Solution. Tell us about your website or online store and we'll send a clear, written proposal after a free consultation.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "KNB Web Solution",
+    "url": "https://knb-solutions.netlify.app/",
+    "email": "info@knb.solutions",
+    "areaServed": "Worldwide",
+    "address": { "@type": "PostalAddress", "addressCountry": "PH" },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "info@knb.solutions",
+      "availableLanguage": ["en"]
+    }
+  }
+}
+</script>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://s.wp.com" crossorigin>
 <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
@@ -138,22 +160,20 @@
     background-size: 64px 64px; opacity: 0.5;
     mask-image: radial-gradient(ellipse at 50% 20%, #000 35%, transparent 80%);
     -webkit-mask-image: radial-gradient(ellipse at 50% 20%, #000 35%, transparent 80%);
-    pointer-events: none; animation: gridDrift 24s linear infinite;
+    pointer-events: none;
   }
-  @keyframes gridDrift { to { background-position: 64px 128px; } }
   /* upward-floating dots (same idea as the homepage hero) */
   .contact-particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
   /* brighter grid revealed as a spotlight that follows the cursor */
   .contact-grid-spot {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background-image: linear-gradient(rgba(17,17,16,0.40) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,16,0.40) 1px, transparent 1px);
-    background-size: 64px 64px; animation: gridDrift 24s linear infinite;
+    background-image: linear-gradient(rgba(232,63,160,0.45) 1px, transparent 1px), linear-gradient(90deg, rgba(232,63,160,0.45) 1px, transparent 1px);
+    background-size: 64px 64px;
     --mx: 50%; --my: 30%; opacity: 0; transition: opacity 0.5s var(--ease);
     -webkit-mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000 0%, transparent 70%);
     mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000 0%, transparent 70%);
   }
   .contact-grid-spot.active { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) { .contact-grid-bg, .contact-grid-spot { animation: none; } }
   .contact .wrap { position: relative; z-index: 2; }
 
   .label { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: inline-flex; align-items: center; gap: 16px; }
@@ -175,12 +195,37 @@
   .form-step { display: none; }
   .form-step.active { display: block; animation: stepIn 0.32s var(--ease); }
   @keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* Mode toggle: free review vs full project */
+  .form-mode { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 24px; }
+  .fm-btn { display: flex; align-items: center; gap: 12px; text-align: left; padding: 13px 14px; border: 1px solid var(--line); border-radius: 14px; background: #faf9f6; cursor: pointer; font: inherit; transition: border-color 0.25s var(--ease), background 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+  .fm-btn:hover { border-color: #c9c7bf; }
+  .fm-btn .fm-ic { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: #fff; border: 1px solid var(--line); color: var(--ink); transition: background 0.25s var(--ease), color 0.25s var(--ease); }
+  .fm-btn .fm-ic svg { width: 19px; height: 19px; }
+  .fm-btn b { display: block; font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .fm-btn small { display: block; font-size: 12px; line-height: 1.4; color: var(--muted); margin-top: 2px; }
+  .fm-btn[aria-pressed="true"] { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 1px var(--ink) inset; }
+  .fm-btn[aria-pressed="true"] .fm-ic { background: var(--ink); color: var(--bg); }
+  @media (max-width: 520px) { .form-mode { grid-template-columns: 1fr; } }
+
+  /* Mode-driven visibility */
+  .audit-only { display: none !important; }
+  form.mode-audit .field.audit-only { display: block !important; }
+  form.mode-audit .project-only { display: none !important; }
+  form.mode-audit .form-progress { display: none !important; }
+  form.mode-audit .form-step[data-step="1"], form.mode-audit .form-step[data-step="2"] { display: none !important; }
+  form.mode-audit .form-actions [data-prev-step] { display: none !important; }
+  form.mode-audit .form-actions .step-nav { justify-content: flex-end; }
+  form.mode-audit .request-summary { display: none; }
   .form-section { padding-top: 0; margin-top: 0; border-top: 0; }
   .form-section-head { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; }
   .form-section-head .num { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 700; letter-spacing: 0; }
   .form-section-head b { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
   .field { margin-bottom: 22px; }
-  .field label { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; }
+  fieldset.field { border: 0; padding: 0; margin: 0 0 22px; min-width: 0; }
+  .field label, .field legend { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; padding: 0; }
+  .field legend { float: left; width: 100%; }
+  .field legend + * { clear: both; }
   .field input, .field select, .field textarea {
     width: 100%; font-family: inherit; font-size: 16px; color: var(--ink);
     background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
@@ -237,7 +282,7 @@
   .detail-panel.active { display: block; }
   @keyframes detailIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .detail-panel .field:last-child { margin-bottom: 0; }
-  .field.recommended > label::after { content: "Helpful"; display: inline-flex; margin-left: 8px; padding: 2px 7px; border-radius: 999px; background: rgba(232,63,160,0.08); color: #e83fa0; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; vertical-align: middle; }
+  .field.recommended > label::after, .field.recommended > legend::after { content: "Helpful"; display: inline-flex; margin-left: 8px; padding: 2px 7px; border-radius: 999px; background: rgba(232,63,160,0.08); color: #e83fa0; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; vertical-align: middle; }
   .choice-grid { display: flex; flex-wrap: wrap; gap: 8px; }
   .check-card { display: inline-flex; align-items: center; gap: 8px; min-height: 0; padding: 9px 13px; border: 1px solid var(--line); border-radius: 999px; background: #faf9f6; color: var(--ink); font-size: 13.5px; font-weight: 600; line-height: 1.15; cursor: pointer; transition: border-color 0.25s var(--ease), background 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease); }
   .field label.check-card { display: inline-flex; align-items: center; margin-bottom: 0; color: var(--ink); font-size: 13.5px; font-weight: 600; letter-spacing: 0; line-height: 1.15; text-transform: none; }
@@ -316,10 +361,14 @@
   .field-error[hidden] { display: none; }
   .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: #d12e6b; box-shadow: 0 0 0 4px rgba(209,46,107,0.10); }
   .hidden-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-send-error { color: #d12e6b; font-weight: 600; }
+  .form-send-error a { text-decoration: underline; text-underline-offset: 2px; font-weight: 700; }
+  .form-send-error[hidden] { display: none; }
   .form-success {
     display: none; text-align: center; padding: 40px 10px;
   }
-  .form-success.show { display: block; }
+  .form-success.show { display: block; animation: stepIn 0.5s var(--ease); }
+  .form-success:focus { outline: none; }
   .form-success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg); display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
   .form-success h3 { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
   .form-success p { color: var(--muted); margin-top: 10px; }
@@ -339,11 +388,12 @@
   }
   .steps .st { font-weight: 600; }
   .steps .sd { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
-  .socials-row { display: flex; gap: 12px; margin-top: 4px; }
-  .socials-row a { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.3s, color 0.3s, border-color 0.3s; }
-  .socials-row a:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .info-loc { color: var(--muted); font-size: 14.5px; margin: 0; }
 
-  .reveal { opacity: 0; transform: translateY(36px); }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+  }
 
   /* ---------- FOOTER ---------- */
   footer { background: var(--ink); color: var(--bg); padding: 80px 0 36px; position: relative; z-index: 2; overflow: hidden; }
@@ -355,13 +405,13 @@
   .foot-status .fs-dot { width: 8px; height: 8px; border-radius: 50%; background: #6cf09a; box-shadow: 0 0 0 0 rgba(108,240,154,0.6); animation: fsPulse 2.4s var(--ease) infinite; }
   @keyframes fsPulse { 0% { box-shadow: 0 0 0 0 rgba(108,240,154,0.5); } 70%,100% { box-shadow: 0 0 0 7px rgba(108,240,154,0); } }
   .foot-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  .foot-col h3 { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+  .foot-col h3 { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 16px; }
   .foot-col a { display: block; color: rgba(255,255,255,0.78); font-size: 15px; padding: 6px 0; transition: color 0.25s, transform 0.25s var(--ease); }
   .foot-col a:hover { color: #fff; transform: translateX(3px); }
-  .foot-loc { display: block; color: rgba(255,255,255,0.45); font-size: 13px; padding: 6px 0 14px; }
-  .socials { display: flex; gap: 12px; margin-top: 4px; }
-  .socials a { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 15px; transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease); }
-  .socials a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); transform: translateY(-3px); }
+  .foot-email { color: #fff; font-weight: 600; }
+  .foot-col a.foot-email:hover { text-decoration: underline; text-underline-offset: 3px; transform: none; }
+  .foot-loc { display: block; color: rgba(255,255,255,0.58); font-size: 13px; padding: 6px 0 0; }
+  .foot-note { display: block; color: rgba(255,255,255,0.58); font-size: 13px; padding: 4px 0 0; }
   .foot-mark { font-size: clamp(90px, 26vw, 360px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: rgba(255,255,255,0.04); margin: 10px 0 -6px; user-select: none; pointer-events: none; text-align: center; }
   .foot-mark::after { content: "KNB"; }
   .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); font-size: 14px; }
@@ -369,8 +419,28 @@
   .foot-bottom a { color: rgba(255,255,255,0.7); transition: color 0.25s; }
   .foot-bottom a:hover { color: #fff; }
   .foot-up:hover { color: #fff; }
-  @media (max-width: 760px) { .foot-top { grid-template-columns: 1fr; gap: 36px; } .foot-cols { grid-template-columns: repeat(2, 1fr); gap: 28px; } }
-  @media (max-width: 520px) { .foot-cols { grid-template-columns: 1fr; gap: 24px; } }
+  .foot-up .fu-arr { display: inline-block; transition: transform 0.25s var(--ease); }
+  .foot-up:hover .fu-arr, .foot-up:focus-visible .fu-arr { transform: translateY(-2px); }
+  footer a:focus-visible { outline: 2px solid var(--bg); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .foot-status .fs-dot { animation: none; box-shadow: none; }
+    .foot-col a:hover, .foot-up:hover .fu-arr, .foot-up:focus-visible .fu-arr { transform: none; }
+  }
+  @media (max-width: 900px) {
+    .foot-top { grid-template-columns: 1fr; gap: 28px; }
+    .foot-mark { font-size: clamp(72px, 15vw, 140px); margin: 6px 0 -4px; }
+  }
+  @media (max-width: 760px) {
+    footer { padding: 44px 0 24px; }
+    .foot-top { gap: 24px; padding-bottom: 22px; }
+    .foot-brand p { margin-top: 10px; }
+    .foot-status { margin-top: 14px; }
+    .foot-cols { grid-template-columns: repeat(2, 1fr); gap: 22px 24px; }
+    .foot-col:last-child { grid-column: 1 / -1; }
+    .foot-col h3 { margin-bottom: 8px; }
+    .foot-mark { display: none; }
+    .foot-bottom { padding-top: 18px; gap: 10px 16px; }
+  }
 
   @media (max-width: 860px) {
     .nav-right { display: none; }
@@ -402,9 +472,9 @@
 
   <!-- CONTACT -->
   <section id="main" class="contact">
-    <div class="contact-grid-bg"></div>
-    <div class="contact-grid-spot" id="contactSpot"></div>
-    <canvas class="contact-particles" id="contactParticles"></canvas>
+    <div class="contact-grid-bg" aria-hidden="true"></div>
+    <div class="contact-grid-spot" id="contactSpot" aria-hidden="true"></div>
+    <canvas class="contact-particles" id="contactParticles" aria-hidden="true"></canvas>
     <div class="wrap">
       <p class="label reveal">Get in touch</p>
       <h1 class="reveal">Let's build something that works.</h1>
@@ -416,7 +486,19 @@
           <form id="auditForm" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field" novalidate>
             <input type="hidden" name="form-name" value="contact">
             <input type="hidden" name="addons" id="addonsField">
+            <input type="hidden" name="request_type" id="requestType" value="Project enquiry">
             <p class="hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+
+            <div class="form-mode" id="formMode" role="group" aria-label="Choose what you need">
+              <button type="button" class="fm-btn" data-mode="audit" aria-pressed="false">
+                <span class="fm-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+                <span class="fm-tx"><b>Free website review</b><small>A quick, no-pressure look at your current site</small></span>
+              </button>
+              <button type="button" class="fm-btn" data-mode="project" aria-pressed="true">
+                <span class="fm-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h12"/></svg></span>
+                <span class="fm-tx"><b>Start a project</b><small>Tell us the details and get a written proposal</small></span>
+              </button>
+            </div>
 
             <div class="addons-summary" id="addonsSummary" hidden>
               <div class="as-head">
@@ -459,12 +541,16 @@
                 </div>
               </div>
               <div class="field">
-                <label for="site">Website or store URL <span class="opt">(optional)</span></label>
+                <label for="site">Website or store URL <span class="opt" data-audit-label>(optional)</span></label>
                 <input type="url" id="site" name="site" placeholder="yourstore.com" autocomplete="url" inputmode="url">
+              </div>
+              <div class="field audit-only">
+                <label for="auditMessage">What should we look at? <span class="opt">(optional)</span></label>
+                <textarea id="auditMessage" name="audit_message" placeholder="e.g. checkout feels clunky, the site looks dated on mobile, pages load slowly…"></textarea>
               </div>
               <div class="step-nav">
                 <span></span>
-                <button type="button" class="btn" data-next-step><span class="dot"></span>Next: project type</button>
+                <button type="button" class="btn project-only" data-next-step><span class="dot"></span>Next: project type</button>
               </div>
             </div>
 
@@ -920,12 +1006,8 @@
             </ol>
           </div>
           <div class="info-block reveal">
-            <div class="k">Find us</div>
-            <div class="socials-row">
-              <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-              <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
-              <a href="#" aria-label="Facebook"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 9h3l.5-3.5H14V4c0-1 .3-1.7 1.8-1.7H17V-.8C16.7-.9 15.6-1 14.4-1 11.9-1 10 .5 10 3.3v2.2H7V9h3v12h4V9Z"/></svg></a>
-            </div>
+            <div class="k">Where we work</div>
+            <p class="info-loc">Philippines · Remote worldwide</p>
           </div>
         </aside>
       </div>
@@ -943,7 +1025,7 @@
           <p>Web design, Shopify revamps, and ongoing support for growing businesses.</p>
           <span class="foot-status"><span class="fs-dot"></span>Now booking new projects</span>
         </div>
-        <nav class="foot-cols" aria-label="Footer">
+        <nav class="foot-cols" aria-label="Footer navigation">
           <div class="foot-col">
             <h3>Explore</h3>
             <a href="portfolio.html">Work</a>
@@ -959,14 +1041,9 @@
           </div>
           <div class="foot-col">
             <h3>Get in touch</h3>
-            <a href="mailto:info@knb.solutions">info@knb.solutions</a>
+            <a class="foot-email" href="mailto:info@knb.solutions">info@knb.solutions</a>
             <span class="foot-loc">Philippines · Remote worldwide</span>
-            <div class="socials">
-              <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-              <a href="#" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
-              <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
-              <a href="#" aria-label="Dribbble"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M5 6.5c3.5 4 8.5 6 14 6m-2-9c-4 5-5.5 12-5.5 15.5M3 14c5-1.5 11-1 15.5 4"/></svg></a>
-            </div>
+            <span class="foot-note">Usually replies within 1 business day</span>
           </div>
         </nav>
       </div>
@@ -975,7 +1052,7 @@
         <span>© 2026 KNB Web Solution. All rights reserved.</span>
         <div class="foot-bottom-r">
           <a href="privacy.html">Privacy</a>
-          <a href="#" class="foot-up">Back to top ↑</a>
+          <a href="#top" class="foot-up">Back to top <span class="fu-arr" aria-hidden="true">↑</span></a>
         </div>
       </div>
     </div>
@@ -1015,56 +1092,7 @@
       });
     }
 
-    /* floating dust particles (drift up + parallax depth + cursor) — same as the homepage hero */
-    (function () {
-      const canvas = document.getElementById('contactParticles');
-      if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const ctx = canvas.getContext('2d');
-      const host = document.querySelector('.contact');
-      const DPR = Math.min(window.devicePixelRatio || 1, 2);
-      let w = 0, h = 0, particles = [], mx = 0, my = 0, rafId;
-      const palette = ['232,63,160', '232,63,160', '232,63,160', '17,17,16', '96,132,255', '39,196,153', '255,168,84'];
-      const spawn = (anywhere) => {
-        const depth = Math.random();
-        return { x: Math.random() * w, y: anywhere ? Math.random() * h : h + 12, r: 0.6 + depth * 2.2, vy: 0.15 + depth * 0.6, drift: (Math.random() - 0.5) * 0.3, alpha: 0.08 + depth * 0.3, rgb: palette[Math.floor(Math.random() * palette.length)], depth };
-      };
-      function resize() {
-        w = host.clientWidth; h = host.clientHeight;
-        canvas.width = w * DPR; canvas.height = h * DPR;
-        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        particles = Array.from({ length: Math.round(Math.min(70, w / 20)) }, () => spawn(true));
-      }
-      function tick() {
-        ctx.clearRect(0, 0, w, h);
-        for (const p of particles) {
-          p.y -= p.vy; p.x += p.drift;
-          if (p.y < -12) Object.assign(p, spawn(false));
-          ctx.beginPath();
-          ctx.arc(p.x + mx * p.depth * 28, p.y + my * p.depth * 16, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + p.rgb + ',' + p.alpha + ')'; ctx.fill();
-        }
-        rafId = requestAnimationFrame(tick);
-      }
-      host.addEventListener('mousemove', (e) => { const r = host.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5; });
-      host.addEventListener('mouseleave', () => { mx = 0; my = 0; });
-      let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 200); });
-      resize(); tick();
-    })();
-
-    /* grid spotlight follows the cursor */
-    (function () {
-      const spot = document.getElementById('contactSpot');
-      const host = document.querySelector('.contact');
-      if (!spot || !host || matchMedia('(hover: none)').matches) return;
-      host.addEventListener('mousemove', (e) => {
-        const r = host.getBoundingClientRect();
-        spot.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        spot.style.setProperty('--my', (e.clientY - r.top) + 'px');
-        spot.classList.add('active');
-      });
-      host.addEventListener('mouseleave', () => spot.classList.remove('active'));
-    })();
+    /* particles + grid spotlight: shared implementation in ambient.js */
 
     /* form submit — inline validation + Netlify Forms (AJAX, keeps the inline success state) */
     const form = document.getElementById('auditForm');
@@ -1333,6 +1361,60 @@
     }
     showStep(0);
 
+    /* Mode toggle — Free website review (short) vs Start a project (full multi-step) */
+    (function () {
+      const formMode = document.getElementById('formMode');
+      const requestType = document.getElementById('requestType');
+      const step0 = form.querySelector('.form-step[data-step="0"]');
+      const step2 = form.querySelector('.form-step[data-step="2"]');
+      const formActions = step2 ? step2.querySelector('.form-actions') : null;
+      const submitBtn = formActions ? formActions.querySelector('button[type="submit"]') : null;
+      const heading = document.querySelector('.contact h1');
+      const lead = document.querySelector('.contact .lead');
+      if (!formMode || !formActions || !step0 || !step2) return;
+
+      const COPY = {
+        audit: {
+          h: 'Get a free website review.',
+          lead: "Send us your current site and we'll take a quick look — then reply with the clearest next step. No pressure, no cost.",
+          btn: 'Send my free review request',
+          type: 'Free website review'
+        },
+        project: {
+          h: heading ? heading.textContent : "Let's build something that works.",
+          lead: lead ? lead.textContent : '',
+          btn: 'Start my project',
+          type: 'Project enquiry'
+        }
+      };
+
+      function setMode(mode, focus) {
+        const audit = mode === 'audit';
+        form.classList.toggle('mode-audit', audit);
+        // relocate the shared reCAPTCHA + submit block so it's reachable in both modes
+        if (audit) { step0.appendChild(formActions); } else if (formActions.parentElement !== step2) { step2.appendChild(formActions); }
+        if (submitBtn) submitBtn.innerHTML = '<span class="dot"></span>' + (audit ? COPY.audit.btn : COPY.project.btn);
+        if (requestType) requestType.value = audit ? COPY.audit.type : COPY.project.type;
+        formMode.querySelectorAll('.fm-btn').forEach((b) => b.setAttribute('aria-selected', b.dataset.mode === mode ? 'true' : 'false'));
+        if (heading) heading.textContent = audit ? COPY.audit.h : COPY.project.h;
+        if (lead) lead.textContent = audit ? COPY.audit.lead : COPY.project.lead;
+        showStep(0);
+        if (focus) { const f = document.getElementById('name'); if (f) f.focus({ preventScroll: true }); }
+      }
+
+      formMode.querySelectorAll('.fm-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.mode;
+          setMode(mode, true);
+          const url = mode === 'audit' ? '?type=audit' : location.pathname;
+          history.replaceState(null, '', url + location.hash);
+        });
+      });
+
+      const param = (new URLSearchParams(location.search).get('type') || '').toLowerCase();
+      setMode(param === 'audit' ? 'audit' : 'project', false);
+    })();
+
     function setError(el, show) {
       const field = el.closest('.field');
       field.classList.toggle('invalid', show);
@@ -1356,8 +1438,9 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!validate()) { showStep(0); return; }
-      if (!selectedServiceOption()?.dataset.detail) { showStep(1); validStep(1); return; }
+      const isAudit = form.classList.contains('mode-audit');
+      if (!validate()) { if (!isAudit) showStep(0); return; }
+      if (!isAudit && !selectedServiceOption()?.dataset.detail) { showStep(1); validStep(1); return; }
       // require reCAPTCHA when Netlify has rendered it (only renders on the deployed Netlify site)
       const rc = document.getElementById('recaptcha-err');
       if (window.grecaptcha && typeof grecaptcha.getResponse === 'function') {
@@ -1383,6 +1466,18 @@
     });
   </script>
   <script src="navmenu.js"></script>
+  <script src="ambient.js"></script>
+  <script>
+    /* footer "Back to top" (href="#top" is the no-JS fallback) */
+    (function () {
+      var up = document.querySelector('.foot-up');
+      if (!up) return;
+      up.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    })();
+  </script>
   <script>
     // Carry selected add-ons from the pricing popup (?addons=A, B, C) into the form.
     (function () {

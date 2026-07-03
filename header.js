@@ -41,7 +41,7 @@
                     <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoachman.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
                     <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fphoenixsafe.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
                   </div>
-                  <div class="nm-foot"><span>44 projects · 3 platforms · 18+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
+                  <div class="nm-foot"><span>44 projects · 3 platforms · 12+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
         </div>
         <a href="contact.html" class="nav-cta"><span class="dot"></span>Start your project</a>
       </div>
-      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">

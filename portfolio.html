@@ -57,6 +57,8 @@
   .proj-card.feat .proj-img img { height: 100%; }
   .proj-card.feat:hover .proj-img img { transform: none; }
   /* CTA ticket / coupon styles live in work.css (.ctaC) — shared across all pages */
+  /* flat hero: no glow/logo pseudo layers on this page */
+  .page-hero::before, .page-hero::after { display: none; }
 </style>
 <link rel="stylesheet" href="navmenu.css">
 </head>
@@ -69,7 +71,7 @@
   <main>
 
   <!-- HERO -->
-  <header id="main" class="page-hero hero-split" style="--pcol:#111110;">
+  <header id="main" class="page-hero hero-split" style="--pcol:#e83fa0;">
     <div class="hero-grid-bg" aria-hidden="true"></div>
     <div class="hero-grid-spot" id="gridSpot" aria-hidden="true"></div>
     <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
@@ -488,21 +490,77 @@
   </div>
 
   <!-- FAQ -->
-  <section class="faq-sec">
-    <div class="wrap">
-      <div class="faq-head reveal r-left">
-        <span class="testi-kicker">Questions</span>
-        <h2>Good to know.</h2>
-      </div>
-      <div class="faq-list">
-        <details class="faq-item reveal"><summary>How long does a website take?<span class="faq-ic" aria-hidden="true"></span></summary><p>Most sites launch in a few weeks — it depends on page count, content readiness, and revisions. You'll get a timeline in your proposal.</p></details>
-        <details class="faq-item reveal"><summary>What do you need from me to start?<span class="faq-ic" aria-hidden="true"></span></summary><p>Your goals, any brand assets (logo, colours, copy or photos if you have them), and a few example sites you like. We'll guide the rest.</p></details>
-        <details class="faq-item reveal"><summary>Can I edit the site myself afterward?<span class="faq-ic" aria-hidden="true"></span></summary><p>Yes — we build on a CMS (Shopify, Webflow, or WordPress) and hand off guidance so your team can manage content.</p></details>
-        <details class="faq-item reveal"><summary>Do you offer ongoing support?<span class="faq-ic" aria-hidden="true"></span></summary><p>Yes — optional care plans cover updates, fixes, and improvements after launch. We'll recommend a tier that fits.</p></details>
-        <details class="faq-item reveal"><summary>How much does it cost?<span class="faq-ic" aria-hidden="true"></span></summary><p>Every project is scoped to what you need, so we quote after a quick consultation. See the <a href="pricing.html">pricing page</a> for starting points.</p></details>
+  <section class="faq" id="faq"><div class="wrap">
+    <div class="faq-grid">
+      <aside class="faq-aside reveal">
+        <span class="faq-eyebrow"><span class="dot"></span>FAQ</span>
+        <h2 class="sec-head">Good to know</h2>
+        <p>Everything worth knowing before we start. Still can't find your answer? Ask us directly — it's free.</p>
+        <a href="contact.html?type=audit" class="btn"><span class="dot"></span>Book a free consultation</a>
+        <p class="faq-note">No pressure. We'll point you to the right next step — even if that isn't us.</p>
+      </aside>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item reveal">
+          <h3 class="faq-h">
+            <button class="faq-q" type="button" id="faq-q-1" aria-expanded="false" aria-controls="faq-a-1">
+            <span class="faq-q-main"><span class="faq-chip">Timeline</span><span class="faq-q-text">How long does a website take?</span></span>
+            <span class="ic" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id="faq-a-1" role="region" aria-hidden="true" aria-labelledby="faq-q-1"><p>Most sites launch in a few weeks — it depends on page count, content readiness, and revisions. You'll get a timeline in your proposal.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <h3 class="faq-h">
+            <button class="faq-q" type="button" id="faq-q-2" aria-expanded="false" aria-controls="faq-a-2">
+            <span class="faq-q-main"><span class="faq-chip">Getting started</span><span class="faq-q-text">What do you need from me to start?</span></span>
+            <span class="ic" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id="faq-a-2" role="region" aria-hidden="true" aria-labelledby="faq-q-2"><p>Your goals, any brand assets (logo, colours, copy or photos if you have them), and a few example sites you like. We'll guide the rest.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <h3 class="faq-h">
+            <button class="faq-q" type="button" id="faq-q-3" aria-expanded="false" aria-controls="faq-a-3">
+            <span class="faq-q-main"><span class="faq-chip">Self-serve</span><span class="faq-q-text">Can I edit the site myself afterward?</span></span>
+            <span class="ic" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id="faq-a-3" role="region" aria-hidden="true" aria-labelledby="faq-q-3"><p>Yes — we build on a CMS (Shopify, Webflow, or WordPress) and hand off guidance so your team can manage content.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <h3 class="faq-h">
+            <button class="faq-q" type="button" id="faq-q-4" aria-expanded="false" aria-controls="faq-a-4">
+            <span class="faq-q-main"><span class="faq-chip">Support</span><span class="faq-q-text">Do you offer ongoing support?</span></span>
+            <span class="ic" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id="faq-a-4" role="region" aria-hidden="true" aria-labelledby="faq-q-4"><p>Yes — optional care plans cover updates, fixes, and improvements after launch. We'll recommend a tier that fits.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <h3 class="faq-h">
+            <button class="faq-q" type="button" id="faq-q-5" aria-expanded="false" aria-controls="faq-a-5">
+            <span class="faq-q-main"><span class="faq-chip">Pricing</span><span class="faq-q-text">How much does it cost?</span></span>
+            <span class="ic" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id="faq-a-5" role="region" aria-hidden="true" aria-labelledby="faq-q-5"><p>Every project is scoped to what you need, so we quote after a quick consultation. See the <a href="pricing.html">pricing page</a> for starting points.</p></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div></section>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How long does a website take?", "acceptedAnswer": { "@type": "Answer", "text": "Most sites launch in a few weeks — it depends on page count, content readiness, and revisions. You'll get a timeline in your proposal." } },
+      { "@type": "Question", "name": "What do you need from me to start?", "acceptedAnswer": { "@type": "Answer", "text": "Your goals, any brand assets (logo, colours, copy or photos if you have them), and a few example sites you like. We'll guide the rest." } },
+      { "@type": "Question", "name": "Can I edit the site myself afterward?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — we build on a CMS (Shopify, Webflow, or WordPress) and hand off guidance so your team can manage content." } },
+      { "@type": "Question", "name": "Do you offer ongoing support?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — optional care plans cover updates, fixes, and improvements after launch. We'll recommend a tier that fits." } },
+      { "@type": "Question", "name": "How much does it cost?", "acceptedAnswer": { "@type": "Answer", "text": "Every project is scoped to what you need, so we quote after a quick consultation. See the pricing page for starting points." } }
+    ]
+  }
+  </script>
 
   <!-- CTA — ticket / coupon (tears on hover) -->
   <section class="cta-strip">
@@ -568,7 +626,7 @@
           <p>Web design, Shopify revamps, and ongoing support for growing businesses.</p>
           <span class="foot-status"><span class="fs-dot"></span>Now booking new projects</span>
         </div>
-        <nav class="foot-cols" aria-label="Footer">
+        <nav class="foot-cols" aria-label="Footer navigation">
           <div class="foot-col">
             <h3>Explore</h3>
             <a href="portfolio.html">Work</a>
@@ -584,14 +642,9 @@
           </div>
           <div class="foot-col">
             <h3>Get in touch</h3>
-            <a href="mailto:info@knb.solutions">info@knb.solutions</a>
+            <a class="foot-email" href="mailto:info@knb.solutions">info@knb.solutions</a>
             <span class="foot-loc">Philippines · Remote worldwide</span>
-            <div class="socials">
-              <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-              <a href="#" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
-              <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
-              <a href="#" aria-label="Dribbble"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M5 6.5c3.5 4 8.5 6 14 6m-2-9c-4 5-5.5 12-5.5 15.5M3 14c5-1.5 11-1 15.5 4"/></svg></a>
-            </div>
+            <span class="foot-note">Usually replies within 1 business day</span>
           </div>
         </nav>
       </div>
@@ -600,7 +653,7 @@
         <span>© 2026 KNB Web Solution. All rights reserved.</span>
         <div class="foot-bottom-r">
           <a href="privacy.html">Privacy</a>
-          <a href="#" class="foot-up">Back to top ↑</a>
+          <a href="#top" class="foot-up">Back to top <span class="fu-arr" aria-hidden="true">↑</span></a>
         </div>
       </div>
     </div>
@@ -609,6 +662,7 @@
   <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
   <script src="work.js"></script>
+  <script src="ambient.js"></script>
   <script src="testimonials.js"></script>
   <script src="navmenu.js"></script>
 </body>

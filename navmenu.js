@@ -72,6 +72,41 @@
       if (img.complete && img.naturalWidth) done();
       else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
     });
+
+    /* ---- Mobile menu: single source of truth (navmenu.js loads on every page) ----
+       Full-screen overlay toggle with complete a11y state + body scroll lock.
+       Runs after the mm-work strip is injected above, so the cloned work links
+       also close the menu on tap. (The old duplicates in main.js and work.js
+       were removed — work.js lacked scroll-lock/ARIA and contact.html had none.) */
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobileMenu');
+    if (burger && menu && !burger.dataset.mmBound) {
+      burger.dataset.mmBound = '1';
+      let savedY = 0;
+      const setMenu = (open) => {
+        burger.classList.toggle('open', open);
+        menu.classList.toggle('open', open);
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        // Robust scroll lock: pin the body at its current scroll offset while
+        // open (position:fixed via .menu-open), then restore on close — this
+        // holds on iOS Safari where overflow:hidden alone does not.
+        if (open) {
+          savedY = window.scrollY || window.pageYOffset || 0;
+          document.documentElement.classList.add('menu-open');
+          document.body.classList.add('menu-open');
+          document.body.style.top = -savedY + 'px';
+        } else {
+          document.documentElement.classList.remove('menu-open');
+          document.body.classList.remove('menu-open');
+          document.body.style.top = '';
+          window.scrollTo(0, savedY);
+        }
+      };
+      burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

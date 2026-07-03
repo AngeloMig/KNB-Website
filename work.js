@@ -7,13 +7,8 @@
     window.addEventListener('scroll', onScroll); onScroll();
   }
 
-  // mobile menu
-  const burger = document.getElementById('burger');
-  const menu = document.getElementById('mobileMenu');
-  if (burger && menu) {
-    burger.addEventListener('click', () => { burger.classList.toggle('open'); menu.classList.toggle('open'); });
-    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { burger.classList.remove('open'); menu.classList.remove('open'); }));
-  }
+  // Mobile menu toggle now lives in navmenu.js (loaded on every page) — single
+  // source of truth for a11y state + body scroll lock.
 
   // scroll reveal
   const els = document.querySelectorAll('.reveal');
@@ -488,6 +483,16 @@
     onScroll();
     if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
   })();
+
+  // footer "Back to top" (href="#top" is the no-JS fallback)
+  (function () {
+    const up = document.querySelector('.foot-up');
+    if (!up) return;
+    up.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  })();
 })();
 
 /* platform-page grid load-more (shopify / webflow / wordpress) — not the portfolio controller grid */
@@ -598,64 +603,6 @@
    HOMEPAGE ALIGNMENT — ported behaviour (vanilla, no GSAP)
    ============================================================== */
 
-/* living hero — floating particles (drift up + cursor parallax) */
-(function () {
-  var canvas = document.getElementById('heroParticles');
-  if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var ctx = canvas.getContext('2d');
-  var hero = canvas.parentElement;
-  var DPR = Math.min(window.devicePixelRatio || 1, 2);
-  var w = 0, h = 0, particles = [], mx = 0, my = 0, rafId;
-  var palette = ['232,63,160', '17,17,16', '96,132,255', '39,196,153', '255,168,84'];
-  function spawn(anywhere) {
-    var depth = Math.random();
-    return { x: Math.random() * w, y: anywhere ? Math.random() * h : h + 12,
-      r: 0.6 + depth * 2.2, vy: 0.15 + depth * 0.65, drift: (Math.random() - 0.5) * 0.3,
-      alpha: 0.10 + depth * 0.34, rgb: palette[Math.floor(Math.random() * palette.length)], depth: depth };
-  }
-  function resize() {
-    w = hero.clientWidth; h = hero.clientHeight;
-    canvas.width = w * DPR; canvas.height = h * DPR;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    particles = Array.from({ length: Math.round(Math.min(70, w / 20)) }, function () { return spawn(true); });
-  }
-  function tick() {
-    ctx.clearRect(0, 0, w, h);
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      p.y -= p.vy; p.x += p.drift;
-      if (p.y < -12) Object.assign(p, spawn(false));
-      ctx.beginPath();
-      ctx.arc(p.x + mx * p.depth * 28, p.y + my * p.depth * 16, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + p.rgb + ',' + p.alpha + ')'; ctx.fill();
-    }
-    rafId = requestAnimationFrame(tick);
-  }
-  hero.addEventListener('mousemove', function (e) {
-    var r = hero.getBoundingClientRect();
-    mx = (e.clientX - r.left) / r.width - 0.5; my = (e.clientY - r.top) / r.height - 0.5;
-  });
-  hero.addEventListener('mouseleave', function () { mx = 0; my = 0; });
-  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(resize, 200); });
-  var start = function () { resize(); cancelAnimationFrame(rafId); tick(); };
-  if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 900 }); else setTimeout(start, 250);
-})();
-
-/* living hero — grid cursor spotlight */
-(function () {
-  var spot = document.getElementById('gridSpot');
-  var heroEl = document.querySelector('.page-hero');
-  if (!spot || !heroEl || matchMedia('(hover: none)').matches) return;
-  heroEl.addEventListener('mousemove', function (e) {
-    var r = heroEl.getBoundingClientRect();
-    spot.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-    spot.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    spot.classList.add('active');
-  });
-  heroEl.addEventListener('mouseleave', function () { spot.classList.remove('active'); });
-})();
-
 /* project screenshots via mShots + shimmer blur-up */
 (function () {
   document.querySelectorAll('.pj-img').forEach(function (img) {
@@ -735,16 +682,46 @@
   document.addEventListener('keydown', function (e) { if (modal.hidden) return; if (e.key === 'ArrowLeft') navTo(-1); else if (e.key === 'ArrowRight') navTo(1); });
 })();
 
-/* two-column FAQ accordion */
+/* FAQ accordion (accessible: real buttons + ARIA, one open at a time — homepage parity) */
 (function () {
-  document.querySelectorAll('#faqList .faq-item').forEach(function (item) {
-    var q = item.querySelector('.faq-q'), a = item.querySelector('.faq-a');
-    if (!q || !a) return;
-    q.addEventListener('click', function () {
+  var items = document.querySelectorAll('#faqList .faq-item');
+  if (!items.length) return;
+
+  function closeItem(item) {
+    var btn = item.querySelector('.faq-q'), panel = item.querySelector('.faq-a');
+    item.classList.remove('open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    // Remove the collapsed answer from the a11y tree so screen readers skip it on a linear read.
+    if (panel) { panel.setAttribute('aria-hidden', 'true'); panel.style.maxHeight = null; }
+  }
+  function openItem(item) {
+    var btn = item.querySelector('.faq-q'), panel = item.querySelector('.faq-a');
+    item.classList.add('open');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+    if (panel) { panel.removeAttribute('aria-hidden'); panel.style.maxHeight = panel.scrollHeight + 'px'; }
+  }
+
+  items.forEach(function (item) {
+    var btn = item.querySelector('.faq-q');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
       var isOpen = item.classList.contains('open');
-      document.querySelectorAll('#faqList .faq-item').forEach(function (it) { it.classList.remove('open'); var aa = it.querySelector('.faq-a'); if (aa) aa.style.maxHeight = null; });
-      if (!isOpen) { item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+      items.forEach(closeItem);
+      if (!isOpen) openItem(item);
     });
+  });
+
+  // Open the first question by default so the section leads with visible content.
+  openItem(items[0]);
+
+  // Keep the open panel sized correctly if the layout reflows (resize, font swap).
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      var open = document.querySelector('#faqList .faq-item.open .faq-a');
+      if (open) open.style.maxHeight = open.scrollHeight + 'px';
+    }, 120);
   });
 })();
 
@@ -898,21 +875,3 @@
   });
 })();
 
-/* "How it works" flip cards (pricing) — entrance trigger + hover/click/tilt */
-(function () {
-  var grid = document.querySelector('.v-flip');
-  if (!grid) return;
-  var cards = [].slice.call(grid.querySelectorAll('.fl-card'));
-  function play() { grid.classList.add('played'); }
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { play(); io.unobserve(e.target); } }); }, { threshold: 0.25 });
-    io.observe(grid);
-  } else { play(); }
-  cards.forEach(function (c) {
-    var tilt = c.querySelector('.fl-tilt'); c._locked = false;
-    c.addEventListener('mouseenter', function () { if (!c._locked) c.classList.add('flipped'); });
-    c.addEventListener('mouseleave', function () { if (!c._locked) c.classList.remove('flipped'); tilt.style.setProperty('--tx', '0deg'); tilt.style.setProperty('--ty', '0deg'); });
-    c.addEventListener('click', function (e) { if (e.target.closest('.fl-cta')) return; e.preventDefault(); c._locked = !c._locked; if (c._locked) c.classList.add('flipped'); else if (!c.matches(':hover')) c.classList.remove('flipped'); });
-    c.addEventListener('pointermove', function (e) { if (!c.classList.contains('flipped')) return; var r = c.getBoundingClientRect(); var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; tilt.style.setProperty('--ty', (x * 7) + 'deg'); tilt.style.setProperty('--tx', (-y * 7) + 'deg'); });
-  });
-})();

@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plans header whitespace — 10 fill ideas</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f3ef; --ink:#111110; --muted:#6d6c66; --line:#dedcd4; --card:#fff;
+    --green:#6cf09a; --pink:#e83fa0; --blue:#6084ff; --teal:#27c499; --amber:#ffa854;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;padding:40px 24px 120px;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  .pv-lead{margin:8px 0 40px;}
+  .pv-lead .k{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);}
+  .pv-lead h1{font-size:34px;line-height:1.1;letter-spacing:-.02em;margin:8px 0 10px;}
+  .pv-lead p{color:var(--muted);font-size:15.5px;line-height:1.55;max-width:70ch;}
+
+  .pv-h{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin:52px 0 4px;}
+  .pv-desc{color:var(--muted);font-size:14.5px;line-height:1.5;margin:0 0 18px;max-width:72ch;}
+  .pv-desc b{color:var(--ink);font-weight:700;}
+
+  /* section frame mimics the real .plans header row */
+  .stage{background:var(--bg);border:1px dashed var(--line);border-radius:22px;padding:34px 34px 30px;position:relative;
+    background-image:repeating-linear-gradient(90deg,rgba(17,17,16,.035) 0 1px,transparent 1px 86px);}
+  .head-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  @media (max-width:860px){.head-row{grid-template-columns:1fr;}}
+  .head-left h2{font-size:clamp(30px,4vw,50px);line-height:1.03;letter-spacing:-.03em;font-weight:700;}
+  .head-left .sub{color:var(--muted);font-size:15px;line-height:1.55;margin-top:16px;max-width:44ch;}
+  .toggle{display:inline-flex;gap:4px;padding:5px;border-radius:100px;background:rgba(17,17,16,.05);margin-top:26px;}
+  .toggle span{padding:9px 20px;border-radius:100px;font-size:14px;font-weight:600;color:var(--muted);}
+  .toggle span.on{background:var(--ink);color:#fff;}
+  .slot{min-height:170px;}
+
+  /* shared bits */
+  .stars{color:var(--amber);letter-spacing:2px;font-size:15px;}
+  .chk{flex:none;width:18px;height:18px;border-radius:50%;background:var(--green);display:inline-flex;align-items:center;justify-content:center;}
+  .chk svg{width:10px;height:10px;stroke:#11261a;stroke-width:2.8;fill:none;}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border-radius:100px;padding:11px 18px;font-weight:700;font-size:14px;}
+  .btn .dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
+  .ghost{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--ink);}
+  .kick{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+
+  /* 1 — Trust / proof card */
+  .v1{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;box-shadow:0 24px 50px -38px rgba(0,0,0,.5);max-width:420px;}
+  .v1 .top{display:flex;align-items:center;gap:12px;}
+  .v1 .score{font-size:30px;font-weight:800;letter-spacing:-.02em;}
+  .v1 .metrics{display:flex;gap:26px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+  .v1 .metrics b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em;}
+  .v1 .metrics span{font-size:12.5px;color:var(--muted);}
+  .v1 .foot{margin-top:16px;font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:center;}
+
+  /* 2 — "Not sure?" helper CTA */
+  .v2{background:var(--ink);color:#fff;border-radius:18px;padding:24px 26px;max-width:420px;box-shadow:0 24px 50px -34px rgba(0,0,0,.6);}
+  .v2 .kick{color:var(--pink);}
+  .v2 h3{font-size:22px;line-height:1.15;margin:8px 0 8px;font-weight:700;}
+  .v2 p{color:#c9c8c2;font-size:14px;line-height:1.5;margin-bottom:18px;}
+  .v2 .btn{background:#fff;color:var(--ink);}
+  .v2 .btn .dot{background:var(--pink);}
+
+  /* 3 — How it works mini-steps */
+  .v3{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 24px;max-width:420px;box-shadow:0 24px 50px -40px rgba(0,0,0,.5);}
+  .v3 ol{list-style:none;counter-reset:s;margin-top:14px;}
+  .v3 li{counter-increment:s;display:flex;align-items:center;gap:14px;padding:9px 0;font-size:14.5px;font-weight:600;}
+  .v3 li+li{border-top:1px solid var(--line);}
+  .v3 li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+
+  /* 4 — Quiz teaser */
+  .v4{background:linear-gradient(135deg,#fff,#fdf2f8);border:1px solid var(--line);border-radius:18px;padding:24px 26px;max-width:420px;box-shadow:0 24px 50px -40px rgba(0,0,0,.5);}
+  .v4 .pill{display:inline-flex;align-items:center;gap:7px;background:var(--pink);color:#fff;border-radius:100px;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;}
+  .v4 h3{font-size:21px;margin:14px 0 6px;font-weight:700;}
+  .v4 p{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:16px;}
+
+  /* 5 — Guarantees / reassurance grid */
+  .v5{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:440px;}
+  .v5 .g{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;}
+  .v5 .g .ic{width:32px;height:32px;border-radius:9px;background:rgba(17,17,16,.06);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px;}
+  .v5 .g b{display:block;font-size:14px;}
+  .v5 .g span{font-size:12.5px;color:var(--muted);line-height:1.4;}
+
+  /* 6 — Platform logos + line */
+  .v6{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;max-width:420px;box-shadow:0 24px 50px -40px rgba(0,0,0,.5);}
+  .v6 .logos{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  .v6 .logos span{background:rgba(17,17,16,.05);border-radius:100px;padding:8px 14px;font-size:13px;font-weight:700;}
+  .v6 .foot{margin-top:16px;font-size:13px;color:var(--muted);line-height:1.5;}
+
+  /* 7 — Testimonial quote */
+  .v7{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 26px;max-width:430px;box-shadow:0 24px 50px -40px rgba(0,0,0,.5);}
+  .v7 blockquote{font-size:16.5px;line-height:1.5;font-weight:600;}
+  .v7 .who{display:flex;align-items:center;gap:10px;margin-top:16px;}
+  .v7 .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--amber));}
+  .v7 .who b{font-size:14px;}.v7 .who span{display:block;font-size:12.5px;color:var(--muted);}
+
+  /* 8 — Stat strip (horizontal, sits above toggle) */
+  .v8{display:flex;gap:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;max-width:460px;box-shadow:0 20px 44px -38px rgba(0,0,0,.5);}
+  .v8 .cell{flex:1;padding:18px 20px;border-left:1px solid var(--line);}
+  .v8 .cell:first-child{border-left:none;}
+  .v8 .cell b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;}
+  .v8 .cell span{font-size:12px;color:var(--muted);}
+
+  /* 9 — Included-with checklist (repurpose the strip vertically) */
+  .v9{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 24px;max-width:400px;box-shadow:0 24px 50px -40px rgba(0,0,0,.5);}
+  .v9 ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:12px;}
+  .v9 li{display:flex;align-items:center;gap:11px;font-size:14px;font-weight:600;}
+
+  /* 10 — Consultation booking mini-card */
+  .v10{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;max-width:420px;box-shadow:0 24px 50px -40px rgba(0,0,0,.5);}
+  .v10 .avatars{display:flex;margin-bottom:14px;}
+  .v10 .avatars i{width:34px;height:34px;border-radius:50%;border:2px solid var(--card);margin-left:-8px;display:block;}
+  .v10 .avatars i:first-child{margin-left:0;}
+  .v10 h3{font-size:19px;font-weight:700;margin-bottom:6px;}
+  .v10 p{color:var(--muted);font-size:13.5px;line-height:1.5;margin-bottom:16px;}
+  .v10 .row{display:flex;align-items:center;gap:12px;}
+  .v10 .free{font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="pv-lead">
+    <div class="k">Preview · not linked from the live site</div>
+    <h1>Filling the header whitespace</h1>
+    <p>Each block below shows the real <b>“Website packages &amp; care plans”</b> header on the left, with a different idea dropped into the empty top-right slot you circled. Same layout, same theme colours — pick the one(s) you like and I’ll build it into <b>index.html</b>. Figures shown (4.9★, 40+) reuse what’s already on the site; swap for real numbers before launch.</p>
+  </div>
+
+  <!-- 1 -->
+  <p class="pv-h">Idea 1 · Trust / proof card</p>
+  <p class="pv-desc">Rating + headline stats + a one-line reassurance. Best all-rounder — balances the heading and builds confidence right at the decision point.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v1">
+      <div class="top"><span class="stars">★★★★★</span><span class="score">4.9</span><span style="color:var(--muted);font-size:13px;">/ 5 from clients</span></div>
+      <div class="metrics">
+        <div><b>40+</b><span>Projects shipped</span></div>
+        <div><b>2–6 wk</b><span>Typical launch</span></div>
+        <div><b>100%</b><span>Written proposals</span></div>
+      </div>
+      <div class="foot"><span class="chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Free consultation — no pressure, no fee.</div>
+    </div></div>
+  </div></div>
+
+  <!-- 2 -->
+  <p class="pv-h">Idea 2 · “Not sure?” helper CTA</p>
+  <p class="pv-desc">A dark nudge card for undecided visitors → book a free consultation. Conversion-focused; stands out against the light background.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v2">
+      <div class="kick">Not sure which fits?</div>
+      <h3>Tell us your goals — we’ll recommend the right scope.</h3>
+      <p>Every project is quoted in writing after a quick, free call. No obligation.</p>
+      <a class="btn" href="#"><span class="dot"></span>Book a free consultation</a>
+    </div></div>
+  </div></div>
+
+  <!-- 3 -->
+  <p class="pv-h">Idea 3 · How it works (mini-steps)</p>
+  <p class="pv-desc">Sets expectations before browsing — reduces “what happens next?” friction. Numbered flow: consult → proposal → build → care.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v3">
+      <div class="kick">How it works</div>
+      <ol>
+        <li>Free consultation &amp; goals</li>
+        <li>Clear written proposal</li>
+        <li>Design, build &amp; launch</li>
+        <li>Ongoing care after launch</li>
+      </ol>
+    </div></div>
+  </div></div>
+
+  <!-- 4 -->
+  <p class="pv-h">Idea 4 · Quiz teaser</p>
+  <p class="pv-desc">Playful entry point — the 30-second quiz already referenced on your pricing page. Good for engagement and lead capture.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v4">
+      <span class="pill">★ 30-second quiz</span>
+      <h3>Find your perfect package</h3>
+      <p>Answer 4 quick questions and we’ll point you to the right starting point.</p>
+      <a class="btn" href="#"><span class="dot"></span>Take the quiz</a>
+    </div></div>
+  </div></div>
+
+  <!-- 5 -->
+  <p class="pv-h">Idea 5 · Reassurance / guarantees grid</p>
+  <p class="pv-desc">Four small tiles that answer buyer objections (no lock-in, no hidden costs, mobile-first, launch support). Great for cautious first-time buyers.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v5">
+      <div class="g"><div class="ic">✳</div><b>No lock-in</b><span>Care plans are monthly — cancel anytime.</span></div>
+      <div class="g"><div class="ic">◎</div><b>No hidden costs</b><span>Every cost is listed in your proposal.</span></div>
+      <div class="g"><div class="ic">▤</div><b>Mobile-first</b><span>Fast, responsive &amp; SEO-ready builds.</span></div>
+      <div class="g"><div class="ic">♥</div><b>Launch support</b><span>We’re hands-on right through go-live.</span></div>
+    </div></div>
+  </div></div>
+
+  <!-- 6 -->
+  <p class="pv-h">Idea 6 · Platform expertise card</p>
+  <p class="pv-desc">Signals specialism — the platforms you actually build on. Reinforces “platform specialists” positioning from your Why-KNB section.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v6">
+      <div class="kick">We build on</div>
+      <div class="logos"><span>Shopify</span><span>WooCommerce</span><span>Webflow</span><span>WordPress</span><span>Custom</span></div>
+      <div class="foot">We recommend the platform that actually fits your goals — not a one-size-fits-all template.</div>
+    </div></div>
+  </div></div>
+
+  <!-- 7 -->
+  <p class="pv-h">Idea 7 · Single testimonial quote</p>
+  <p class="pv-desc">One strong client quote right where people decide. High trust — but needs a real, attributable quote before launch (placeholder shown).</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v7">
+      <span class="stars">★★★★★</span>
+      <blockquote>“They rebuilt our store and sales followed. Clear scope, on time, and they still look after the site.”</blockquote>
+      <div class="who"><span class="av"></span><div><b>[Client name]</b><span>Founder, [Brand] · Shopify</span></div></div>
+    </div></div>
+  </div></div>
+
+  <!-- 8 -->
+  <p class="pv-h">Idea 8 · Horizontal stat strip</p>
+  <p class="pv-desc">A slim 3-up stat bar. Sits neatly in the slot (or full-width under the intro). Minimal and clean without a heavy card.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v8">
+      <div class="cell"><b>40+</b><span>Projects shipped</span></div>
+      <div class="cell"><b>4.9★</b><span>Client rating</span></div>
+      <div class="cell"><b>2–6 wk</b><span>Typical launch</span></div>
+    </div></div>
+  </div></div>
+
+  <!-- 9 -->
+  <p class="pv-h">Idea 9 · “Every plan includes” checklist</p>
+  <p class="pv-desc">Move the includes strip up here as a vertical checklist that also swaps per tab. Keeps the promise visible without the scrolling marquee.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v9">
+      <div class="kick">Every package includes</div>
+      <ul>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Free consultation &amp; written proposal</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Mobile-first, fast &amp; SEO-ready build</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Hands-on support through launch</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Optional care plan after go-live</li>
+      </ul>
+    </div></div>
+  </div></div>
+
+  <!-- 10 -->
+  <p class="pv-h">Idea 10 · Consultation booking mini-card</p>
+  <p class="pv-desc">Faces + a soft booking prompt. Humanises the agency and drives the primary action (talk to us) without a hard sell.</p>
+  <div class="stage"><div class="head-row">
+    <div class="head-left">
+      <h2>Website packages &amp; care plans</h2>
+      <p class="sub">Choose the support your business needs — from a new website or ecommerce store to a redesign, custom build, or ongoing care after launch.</p>
+      <div class="toggle"><span class="on">Website projects</span><span>Care plans</span></div>
+    </div>
+    <div class="slot"><div class="v10">
+      <div class="avatars">
+        <i style="background:linear-gradient(135deg,var(--pink),var(--amber));"></i>
+        <i style="background:linear-gradient(135deg,var(--blue),var(--teal));"></i>
+        <i style="background:linear-gradient(135deg,var(--teal),var(--green));"></i>
+      </div>
+      <h3>Talk to a real person</h3>
+      <p>Book a quick call and we’ll help you choose the right scope — quoted in writing.</p>
+      <div class="row"><a class="btn" href="#"><span class="dot"></span>Book a call</a><span class="free">Free · 20 min</span></div>
+    </div></div>
+  </div></div>
+
+</div>
+</body>
+</html>

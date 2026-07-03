@@ -41,6 +41,8 @@
   .page-hero .eyebrow::before { background: #5e8e3e; }
   .plat-pill { display:inline-flex; align-items:center; gap:8px; background:#eaf1e2; color:#3f6024; border:1px solid #cfe0bd; font-size:13px; font-weight:700; letter-spacing:0.04em; padding:6px 12px; border-radius:100px; }
   .plat-pill img { width:15px; }
+  /* flat hero: no glow/logo pseudo layers on this page */
+  .page-hero::before, .page-hero::after { display: none; }
 </style>
 <link rel="stylesheet" href="navmenu.css">
 </head>
@@ -51,7 +53,10 @@
 
   <main>
 
-  <header id="main" class="page-hero">
+  <header id="main" class="page-hero" style="--pcol:#e83fa0;">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-grid-spot" id="gridSpot" aria-hidden="true"></div>
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="crumbs reveal"><a href="portfolio.html">Portfolio</a> <span>/</span> <a href="shopify.html">Shopify</a> <span>/</span> <span>Lumen Apparel</span></div>
       <div class="eyebrow reveal"><span class="plat-pill"><img src="https://cdn.simpleicons.org/shopify" alt="">Shopify · Fashion</span></div>
@@ -147,7 +152,7 @@
           <p>Web design, Shopify revamps, and ongoing support for growing businesses.</p>
           <span class="foot-status"><span class="fs-dot"></span>Now booking new projects</span>
         </div>
-        <nav class="foot-cols" aria-label="Footer">
+        <nav class="foot-cols" aria-label="Footer navigation">
           <div class="foot-col">
             <h3>Explore</h3>
             <a href="portfolio.html">Work</a>
@@ -163,14 +168,9 @@
           </div>
           <div class="foot-col">
             <h3>Get in touch</h3>
-            <a href="mailto:info@knb.solutions">info@knb.solutions</a>
+            <a class="foot-email" href="mailto:info@knb.solutions">info@knb.solutions</a>
             <span class="foot-loc">Philippines · Remote worldwide</span>
-            <div class="socials">
-              <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-              <a href="#" aria-label="X"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
-              <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z"/></svg></a>
-              <a href="#" aria-label="Dribbble"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M5 6.5c3.5 4 8.5 6 14 6m-2-9c-4 5-5.5 12-5.5 15.5M3 14c5-1.5 11-1 15.5 4"/></svg></a>
-            </div>
+            <span class="foot-note">Usually replies within 1 business day</span>
           </div>
         </nav>
       </div>
@@ -179,13 +179,14 @@
         <span>© 2026 KNB Web Solution. All rights reserved.</span>
         <div class="foot-bottom-r">
           <a href="privacy.html">Privacy</a>
-          <a href="#" class="foot-up">Back to top ↑</a>
+          <a href="#top" class="foot-up">Back to top <span class="fu-arr" aria-hidden="true">↑</span></a>
         </div>
       </div>
     </div>
   </footer>
 
   <script src="work.js"></script>
+  <script src="ambient.js"></script>
   <script src="navmenu.js"></script>
 </body>
 </html>
