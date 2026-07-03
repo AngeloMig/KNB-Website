@@ -74,13 +74,14 @@
   .pr-tab.active { color: var(--bg); }
   .pr-tabs:not(.ready) .pr-tab.active { color: var(--ink); }
   .pr-ind { position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: 100px; background: #111110; z-index: 0; pointer-events: none; transform: translateX(var(--tx)) scaleX(var(--stretch)); transform-origin: var(--origin, left) center; box-shadow: inset 0 3px 8px rgba(0,0,0,0.66), inset 0 -1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(0,0,0,0.30); transition: transform 0.62s cubic-bezier(.16,1,.3,1), width 0.62s cubic-bezier(.16,1,.3,1), box-shadow 0.22s ease; }
-  .pr-ind::after { content: ""; position: absolute; top: 50%; right: 13px; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 4px rgba(232,63,160,0.14); transform: translateY(-50%); }
+  /* the dot sits on the text baseline, like the period in the KNB. logo */
+  .pr-ind::after { content: ""; position: absolute; bottom: 13px; right: 12px; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 3px rgba(232,63,160,0.16); }
   .pr-tabs.is-switching .pr-tab { transition-delay: .12s, 0s; }
   .pr-tabs.is-switching .pr-ind { box-shadow: inset 0 5px 12px rgba(0,0,0,0.78), inset 0 -1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(0,0,0,0.38); }
   .pr-panel[hidden] { display: none; }
   @media (prefers-reduced-motion: reduce) { .pr-ind, .pr-tab { transition: none; } }
 
-  /* care plans — five hour-led cards (hour figures are placeholders) */
+  /* care plans — five hour-led cards (hours from the internal guide, July 2026) */
   .care-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 30px; }
   .care-pl { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px 20px; }
   .care-pl.feat { border-color: #e83fa0; box-shadow: 0 0 0 1px #e83fa0; }
@@ -89,7 +90,6 @@
   .care-pl .cp-for { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .care-pl .cp-hrs { margin: 16px 0 2px; font-size: 34px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
   .care-pl .cp-hrs small { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
-  .care-pl .cp-hrs.scoped { font-size: 22px; padding-top: 8px; }
   .care-pl .cp-hsub { font-size: 11.5px; color: var(--muted); margin-bottom: 14px; }
   .care-pl ul { list-style: none; display: grid; gap: 7px; margin-bottom: 16px; }
   .care-pl li { position: relative; padding-left: 20px; font-size: 12.5px; line-height: 1.4; }
@@ -441,38 +441,38 @@
           <h2>Ongoing support, monthly</h2>
           <p>Simple monthly retainers. Higher tiers cover more and respond faster — start where you are and move up anytime.</p>
         </div>
-        <!-- PLACEHOLDER HOURS (2/5/10/20) — replace with the real numbers from the
-             internal guide before this goes live. Money amounts stay off the site. -->
+        <!-- Hours + coverage match the internal guide (July 2026): 5/12/20/35/20–40.
+             Monthly fees stay off the site — confidential. -->
         <div class="care-cards reveal">
           <div class="care-pl">
             <h3>Basic</h3><div class="cp-for">Light support</div>
-            <div class="cp-hrs">2<small> hrs/mo</small></div><div class="cp-hsub">of hands-on time</div>
-            <ul><li>Edits, updates &amp; backups</li></ul>
+            <div class="cp-hrs">5<small> hrs/mo</small></div><div class="cp-hsub">of hands-on time</div>
+            <ul><li>Minor edits &amp; simple fixes</li><li>Plugin &amp; theme updates</li><li>Backups &amp; basic monitoring</li></ul>
             <span class="cp-resp"><i></i>2–3 day response</span>
           </div>
           <div class="care-pl">
             <h3>Standard</h3><div class="cp-for">Regular updates</div>
-            <div class="cp-hrs">5<small> hrs/mo</small></div><div class="cp-hsub">of hands-on time</div>
-            <ul><li>Everything in Basic</li><li>Bug fixes &amp; content updates</li><li>Light SEO + monthly report</li></ul>
+            <div class="cp-hrs">12<small> hrs/mo</small></div><div class="cp-hsub">of hands-on time</div>
+            <ul><li>Everything in Basic</li><li>WordPress, Webflow &amp; Shopify support</li><li>Content updates &amp; publishing</li><li>Light SEO checks</li><li>Monthly report</li></ul>
             <span class="cp-resp"><i></i>1–2 day response</span>
           </div>
           <div class="care-pl feat">
             <span class="cp-badge">Popular</span>
             <h3>Growth</h3><div class="cp-for">Active stores</div>
-            <div class="cp-hrs">10<small> hrs/mo</small></div><div class="cp-hsub">unused time rolls over</div>
-            <ul><li>Everything in Standard</li><li>Full SEO, landing pages &amp; CRO</li><li>Ecommerce fixes</li><li>Priority support</li></ul>
+            <div class="cp-hrs">20<small> hrs/mo</small></div><div class="cp-hsub">unused time rolls over</div>
+            <ul><li>Everything in Standard</li><li>Bug fixes</li><li>Landing page edits &amp; CRO improvements</li><li>Speed checks &amp; SEO tasks</li><li>Priority support</li></ul>
             <span class="cp-resp"><i></i>1 day response</span>
           </div>
           <div class="care-pl">
             <h3>Premium</h3><div class="cp-for">Busy ecommerce</div>
-            <div class="cp-hrs">20<small> hrs/mo</small></div><div class="cp-hsub">unused time rolls over</div>
-            <ul><li>Everything in Growth</li><li>Improvement roadmap</li></ul>
+            <div class="cp-hrs">35<small> hrs/mo</small></div><div class="cp-hsub">unused time rolls over</div>
+            <ul><li>Everything in Growth</li><li>Monthly improvement roadmap</li><li>Ecommerce fixes</li><li>Content support &amp; reporting</li><li>Performance tuning</li></ul>
             <span class="cp-resp"><i></i>Same / next day response</span>
           </div>
           <div class="care-pl">
             <h3>Custom System</h3><div class="cp-for">Custom apps</div>
-            <div class="cp-hrs scoped">Scoped</div><div class="cp-hsub">by agreement</div>
-            <ul><li>Integrations &amp; custom dev</li><li>Priority support</li></ul>
+            <div class="cp-hrs">20–40<small> hrs/mo</small></div><div class="cp-hsub">scoped to your system</div>
+            <ul><li>Bug fixes &amp; feature adjustments</li><li>Integration &amp; workflow support</li><li>Technical documentation</li><li>Deployment support</li></ul>
             <span class="cp-resp"><i></i>Response by agreement</span>
           </div>
         </div>
