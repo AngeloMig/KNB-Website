@@ -190,42 +190,41 @@
   }
 
   /* optional extras + good to know, 50/50 */
-  .extras-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 54px; align-items: stretch; }
-  .extras-card, .pr-note { position: relative; background: var(--card, #fff); border: 1px solid var(--line); border-radius: 20px; padding: 28px 30px; margin: 0; overflow: hidden; transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
-  .extras-card:hover, .pr-note:hover { transform: translateY(-3px); border-color: rgba(17,17,16,0.14); box-shadow: 0 26px 54px -34px rgba(17,17,16,0.42); }
-  .extras-card { display: flex; flex-direction: column; }
-  .ex-head { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; }
+  /* optional extras + good to know — one merged card, interior divider,
+     shared footer CTA */
+  .exgtk { background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-top: 54px; }
+  .exgtk-cols { display: grid; grid-template-columns: 1.1fr 0.9fr; }
+  .exgtk-col { padding: 28px 30px 24px; min-width: 0; }
+  .exgtk-col + .exgtk-col { border-left: 1px solid var(--line); }
+  .ex-head { display: flex; align-items: center; gap: 11px; margin-bottom: 20px; }
   .ex-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); }
   .ex-ic svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .extras-card h4, .pr-note h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; margin: 0; }
+  .exgtk h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; margin: 0; }
   .ex-count { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--muted); background: rgba(17,17,16,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; letter-spacing: 0.01em; }
   .ex-count--n { color: var(--muted); background: rgba(17,17,16,0.04); border-color: var(--line); }
-  .extras-card > p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 18px; max-width: 58ch; }
+  .exgtk-lede { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 18px; max-width: 52ch; }
   .ex-feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 16px; }
-  .ex-feature { min-height: 132px; border: 1px solid var(--line); border-radius: 15px; padding: 14px; background: rgba(17,17,16,0.018); display: flex; flex-direction: column; gap: 10px; transition: transform .28s ease, border-color .28s ease, background .28s ease; }
-  .ex-feature:hover { transform: translateY(-2px); border-color: rgba(17,17,16,0.16); background: rgba(17,17,16,0.032); }
+  .ex-feature { min-height: 132px; border: 1px solid var(--line); border-radius: 15px; padding: 14px; background: rgba(17,17,16,0.018); display: flex; flex-direction: column; gap: 10px; }
   .ex-feature-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .ex-mini-ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.055); color: var(--ink); }
   .ex-mini-ic svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .ex-tag { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px 7px; white-space: nowrap; }
   .ex-feature b { display: block; font-size: 13.5px; line-height: 1.12; letter-spacing: -0.02em; }
   .ex-feature p { margin: 6px 0 0; color: var(--muted); font-size: 11.8px; line-height: 1.42; }
-  .ex-chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .ex-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
   .ex-chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); padding: 7px 10px; font-size: 12px; font-weight: 650; letter-spacing: -0.01em; }
   .ex-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; opacity: .78; }
-  .extras-foot { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-  .extras-foot .btn { flex: none; }
-  .ex-note { margin: 0; max-width: 245px; font-size: 12px; line-height: 1.45; font-weight: 500; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; }
-  .ex-note::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: #e83fa0; }
-  .gtk-grid { display: flex; flex-direction: column; gap: 0; margin-top: 0; }
-  .gtk { display: flex; align-items: flex-start; gap: 14px; padding: 15px 0; border-top: 1px solid var(--line); }
+  .gtk-grid { display: flex; flex-direction: column; }
+  .gtk { display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); }
   .gtk:first-child { border-top: 0; padding-top: 2px; }
   .gtk:last-child { padding-bottom: 2px; }
-  .gtk-ic { flex: none; width: 38px; height: 38px; border-radius: 11px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; transition: background .25s ease, color .25s ease; }
-  .gtk:hover .gtk-ic { background: rgba(17,17,16,0.09); color: var(--ink); }
-  .gtk-ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .gtk em { font-style: normal; font-size: 12px; font-weight: 800; color: var(--muted); padding-top: 2px; }
   .gtk-t { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; }
   .gtk-d { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin-top: 3px; }
+  .exgtk-foot { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding: 16px 30px; background: #faf9f6; border-top: 1px solid var(--line); }
+  .exgtk-foot .btn { margin: 0; flex: none; }
+  .ex-note { margin: 0; font-size: 12px; line-height: 1.45; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .ex-note::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; }
 
   /* quiz */
   .quiz-sec { position: relative; overflow: hidden; background: #111110; color: var(--bg); }
@@ -302,10 +301,10 @@
     .howit .step-arr { display: none; }
   }
   @media (max-width: 900px) {
-    .extras-row { grid-template-columns: 1fr; }
+    .exgtk-cols { grid-template-columns: 1fr; }
+    .exgtk-col + .exgtk-col { border-left: 0; border-top: 1px solid var(--line); }
   }
   @media (max-width: 760px) {
-    .extras-foot { align-items: flex-start; flex-direction: column; }
     .ex-note { max-width: none; }
     /* keep page content clear of the fixed quote bar */
     body { padding-bottom: 68px; }
@@ -314,7 +313,10 @@
     .pr-sticky .btn { padding: 11px 18px; }
   }
   @media (max-width: 560px) {
-    .extras-card, .pr-note { padding: 24px 22px; border-radius: 18px; }
+    .exgtk-col { padding: 24px 22px 20px; }
+    .exgtk-foot { padding: 14px 22px; }
+    .ex-feature-grid { grid-template-columns: 1fr; }
+    .ex-feature { min-height: 0; }
     .ex-head { align-items: flex-start; flex-wrap: wrap; row-gap: 10px; margin-bottom: 20px; }
     .ex-count { margin-left: 45px; }
     .ex-feature-grid { grid-template-columns: 1fr; gap: 8px; }
@@ -425,16 +427,17 @@
 
         <div class="v-md" id="pkgSelect" style="margin-top:30px;"></div>
 
-        <!-- #8 OPTIONAL EXTRAS + GOOD TO KNOW (50/50) -->
-        <div class="extras-row reveal">
-          <div class="extras-card">
-            <div class="ex-head">
-              <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
-              <h4>Optional extras</h4>
-              <span class="ex-count" data-ex-count>13 add-ons</span>
-            </div>
-            <p>Use these when the project needs more than the baseline package. Most clients add one to three extras, then we price only what matters.</p>
-            <div class="ex-feature-grid" aria-label="Popular optional extras">
+        <!-- OPTIONAL EXTRAS + GOOD TO KNOW — one merged card, shared footer -->
+        <div class="exgtk reveal">
+          <div class="exgtk-cols">
+            <div class="exgtk-col">
+              <div class="ex-head">
+                <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+                <h4>Optional extras</h4>
+                <span class="ex-count" data-ex-count>13 add-ons</span>
+              </div>
+              <p class="exgtk-lede">Use these when the project needs more than the baseline package. Most clients add one to three extras, then we price only what matters.</p>
+              <div class="ex-feature-grid" aria-label="Popular optional extras">
               <article class="ex-feature">
                 <div class="ex-feature-top">
                   <span class="ex-mini-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg></span>
@@ -472,36 +475,24 @@
               <span class="ex-chip">Memberships</span>
               <span class="ex-chip">Migration</span>
             </div>
-            <div class="extras-foot">
-              <button type="button" class="btn ghost" data-addons>Browse <span data-ex-count>13 add-ons</span><span class="addons-badge" data-addons-count hidden></span> →</button>
-              <p class="ex-note">Pick only what helps. Each selected extra is scoped separately in your proposal.</p>
+            </div>
+            <div class="exgtk-col">
+              <div class="ex-head">
+                <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+                <h4>Good to know</h4>
+                <span class="ex-count ex-count--n">No fine print</span>
+              </div>
+              <div class="gtk-grid">
+                <div class="gtk"><em>01</em><div><div class="gtk-t">Timelines</div><div class="gtk-d">Most projects launch in 2–6 weeks — the exact window is confirmed in your written proposal.</div></div></div>
+                <div class="gtk"><em>02</em><div><div class="gtk-t">No guarantees</div><div class="gtk-d">No guaranteed sales or rankings — results depend on traffic, product, pricing &amp; marketing.</div></div></div>
+                <div class="gtk"><em>03</em><div><div class="gtk-t">Pass-through costs</div><div class="gtk-d">Domains, hosting, paid apps, themes &amp; ad spend are billed separately.</div></div></div>
+                <div class="gtk"><em>04</em><div><div class="gtk-t">Payment terms</div><div class="gtk-d">50% to start, 30% at design approval, 20% before launch.</div></div></div>
+              </div>
             </div>
           </div>
-
-          <div class="pr-note">
-          <div class="ex-head">
-            <span class="ex-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
-            <h4>Good to know</h4>
-            <span class="ex-count ex-count--n">No fine print</span>
-          </div>
-          <div class="gtk-grid">
-            <div class="gtk">
-              <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
-              <div><div class="gtk-t">Timelines</div><div class="gtk-d">Most projects launch in 2–6 weeks — the exact window is confirmed in your written proposal.</div></div>
-            </div>
-            <div class="gtk">
-              <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11.5h1V16h1"/></svg></span>
-              <div><div class="gtk-t">No guarantees</div><div class="gtk-d">No guaranteed sales or rankings — results depend on traffic, product, pricing &amp; marketing.</div></div>
-            </div>
-            <div class="gtk">
-              <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
-              <div><div class="gtk-t">Pass-through costs</div><div class="gtk-d">Domains, hosting, paid apps, themes &amp; ad spend are billed separately.</div></div>
-            </div>
-            <div class="gtk">
-              <span class="gtk-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
-              <div><div class="gtk-t">Payment terms</div><div class="gtk-d">50% to start, 30% at design approval, 20% before launch.</div></div>
-            </div>
-          </div>
+          <div class="exgtk-foot">
+            <p class="ex-note">Pick only what helps. Each selected extra is scoped separately in your proposal.</p>
+            <button type="button" class="btn" data-addons>Browse <span data-ex-count>13 add-ons</span><span class="addons-badge" data-addons-count hidden></span> →</button>
           </div>
         </div>
       </div>
