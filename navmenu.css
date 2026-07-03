@@ -97,6 +97,34 @@
   .nav-item.nm.open .nm-item { animation:none; }
 }
 
+/* ===== "Packages" mega menu — packages + care plans + quiz promo =====
+   Rides the same .nav-item.nm machinery (hover CSS + navmenu.js wiring). */
+.np-panel { left:auto; right:0; width:min(880px, 100%); }
+.np-wrap { display:grid; grid-template-columns:1.15fr 1fr 0.95fr; gap:22px; }
+.np-col { display:flex; flex-direction:column; gap:2px; }
+.np-col > .nm-label { margin-bottom:8px; }
+.np-col + .np-col { border-left:1px solid var(--line); padding-left:22px; }
+.np-item { display:flex; align-items:center; gap:11px; padding:8px 9px; margin:0 -9px; border-radius:11px; transition:background .2s; }
+.np-item:hover { background:var(--bg); }
+.np-ic { flex:none; width:36px; height:36px; border-radius:10px; background:rgba(17,17,16,0.05); display:grid; place-items:center; color:var(--ink); }
+.np-ic svg { width:17px; height:17px; }
+.np-tx { min-width:0; }
+.np-tx b { display:block; font-size:13.5px; font-weight:600; letter-spacing:-0.01em; color:var(--ink); }
+.np-tx span { display:block; font-size:11.5px; color:var(--muted); margin-top:1px; }
+.np-hrs { margin-left:auto; flex:none; font-size:11px; font-weight:700; color:var(--ink); background:rgba(17,17,16,0.05); border-radius:100px; padding:4px 9px; white-space:nowrap; }
+.np-item.np-hot .np-hrs { background:#e83fa0; color:#fff; }
+/* quiz promo card */
+.np-quiz { display:flex; flex-direction:column; align-items:flex-start; background:var(--ink); color:var(--bg); border-radius:16px; padding:20px; }
+.np-quiz .nm-label { color:rgba(255,255,255,0.5); }
+.np-quiz h3 { font-size:19px; font-weight:600; letter-spacing:-0.02em; margin-top:9px; color:#fff; }
+.np-quiz p { font-size:12.5px; line-height:1.55; color:rgba(255,255,255,0.66); margin-top:7px; }
+.np-quiz-btn { display:inline-flex; align-items:center; gap:8px; margin-top:14px; background:var(--bg); color:var(--ink); font-size:13px; font-weight:700; border-radius:100px; padding:10px 16px; transition:background .2s; }
+.np-quiz-btn:hover { background:#fff; }
+.np-quiz-btn span { width:6px; height:6px; border-radius:50%; background:#e83fa0; }
+.np-quote { margin-top:auto; padding-top:14px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.66); transition:color .2s; }
+.np-quote:hover { color:#fff; }
+@media (max-width:1180px){ .np-panel { width:100%; } }
+
 /* mobile: chip row in the fullscreen menu; hide the desktop panel */
 .mm-plats { display:flex; flex-wrap:wrap; gap:8px; margin:-4px 0 4px; }
 .mm-plats a { font-size:15px !important; font-weight:600; color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:7px 15px !important; }
