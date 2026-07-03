@@ -68,42 +68,65 @@
   .howit .step-arr { position: absolute; top: 50%; right: -9px; transform: translateY(-50%); z-index: 1; width: 18px; height: 18px; border-radius: 50%; background: var(--card); border: 1px solid var(--line); display: grid; place-items: center; color: var(--muted); font-size: 10px; }
 
   /* #1 — build / care toggle */
-  .pr-tabs { display: inline-flex; gap: 4px; padding: 5px; border: 1px solid var(--line); background: var(--card); border-radius: 100px; margin-top: 8px; }
-  .pr-tab { font-family: inherit; font-size: 14.5px; font-weight: 600; padding: 10px 22px; border-radius: 100px; border: none; background: transparent; color: var(--muted); cursor: pointer; transition: color 0.25s, background 0.25s; }
-  .pr-tab.active { background: var(--ink); color: var(--bg); }
+  .pr-tabs { --tx: 0px; --stretch: 1; display: inline-flex; gap: 4px; padding: 6px; border: 1px solid var(--line); background: #fff; border-radius: 100px; margin-top: 8px; position: relative; box-shadow: inset 0 2px 5px rgba(17,17,16,0.08), inset 0 -1px 0 rgba(255,255,255,0.9), 0 14px 30px -28px rgba(17,17,16,0.5); }
+  .pr-tab { position: relative; z-index: 1; font-family: inherit; font-size: 14.5px; font-weight: 600; padding: 10px 22px; border-radius: 100px; border: none; background: transparent; color: var(--muted); cursor: pointer; transition: color 0.38s cubic-bezier(.16,1,.3,1), transform 0.18s ease; transition-delay: 0.04s, 0s; }
+  .pr-tab:active { transform: translateY(1px); }
+  .pr-tab.active { color: var(--bg); }
+  .pr-tabs:not(.ready) .pr-tab.active { color: var(--ink); }
+  .pr-ind { position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: 100px; background: #111110; z-index: 0; pointer-events: none; transform: translateX(var(--tx)) scaleX(var(--stretch)); transform-origin: var(--origin, left) center; box-shadow: inset 0 3px 8px rgba(0,0,0,0.66), inset 0 -1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(0,0,0,0.30); transition: transform 0.62s cubic-bezier(.16,1,.3,1), width 0.62s cubic-bezier(.16,1,.3,1), box-shadow 0.22s ease; }
+  .pr-ind::after { content: ""; position: absolute; top: 50%; right: 13px; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 4px rgba(232,63,160,0.14); transform: translateY(-50%); }
+  .pr-tabs.is-switching .pr-tab { transition-delay: .12s, 0s; }
+  .pr-tabs.is-switching .pr-ind { box-shadow: inset 0 5px 12px rgba(0,0,0,0.78), inset 0 -1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(0,0,0,0.38); }
   .pr-panel[hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) { .pr-ind, .pr-tab { transition: none; } }
 
-  /* care plan comparison table */
-  .cmp-wrap { overflow-x: auto; margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; }
-  .cmp { width: 100%; min-width: 680px; border-collapse: collapse; background: var(--card); font-size: 14px; }
-  .cmp th, .cmp td { padding: 14px 16px; text-align: center; border-bottom: 1px solid var(--line); }
-  .cmp thead th { font-weight: 700; font-size: 14.5px; letter-spacing: -0.01em; background: #faf9f6; }
-  .cmp thead th.feat { color: #e83fa0; }
-  .cmp tbody th { text-align: left; font-weight: 600; color: var(--ink); white-space: nowrap; }
-  .cmp td.feat { background: rgba(17,17,16,0.03); }
-  .cmp .yes { color: #27a35f; font-weight: 700; }
-  .cmp .no { color: var(--muted); }
-  .cmp tr:last-child td, .cmp tr:last-child th { border-bottom: none; }
+  /* care plans — five hour-led cards (hour figures are placeholders) */
+  .care-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 30px; }
+  .care-pl { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px 20px; }
+  .care-pl.feat { border-color: #e83fa0; box-shadow: 0 0 0 1px #e83fa0; }
+  .care-pl .cp-badge { position: absolute; top: -10px; left: 18px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; background: #e83fa0; color: #fff; padding: 3px 9px; border-radius: 100px; }
+  .care-pl h3 { font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; }
+  .care-pl .cp-for { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .care-pl .cp-hrs { margin: 16px 0 2px; font-size: 34px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+  .care-pl .cp-hrs small { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+  .care-pl .cp-hrs.scoped { font-size: 22px; padding-top: 8px; }
+  .care-pl .cp-hsub { font-size: 11.5px; color: var(--muted); margin-bottom: 14px; }
+  .care-pl ul { list-style: none; display: grid; gap: 7px; margin-bottom: 16px; }
+  .care-pl li { position: relative; padding-left: 20px; font-size: 12.5px; line-height: 1.4; }
+  .care-pl li::before { content: "✓"; position: absolute; left: 0; color: #27a35f; font-weight: 700; }
+  .care-pl .cp-resp { margin-top: auto; display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 100px; padding: 6px 11px; align-self: flex-start; }
+  .care-pl .cp-resp i { width: 6px; height: 6px; border-radius: 50%; background: #27a35f; }
+  @media (max-width: 860px) { .care-cards { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .care-cards { grid-template-columns: 1fr; } }
 
   /* optional extras + good to know, 50/50 */
   .extras-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 54px; align-items: stretch; }
   .extras-card, .pr-note { position: relative; background: var(--card, #fff); border: 1px solid var(--line); border-radius: 20px; padding: 28px 30px; margin: 0; overflow: hidden; transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
   .extras-card:hover, .pr-note:hover { transform: translateY(-3px); border-color: rgba(17,17,16,0.14); box-shadow: 0 26px 54px -34px rgba(17,17,16,0.42); }
   .extras-card { display: flex; flex-direction: column; }
-  .ex-head { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+  .ex-head { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; }
   .ex-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); }
   .ex-ic svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .extras-card h4, .pr-note h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #e83fa0; margin: 0; }
   .ex-count { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--muted); background: rgba(17,17,16,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; letter-spacing: 0.01em; }
   .ex-count--n { color: var(--muted); background: rgba(17,17,16,0.04); border-color: var(--line); }
-  .extras-card > p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 18px; }
-  .ex-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 11px 16px; }
-  .ex-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
-  .ex-plus { flex: none; width: 21px; height: 21px; border-radius: 7px; display: grid; place-items: center; background: rgba(17,17,16,0.05); color: var(--ink); font-weight: 700; font-size: 14px; line-height: 1; }
-  .extras-foot { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); }
-  .extras-foot .btn { align-self: flex-start; }
-  .ex-note { margin: 14px 0 0; font-size: 12px; font-weight: 500; color: #e83fa0; display: flex; align-items: center; gap: 8px; }
-  .ex-note::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: #e83fa0; }
+  .extras-card > p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0 0 18px; max-width: 58ch; }
+  .ex-feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 16px; }
+  .ex-feature { min-height: 132px; border: 1px solid var(--line); border-radius: 15px; padding: 14px; background: rgba(17,17,16,0.018); display: flex; flex-direction: column; gap: 10px; transition: transform .28s ease, border-color .28s ease, background .28s ease; }
+  .ex-feature:hover { transform: translateY(-2px); border-color: rgba(17,17,16,0.16); background: rgba(17,17,16,0.032); }
+  .ex-feature-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .ex-mini-ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: rgba(17,17,16,0.055); color: var(--ink); }
+  .ex-mini-ic svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .ex-tag { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px 7px; white-space: nowrap; }
+  .ex-feature b { display: block; font-size: 13.5px; line-height: 1.12; letter-spacing: -0.02em; }
+  .ex-feature p { margin: 6px 0 0; color: var(--muted); font-size: 11.8px; line-height: 1.42; }
+  .ex-chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .ex-chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); padding: 7px 10px; font-size: 12px; font-weight: 650; letter-spacing: -0.01em; }
+  .ex-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; opacity: .78; }
+  .extras-foot { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+  .extras-foot .btn { flex: none; }
+  .ex-note { margin: 0; max-width: 245px; font-size: 12px; line-height: 1.45; font-weight: 500; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; }
+  .ex-note::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: #e83fa0; }
   .gtk-grid { display: flex; flex-direction: column; gap: 0; margin-top: 0; }
   .gtk { display: flex; align-items: flex-start; gap: 14px; padding: 15px 0; border-top: 1px solid var(--line); }
   .gtk:first-child { border-top: 0; padding-top: 2px; }
@@ -140,6 +163,12 @@
   .qo-label { font-size: 15px; font-weight: 600; }
   .qo-sub { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.5); line-height: 1.35; }
   .qo-kbd { position: absolute; top: 10px; right: 11px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.18); border-radius: 5px; padding: 1px 5px; line-height: 1.5; }
+  /* touch devices: keyboard hints are meaningless; small screens: stack options */
+  @media (hover: none) { .qo-kbd { display: none; } }
+  @media (max-width: 560px) {
+    .quiz { padding: 24px 18px 22px; }
+    .quiz-opts { grid-template-columns: 1fr; }
+  }
   #quizBody.slide-l .quiz-q, #quizBody.slide-l .quiz-hint, #quizBody.slide-l .quiz-opts { animation: qSlideR 0.42s var(--ease, ease) both; }
   #quizBody.slide-r .quiz-q, #quizBody.slide-r .quiz-hint, #quizBody.slide-r .quiz-opts { animation: qSlideL 0.42s var(--ease, ease) both; }
   @keyframes qSlideR { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
@@ -149,6 +178,7 @@
   @keyframes quizIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   /* result */
   .quiz-res { animation: quizIn 0.45s var(--ease, ease); }
+  .quiz-res:focus { outline: none; }
   .qr-head { display: flex; align-items: flex-start; gap: 16px; }
   .qr-ic { flex: none; width: 54px; height: 54px; border-radius: 14px; background: rgba(255,255,255,0.1); display: grid; place-items: center; color: #fff; }
   .qr-ic svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
@@ -181,13 +211,31 @@
     .howit .step + .step { border-left: 0; border-top: 1px solid var(--line); }
     .howit .step-arr { display: none; }
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .extras-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .extras-foot { align-items: flex-start; flex-direction: column; }
+    .ex-note { max-width: none; }
     /* keep page content clear of the fixed quote bar */
     body { padding-bottom: 68px; }
     .pr-sticky { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; padding: 12px 16px; background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); gap: 12px; align-items: center; justify-content: space-between; }
     .pr-sticky span { font-size: 13px; font-weight: 600; }
     .pr-sticky .btn { padding: 11px 18px; }
+  }
+  @media (max-width: 560px) {
+    .extras-card, .pr-note { padding: 24px 22px; border-radius: 18px; }
+    .ex-head { align-items: flex-start; flex-wrap: wrap; row-gap: 10px; margin-bottom: 20px; }
+    .ex-count { margin-left: 45px; }
+    .ex-feature-grid { grid-template-columns: 1fr; gap: 8px; }
+    .ex-feature { min-height: 0; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 0 12px; padding: 12px; }
+    .ex-feature-top { display: contents; }
+    .ex-mini-ic { grid-column: 1; grid-row: 1 / span 2; }
+    .ex-tag { display: none; }
+    .ex-feature > div:last-child { grid-column: 2; }
+    .ex-feature p { margin-top: 5px; }
+    .ex-chip-row { gap: 6px; }
+    .ex-chip { padding: 6px 8px; font-size: 11.5px; }
   }
 
   .care-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 22px 28px; margin-top: 14px; }
@@ -215,15 +263,7 @@
   .reveal.r-left.in, .reveal.r-right.in, .reveal.r-scale.in { transform: none; }
 
   /* hover interactions */
-  .cmp tbody tr { transition: background 0.25s; }
-  .cmp tbody tr:hover td, .cmp tbody tr:hover th { background: rgba(17,17,16,0.03); }
 
-  /* mobile: hint that the care table scrolls sideways */
-  .cmp-cue { display: none; }
-  @media (max-width: 760px) {
-    .cmp-cue { display: flex; align-items: center; gap: 7px; margin: 14px 0 -18px; font-size: 12px; font-weight: 600; color: var(--muted); }
-    .cmp-cue svg { width: 14px; height: 14px; }
-  }
 
   /* faint static watermark (FAQ) */
   .wm-sec { position: relative; overflow: hidden; }
@@ -298,6 +338,7 @@
   <section class="block" style="padding-top:10px;">
     <div class="wrap">
       <div class="pr-tabs reveal" role="tablist" aria-label="Pricing view">
+        <span class="pr-ind" aria-hidden="true"></span>
         <button class="pr-tab active" id="tab-build" role="tab" aria-selected="true" aria-controls="panel-build">Website projects</button>
         <button class="pr-tab" id="tab-care" role="tab" aria-selected="false" aria-controls="panel-care">Care plans</button>
       </div>
@@ -320,18 +361,48 @@
               <h4>Optional extras</h4>
               <span class="ex-count" data-ex-count>13 add-ons</span>
             </div>
-            <p>Add any of these to your project — each is scoped and quoted on its own, so you only pay for what you need.</p>
-            <ul class="ex-list">
-              <li><span class="ex-plus">+</span>Branding &amp; identity</li>
-              <li><span class="ex-plus">+</span>Copywriting</li>
-              <li><span class="ex-plus">+</span>Product photography</li>
-              <li><span class="ex-plus">+</span>Multi-language</li>
-              <li><span class="ex-plus">+</span>Integrations</li>
-              <li><span class="ex-plus">+</span>Memberships</li>
-            </ul>
+            <p>Use these when the project needs more than the baseline package. Most clients add one to three extras, then we price only what matters.</p>
+            <div class="ex-feature-grid" aria-label="Popular optional extras">
+              <article class="ex-feature">
+                <div class="ex-feature-top">
+                  <span class="ex-mini-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg></span>
+                  <span class="ex-tag">Brand</span>
+                </div>
+                <div>
+                  <b>Branding &amp; logo</b>
+                  <p>Direction, colors, and assets when the identity needs work.</p>
+                </div>
+              </article>
+              <article class="ex-feature">
+                <div class="ex-feature-top">
+                  <span class="ex-mini-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                  <span class="ex-tag">Copy</span>
+                </div>
+                <div>
+                  <b>Copywriting</b>
+                  <p>Sharper page copy, product messaging, and launch content.</p>
+                </div>
+              </article>
+              <article class="ex-feature">
+                <div class="ex-feature-top">
+                  <span class="ex-mini-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span>
+                  <span class="ex-tag">Systems</span>
+                </div>
+                <div>
+                  <b>Integrations</b>
+                  <p>Apps, forms, CRM, POS, booking, or custom connections.</p>
+                </div>
+              </article>
+            </div>
+            <div class="ex-chip-row" aria-label="More optional extras">
+              <span class="ex-chip">Product photography</span>
+              <span class="ex-chip">Multi-language</span>
+              <span class="ex-chip">Memberships</span>
+              <span class="ex-chip">Migration</span>
+            </div>
             <div class="extras-foot">
-              <button type="button" class="btn ghost" data-addons>Browse all add-ons<span class="addons-badge" data-addons-count hidden></span> →</button>
-              <p class="ex-note">Every add-on is optional and quoted to your scope.</p>
+              <button type="button" class="btn ghost" data-addons>Browse <span data-ex-count>13 add-ons</span><span class="addons-badge" data-addons-count hidden></span> →</button>
+              <p class="ex-note">Pick only what helps. Each selected extra is scoped separately in your proposal.</p>
             </div>
           </div>
 
@@ -370,29 +441,44 @@
           <h2>Ongoing support, monthly</h2>
           <p>Simple monthly retainers. Higher tiers cover more and respond faster — start where you are and move up anytime.</p>
         </div>
-        <p class="cmp-cue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h13M17 8l4 4-4 4M3 12h.01"/></svg>Swipe to compare plans</p>
-        <div class="cmp-wrap reveal">
-          <table class="cmp">
-            <thead>
-              <tr><th scope="col">Plan covers</th><th scope="col">Basic</th><th scope="col">Standard</th><th scope="col" class="feat">Growth</th><th scope="col">Premium</th><th scope="col">Custom System</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Best for</th><td>Light support</td><td>Regular updates</td><td class="feat">Active stores</td><td>Busy ecommerce</td><td>Custom apps</td></tr>
-              <tr><th scope="row">Monthly support time</th><td>Light</td><td>Standard</td><td class="feat">Priority</td><td>Extended</td><td>By agreement</td></tr>
-              <tr><th scope="row">Unused time rolls over</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">Edits, updates &amp; backups</th><td class="yes">✓</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-              <tr><th scope="row">Bug fixes &amp; troubleshooting</th><td class="no">—</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-              <tr><th scope="row">Content updates</th><td class="no">—</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">SEO tasks</th><td class="no">—</td><td>Light</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">Landing pages &amp; CRO</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">Monthly report</th><td class="no">—</td><td class="yes">✓</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">Ecommerce fixes</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">Improvement roadmap</th><td class="no">—</td><td class="no">—</td><td class="feat no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
-              <tr><th scope="row">Integrations / custom dev</th><td class="no">—</td><td class="no">—</td><td class="feat no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-              <tr><th scope="row">Priority support</th><td class="no">—</td><td class="no">—</td><td class="feat yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-              <tr><th scope="row">Response time</th><td>2–3 days</td><td>1–2 days</td><td class="feat">1 day</td><td>Same / next</td><td>By agreement</td></tr>
-            </tbody>
-          </table>
+        <!-- PLACEHOLDER HOURS (2/5/10/20) — replace with the real numbers from the
+             internal guide before this goes live. Money amounts stay off the site. -->
+        <div class="care-cards reveal">
+          <div class="care-pl">
+            <h3>Basic</h3><div class="cp-for">Light support</div>
+            <div class="cp-hrs">2<small> hrs/mo</small></div><div class="cp-hsub">of hands-on time</div>
+            <ul><li>Edits, updates &amp; backups</li></ul>
+            <span class="cp-resp"><i></i>2–3 day response</span>
+          </div>
+          <div class="care-pl">
+            <h3>Standard</h3><div class="cp-for">Regular updates</div>
+            <div class="cp-hrs">5<small> hrs/mo</small></div><div class="cp-hsub">of hands-on time</div>
+            <ul><li>Everything in Basic</li><li>Bug fixes &amp; content updates</li><li>Light SEO + monthly report</li></ul>
+            <span class="cp-resp"><i></i>1–2 day response</span>
+          </div>
+          <div class="care-pl feat">
+            <span class="cp-badge">Popular</span>
+            <h3>Growth</h3><div class="cp-for">Active stores</div>
+            <div class="cp-hrs">10<small> hrs/mo</small></div><div class="cp-hsub">unused time rolls over</div>
+            <ul><li>Everything in Standard</li><li>Full SEO, landing pages &amp; CRO</li><li>Ecommerce fixes</li><li>Priority support</li></ul>
+            <span class="cp-resp"><i></i>1 day response</span>
+          </div>
+          <div class="care-pl">
+            <h3>Premium</h3><div class="cp-for">Busy ecommerce</div>
+            <div class="cp-hrs">20<small> hrs/mo</small></div><div class="cp-hsub">unused time rolls over</div>
+            <ul><li>Everything in Growth</li><li>Improvement roadmap</li></ul>
+            <span class="cp-resp"><i></i>Same / next day response</span>
+          </div>
+          <div class="care-pl">
+            <h3>Custom System</h3><div class="cp-for">Custom apps</div>
+            <div class="cp-hrs scoped">Scoped</div><div class="cp-hsub">by agreement</div>
+            <ul><li>Integrations &amp; custom dev</li><li>Priority support</li></ul>
+            <span class="cp-resp"><i></i>Response by agreement</span>
+          </div>
+        </div>
+        <div class="care-cta reveal">
+          <p><b>Not sure which plan?</b> We'll recommend one based on your site and how often it changes.</p>
+          <a href="contact.html" class="btn"><span class="dot"></span>Talk to us</a>
         </div>
         <div class="care-info reveal">
           <div class="care-note">
@@ -417,10 +503,6 @@
             <p>Start where you are and move up anytime. Minimum 3-month term on Growth, Premium &amp; Custom System.</p>
           </div>
         </div>
-        <div class="care-cta reveal">
-          <p><b>Not sure which plan?</b> We'll recommend one based on your site and how often it changes.</p>
-          <a href="contact.html" class="btn"><span class="dot"></span>Talk to us</a>
-        </div>
       </div>
     </div>
   </section>
@@ -435,8 +517,8 @@
       </div>
       <div class="quiz reveal r-scale">
         <div class="quiz-top">
-          <div class="quiz-prog" id="quizProg"></div>
-          <div class="quiz-count" id="quizCount"></div>
+          <div class="quiz-prog" id="quizProg" role="progressbar" aria-label="Quiz progress" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1"></div>
+          <div class="quiz-count" id="quizCount" aria-hidden="true"></div>
         </div>
         <div id="quizBody" aria-live="polite"></div>
       </div>
@@ -618,9 +700,83 @@
       const tabs = { build: document.getElementById('tab-build'), care: document.getElementById('tab-care') };
       const panels = { build: document.getElementById('panel-build'), care: document.getElementById('panel-care') };
       if (!tabs.build) return;
-      const show = (key) => {
+      const tabBox = tabs.build.closest('.pr-tabs');
+      const ind = tabBox && tabBox.querySelector('.pr-ind');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let active = panels.build.hidden ? 'care' : 'build';
+      let busy = false;
+      let stretchTimer = 0;
+      const moveInd = (tab) => {
+        if (!ind || !tab) return;
+        ind.style.width = tab.offsetWidth + 'px';
+        tabBox.style.setProperty('--tx', tab.offsetLeft + 'px');
+      };
+      const glideInd = (tab, dir) => {
+        if (!tabBox) return moveInd(tab);
+        window.clearTimeout(stretchTimer);
+        tabBox.style.setProperty('--origin', dir > 0 ? 'left' : 'right');
+        tabBox.style.setProperty('--stretch', reduce ? '1' : '1.085');
+        tabBox.classList.add('is-switching');
+        moveInd(tab);
+        stretchTimer = window.setTimeout(() => {
+          tabBox.style.setProperty('--stretch', '1');
+          tabBox.classList.remove('is-switching');
+        }, 260);
+      };
+      const setTabs = (key) => {
         Object.entries(tabs).forEach(([k, t]) => { const on = k === key; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); t.setAttribute('tabindex', on ? '0' : '-1'); });
-        Object.entries(panels).forEach(([k, p]) => { p.hidden = k !== key; });
+      };
+      const measurePanel = (panel) => {
+        const wasHidden = panel.hidden;
+        if (wasHidden) panel.hidden = false;
+        panel.style.visibility = 'hidden';
+        panel.style.position = 'absolute';
+        panel.style.pointerEvents = 'none';
+        const height = panel.offsetHeight;
+        panel.style.visibility = '';
+        panel.style.position = '';
+        panel.style.pointerEvents = '';
+        if (wasHidden) panel.hidden = true;
+        return height;
+      };
+      const show = async (key) => {
+        if (!panels[key] || key === active || busy) return;
+        const prev = active;
+        const outgoing = panels[prev];
+        const incoming = panels[key];
+        const dir = key === 'care' ? 1 : -1;
+        busy = true;
+        setTabs(key);
+        glideInd(tabs[key], dir);
+        if (reduce || !outgoing.animate || !incoming.animate) {
+          outgoing.hidden = true;
+          incoming.hidden = false;
+          active = key;
+          busy = false;
+          return;
+        }
+        const holder = outgoing.parentElement;
+        const hold = Math.max(outgoing.offsetHeight, measurePanel(incoming));
+        holder.style.minHeight = holder.offsetHeight + 'px';
+        outgoing.style.minHeight = hold + 'px';
+        await outgoing.animate([
+          { opacity: 1, transform: 'translateX(0) scale(1)', filter: 'blur(0)' },
+          { opacity: 0, transform: 'translateX(' + (-18 * dir) + 'px) scale(.985)', filter: 'blur(3px)' }
+        ], { duration: 180, easing: 'cubic-bezier(.4,0,.2,1)' }).finished.catch(() => {});
+        outgoing.hidden = true;
+        outgoing.style.minHeight = '';
+        incoming.hidden = false;
+        incoming.style.opacity = '0';
+        incoming.style.transform = 'translateX(' + (22 * dir) + 'px) scale(.992)';
+        await incoming.animate([
+          { opacity: 0, transform: 'translateX(' + (22 * dir) + 'px) scale(.992)', filter: 'blur(3px)' },
+          { opacity: 1, transform: 'translateX(0) scale(1)', filter: 'blur(0)' }
+        ], { duration: 360, easing: 'cubic-bezier(.22,1,.36,1)' }).finished.catch(() => {});
+        incoming.style.opacity = '';
+        incoming.style.transform = '';
+        holder.style.minHeight = '';
+        active = key;
+        busy = false;
       };
       tabs.build.addEventListener('click', () => show('build'));
       tabs.care.addEventListener('click', () => show('care'));
@@ -636,6 +792,11 @@
           else if (e.key === 'End') { e.preventDefault(); focusTab(order[order.length - 1]); }
         });
       });
+      setTabs(active);
+      moveInd(tabs[active]);
+      if (tabBox) tabBox.classList.add('ready');
+      window.addEventListener('load', () => moveInd(tabs[active]));
+      window.addEventListener('resize', () => moveInd(tabs[active]));
     })();
 
     /* ---- #4 Quiz ---- */
@@ -687,17 +848,30 @@
       let step = 0;
       const answers = {};
 
+      /* resume where the visitor left off (cleared on Retake) */
+      const STORE = 'knb-quiz';
+      function saveState(done) {
+        try { sessionStorage.setItem(STORE, JSON.stringify({ step: step, answers: answers, done: !!done })); } catch (e) {}
+      }
+      function clearState() {
+        try { sessionStorage.removeItem(STORE); } catch (e) {}
+      }
+
       function buildProg() {
         prog.innerHTML = QUESTIONS.map((_, i) => '<span' + (i === 0 ? ' class="on"' : '') + '></span>').join('');
+        prog.setAttribute('aria-valuemax', QUESTIONS.length);
       }
       function setProg() {
         [...prog.children].forEach((s, i) => s.classList.toggle('on', i <= step));
+        prog.setAttribute('aria-valuenow', step + 1);
+        prog.setAttribute('aria-valuetext', 'Question ' + (step + 1) + ' of ' + QUESTIONS.length);
         if (count) count.innerHTML = '<b>' + String(step + 1).padStart(2, '0') + '</b> / ' + String(QUESTIONS.length).padStart(2, '0');
       }
       function recommend() {
         let rec = answers.type || 'business';
+        /* selling online needs an ecommerce build; bookings stay an add-on on
+           whatever the visitor chose — never silently upgrade them to a custom app */
         if (answers.feature === 'payments') rec = 'ecom';
-        else if (answers.feature === 'booking') rec = 'app';
         if (rec === 'starter' && (answers.scope === 'med' || answers.scope === 'large')) rec = 'business';
         if (rec === 'business' && answers.scope === 'small') rec = 'starter';
         return rec;
@@ -737,21 +911,29 @@
           '<div class="quiz-q">' + item.q + '</div>' +
           (item.hint ? '<div class="quiz-hint">' + item.hint + '</div>' : '') +
           '<div class="quiz-opts' + (item.opts.length > 2 ? '' : ' one') + '">' +
-          item.opts.map((o, i) => '<button type="button" class="quiz-opt" data-val="' + o.val + '"><span class="qo-ic">' + (ICONS[o.val] || '') + '</span><span class="qo-text"><span class="qo-label">' + o.label + '</span>' + (o.sub ? '<span class="qo-sub">' + o.sub + '</span>' : '') + '</span><span class="qo-kbd">' + KEYS[i] + '</span></button>').join('') +
+          item.opts.map((o, i) => '<button type="button" class="quiz-opt" data-val="' + o.val + '" aria-pressed="false"><span class="qo-ic">' + (ICONS[o.val] || '') + '</span><span class="qo-text"><span class="qo-label">' + o.label + '</span>' + (o.sub ? '<span class="qo-sub">' + o.sub + '</span>' : '') + '</span><span class="qo-kbd" aria-hidden="true">' + KEYS[i] + '</span></button>').join('') +
           '</div>' + (step > 0 ? '<button type="button" class="quiz-back">← Back</button>' : '');
         animate(dir);
-        body.querySelectorAll('.quiz-opt').forEach((b) => b.addEventListener('click', () => {
-          if (b.classList.contains('sel')) return;
-          body.querySelectorAll('.quiz-opt').forEach((x) => x.classList.remove('sel'));
-          b.classList.add('sel');
-          answers[item.key] = b.dataset.val;
-          setTimeout(() => {
-            if (step < QUESTIONS.length - 1) { step++; renderQuestion(1); }
-            else renderResult();
-          }, 170);
-        }));
+        const mark = (b, on) => { b.classList.toggle('sel', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); };
+        let advancing = false;
+        body.querySelectorAll('.quiz-opt').forEach((b) => {
+          /* coming Back to a question: show the answer that's already stored */
+          if (b.dataset.val === answers[item.key]) mark(b, true);
+          b.addEventListener('click', () => {
+            if (advancing) return;
+            advancing = true;
+            body.querySelectorAll('.quiz-opt').forEach((x) => mark(x, x === b));
+            answers[item.key] = b.dataset.val;
+            setTimeout(() => {
+              if (step < QUESTIONS.length - 1) { step++; saveState(); renderQuestion(1); }
+              else { saveState(true); renderResult(true); }
+            }, 170);
+          });
+        });
         const back = body.querySelector('.quiz-back');
-        if (back) back.addEventListener('click', () => { step--; renderQuestion(-1); });
+        if (back) back.addEventListener('click', () => { step--; saveState(); renderQuestion(-1); });
+        /* keep keyboard users inside the quiz when a step was user-initiated */
+        if (dir) { const first = body.querySelector('.quiz-opt'); if (first) first.focus({ preventScroll: true }); }
       }
       document.addEventListener('keydown', (e) => {
         if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -769,21 +951,26 @@
         else { const L = e.key.toUpperCase(); if (/^[A-D]$/.test(L)) idx = L.charCodeAt(0) - 65; }
         if (idx >= 0 && idx < opts.length) { e.preventDefault(); opts[idx].click(); }
       });
-      function renderResult() {
+      function renderResult(fromUser) {
         prog.querySelectorAll('span').forEach((s) => s.classList.add('on'));
+        prog.setAttribute('aria-valuenow', QUESTIONS.length);
+        prog.setAttribute('aria-valuetext', 'Complete');
         if (count) count.innerHTML = '<b>Done</b>';
         const key = recommend();
         const p = PKG[key];
+        /* a custom app scopes booking into the build itself — only pitch the
+           booking add-on when the recommendation is a website package */
+        const wantsBookingAddon = answers.feature === 'booking' && key !== 'app';
         const extras = [];
         if (answers.update === 'team') extras.push('A <b>CMS</b> so your team can edit content');
         if (answers.feature === 'content') extras.push('A <b>blog / content</b> section');
         if (answers.ready === 'branding' || answers.ready === 'both') extras.push('<b>Branding &amp; logo</b> (add-on)');
         if (answers.ready === 'copy' || answers.ready === 'both') extras.push('<b>Copywriting</b> (add-on)');
-        if (answers.feature === 'booking') extras.push('<b>Booking &amp; scheduling</b> (add-on)');
+        if (wantsBookingAddon) extras.push('<b>Booking &amp; scheduling</b> (add-on)');
         const addonNames = [];
         if (answers.ready === 'branding' || answers.ready === 'both') addonNames.push('Branding & logo');
         if (answers.ready === 'copy' || answers.ready === 'both') addonNames.push('Copywriting');
-        if (answers.feature === 'booking') addonNames.push('Booking & scheduling');
+        if (wantsBookingAddon) addonNames.push('Booking & scheduling');
         const extrasHtml = extras.length
           ? '<div class="qr-extras"><span class="qr-label">Likely to include</span><ul>' + extras.map((e) => '<li>' + e + '</li>').join('') + '</ul></div>'
           : '';
@@ -804,7 +991,7 @@
         const joinNice = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
         const whyHtml = bits.length ? '<div class="qr-why"><span>Because ' + joinNice(bits) + ', this is the best place to start. We confirm the exact scope in your written proposal.</span></div>' : '';
         body.innerHTML =
-          '<div class="quiz-res">' +
+          '<div class="quiz-res" tabindex="-1">' +
             '<div class="qr-head"><span class="qr-ic">' + p.icon + '</span>' +
               '<div><span class="qr-kicker">Your starting point</span><h3>' + p.name + '</h3><p class="qr-desc">' + p.desc + '</p></div></div>' +
             whyHtml +
@@ -823,10 +1010,20 @@
         if (quote && addonNames.length) quote.addEventListener('click', () => { if (window.KNBpkg) window.KNBpkg.addAddons(addonNames); });
         const careB = body.querySelector('#qrCare');
         if (careB) careB.addEventListener('click', () => { const t = document.getElementById('tab-care'); if (t) { t.click(); const panel = document.getElementById('panel-care') || t; panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
-        body.querySelector('#quizRetake').addEventListener('click', () => { step = 0; for (const k in answers) delete answers[k]; renderQuestion(-1); });
+        body.querySelector('#quizRetake').addEventListener('click', () => { step = 0; for (const k in answers) delete answers[k]; clearState(); renderQuestion(-1); });
+        if (fromUser) body.querySelector('.quiz-res').focus({ preventScroll: true });
       }
       buildProg();
-      renderQuestion();
+      /* resume a half-finished quiz from this browsing session */
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(STORE) || 'null'); } catch (e) {}
+      if (saved && saved.answers && typeof saved.step === 'number') {
+        Object.assign(answers, saved.answers);
+        step = Math.max(0, Math.min(saved.step, QUESTIONS.length - 1));
+        if (saved.done) renderResult(); else renderQuestion();
+      } else {
+        renderQuestion();
+      }
     })();
 
     /* ---- deep-link from the home Solutions cards: #build-<pkg> / #care-<plan> ---- */

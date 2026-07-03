@@ -1998,22 +1998,20 @@
   /* merged Solutions section — toggle (Website projects / Care plans) */
   .solu-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; position: relative; z-index: 1; }
   .solu-more { margin-top: 0; }
-  .solu-toggle { display: inline-flex; gap: 4px; margin: 28px 0 32px; padding: 5px; background: rgba(17,17,16,0.05); border: 1px solid var(--line); border-radius: var(--r-pill); position: relative; z-index: 1; }
-  .solu-tab { position: relative; z-index: 1; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--muted); background: none; border: none; padding: 10px 22px; border-radius: var(--r-pill); cursor: pointer; transition: color 0.3s; }
+  .solu-toggle { --tx: 0px; --stretch: 1; display: inline-flex; gap: 4px; margin: 28px 0 32px; padding: 6px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-pill); position: relative; z-index: 1; box-shadow: inset 0 2px 5px rgba(17,17,16,0.08), inset 0 -1px 0 rgba(255,255,255,0.9), 0 14px 30px -28px rgba(17,17,16,0.5); }
+  .solu-tab { position: relative; z-index: 1; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--muted); background: none; border: none; padding: 10px 22px; border-radius: var(--r-pill); cursor: pointer; transition: color 0.38s cubic-bezier(.16,1,.3,1), transform 0.18s ease; transition-delay: 0.04s, 0s; }
+  .solu-tab:active { transform: translateY(1px); }
   .solu-tab:hover { color: var(--ink); }
   .solu-tab.active { color: var(--bg); }
   .solu-toggle:not(.ready) .solu-tab.active { color: var(--ink); } /* readable before JS positions the indicator */
   /* #1 sliding indicator (JS positions it to the active tab) */
-  .solu-ind { position: absolute; top: 5px; bottom: 5px; left: 0; width: 0; border-radius: var(--r-pill); background: var(--ink); z-index: 0; pointer-events: none; transition: transform 0.4s var(--ease), width 0.4s var(--ease); }
-  @media (prefers-reduced-motion: reduce) { .solu-ind { transition: none; } }
-  /* #2 directional panel entrance: web slides from left, care from right */
+  .solu-ind { position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: var(--r-pill); background: #111110; z-index: 0; pointer-events: none; transform: translateX(var(--tx)) scaleX(var(--stretch)); transform-origin: var(--origin, left) center; box-shadow: inset 0 3px 8px rgba(0,0,0,0.66), inset 0 -1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(0,0,0,0.30); transition: transform 0.62s cubic-bezier(.16,1,.3,1), width 0.62s cubic-bezier(.16,1,.3,1), box-shadow 0.22s ease; }
+  .solu-ind::after { content: ""; position: absolute; top: 50%; right: 13px; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; box-shadow: 0 0 0 4px rgba(232,63,160,0.14); transform: translateY(-50%); }
+  .solu-toggle.is-switching .solu-tab { transition-delay: .12s, 0s; }
+  .solu-toggle.is-switching .solu-ind { box-shadow: inset 0 5px 12px rgba(0,0,0,0.78), inset 0 -1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(0,0,0,0.38); }
+  @media (prefers-reduced-motion: reduce) { .solu-ind, .solu-tab { transition: none; } }
   .solu-panel { display: none; position: relative; z-index: 1; }
   .solu-panel.on { display: block; }
-  .solu-panel[data-solu-panel="web"].on { animation: soluInL 0.45s var(--ease); }
-  .solu-panel[data-solu-panel="care"].on { animation: soluInR 0.45s var(--ease); }
-  @keyframes soluInL { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
-  @keyframes soluInR { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .solu-panel.on { animation: none !important; } }
   .care-intro { max-width: 640px; margin-bottom: 26px; }
   .care-intro h3 { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; }
   .care-intro p { color: var(--muted); font-size: 15px; line-height: 1.55; margin-top: 10px; }

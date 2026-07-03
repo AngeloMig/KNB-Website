@@ -235,7 +235,13 @@ gsap.registerPlugin(ScrollTrigger);
       if (!tabs.length) return;
       const ind = toggle && toggle.querySelector('.solu-ind');
       const plans = document.querySelector('.plans');
-      const moveInd = (tab) => { if (ind && tab) { ind.style.width = tab.offsetWidth + 'px'; ind.style.transform = 'translateX(' + tab.offsetLeft + 'px)'; } };
+      let stretchTimer = 0;
+      const moveInd = (tab) => {
+        if (ind && tab && toggle) {
+          ind.style.width = tab.offsetWidth + 'px';
+          toggle.style.setProperty('--tx', tab.offsetLeft + 'px');
+        }
+      };
 
       // "Every … includes" strip — swap label + items to suit the active tab
       const incl = document.querySelector('.plans-incl');
@@ -259,12 +265,73 @@ gsap.registerPlugin(ScrollTrigger);
         incl.setAttribute('aria-label', 'Included with ' + (solu === 'care' ? 'every care plan' : 'every package'));
       };
 
-      const activate = (t) => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let activeSolu = (tabs.find((x) => x.classList.contains('active')) || tabs[0]).dataset.solu;
+      let switching = false;
+      const glideInd = (tab, dir) => {
+        if (!toggle) return moveInd(tab);
+        window.clearTimeout(stretchTimer);
+        toggle.style.setProperty('--origin', dir > 0 ? 'left' : 'right');
+        toggle.style.setProperty('--stretch', reduce ? '1' : '1.085');
+        toggle.classList.add('is-switching');
+        moveInd(tab);
+        stretchTimer = window.setTimeout(() => {
+          toggle.style.setProperty('--stretch', '1');
+          toggle.classList.remove('is-switching');
+        }, 260);
+      };
+      const panelFor = (solu) => panels.find((p) => p.dataset.soluPanel === solu);
+      const measurePanel = (panel) => {
+        const wasOn = panel.classList.contains('on');
+        if (!wasOn) panel.classList.add('on');
+        panel.style.visibility = 'hidden';
+        panel.style.position = 'absolute';
+        panel.style.pointerEvents = 'none';
+        const height = panel.offsetHeight;
+        panel.style.visibility = '';
+        panel.style.position = '';
+        panel.style.pointerEvents = '';
+        if (!wasOn) panel.classList.remove('on');
+        return height;
+      };
+      const activate = async (t) => {
+        const nextSolu = t.dataset.solu;
+        if (nextSolu === activeSolu || switching) return;
+        const prevPanel = panelFor(activeSolu);
+        const nextPanel = panelFor(nextSolu);
+        const dir = nextSolu === 'care' ? 1 : -1;
+        switching = true;
         tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
-        panels.forEach((p) => p.classList.toggle('on', p.dataset.soluPanel === t.dataset.solu));
-        setIncl(t.dataset.solu);
-        moveInd(t);
+        setIncl(nextSolu);
+        glideInd(t, dir);
         if (plans) { plans.classList.remove('bloom'); void plans.offsetWidth; plans.classList.add('bloom'); } // #9 re-bloom (existing keyframe)
+        if (!prevPanel || !nextPanel || reduce || !prevPanel.animate || !nextPanel.animate) {
+          panels.forEach((p) => p.classList.toggle('on', p.dataset.soluPanel === nextSolu));
+          activeSolu = nextSolu;
+          switching = false;
+          return;
+        }
+        const holder = prevPanel.parentElement;
+        holder.style.minHeight = holder.offsetHeight + 'px';
+        prevPanel.style.minHeight = Math.max(prevPanel.offsetHeight, measurePanel(nextPanel)) + 'px';
+        await prevPanel.animate([
+          { opacity: 1, transform: 'translateX(0) scale(1)', filter: 'blur(0)' },
+          { opacity: 0, transform: 'translateX(' + (-18 * dir) + 'px) scale(.985)', filter: 'blur(3px)' }
+        ], { duration: 180, easing: 'cubic-bezier(.4,0,.2,1)' }).finished.catch(() => {});
+        prevPanel.classList.remove('on');
+        prevPanel.style.minHeight = '';
+        nextPanel.classList.add('on');
+        nextPanel.style.opacity = '0';
+        nextPanel.style.transform = 'translateX(' + (22 * dir) + 'px) scale(.992)';
+        await nextPanel.animate([
+          { opacity: 0, transform: 'translateX(' + (22 * dir) + 'px) scale(.992)', filter: 'blur(3px)' },
+          { opacity: 1, transform: 'translateX(0) scale(1)', filter: 'blur(0)' }
+        ], { duration: 360, easing: 'cubic-bezier(.22,1,.36,1)' }).finished.catch(() => {});
+        nextPanel.style.opacity = '';
+        nextPanel.style.transform = '';
+        holder.style.minHeight = '';
+        activeSolu = nextSolu;
+        switching = false;
       };
       tabs.forEach((t) => t.addEventListener('click', () => activate(t)));
       const initInd = () => moveInd(tabs.find((t) => t.classList.contains('active')) || tabs[0]);
