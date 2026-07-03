@@ -2,6 +2,19 @@
    Injected synchronously where the <script src="header.js"> tag sits, so the
    end-of-body scripts (navmenu.js, main.js / work.js) still initialise it.
    Active state + logo href are derived from the current page. */
+/* Canonical care-plan data — THE single source for names, hours, audiences.
+   Consumed here (Packages mega menu), by pricing.html (card hydration + quiz)
+   and by packages.js (care compare modal). Change hours HERE only. */
+window.KNBDATA = {
+  care: [
+    { id: 'basic',    name: 'Basic',         hours: '5',       who: 'Light support',   resp: '2\u20133 day response' },
+    { id: 'standard', name: 'Standard',      hours: '12',      who: 'Regular updates', resp: '1\u20132 day response' },
+    { id: 'growth',   name: 'Growth',        hours: '20',      who: 'Active stores',   resp: '1 day response', popular: true, rollover: true },
+    { id: 'premium',  name: 'Premium',       hours: '35',      who: 'Busy ecommerce',  resp: 'Same / next day response', rollover: true },
+    { id: 'custom',   name: 'Custom System', hours: '20\u201340', who: 'Custom apps', resp: 'Response by agreement' }
+  ]
+};
+
 (function () {
   var here = (location.pathname.split('/').pop() || 'index').toLowerCase().replace(/\.html$/, '') || 'index';
   var workPages = ['portfolio', 'shopify', 'webflow', 'wordpress', 'case-study'];
@@ -33,14 +46,14 @@
                 <div class="nm-main">
                   <div class="nm-head"><div><span class="nm-label">Selected work</span><h3>Sites we've shipped</h3></div><div class="nm-filters"><button class="on" data-f="all">All</button><button data-f="shopify">Shopify</button><button data-f="webflow">Webflow</button><button data-f="wordpress">WordPress</button></div></div>
                   <div class="nm-thumbs">
-                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Light My Bricks</b><small>Shopify · Retail</small></span></a>
-                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Feedbird</b><small>Webflow · Software</small></span></a>
-                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.cacaocollective.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Cacao Collective</b><small>Shopify · Food</small></span></a>
-                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.maestrolabs.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Maestro Labs</b><small>Webflow · Software</small></span></a>
-                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Friseoutdoor.com.au%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Rise Outdoor</b><small>Shopify · Outdoor</small></span></a>
-                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coptrz</b><small>WordPress · Drone tech</small></span></a>
-                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoachman.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
-                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="https://s.wp.com/mshots/v1/https%3A%2F%2Fphoenixsafe.co.uk%2F?w=320" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="assets/shots/nav-lightmybricks.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Light My Bricks</b><small>Shopify · Retail</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="assets/shots/nav-feedbird.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Feedbird</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="assets/shots/nav-cacao.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Cacao Collective</b><small>Shopify · Food</small></span></a>
+                    <a class="nm-item" data-plat="webflow" href="webflow.html"><span class="nm-th"><img src="assets/shots/nav-maestro.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Maestro Labs</b><small>Webflow · Software</small></span></a>
+                    <a class="nm-item" data-plat="shopify" href="shopify.html"><span class="nm-th"><img src="assets/shots/nav-rise.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Rise Outdoor</b><small>Shopify · Outdoor</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="assets/shots/nav-coptrz.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coptrz</b><small>WordPress · Drone tech</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="assets/shots/nav-coachman.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Coachman</b><small>WordPress · Automotive</small></span></a>
+                    <a class="nm-item" data-plat="wordpress" href="wordpress.html"><span class="nm-th"><img src="assets/shots/nav-phoenix.jpg" alt="" loading="lazy"><span class="nm-view">View &#8594;</span></span><span class="nm-cap"><b>Phoenix Safe</b><small>WordPress · Security</small></span></a>
                   </div>
                   <div class="nm-foot"><span>44 projects · 3 platforms · 12+ industries</span><a href="portfolio.html">Browse the portfolio &#8594;</a></div>
                 </div>
@@ -62,11 +75,7 @@
                 </div>
                 <div class="np-col np-care">
                   <span class="nm-label">Care plans</span>
-                  <a class="np-item" href="pricing.html#care"><span class="np-tx"><b>Basic</b><span>Light support</span></span><span class="np-hrs">5 hrs/mo</span></a>
-                  <a class="np-item" href="pricing.html#care"><span class="np-tx"><b>Standard</b><span>Regular updates</span></span><span class="np-hrs">12 hrs/mo</span></a>
-                  <a class="np-item np-hot" href="pricing.html#care"><span class="np-tx"><b>Growth</b><span>Active stores</span></span><span class="np-hrs">20 hrs/mo</span></a>
-                  <a class="np-item" href="pricing.html#care"><span class="np-tx"><b>Premium</b><span>Busy ecommerce</span></span><span class="np-hrs">35 hrs/mo</span></a>
-                  <a class="np-item" href="pricing.html#care"><span class="np-tx"><b>Custom System</b><span>Custom apps</span></span><span class="np-hrs">20&#8211;40 hrs</span></a>
+                  ${window.KNBDATA.care.map(function (c) { return '<a class="np-item' + (c.popular ? ' np-hot' : '') + '" href="pricing.html#care"><span class="np-tx"><b>' + c.name + '</b><span>' + c.who + '</span></span><span class="np-hrs">' + c.hours + ' hrs/mo</span></a>'; }).join('')}
                 </div>
                 <aside class="np-quiz">
                   <span class="nm-label">Find your fit</span>
@@ -75,6 +84,7 @@
                   <a class="np-quiz-btn" href="pricing.html#quiz"><span></span>Take the 30-second quiz</a>
                   <a class="np-quote" href="contact.html">Or get an exact quote &#8594;</a>
                 </aside>
+                <div class="nm-foot np-foot"><span>4 packages &#183; 5 care plans &#183; quoted in writing</span><a href="pricing.html">See all packages &amp; plans &#8594;</a></div>
               </div>
             </div>
           </div>

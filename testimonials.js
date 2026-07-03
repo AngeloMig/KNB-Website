@@ -47,7 +47,11 @@
       window.addEventListener('pointerup', () => { if (!st.dragging) return; st.dragging = false; dragging = false; row.classList.remove('grabbing'); if (!reduce) st.paused = false; });
       return st;
     });
+    // only run the marquee loop while the section is near the viewport —
+    // otherwise this rAF would mutate styles every frame for the whole visit
+    let inView = true, looping = false;
     const tick = () => {
+      if (!inView) { looping = false; return; }
       states.forEach((st) => {
         if (!st.paused && !st.dragging) st.x += st.dir * 0.45 * (1 + st.boost);
         if (st.half) { if (st.x <= -st.half) st.x += st.half; else if (st.x >= 0) st.x -= st.half; }
@@ -56,7 +60,14 @@
       });
       requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+    const startLoop = () => { if (!looping) { looping = true; requestAnimationFrame(tick); } };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => {
+        inView = es[0].isIntersecting;
+        if (inView) startLoop();
+      }, { rootMargin: '200px' }).observe(root);
+    }
+    startLoop();
     if (!reduce) window.addEventListener('scroll', () => { states.forEach((st) => { st.boost = 2.5; }); }, { passive: true });
 
     /* quote modal */

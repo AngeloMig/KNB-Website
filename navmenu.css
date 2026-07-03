@@ -85,6 +85,7 @@
 .nav-item.nm.open .nm-item:nth-child(8){animation-delay:.30s}
 @keyframes nmTileIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
 .nm-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+.np-foot { grid-column: 1 / -1; margin-top: 4px; }
 .nm-foot span { font-size:13px; color:var(--muted); }
 .nm-foot a { font-size:13px; font-weight:600; color:var(--ink); border-bottom:1.5px solid var(--ink); padding-bottom:1px; }
 

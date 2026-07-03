@@ -4,7 +4,7 @@
   const nav = document.getElementById('nav');
   if (nav) {
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
-    window.addEventListener('scroll', onScroll); onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
 
   // Mobile menu toggle now lives in navmenu.js (loaded on every page) — single
@@ -456,18 +456,6 @@
     });
   }
 
-  // B6: logo marquee speeds up while scrolling
-  (function () {
-    const track = document.querySelector('.logos-track');
-    if (!track || reduce) return;
-    let t;
-    window.addEventListener('scroll', () => {
-      track.style.animationDuration = '16s';
-      clearTimeout(t);
-      t = setTimeout(() => { track.style.animationDuration = ''; }, 220);
-    }, { passive: true });
-  })();
-
   // #3 scroll-progress bar + back-to-top
   (function () {
     const prog = document.getElementById('scrollProg');
@@ -525,27 +513,6 @@
   };
   btn.addEventListener('click', () => { shown += STEP; render(); });
   render();
-})();
-
-/* platform-page stat count-up (decimals + suffix; ★ stays static in markup) */
-(function () {
-  var nums = document.querySelectorAll('.plat-stats [data-num], .hero-stats [data-num]');
-  if (!nums.length) return;
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!('IntersectionObserver' in window) || reduce) { nums.forEach(function (el) { el.textContent = parseFloat(el.dataset.num).toFixed(+(el.dataset.dec || 0)) + (el.dataset.suffix || ''); }); return; }
-  var io = new IntersectionObserver(function (es, o) {
-    es.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      var el = en.target, target = parseFloat(el.dataset.num), dec = +(el.dataset.dec || 0), suf = el.dataset.suffix || '', t0 = performance.now();
-      (function tick(now) {
-        var p = Math.min((now - t0) / 1400, 1), e = 1 - Math.pow(1 - p, 3);
-        el.textContent = (target * e).toFixed(dec) + suf;
-        if (p < 1) requestAnimationFrame(tick); else el.textContent = target.toFixed(dec) + suf;
-      })(t0);
-      o.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-  nums.forEach(function (el) { io.observe(el); });
 })();
 
 /* platform "is this right for you?" — cursor glow + fit-finder toggle */
@@ -875,3 +842,19 @@
   });
 })();
 
+
+/* pause continuously-animating CSS decor (logo marquee, watermark drift) while
+   off-screen — the compositor otherwise runs them for the whole visit.
+   (The testimonial marquee is rAF-driven; testimonials.js gates its own loop.) */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var els = document.querySelectorAll('.plat-mq-track, .work-wm');
+  if (!els.length) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      /* clear the inline value when visible so CSS hover-pause rules still win */
+      en.target.style.animationPlayState = en.isIntersecting ? '' : 'paused';
+    });
+  }, { rootMargin: '120px' });
+  els.forEach(function (el) { io.observe(el); });
+})();

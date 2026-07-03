@@ -14,10 +14,10 @@
   var CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 1.8"/></svg>';
   var OUT={ starter:'A polished site you can launch fast and grow into.', business:'A credible site that turns visitors into enquiries.', ecom:'A fast store that is easy to run and ready to scale.', app:'Software that fits your process, not the other way round.' };
   var PKG=[
-    {id:'starter',acc:'#111110',scope:1,next:'Business Website',name:'Starter Website',sub:'Small businesses & service sites',icon:'monitor',shot:{u:'https://thewalsallbox.co.uk/',n:'The Walsall Box'},tagline:'A clean, professional site — ready in weeks.',meta:['~1–2 weeks','1 revision','Launch support'],inc:['1–5 pages, responsive design','Contact form, navigation & CTAs','Basic SEO (titles, meta, alt text)','Mobile-first, fast-loading build','Google Analytics setup','One revision, QA & launch support'],sep:['Ecommerce checkout','Custom animation & interactions','Branding / logo design','Full copywriting','Blog / CMS','Ongoing care plan']},
-    {id:'business',acc:'#111110',scope:2,next:'Ecommerce Website',name:'Business Website',sub:'Growing companies, B2B, clinics',icon:'building',popular:true,shot:{u:'https://feedbird.com/',n:'Feedbird'},tagline:'A site that builds trust and brings in leads.',meta:['~3–4 weeks','2 revisions','CMS training'],inc:['6–12 pages + blog / CMS','Lead forms & integrations','On-page SEO & speed','Editable CMS — update it yourself','Analytics & conversion tracking','2 revisions, QA & launch'],sep:['Ecommerce checkout','Custom web app features','Branding / logo design','Paid ad landing pages','Full copywriting','Ongoing care plan']},
-    {id:'ecom',acc:'#5e8e3e',scope:3,next:'Custom Web App',name:'Ecommerce Website',sub:'Shopify & WooCommerce brands',icon:'cart',shot:{u:'https://www.lightmybricks.com/',n:'Light My Bricks'},tagline:'A storefront built to sell on any device.',meta:['~4–6 weeks','2 revisions','Store training'],inc:['Theme build & product setup','Cart, checkout & payments','Apps, shipping & tax config','Collections, variants & filters','SEO, speed & analytics','Store training & launch'],sep:['Custom app features','Branding / logo design','Product photography','Ongoing marketing & ads','Full copywriting','Subscriptions / B2B portal']},
-    {id:'app',acc:'#111110',scope:4,next:'',name:'Custom Web App',sub:'Dashboards, portals, booking, POS',icon:'grid',shot:{u:'http://learn.orca.org.uk/',n:'ORCA Learn'},tagline:'Custom software, scoped around your workflow.',meta:['Scoped to spec','Agile sprints','Ongoing support'],inc:['Discovery & UX flows','Custom front-end build','APIs & integrations','Auth, roles & permissions','Database & admin dashboard','QA, launch & handover'],sep:['Off-the-shelf themes','Branding / logo design','Native mobile app','Third-party licenses','Ongoing maintenance','Data migration']}
+    {id:'starter',acc:'#111110',scope:1,next:'Business Website',name:'Starter Website',sub:'Small businesses & service sites',icon:'monitor',shot:{img:'assets/shots/pkg-walsall.jpg',n:'The Walsall Box'},tagline:'A clean, professional site — ready in weeks.',meta:['~1–2 weeks','1 revision','Launch support'],inc:['1–5 pages, responsive design','Contact form, navigation & CTAs','Basic SEO (titles, meta, alt text)','Mobile-first, fast-loading build','Google Analytics setup','One revision, QA & launch support'],sep:['Ecommerce checkout','Custom animation & interactions','Branding / logo design','Full copywriting','Blog / CMS','Ongoing care plan']},
+    {id:'business',acc:'#111110',scope:2,next:'Ecommerce Website',name:'Business Website',sub:'Growing companies, B2B, clinics',icon:'building',popular:true,shot:{img:'assets/shots/pkg-feedbird.jpg',n:'Feedbird'},tagline:'A site that builds trust and brings in leads.',meta:['~3–4 weeks','2 revisions','CMS training'],inc:['6–12 pages + blog / CMS','Lead forms & integrations','On-page SEO & speed','Editable CMS — update it yourself','Analytics & conversion tracking','2 revisions, QA & launch'],sep:['Ecommerce checkout','Custom web app features','Branding / logo design','Paid ad landing pages','Full copywriting','Ongoing care plan']},
+    {id:'ecom',acc:'#5e8e3e',scope:3,next:'Custom Web App',name:'Ecommerce Website',sub:'Shopify & WooCommerce brands',icon:'cart',shot:{img:'assets/shots/pkg-lightmybricks.jpg',n:'Light My Bricks'},tagline:'A storefront built to sell on any device.',meta:['~4–6 weeks','2 revisions','Store training'],inc:['Theme build & product setup','Cart, checkout & payments','Apps, shipping & tax config','Collections, variants & filters','SEO, speed & analytics','Store training & launch'],sep:['Custom app features','Branding / logo design','Product photography','Ongoing marketing & ads','Full copywriting','Subscriptions / B2B portal']},
+    {id:'app',acc:'#111110',scope:4,next:'',name:'Custom Web App',sub:'Dashboards, portals, booking, POS',icon:'grid',shot:{img:'assets/shots/pkg-orca.jpg',n:'ORCA Learn'},tagline:'Custom software, scoped around your workflow.',meta:['Scoped to spec','Agile sprints','Ongoing support'],inc:['Discovery & UX flows','Custom front-end build','APIs & integrations','Auth, roles & permissions','Database & admin dashboard','QA, launch & handover'],sep:['Off-the-shelf themes','Branding / logo design','Native mobile app','Third-party licenses','Ongoing maintenance','Data migration']}
   ];
   var FEAT=[
     {label:'Pages',vals:['1–5','6–12','Catalogue','Custom']},
@@ -34,11 +34,11 @@
   var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>';
   function dots(n){ var o=''; for(var k=0;k<4;k++){ o+='<i class="'+(k<n?'on':'')+'"></i>'; } return o; }
   function detail(p){
-    /* real-project thumbnail (same mshots service the portfolio uses) — swap
+    /* real-project thumbnail (self-hosted capture in assets/shots) — swap
        p.shot per package to feature a different site */
     var shot=p.shot?'<a class="md-shot" href="portfolio.html" aria-label="See '+p.shot.n+' and more recent work">'+
       '<span class="md-shot-bar" aria-hidden="true"><i></i><i></i><i></i></span>'+
-      '<img src="https://s.wp.com/mshots/v1/'+encodeURIComponent(p.shot.u)+'?w=480" alt="Screenshot of '+p.shot.n+'" loading="lazy">'+
+      '<img src="'+p.shot.img+'" alt="Screenshot of '+p.shot.n+'" loading="lazy">'+
       '<span class="md-shot-cap">Recent project — '+p.shot.n+'</span></a>':'';
     /* the shot sits after the tagline: absolute-positioned on desktop (order
        irrelevant), in-flow on mobile so the package name reads first */
@@ -119,6 +119,47 @@
     showModal(m);
   }
 
+  /* care plans compare — names/hours/audiences come from KNBDATA (header.js);
+     only the coverage grid lives here. Mirrors the plan cards' coverage. */
+  var CAREFEAT=[
+    {label:'Minor edits & simple fixes',vals:[1,1,1,1,0]},
+    {label:'Plugin updates, backups & monitoring',vals:[1,1,1,1,0]},
+    {label:'WordPress, Webflow & Shopify support',vals:[0,1,1,1,0]},
+    {label:'Content updates & publishing',vals:[0,1,1,1,0]},
+    {label:'Light SEO checks & monthly report',vals:[0,1,1,1,0]},
+    {label:'Bug fixes',vals:[0,0,1,1,1]},
+    {label:'Landing page edits & CRO',vals:[0,0,1,1,0]},
+    {label:'Speed checks & SEO tasks',vals:[0,0,1,1,0]},
+    {label:'Priority support',vals:[0,0,1,1,1]},
+    {label:'Improvement roadmap',vals:[0,0,0,1,0]},
+    {label:'Ecommerce fixes',vals:[0,0,0,1,0]},
+    {label:'Integrations, docs & deployment',vals:[0,0,0,0,1]}
+  ];
+  function careMatrixHTML(){
+    var care=(window.KNBDATA&&window.KNBDATA.care)||[];
+    var pop=function(c){ return c&&c.popular?' class="col-pop"':''; };
+    var head='<thead><tr><th class="mx-corner"></th>'+care.map(function(c,ci){ return '<th data-c="'+ci+'"'+pop(c)+'><div class="mx-col"><b>'+c.name+'</b>'+(c.popular?'<span class="mx-pop">Popular</span>':'')+'</div></th>'; }).join('')+'</tr></thead>';
+    var rows='<tr class="mx-bestfor"><th>Best for</th>'+care.map(function(c,ci){ return '<td data-c="'+ci+'"'+pop(c)+'><span class="mx-bf">'+c.who+'</span></td>'; }).join('')+'</tr>';
+    rows+='<tr><th>Monthly hours</th>'+care.map(function(c,ci){ return '<td data-c="'+ci+'"'+pop(c)+'><span class="val">'+c.hours+' hrs</span></td>'; }).join('')+'</tr>';
+    rows+='<tr><th>Unused time rolls over</th>'+care.map(function(c,ci){ return '<td data-c="'+ci+'"'+pop(c)+'>'+(c.rollover?'<span class="yes">'+CHK+'</span>':'<span class="no">'+CRS+'</span>')+'</td>'; }).join('')+'</tr>';
+    rows+=CAREFEAT.map(function(f){ return '<tr><th>'+f.label+'</th>'+f.vals.map(function(v,ci){ return '<td data-c="'+ci+'"'+pop(care[ci])+'>'+(v?'<span class="yes">'+CHK+'</span>':'<span class="no">'+CRS+'</span>')+'</td>'; }).join('')+'</tr>'; }).join('');
+    rows+='<tr><th>Response time</th>'+care.map(function(c,ci){ return '<td data-c="'+ci+'"'+pop(c)+'><span class="val">'+c.resp.replace(' response','')+'</span></td>'; }).join('')+'</tr>';
+    return '<table class="mx">'+head+'<tbody>'+rows+'</tbody></table>';
+  }
+  function openCareCompare(){
+    var m=document.getElementById('careCmpModal');
+    if(!m){
+      m=document.createElement('div'); m.id='careCmpModal'; m.className='cmp-modal';
+      m.innerHTML='<div class="cmp-backdrop"></div><div class="cmp-dialog" role="dialog" aria-modal="true" aria-labelledby="careCmpTitle"><div class="cmp-head"><button class="cmp-x" aria-label="Close">\u2715</button><span class="pk-kicker">Compare care plans</span><h3 id="careCmpTitle">All five plans, side by side</h3><p class="cmp-sub">Coverage, hours and response times for every plan. Hover a column to focus it.</p></div><div class="cmp-body">'+careMatrixHTML()+'</div><div class="cmp-foot cmp-foot--note"><span class="cmp-foot-note">Bigger work is always quoted and approved before we start.</span><a class="pk-cta cmp-cta" href="contact.html"><span class="dot"></span>Talk to us</a></div></div>';
+      document.body.appendChild(m);
+      m.querySelector('.cmp-x').addEventListener('click', closeModals);
+      m.querySelector('.cmp-backdrop').addEventListener('click', closeModals);
+      wireMatrix(m.querySelector('.mx'));
+      addTrap(m);
+    }
+    showModal(m);
+  }
+
   /* add-on picks (persisted, carried into the contact link) */
   var picks={};
   function loadPicks(){ try{ var raw=localStorage.getItem('knb_addons'); if(raw){ JSON.parse(raw).forEach(function(n){ picks[n]=true; }); } }catch(e){} }
@@ -127,7 +168,7 @@
   function applyPicksToModal(m){ if(!m){ return; } m.querySelectorAll('.ax[data-n]').forEach(function(card){ var n=card.getAttribute('data-n'); var on=!!picks[n]; card.classList.toggle('sel', on); var pk=card.querySelector('.ax-pick'); if(pk){ pk.setAttribute('aria-pressed', on?'true':'false'); pk.textContent=on?'✓':'+'; } }); axFootUpdate(); }
   function clearPicks(){ Object.keys(picks).forEach(function(k){ picks[k]=false; }); savePicks(); updateTeaser(); applyPicksToModal(document.getElementById('axModal')); }
   function axFootUpdate(){ var modal=document.getElementById('axModal'); if(!modal){ return; } var names=Object.keys(picks).filter(function(k){ return picks[k]; }); var msg=modal.querySelector('#axSelMsg'); var cta=modal.querySelector('#axCta'); var clr=modal.querySelector('#axClear'); if(!msg||!cta){ return; } if(names.length){ msg.textContent=names.length+(names.length>1?' add-ons selected':' add-on selected'); msg.classList.add('on'); cta.href='contact.html?addons='+encodeURIComponent(names.join(', ')); if(clr){ clr.hidden=false; } } else { msg.textContent='Don’t see what you need?'; msg.classList.remove('on'); cta.href='contact.html'; if(clr){ clr.hidden=true; } } }
-  document.addEventListener('click', function(e){ if(e.target.closest('.md-compare')){ openCompare(); } if(e.target.closest('[data-addons]')){ e.preventDefault(); openAddons(); } var pk=e.target.closest('.ax-pick'); if(pk){ var card=pk.closest('.ax'); var n=card.getAttribute('data-n'); picks[n]=!picks[n]; pk.setAttribute('aria-pressed', picks[n]?'true':'false'); pk.textContent=picks[n]?'✓':'+'; card.classList.toggle('sel', !!picks[n]); savePicks(); updateTeaser(); axFootUpdate(); return; } if(e.target.closest('#axClear')){ clearPicks(); return; } var care=e.target.closest('.ax-care'); if(care){ closeModals(); var t=document.getElementById('tab-care'); if(t){ t.click(); var p=document.getElementById('panel-care'); (p||t).scrollIntoView({behavior:'smooth', block:'start'}); } return; } });
+  document.addEventListener('click', function(e){ if(e.target.closest('.md-compare')){ openCompare(); } if(e.target.closest('[data-care-compare]')){ openCareCompare(); } if(e.target.closest('[data-addons]')){ e.preventDefault(); openAddons(); } var pk=e.target.closest('.ax-pick'); if(pk){ var card=pk.closest('.ax'); var n=card.getAttribute('data-n'); picks[n]=!picks[n]; pk.setAttribute('aria-pressed', picks[n]?'true':'false'); pk.textContent=picks[n]?'✓':'+'; card.classList.toggle('sel', !!picks[n]); savePicks(); updateTeaser(); axFootUpdate(); return; } if(e.target.closest('#axClear')){ clearPicks(); return; } var care=e.target.closest('.ax-care'); if(care){ closeModals(); var t=document.getElementById('tab-care'); if(t){ t.click(); var p=document.getElementById('panel-care'); (p||t).scrollIntoView({behavior:'smooth', block:'start'}); } return; } });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeModals(); } });
   loadPicks(); updateTeaser();
   /* keep the on-page add-ons count in sync with the ADDONS list */
