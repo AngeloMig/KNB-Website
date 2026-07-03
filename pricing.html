@@ -238,23 +238,31 @@
     .ex-chip { padding: 6px 8px; font-size: 11.5px; }
   }
 
-  .care-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 22px 28px; margin-top: 14px; }
-  .care-cta p { font-size: 15px; }
-  .care-cta b { font-weight: 700; }
-  .care-cta .btn { background: var(--bg); color: var(--ink); }
-  /* care plans — "how it works" explainer cards */
-  .care-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 26px; }
-  .care-note { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-  .care-note.hl { border-color: rgba(232,63,160,0.35); }
-  .care-note .ci-ic { width: 36px; height: 36px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--ink); }
-  .care-note.hl .ci-ic { color: #e83fa0; border-color: rgba(232,63,160,0.3); }
-  .care-note .ci-ic svg { width: 18px; height: 18px; }
-  .care-note h4 { font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; margin: 14px 0 6px; }
-  .care-note p { color: var(--muted); font-size: 13px; line-height: 1.5; }
-  .ci-tag { position: absolute; top: 16px; right: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #e83fa0; }
-  .ci-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #e83fa0; }
-  @media (max-width: 860px) { .care-info { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .care-info { grid-template-columns: 1fr; } }
+  /* care panel — the plan rules as a support chat; the composer carries the CTA */
+  .care-chat { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 18px; align-items: stretch; margin-top: 14px; }
+  .chat-thread { display: grid; gap: 10px; align-content: start; }
+  .chat-who { font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 6px 8px -2px; }
+  .chat-who.right { justify-self: end; }
+  .chat-msg { max-width: 82%; border-radius: 18px; padding: 13px 17px; font-size: 14px; line-height: 1.5; margin: 0; }
+  .chat-msg.them { justify-self: start; background: var(--card); border: 1px solid var(--line); border-bottom-left-radius: 6px; font-weight: 600; }
+  .chat-msg.us { justify-self: end; background: var(--ink); color: rgba(255,255,255,0.85); border-bottom-right-radius: 6px; }
+  .chat-msg.us b { color: #fff; }
+  .chat-msg.us.hl { background: #e83fa0; color: #fff; }
+  .chat-composer { display: flex; flex-direction: column; justify-content: space-between; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 26px; }
+  .chat-composer .cc-kick { display: inline-flex; align-items: center; gap: 8px; width: max-content; border: 1px solid rgba(232,63,160,0.38); background: rgba(232,63,160,0.08); color: #e83fa0; border-radius: 100px; padding: 6px 11px; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+  .chat-composer .cc-kick::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #e83fa0; }
+  .chat-composer h3 { font-size: clamp(24px, 3vw, 34px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+  .chat-composer p { margin-top: 12px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+  .chat-bar { display: flex; align-items: center; gap: 10px; margin-top: 24px; border: 1px solid var(--line); border-radius: 100px; padding: 8px 8px 8px 18px; background: var(--bg); }
+  .chat-bar > span { flex: 1; color: var(--muted); font-size: 13.5px; }
+  .chat-bar .btn { margin: 0; padding: 12px 18px; }
+  @media (max-width: 860px) { .care-chat { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .chat-msg { max-width: 92%; }
+    .chat-bar { flex-direction: column; align-items: stretch; padding: 10px; gap: 8px; }
+    .chat-bar > span { padding: 4px 8px 0; }
+    .chat-bar .btn { justify-content: center; }
+  }
 
   /* directional reveal variants (work.js toggles .in) */
   .reveal.r-left  { transform: translateX(-44px); }
@@ -476,32 +484,29 @@
             <span class="cp-resp"><i></i>Response by agreement</span>
           </div>
         </div>
-        <div class="care-cta reveal">
-          <p><b>Not sure which plan?</b> We'll recommend one based on your site and how often it changes.</p>
-          <a href="contact.html" class="btn"><span class="dot"></span>Talk to us</a>
-        </div>
-        <div class="care-info reveal">
-          <div class="care-note">
-            <span class="ci-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-            <h4>Included support time</h4>
-            <p>Every plan includes a set block of monthly time for edits, fixes, and small improvements — higher tiers get more.</p>
+        <div class="care-chat reveal">
+          <div class="chat-thread">
+            <span class="chat-who">You</span>
+            <p class="chat-msg them">What do I actually get each month?</p>
+            <span class="chat-who right">KNB</span>
+            <p class="chat-msg us">A set block of <b>hands-on hours</b> — edits, fixes, checks, and small improvements, every month.</p>
+            <span class="chat-who">You</span>
+            <p class="chat-msg them">And if I don’t use all my hours?</p>
+            <span class="chat-who right">KNB</span>
+            <p class="chat-msg us hl">On <b>Growth and Premium</b> they roll over to next month, up to your plan’s cap. Nothing wasted.</p>
+            <span class="chat-who">You</span>
+            <p class="chat-msg them">What about bigger jobs?</p>
+            <span class="chat-who right">KNB</span>
+            <p class="chat-msg us">Scoped and <b>approved before we start</b> — no surprise bills. And you can move up anytime (Growth and above run on a 3-month minimum).</p>
           </div>
-          <div class="care-note hl">
-            <span class="ci-tag"><span class="dot"></span>Growth &amp; Premium</span>
-            <span class="ci-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
-            <h4>Unused time rolls over</h4>
-            <p>Didn't use all your time this month? It carries into the next (up to your plan's cap) — so nothing is wasted.</p>
-          </div>
-          <div class="care-note">
-            <span class="ci-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
-            <h4>Bigger work, quoted first</h4>
-            <p>Anything beyond your monthly time is scoped and approved before we start — no surprise bills, ever.</p>
-          </div>
-          <div class="care-note">
-            <span class="ci-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-            <h4>Flexible, no lock-in</h4>
-            <p>Start where you are and move up anytime. Minimum 3-month term on Growth, Premium &amp; Custom System.</p>
-          </div>
+          <aside class="chat-composer">
+            <div>
+              <span class="cc-kick">Ask us anything</span>
+              <h3>Your turn to ask.</h3>
+              <p>Tell us about your site and how often it changes — we’ll recommend the right plan, no over-selling.</p>
+            </div>
+            <div class="chat-bar"><span aria-hidden="true">Which plan fits my store…</span><a href="contact.html" class="btn"><span class="dot"></span>Talk to us</a></div>
+          </aside>
         </div>
       </div>
     </div>
