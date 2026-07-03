@@ -50,14 +50,22 @@
     .hero-ctas { margin-top: 22px; gap: 16px; }
   }
 
-  /* how pricing works — flat 3-step */
-  .howit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
-  .howit .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px 24px; }
-  .howit .step-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .howit .sn { width: 34px; height: 34px; border-radius: 10px; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
-  .howit .step-tag { font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: rgba(17,17,16,0.05); border: 1px solid var(--line); padding: 4px 9px; border-radius: 100px; }
-  .howit h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin: 16px 0 6px; }
-  .howit p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+  /* how pricing works — one flat card, three steps */
+  .howit { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin-top: 8px; }
+  .howit .step { position: relative; display: flex; flex-direction: column; padding: 28px 26px 24px; }
+  .howit .step + .step { border-left: 1px solid var(--line); }
+  .howit .step-wm { position: absolute; top: 14px; right: 18px; font-size: 64px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; color: rgba(17,17,16,0.05); pointer-events: none; user-select: none; }
+  .howit .step-top { position: relative; display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .howit .step-ic { width: 40px; height: 40px; border-radius: 11px; background: rgba(17,17,16,0.05); color: var(--ink); display: grid; place-items: center; }
+  .howit .step-ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .howit .step-tag { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: rgba(17,17,16,0.05); border: 1px solid var(--line); padding: 4px 9px; border-radius: 100px; }
+  .howit h3 { position: relative; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .howit p { position: relative; color: var(--muted); font-size: 14px; line-height: 1.55; margin-top: 8px; }
+  .howit .step-meta { position: relative; display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 18px; }
+  .howit .step-meta::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--line), transparent 85%); }
+  .howit .step-meta i { flex: none; width: 6px; height: 6px; border-radius: 50%; background: #27a35f; }
+  .howit .step-meta span { font-size: 12px; font-weight: 600; color: var(--ink); }
+  .howit .step-arr { position: absolute; top: 50%; right: -9px; transform: translateY(-50%); z-index: 1; width: 18px; height: 18px; border-radius: 50%; background: var(--card); border: 1px solid var(--line); display: grid; place-items: center; color: var(--muted); font-size: 10px; }
 
   /* #1 — build / care toggle */
   .pr-tabs { display: inline-flex; gap: 4px; padding: 5px; border: 1px solid var(--line); background: var(--card); border-radius: 100px; margin-top: 8px; }
@@ -168,7 +176,11 @@
   /* sticky mobile quote bar */
   .pr-sticky { display: none; }
 
-  @media (max-width: 860px) { .howit { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) {
+    .howit { grid-template-columns: 1fr; }
+    .howit .step + .step { border-left: 0; border-top: 1px solid var(--line); }
+    .howit .step-arr { display: none; }
+  }
   @media (max-width: 760px) {
     .extras-row { grid-template-columns: 1fr; }
     /* keep page content clear of the fixed quote bar */
@@ -256,19 +268,27 @@
       <h2 class="sr-only">How pricing works</h2>
       <div class="howit reveal">
         <div class="step">
-          <div class="step-head"><span class="sn">1</span><span class="step-tag">Discovery</span></div>
+          <span class="step-wm" aria-hidden="true">01</span>
+          <div class="step-top"><span class="step-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><span class="step-tag">Discovery</span></div>
           <h3>Free consultation</h3>
           <p>We learn your goals and review your current site, if you have one, for quick wins.</p>
+          <div class="step-meta"><i></i><span>Free — no obligation</span></div>
+          <span class="step-arr" aria-hidden="true">→</span>
         </div>
         <div class="step">
-          <div class="step-head"><span class="sn">2</span><span class="step-tag">Scope</span></div>
+          <span class="step-wm" aria-hidden="true">02</span>
+          <div class="step-top"><span class="step-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg></span><span class="step-tag">Scope</span></div>
           <h3>Written proposal</h3>
           <p>A clear scope with deliverables, timeline, and an exact price — no surprises.</p>
+          <div class="step-meta"><i></i><span>Fixed quote, in writing</span></div>
+          <span class="step-arr" aria-hidden="true">→</span>
         </div>
         <div class="step">
-          <div class="step-head"><span class="sn">3</span><span class="step-tag">Delivery</span></div>
+          <span class="step-wm" aria-hidden="true">03</span>
+          <div class="step-top"><span class="step-ic"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span><span class="step-tag">Delivery</span></div>
           <h3>Build &amp; launch</h3>
           <p>We design, build, test, and launch — then keep it running with a care plan.</p>
+          <div class="step-meta"><i></i><span>Most launches in 2–6 weeks</span></div>
         </div>
       </div>
     </div>
