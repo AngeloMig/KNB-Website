@@ -1133,21 +1133,47 @@
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) { setOpen(false); fab.focus({ preventScroll: true }); } });
     })();
 
-    /* ---- deep-link from the home Solutions cards: #build-<pkg> / #care-<plan> ---- */
+    /* ---- deep links: #build-<pkg> / #care — virtual hashes with no matching
+       element, so handle them on load, on hashchange, AND for in-page clicks
+       (header mega menu, quiz buttons). Same-hash clicks fire no event at all,
+       which is why they're intercepted here. ---- */
     (function () {
-      const m = /^#(build|care)(?:-([a-z]+))?$/.exec(location.hash);
-      if (!m) return;
-      const tab = m[1], key = m[2];
-      const tabBtn = document.getElementById('tab-' + tab);
-      if (tabBtn) tabBtn.click();
-      if (tab === 'build' && key) {
-        const item = document.querySelector('.psel-item[data-pkg="' + key + '"]');
-        if (item) item.click();
-      }
-      if (tabBtn) setTimeout(() => {
-        const y = tabBtn.getBoundingClientRect().top + window.scrollY - 90;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }, 90);
+      const RX = /^#(build|care)(?:-([a-z]+))?$/;
+      const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const closeMegaMenus = () => document.querySelectorAll('.nav-item.nm.open').forEach((i) => {
+        i.classList.remove('open');
+        const t = i.querySelector('.nm-trigger');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+      const go = (tab, key) => {
+        closeMegaMenus();
+        if (tab === 'build' && key && window.KNBpkg) {
+          window.KNBpkg.select(key); // switches tab, selects the package, scrolls
+          return;
+        }
+        const tabBtn = document.getElementById('tab-' + tab);
+        if (!tabBtn) return;
+        tabBtn.click();
+        setTimeout(() => {
+          const y = tabBtn.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top: y, behavior: reduce() ? 'auto' : 'smooth' });
+        }, 90);
+      };
+      const fromHash = () => { const m = RX.exec(location.hash); if (m) go(m[1], m[2]); };
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('a[href]');
+        if (!a) return;
+        let url;
+        try { url = new URL(a.getAttribute('href'), location.href); } catch (err) { return; }
+        if (url.pathname !== location.pathname) return;
+        const m = RX.exec(url.hash);
+        if (!m) return;
+        e.preventDefault();
+        history.replaceState(null, '', url.hash);
+        go(m[1], m[2]);
+      });
+      window.addEventListener('hashchange', fromHash);
+      fromHash();
     })();
 
     /* ---- stat count-up on scroll ---- */
