@@ -28,12 +28,13 @@
   const animateCount = (el) => {
     const target = parseFloat(el.dataset.count) || 0;
     const suffix = el.dataset.suffix || '';
+    const dec = +(el.dataset.dec || 0);
     const ring = el.closest('.stat-ring');
     const dur = 1200, start = performance.now();
     const step = (now) => {
       const p = Math.min((now - start) / dur, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased) + suffix;
+      el.textContent = (target * eased).toFixed(dec) + suffix;
       if (ring) ring.style.setProperty('--p', (eased * 100).toFixed(1)); // B5 fill the ring
       if (p < 1) requestAnimationFrame(step);
     };
@@ -169,7 +170,11 @@
         b.classList.toggle('active', on);
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      document.querySelectorAll('.ind-chip').forEach((c) => c.classList.toggle('active', c.dataset.filter === f));
+      document.querySelectorAll('.ind-chip').forEach((c) => {
+        const on = c.dataset.filter === f;
+        c.classList.toggle('active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
       flip(render);
       if (push) history.replaceState(null, '', f === 'all' ? location.pathname + location.search : '#work=' + f);
     };
@@ -214,12 +219,18 @@
       img.dataset.loaded = '1';
       const card = img.closest('.proj-card');
       const url = card && card.dataset.url;
-      const fallback = img.dataset.fallback;
       const wrap = img.closest('.proj-img');
       const done = () => { if (wrap) wrap.classList.add('is-loaded'); };
+      // source chain: self-hosted thumb (best) -> live mShots screenshot -> stock fallback (last resort)
+      const chain = [
+        card && card.dataset.thumb,
+        url && 'https://s.wp.com/mshots/v1/' + encodeURIComponent(url) + '?w=1200',
+        img.dataset.fallback
+      ].filter(Boolean);
+      let step = 0;
       img.addEventListener('load', done);
-      img.addEventListener('error', () => { if (fallback && img.src !== fallback) img.src = fallback; else done(); });
-      img.src = url ? 'https://s.wp.com/mshots/v1/' + encodeURIComponent(url) + '?w=1200' : (fallback || '');
+      img.addEventListener('error', () => { step++; if (step < chain.length) img.src = chain[step]; else done(); });
+      img.src = chain[0] || '';
     };
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries, o) => {
@@ -515,32 +526,85 @@
   render();
 })();
 
-/* platform "is this right for you?" — cursor glow + fit-finder toggle */
+/* fit check — live "is this right for you?" console (Direction O) */
 (function () {
-  var sec = document.querySelector('.why-plat');
+  var sec = document.querySelector('.fitcheck');
   if (!sec) return;
-  // cursor-reactive glow (desktop / pointer only)
-  if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    sec.addEventListener('mousemove', function (e) {
-      var r = sec.getBoundingClientRect();
-      sec.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100) + '%');
-      sec.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100) + '%');
-      sec.classList.add('glow-on');
-    });
-    sec.addEventListener('mouseleave', function () { sec.classList.remove('glow-on'); });
+  var dataEl = sec.querySelector('[data-fc-data]');
+  var logEl = sec.querySelector('[data-fc-log]');
+  var verdEl = sec.querySelector('[data-fc-verdict]');
+  var forEl = sec.querySelector('[data-fc-for]');
+  if (!dataEl || !logEl || !verdEl) return;
+  var RUNS;
+  try { RUNS = JSON.parse(dataEl.textContent); } catch (e) { return; }
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var esc = function (s) { return String(s).replace(/[<>&]/g, function (ch) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]; }); };
+  var MARK = { ok: '\u2713', warn: '~', off: '\u2013', out: '\u2192' };
+  var timers = [];
+  var run = function (mode) {
+    timers.forEach(clearTimeout); timers = [];
+    var cfg = RUNS[mode];
+    if (!cfg) return;
+    if (forEl) forEl.textContent = mode;
+    verdEl.classList.remove('show');
+    logEl.innerHTML = cfg.lines.map(function (l) {
+      var tone = l[2] || 'ok';
+      return '<p class="fc-ln"><span>' + esc(l[0]) + '</span><span class="fc-dots"></span><span class="fc-' + tone + '">' + MARK[tone] + ' ' + esc(l[1]) + '</span></p>';
+    }).join('');
+    verdEl.innerHTML = 'verdict: <b class="fc-' + (cfg.verdict[1] || 'ok') + '">' + esc(cfg.verdict[0]) + '</b>' + (cfg.verdict[2] ? ' \u2014 ' + esc(cfg.verdict[2]) : '');
+    document.dispatchEvent(new CustomEvent('knb:fitcheck', { detail: { suggest: cfg.goto || null } }));
+    var rows = logEl.querySelectorAll('.fc-ln');
+    if (reduce) { rows.forEach(function (r) { r.classList.add('show'); }); verdEl.classList.add('show'); return; }
+    rows.forEach(function (r, i) { timers.push(setTimeout(function () { r.classList.add('show'); }, 130 + i * 230)); });
+    timers.push(setTimeout(function () { verdEl.classList.add('show'); }, 190 + rows.length * 230));
+  };
+  var btns = [].slice.call(sec.querySelectorAll('.fc-seg button'));
+  var modes = btns.map(function (b) { return b.dataset.mode; });
+  var N = modes.length, current = -1, lock = false, lockT;
+  var mqDesk = matchMedia('(min-width: 861px)');
+  // scroll-driven only on desktop with motion allowed; else it's a plain click toggle
+  function scrollMode() { return mqDesk.matches && !reduce; }
+  function apply(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    if (i === current) return;
+    current = i;
+    btns.forEach(function (x, k) { var on = k === i; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    run(modes[i]);
   }
-  // fit-finder: swap the verdict + emphasise store-fit vs. alternatives
-  var seg = sec.querySelector('.why-seg');
-  var verdict = sec.querySelector('#whyVerdict');
-  if (seg && verdict) {
-    seg.querySelectorAll('button').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        seg.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b === btn); });
-        if (btn.dataset.verdict) verdict.innerHTML = btn.dataset.verdict;
-        sec.classList.remove('fit-store', 'fit-content', 'fit-both');
-        sec.classList.add('fit-' + btn.dataset.fit);
-      });
+  btns.forEach(function (b, i) {
+    b.addEventListener('click', function () {
+      if (scrollMode()) {
+        // keep click in sync with the pinned scroll: jump to this mode's segment
+        apply(i); lock = true; clearTimeout(lockT);
+        var total = sec.offsetHeight - window.innerHeight;
+        window.scrollTo({ top: sec.offsetTop + (i + 0.5) / N * total, behavior: 'smooth' });
+        lockT = setTimeout(function () { lock = false; }, 700);
+      } else { apply(i); }
     });
+  });
+  // active mode = deterministic function of scroll position => scrolling back up reverses cleanly
+  function onFcScroll() {
+    if (!scrollMode() || lock) return;
+    var total = sec.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+    var p = Math.min(1, Math.max(0, (-sec.getBoundingClientRect().top) / total));
+    apply(Math.min(N - 1, Math.floor(p * N + 0.0001)));
+  }
+  function applyMode() { sec.classList.toggle('fc-scroll', scrollMode()); }
+  window.addEventListener('scroll', onFcScroll, { passive: true });
+  window.addEventListener('resize', applyMode);
+  if (mqDesk.addEventListener) mqDesk.addEventListener('change', applyMode);
+  applyMode(); // set pin state on load (avoids a layout jump when the section is reached)
+  // paint the first mode when the section scrolls into view (typing effect); scroll then drives it
+  var fired = false;
+  var fire = function () { if (fired) return; fired = true; if (scrollMode()) onFcScroll(); else apply(0); };
+  if ('IntersectionObserver' in window && !reduce) {
+    new IntersectionObserver(function (es, o) {
+      es.forEach(function (en) { if (en.isIntersecting) { fire(); o.disconnect(); } });
+    }, { threshold: 0.25 }).observe(sec);
+    setTimeout(fire, 6000); // safety: never leave the console empty
+  } else {
+    apply(0);
   }
 })();
 
@@ -791,11 +855,6 @@
   }, 2600);
 })();
 
-/* (9) pop-in for the platform-compare cards */
-(function () {
-  document.querySelectorAll('.pc-grid .pc-card.reveal').forEach(function (e) { if (!e.classList.contains('in')) e.classList.add('r-pop'); });
-})();
-
 /* "What we do" card grid — pointer 3D tilt + spotlight */
 (function () {
   var cards = document.querySelectorAll('.svc-card');
@@ -857,4 +916,34 @@
     });
   }, { rootMargin: '120px' });
   els.forEach(function (el) { io.observe(el); });
+})();
+
+
+/* fit-check -> picker bridge: a "wrong tool" verdict pre-opens the suggested column */
+(function () {
+  var cols = document.querySelector('.pp-cols');
+  if (!cols) return;
+  var byKey = {};
+  cols.querySelectorAll('.pp-col').forEach(function (col) {
+    var name = col.querySelector('.pp-body h3');
+    if (name) byKey[name.textContent.trim().toLowerCase()] = col;
+  });
+  document.addEventListener('knb:fitcheck', function (e) {
+    cols.classList.remove('has-suggest');
+    cols.querySelectorAll('.pp-col.pp-suggest').forEach(function (col) {
+      col.classList.remove('pp-suggest');
+      var t = col.querySelector('.pp-tag');
+      if (t && t.dataset.orig) t.textContent = t.dataset.orig;
+    });
+    var key = e.detail && e.detail.suggest;
+    var col = key && byKey[key];
+    if (!col || col.classList.contains('cur')) return;
+    var tag = col.querySelector('.pp-tag');
+    if (tag) {
+      if (!tag.dataset.orig) tag.dataset.orig = tag.textContent;
+      tag.textContent = 'The check pointed here';
+    }
+    col.classList.add('pp-suggest');
+    cols.classList.add('has-suggest');
+  });
 })();

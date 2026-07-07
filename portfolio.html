@@ -89,11 +89,11 @@
       <div class="hero-mock hero-stack reveal r-right" aria-hidden="true">
         <div class="bw bw-back">
           <div class="bw-bar"><span></span><span></span><span></span><b>feedbird.com</b></div>
-          <div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=820" alt=""></div>
+          <div class="bw-shot"><img decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=820" alt=""></div>
         </div>
         <div class="bw bw-front">
           <div class="bw-bar"><span></span><span></span><span></span><b>lightmybricks.com</b></div>
-          <div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=820" alt=""></div>
+          <div class="bw-shot"><img fetchpriority="high" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=820" alt=""></div>
         </div>
       </div>
     </div>
@@ -167,12 +167,12 @@
       </div>
       <div class="ind-strip reveal" role="group" aria-label="Filter by industry">
         <span class="ind-label">Industries</span>
-        <button class="ind-chip" data-filter="retail">Retail</button>
-        <button class="ind-chip" data-filter="food-drink">Food &amp; drink</button>
-        <button class="ind-chip" data-filter="software">Software</button>
-        <button class="ind-chip" data-filter="property">Property</button>
-        <button class="ind-chip" data-filter="outdoor">Outdoor</button>
-        <button class="ind-chip" data-filter="beauty">Beauty</button>
+        <button class="ind-chip" data-filter="retail" aria-pressed="false">Retail</button>
+        <button class="ind-chip" data-filter="food-drink" aria-pressed="false">Food &amp; drink</button>
+        <button class="ind-chip" data-filter="software" aria-pressed="false">Software</button>
+        <button class="ind-chip" data-filter="property" aria-pressed="false">Property</button>
+        <button class="ind-chip" data-filter="outdoor" aria-pressed="false">Outdoor</button>
+        <button class="ind-chip" data-filter="beauty" aria-pressed="false">Beauty</button>
       </div>
       <p class="work-count reveal" id="workCount">Showing all <b>44</b> projects</p>
       <p class="sr-only" id="filterStatus" aria-live="polite">Showing all 44 projects.</p>
@@ -616,46 +616,7 @@
   <!-- FOOTER -->
   </main>
 
-  <footer id="footer">
-    <div class="wrap">
-      <div class="foot-top">
-        <div class="foot-brand">
-          <div class="logo">KNB<i class="lgdot"></i></div>
-          <p>Web design, Shopify revamps, and ongoing support for growing businesses.</p>
-          <span class="foot-status"><span class="fs-dot"></span>Now booking new projects</span>
-        </div>
-        <nav class="foot-cols" aria-label="Footer navigation">
-          <div class="foot-col">
-            <h3>Explore</h3>
-            <a href="portfolio.html">Work</a>
-            <a href="pricing.html">Packages</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-          </div>
-          <div class="foot-col">
-            <h3>Platforms</h3>
-            <a href="shopify.html">Shopify</a>
-            <a href="webflow.html">Webflow</a>
-            <a href="wordpress.html">WordPress</a>
-          </div>
-          <div class="foot-col">
-            <h3>Get in touch</h3>
-            <a class="foot-email" href="mailto:info@knb.solutions">info@knb.solutions</a>
-            <span class="foot-loc">Philippines · Remote worldwide</span>
-            <span class="foot-note">Usually replies within 1 business day</span>
-          </div>
-        </nav>
-      </div>
-      <div class="foot-mark" aria-hidden="true"></div>
-      <div class="foot-bottom">
-        <span>© 2026 KNB Web Solution. All rights reserved.</span>
-        <div class="foot-bottom-r">
-          <a href="privacy.html">Privacy</a>
-          <a href="#top" class="foot-up">Back to top <span class="fu-arr" aria-hidden="true">↑</span></a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <script src="footer.js"></script>
 
   <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 

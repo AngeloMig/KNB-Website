@@ -63,7 +63,6 @@
         <div class="pf-stat"><span class="num" data-count="12" data-suffix="+">12</span><span class="lbl">Industries served</span></div>
       </div>
       </div>
-      </div>
       <div class="hero-mock reveal r-right" aria-hidden="true">
         <div class="bw">
           <div class="bw-bar"><span></span><span></span><span></span><b>feedbird.com</b></div>
@@ -289,45 +288,116 @@
   </section>
 
   <!-- why this platform -->
-  <section class="why-plat" id="overview">
-    <div class="why-glow" id="whyGlow" aria-hidden="true"></div>
-    <div class="wrap"><div class="why-grid">
-      <div class="why-main reveal">
+  <!-- why this platform — live fit-check console -->
+  <section class="fitcheck" id="overview">
+    <div class="wrap"><div class="fc-grid">
+      <div class="fc-copy reveal">
         <span class="eyebrow"><span class="dot"></span>Is Webflow right for you?</span>
         <h2>When Webflow is the right call.</h2>
-        <p class="lead2">Webflow gives you a fully custom, animated marketing site you can edit yourself — no developer needed for everyday changes. It's the sweet spot between total design freedom and a friendly no-code CMS.</p>
-        <ul class="why-proof">
-          <li><b>10</b> sites built</li>
-          <li><b>100%</b> client-editable</li>
-          <li><b>2–5 wks</b> typical build</li>
+        <p class="fc-lead">Webflow gives you a fully custom, animated site your team can edit without code. Run the check for your project:</p>
+        <div class="fc-seg" role="group" aria-label="What are you building?">
+            <button type="button" class="on" aria-pressed="true" data-mode="site">A marketing site</button>
+            <button type="button" aria-pressed="false" data-mode="store">An online store</button>
+            <button type="button" aria-pressed="false" data-mode="both">A bit of both</button>
+        </div>
+        <ul class="fc-proof">
+            <li><b>10</b><span>sites built</span></li>
+            <li><b>100%</b><span>client-editable</span></li>
+            <li><b>2–5 wks</b><span>typical build</span></li>
         </ul>
-        <div class="why-fit">
-          <span class="why-fit-q">What are you building?</span>
-          <div class="why-seg" role="group" aria-label="What are you building?">
-            <button type="button" class="on" data-fit="store" data-verdict="<b>✓ Webflow is a great fit.</b> Custom design, smooth motion, and a CMS your team can edit without code.">A marketing site</button>
-            <button type="button" data-fit="content" data-verdict="<b>Webflow does light commerce</b> — but for a real online store, Shopify is the better call. See the options →">An online store</button>
-            <button type="button" data-fit="both" data-verdict="<b>You can do both.</b> Pair Webflow with ecommerce, or combine platforms — we'll advise in your free consultation.">A bit of both</button>
-          </div>
-          <p class="why-verdict" id="whyVerdict" aria-live="polite"><b>✓ Webflow is a great fit.</b> Custom design, smooth motion, and a CMS your team can edit without code.</p>
-        </div>
-        <div class="why-fits">
-          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span><div><b>Marketing &amp; brand sites</b><small>Pixel-perfect, on-brand pages that convert.</small></div></div>
-          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 7h6v6"/></svg></span><div><b>Startups &amp; SaaS</b><small>Ship fast, then edit and iterate yourself.</small></div></div>
-          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div><b>Portfolios</b><small>CMS-driven case studies and project grids.</small></div></div>
-          <div class="why-fitcard"><span class="wf-ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span><div><b>Landing pages</b><small>Fast, animated pages built to capture leads.</small></div></div>
-        </div>
+        <p class="fc-cross">Check says no? <a href="shopify.html">Shopify</a> · <a href="wordpress.html">WordPress</a></p>
       </div>
-      <aside class="why-side reveal r-right">
-        <a class="why-shot" href="https://feedbird.com/" target="_blank" rel="noopener" aria-label="Visit Feedbird — a Webflow site built by KNB Web Solution">
-          <span class="why-shot-tag">★ Featured Webflow site</span>
-          <div class="bw"><div class="bw-bar"><span></span><span></span><span></span><b>feedbird.com</b></div><div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=900" alt="Feedbird — Webflow site by KNB Web Solution"></div></div>
-        </a>
-        <div class="why-cross">
-          <span class="why-cross-h">Not sure? Other options</span>
-          <a href="shopify.html" class="why-pick" style="--c:#5e8e3e"><img src="https://cdn.simpleicons.org/shopify/5e8e3e" alt="" width="22" height="22" loading="lazy"><span class="wp-t"><b>Shopify</b><small>Online stores with secure checkout.</small></span><i>&#8594;</i></a>
-          <a href="wordpress.html" class="why-pick" style="--c:#21759b"><img src="https://cdn.simpleicons.org/wordpress/21759b" alt="" width="22" height="22" loading="lazy"><span class="wp-t"><b>WordPress</b><small>Content-heavy sites &amp; flexible WooCommerce.</small></span><i>&#8594;</i></a>
+      <div class="fc-term reveal r-right" aria-live="polite">
+        <div class="fc-term-bar"><span></span><span></span><span></span><b>knb — fit check</b></div>
+        <div class="fc-term-body">
+          <p class="fc-cmd">run fit-check --platform=webflow --for=<span data-fc-for>site</span></p>
+          <div class="fc-log" data-fc-log></div>
+          <p class="fc-verdict" data-fc-verdict></p>
+          <p class="fc-cursor-row"><span class="fc-cursor" aria-hidden="true"></span></p>
         </div>
-      </aside>
+        <script type="application/json" data-fc-data>
+{
+  "site": {
+    "lines": [
+      [
+        "checking design",
+        "fully custom, no templates",
+        "ok"
+      ],
+      [
+        "checking motion",
+        "smooth, built-in",
+        "ok"
+      ],
+      [
+        "checking cms",
+        "your team edits, no code",
+        "ok"
+      ],
+      [
+        "checking maintenance",
+        "hosted, no plugins to patch",
+        "ok"
+      ]
+    ],
+    "verdict": [
+      "GREAT FIT ✓",
+      "ok",
+      "build it on Webflow"
+    ]
+  },
+  "store": {
+    "lines": [
+      [
+        "checking commerce",
+        "light commerce only",
+        "warn"
+      ],
+      [
+        "checking checkout",
+        "Shopify handles this better",
+        "out"
+      ],
+      [
+        "checking content",
+        "pages & CMS still strong",
+        "ok"
+      ]
+    ],
+    "verdict": [
+      "WRONG TOOL",
+      "warn",
+      "see Shopify for a real store"
+    ],
+    "goto": "shopify"
+  },
+  "both": {
+    "lines": [
+      [
+        "checking design",
+        "fully custom, no templates",
+        "ok"
+      ],
+      [
+        "checking light store",
+        "fine for small catalogues",
+        "ok"
+      ],
+      [
+        "checking growth",
+        "pair with Shopify if you outgrow it",
+        "warn"
+      ]
+    ],
+    "verdict": [
+      "GOOD FIT ✓",
+      "ok",
+      "we’ll scope the store side"
+    ]
+  }
+}
+        </script>
+      </div>
     </div></div>
   </section>
 
@@ -384,10 +454,31 @@
 
   <section class="plat-compare"><div class="wrap">
     <div class="pc-head reveal"><span class="eyebrow">Not sure which?</span><h2>Pick the right platform</h2></div>
-    <div class="pc-grid">
-      <a class="pc-card reveal" href="shopify.html"><img class="pc-ic" src="https://cdn.simpleicons.org/shopify/5e8e3e" alt=""><h3>Shopify</h3><p>Best for selling products online — secure, low-maintenance stores.</p><span class="pc-go">Explore Shopify <i>&#8594;</i></span></a>
-      <div class="pc-card is-this reveal"><span class="pc-here">You&#39;re here</span><img class="pc-ic" src="https://cdn.simpleicons.org/webflow/4353ff" alt=""><h3>Webflow</h3><p>Best for design-led marketing & brand sites with smooth motion.</p><span class="pc-go">You&#39;re on this page</span></div>
-      <a class="pc-card reveal" href="wordpress.html"><img class="pc-ic" src="https://cdn.simpleicons.org/wordpress/21759b" alt=""><h3>WordPress</h3><p>Best for content-heavy sites, blogs & flexible WooCommerce.</p><span class="pc-go">Explore WordPress <i>&#8594;</i></span></a>
+    <div class="pp-cols reveal">
+      <a class="pp-col" href="shopify.html" style="--c:#5e8e3e;">
+        <span class="pp-rail" aria-hidden="true"></span>
+        <span class="pp-ghost" aria-hidden="true">S</span><span class="pp-mark" aria-hidden="true">S</span>
+        <span class="pp-top"><img class="pp-ic" src="https://cdn.simpleicons.org/shopify/5e8e3e" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">Featured build</span></span>
+        <span class="pp-vname" aria-hidden="true"><b>Shopify</b><small>selling online</small></span>
+        <span class="pp-body"><h3>Shopify</h3><p>Best for selling products online — secure, low-maintenance stores.</p><span class="pp-go">Explore Shopify <i>&#8594;</i></span></span>
+        <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>lightmybricks.com</b></span><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=700" alt=""></span>
+      </a>
+      <div class="pp-col cur" style="--c:#4353ff;">
+        <span class="pp-rail" aria-hidden="true"></span>
+        <span class="pp-ghost" aria-hidden="true">W</span><span class="pp-mark" aria-hidden="true">W</span>
+        <span class="pp-top"><img class="pp-ic" src="https://cdn.simpleicons.org/webflow/4353ff" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">You&#39;re here</span></span>
+        <span class="pp-vname" aria-hidden="true"><b>Webflow</b><small>design-led sites</small></span>
+        <span class="pp-body"><h3>Webflow</h3><p>Best for design-led marketing &amp; brand sites with smooth motion.</p><a class="pp-go" href="portfolio.html#work=webflow">See all 10 Webflow builds <i>&#8594;</i></a></span>
+        <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>feedbird.com</b></span><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=700" alt=""></span>
+      </div>
+      <a class="pp-col" href="wordpress.html" style="--c:#21759b;">
+        <span class="pp-rail" aria-hidden="true"></span>
+        <span class="pp-ghost" aria-hidden="true">WP</span><span class="pp-mark" aria-hidden="true">WP</span>
+        <span class="pp-top"><img class="pp-ic" src="https://cdn.simpleicons.org/wordpress/21759b" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">Featured build</span></span>
+        <span class="pp-vname" aria-hidden="true"><b>WordPress</b><small>content & woo</small></span>
+        <span class="pp-body"><h3>WordPress</h3><p>Best for content-heavy sites, blogs &amp; flexible WooCommerce.</p><span class="pp-go">Explore WordPress <i>&#8594;</i></span></span>
+        <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>coptrz.com</b></span><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=700" alt=""></span>
+      </a>
     </div>
   </div></section>
 
@@ -474,50 +565,7 @@
 
   </main>
 
-  <footer id="footer">
-    <div class="wrap">
-      <div class="foot-cta">
-        <h2>Let’s build something <em>worth visiting.</em></h2>
-        <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
-      </div>
-      <div class="foot-top">
-        <div class="foot-brand">
-          <div class="logo">KNB<i class="lgdot"></i></div>
-          <p>Web design, Shopify revamps, and ongoing support for growing businesses.</p>
-          <span class="foot-status"><span class="fs-dot"></span>Now booking new projects</span>
-        </div>
-        <nav class="foot-cols" aria-label="Footer navigation">
-          <div class="foot-col">
-            <h3>Explore</h3>
-            <a href="portfolio.html">Work</a>
-            <a href="pricing.html">Packages</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-          </div>
-          <div class="foot-col">
-            <h3>Platforms</h3>
-            <a href="shopify.html">Shopify</a>
-            <a href="webflow.html">Webflow</a>
-            <a href="wordpress.html">WordPress</a>
-          </div>
-          <div class="foot-col">
-            <h3>Get in touch</h3>
-            <a class="foot-email" href="mailto:info@knb.solutions">info@knb.solutions</a>
-            <span class="foot-loc">Philippines · Remote worldwide</span>
-            <span class="foot-note">Usually replies within 1 business day</span>
-          </div>
-        </nav>
-      </div>
-      <div class="foot-mark" aria-hidden="true"></div>
-      <div class="foot-bottom">
-        <span>© 2026 KNB Web Solution. All rights reserved.</span>
-        <div class="foot-bottom-r">
-          <a href="privacy.html">Privacy</a>
-          <a href="#top" class="foot-up">Back to top <span class="fu-arr" aria-hidden="true">↑</span></a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <script src="footer.js"></script>
 
   <script src="work.js"></script>
   <script src="ambient.js"></script>

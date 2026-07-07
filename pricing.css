@@ -52,6 +52,14 @@
   /* care plans — 65/35: hour-led plan cards + support-chat box
      (hours from the internal guide, July 2026) */
   .care-layout { display: grid; grid-template-columns: 65fr 35fr; gap: 22px; align-items: start; margin-top: 30px; }
+  /* desktop grid placement: cards fill the left column; "Compare" + sticky chat stack on the right.
+     without this the chat auto-flows under the cards and overlaps them. scoped >900 so the mobile
+     single-column + chat-launcher layout further down is left untouched. */
+  @media (min-width: 901px) {
+    .care-cards { grid-column: 1; grid-row: 1 / span 2; }
+    .care-compare { grid-column: 2; grid-row: 1; align-self: start; }
+    .chat-box { grid-column: 2; grid-row: 2; }
+  }
   .care-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   /* Direction C "ink flagship" (plan-card-alternatives-preview.html): Growth goes
      full ink with green accents, light cards get a faint hour watermark; the hour
