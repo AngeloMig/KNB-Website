@@ -85,7 +85,6 @@
 .nav-item.nm.open .nm-item:nth-child(8){animation-delay:.30s}
 @keyframes nmTileIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
 .nm-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
-.np-foot { grid-column: 1 / -1; margin-top: 4px; }
 .nm-foot span { font-size:13px; color:var(--muted); }
 .nm-foot a { font-size:13px; font-weight:600; color:var(--ink); border-bottom:1.5px solid var(--ink); padding-bottom:1px; }
 
@@ -98,32 +97,45 @@
   .nav-item.nm.open .nm-item { animation:none; }
 }
 
-/* ===== "Packages" mega menu — packages + care plans + quiz promo =====
-   Rides the same .nav-item.nm machinery (hover CSS + navmenu.js wiring). */
-.np-panel { left:auto; right:0; width:min(880px, 100%); }
-.np-wrap { display:grid; grid-template-columns:1.15fr 1fr 0.95fr; gap:22px; }
-.np-col { display:flex; flex-direction:column; gap:2px; }
-.np-col > .nm-label { margin-bottom:8px; }
-.np-col + .np-col { border-left:1px solid var(--line); padding-left:22px; }
+/* ===== "Packages" mega menu — Build/Keep diptych =====
+   Rides the same .nav-item.nm machinery (hover CSS + navmenu.js wiring).
+   Light half = website packages ("Build"), dark half = care plans ("Keep")
+   with the quiz CTA + its one-line pitch anchored to the dark half's foot. */
+.np-panel { left:auto; right:0; width:min(880px, 100%); padding:0; }
+.np-dip { display:grid; grid-template-columns:1fr 1.15fr; border-radius:21px; overflow:hidden; }
+.np-side { padding:20px; display:flex; flex-direction:column; gap:2px; }
+.np-keep { background:linear-gradient(155deg,#1d1d1b,#0c0c0b); color:#fff; }
+.np-k { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; }
+.np-k b { font-size:20px; font-weight:700; letter-spacing:-0.02em; color:var(--ink); }
+.np-keep .np-k b { color:#fff; }
+.np-keep .nm-label { color:rgba(255,255,255,0.45); }
 .np-item { display:flex; align-items:center; gap:11px; padding:8px 9px; margin:0 -9px; border-radius:11px; transition:background .2s; }
 .np-item:hover { background:var(--bg); }
-.np-ic { flex:none; width:36px; height:36px; border-radius:10px; background:rgba(17,17,16,0.05); display:grid; place-items:center; color:var(--ink); }
+.np-keep .np-item:hover { background:rgba(255,255,255,0.07); }
+.np-ic { flex:none; width:36px; height:36px; border-radius:10px; background:rgba(17,17,16,0.05); display:grid; place-items:center; color:var(--ink); transition:background .2s, color .2s; }
 .np-ic svg { width:17px; height:17px; }
+.np-item:hover .np-ic { background:var(--ink); color:#fff; }
 .np-tx { min-width:0; }
 .np-tx b { display:block; font-size:13.5px; font-weight:600; letter-spacing:-0.01em; color:var(--ink); }
 .np-tx span { display:block; font-size:11.5px; color:var(--muted); margin-top:1px; }
-.np-hrs { margin-left:auto; flex:none; font-size:11px; font-weight:700; color:var(--ink); background:rgba(17,17,16,0.05); border-radius:100px; padding:4px 9px; white-space:nowrap; }
+.np-keep .np-tx b { color:#fff; }
+.np-keep .np-tx span { color:rgba(255,255,255,0.55); }
+.np-pop { display:inline-block; font-style:normal; font-size:9.5px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#e83fa0; border:1px solid rgba(232,63,160,0.45); border-radius:100px; padding:2px 7px; margin-left:7px; vertical-align:2px; }
+.np-hrs { margin-left:auto; flex:none; font-size:11px; font-weight:700; color:#6cf09a; background:rgba(255,255,255,0.10); border-radius:100px; padding:4px 9px; white-space:nowrap; }
 .np-item.np-hot .np-hrs { background:#e83fa0; color:#fff; }
-/* quiz promo card */
-.np-quiz { display:flex; flex-direction:column; align-items:flex-start; background:var(--ink); color:var(--bg); border-radius:16px; padding:20px; }
-.np-quiz .nm-label { color:rgba(255,255,255,0.5); }
-.np-quiz h3 { font-size:19px; font-weight:600; letter-spacing:-0.02em; margin-top:9px; color:#fff; }
-.np-quiz p { font-size:12.5px; line-height:1.55; color:rgba(255,255,255,0.66); margin-top:7px; }
-.np-quiz-btn { display:inline-flex; align-items:center; gap:8px; margin-top:14px; background:var(--bg); color:var(--ink); font-size:13px; font-weight:700; border-radius:100px; padding:10px 16px; transition:background .2s; }
+/* quiz CTA row — pinned to the dark half's foot, pitch line explains the why */
+.np-cta { margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,0.12); }
+.np-cta p { font-size:12px; line-height:1.5; color:rgba(255,255,255,0.6); margin-bottom:10px; }
+.np-cta p b { color:#fff; font-weight:600; }
+.np-cta-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.np-quiz-btn { display:inline-flex; align-items:center; gap:8px; background:var(--bg); color:var(--ink); font-size:13px; font-weight:700; border-radius:100px; padding:10px 16px; transition:background .2s; }
 .np-quiz-btn:hover { background:#fff; }
 .np-quiz-btn span { width:6px; height:6px; border-radius:50%; background:#e83fa0; }
-.np-quote { margin-top:auto; padding-top:14px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.66); transition:color .2s; }
+.np-quote { font-size:12px; font-weight:600; color:rgba(255,255,255,0.66); transition:color .2s; }
 .np-quote:hover { color:#fff; }
+.np-dfoot { grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:13px 20px; background:var(--card); border-top:1px solid var(--line); }
+.np-dfoot span { font-size:13px; color:var(--muted); }
+.np-dfoot a { font-size:13px; font-weight:600; color:var(--ink); border-bottom:1.5px solid var(--ink); padding-bottom:1px; }
 @media (max-width:1180px){ .np-panel { width:100%; } }
 
 /* mobile: chip row in the fullscreen menu; hide the desktop panel */

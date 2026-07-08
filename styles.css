@@ -2683,7 +2683,19 @@
 }
 
 /* ================= STATS — portfolio proof band (matches about.html ab-port) ================= */
-.hp-port { text-align: center; }
+.hp-port { position: relative; text-align: center; }
+/* band flanks — hand-drawn margin annotations (flanks preview, option B; duplicated in about.html's inline styles) */
+.pfl { position: absolute; z-index: 0; pointer-events: none; }
+.pfl-note { font-size: 15.5px; font-style: italic; color: var(--muted); font-weight: 500; letter-spacing: -0.01em; }
+.pfl-note b { color: var(--ink); font-weight: 700; }
+.pfl-up { color: #e83fa0; }
+.pfl svg path { stroke: #e83fa0; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
+.pfl-circ { position: relative; display: inline-block; padding: 6px 10px; }
+.pfl-circ svg { position: absolute; inset: -6px -10px; width: calc(100% + 20px); height: calc(100% + 12px); }
+.pfl-a { left: 4%; top: 108px; transform: rotate(-4deg); }
+.pfl-b { right: 4%; top: 96px; transform: rotate(3deg); }
+.pfl-c { right: 8.5%; top: 226px; transform: rotate(-2deg); }
+@media (max-width: 1100px) { .pfl { display: none; } }
 .hp-port-k { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #e83fa0; }
 .hp-port-n { font-size: clamp(84px, 13vw, 168px); font-weight: 500; letter-spacing: -0.055em; line-height: 0.95; margin-top: 10px; }
 .hp-port-n em { font-style: normal; color: #e83fa0; }

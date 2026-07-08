@@ -19,7 +19,8 @@
   // clone each illustration into its mobile mini slot
   items.forEach(function(it,k){
     var mini=it.querySelector('.pa-mini'); var shot=shots[k];
-    if(mini&&shot){ mini.appendChild(shot.querySelector('.pa-il').cloneNode(true)); }
+    var vis=shot&&shot.querySelector('.pa-il,.pa-photo');
+    if(mini&&vis){ mini.appendChild(vis.cloneNode(true)); }
   });
 
   function setH(it){var a=it.querySelector('.pa-a');a.style.maxHeight=it.classList.contains('open')?a.scrollHeight+'px':'0px';}
