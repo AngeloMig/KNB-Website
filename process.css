@@ -7,7 +7,7 @@
    ========================================================================== */
 .pa-scroll{
   --ink:#111110; --bg:#f4f3ef; --muted:#6d6c66; --line:#dedcd4; --card:#ffffff;
-  --off:#f4f3ef; --green:#f76fc0; --green-deep:#e83fa0; /* section accent: brand pink #e83fa0 */
+  --off:#f4f3ef; --green:#b9b7af; --green-deep:#e83fa0; /* --green-deep: brand pink (primary accent); --green: neutral for secondary labels/dots */
   --r-pill:100px; --r-xl:24px; --r-lg:20px; --r-md:14px;
   --pa-ease:cubic-bezier(0.16,1,0.3,1);
   --pa-shadow:0 26px 54px -30px rgba(17,17,16,0.40);

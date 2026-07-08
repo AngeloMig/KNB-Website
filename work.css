@@ -285,9 +285,10 @@ footer a:focus-visible { outline: 2px solid var(--bg); outline-offset: 3px; }
 .proj-filter.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
 /* ---------- MOSAIC / FILTER GRID ---------- */
-.pf-grid { grid-template-columns: repeat(3, 1fr); grid-auto-flow: dense; }
+.pf-grid { grid-template-columns: repeat(2, 1fr); grid-auto-flow: dense; }
 .pf-grid .proj-card.feat { grid-column: span 2; }
 .pf-grid.is-filtering .proj-card.feat { grid-column: auto; }
+.pf-grid.is-filtering .proj-card.feat .proj-img { aspect-ratio: 16/11; }
 .proj-card[hidden] { display: none; }
 .proj-card { --accent: #9a988f; }
 .proj-card[data-plat="shopify"] { --accent: #5e8e3e; }
@@ -298,7 +299,7 @@ footer a:focus-visible { outline: 2px solid var(--bg); outline-offset: 3px; }
 .proj-img { position: relative; }
 .proj-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, var(--accent)); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.5s var(--ease); }
 .proj-card:hover .proj-img::after { opacity: 0.28; }
-.proj-card.feat .proj-img { aspect-ratio: 16/9; }
+.proj-card.feat .proj-img { aspect-ratio: 21/8; }
 
 /* ---------- CASE STUDY ---------- */
 .cs-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 8px 0 16px; }
@@ -355,9 +356,12 @@ footer a:focus-visible { outline: 2px solid var(--bg); outline-offset: 3px; }
   .pf-grid .proj-card.feat { grid-column: span 2; }
   .spot-inner { grid-template-columns: 1fr; }
 }
-@media (max-width: 560px) {
+/* collapse to 1 column at 760px — matches the .pj-grid breakpoint on the
+   homepage + platform pages so all project grids reflow at the same width */
+@media (max-width: 760px) {
   .pf-grid, .proj-grid.cols-3 { grid-template-columns: 1fr; }
   .pf-grid .proj-card.feat, .proj-grid.cols-3 .proj-card.feat { grid-column: auto; }
+  .pf-grid .proj-card.feat .proj-img { aspect-ratio: 16/11; }
 }
 
 /* ===== Portfolio upgrades (ported from home Projects) ===== */

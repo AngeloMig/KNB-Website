@@ -748,6 +748,7 @@ gsap.registerPlugin(ScrollTrigger);
       function setView(view) {
         tabs.forEach((t) => t.classList.toggle('active', t.dataset.view === view));
         const live = view === 'live';
+        modal.classList.toggle('is-live', live);
         liveWrap.hidden = !live;
         shotWrap.hidden = live;
         if (live && !frameEl.getAttribute('src') && frameEl.dataset.url) { startLive(); frameEl.src = frameEl.dataset.url; }

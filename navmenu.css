@@ -170,3 +170,23 @@
 
 /* responsive: collapse the desktop nav to the burger wherever the full-width mega-menu can't fit (kills the 861–1080px dead-zone) */
 @media (max-width: 1080px) { .nav-right { display: none; } .burger { display: flex; } }
+
+/* ==========================================================================
+   Shared footer CTA band — the homepage design on every page.
+   navmenu.css loads last on every page, and #footer id-specificity wins over
+   the styles.css / work.css / contact.css variants, so this unifies them all.
+   Accent (the <em> word) themes per page via --pcol and falls back to brand
+   pink; the trust dots stay green (a fixed "free / no pressure" signal).
+   ========================================================================== */
+#footer .foot-cta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 22px 40px; padding-bottom: 40px; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.14); }
+#footer .foot-cta-l { flex: 1 1 380px; }
+#footer .foot-cta h2 { font-size: clamp(30px, 5vw, 56px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.02; max-width: 18ch; margin: 0; }
+#footer .foot-cta h2 em { font-style: normal; color: var(--pcol, #e83fa0); }
+#footer .foot-cta-sub { color: rgba(255,255,255,0.66); font-size: 16px; line-height: 1.6; max-width: 44ch; margin: 10px 0 0; }
+#footer .foot-cta-row { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+#footer .foot-cta-btn { background: var(--bg); color: var(--ink); margin-top: 0; }
+#footer .foot-cta-btn .dot { background: #6cf09a; }
+#footer .foot-cta-btn:hover { background: #fff; }
+#footer .foot-cta-trust { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); margin: 0; }
+#footer .foot-cta-trust::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #6cf09a; flex: none; }
+@media (max-width: 640px) { #footer .foot-cta { padding-bottom: 28px; margin-bottom: 28px; gap: 18px; } #footer .foot-cta-sub { font-size: 15px; margin-top: 8px; } }

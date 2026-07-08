@@ -22,21 +22,41 @@
       </div>`,
     shopify: `
       <div class="foot-cta">
-        <h2>Let’s build a store <em>worth selling on.</em></h2>
-        <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+        <div class="foot-cta-l">
+          <h2>Let’s build a store <em>worth selling on.</em></h2>
+          <p class="foot-cta-sub">Tell us about your store or idea. We’ll review it and recommend the next step.</p>
+        </div>
+        <div class="foot-cta-row">
+          <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+          <p class="foot-cta-trust">Free consultation. Clear scope. No pressure.</p>
+        </div>
       </div>`,
     webflow: `
       <div class="foot-cta">
-        <h2>Let’s build something <em>worth visiting.</em></h2>
-        <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+        <div class="foot-cta-l">
+          <h2>Let’s build something <em>worth visiting.</em></h2>
+          <p class="foot-cta-sub">Tell us about your project. We’ll review it and recommend the next step.</p>
+        </div>
+        <div class="foot-cta-row">
+          <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+          <p class="foot-cta-trust">Free consultation. Clear scope. No pressure.</p>
+        </div>
       </div>`,
     wordpress: `
       <div class="foot-cta">
-        <h2>Let’s build a site <em>worth managing.</em></h2>
-        <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+        <div class="foot-cta-l">
+          <h2>Let’s build a site <em>worth managing.</em></h2>
+          <p class="foot-cta-sub">Tell us about your project or site. We’ll review it and recommend the next step.</p>
+        </div>
+        <div class="foot-cta-row">
+          <a href="contact.html" class="btn foot-cta-btn"><span class="dot"></span>Start your project</a>
+          <p class="foot-cta-trust">Free consultation. Clear scope. No pressure.</p>
+        </div>
       </div>`
   };
-  var cta = CTAS[here] || '';
+  // Homepage band is the default; platform pages keep their own headline + accent
+  // colour (themed via --pcol). Every other page falls back to the homepage band.
+  var cta = CTAS[here] || CTAS.index;
 
   var html = `
   <footer id="footer">

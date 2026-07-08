@@ -93,7 +93,7 @@
         </div>
         <div class="bw bw-front">
           <div class="bw-bar"><span></span><span></span><span></span><b>lightmybricks.com</b></div>
-          <div class="bw-shot"><img fetchpriority="high" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fwww.lightmybricks.com%2F?w=820" alt=""></div>
+          <div class="bw-shot"><img fetchpriority="high" decoding="async" src="assets/shots/lightmybricks.jpg" alt=""></div>
         </div>
       </div>
     </div>
@@ -177,7 +177,7 @@
       <p class="work-count reveal" id="workCount">Showing all <b>44</b> projects</p>
       <p class="sr-only" id="filterStatus" aria-live="polite">Showing all 44 projects.</p>
       <div class="proj-grid pf-grid">
-        <article class="proj-card feat reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.lightmybricks.com/" data-title="Light My Bricks" data-scope="Shopify store for LED lighting kits — a clean, product-focused storefront.">
+        <article class="proj-card feat reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.lightmybricks.com/" data-thumb="assets/shots/lightmybricks.jpg" data-title="Light My Bricks" data-scope="Shopify store for LED lighting kits — a clean, product-focused storefront.">
           <button type="button" class="view-details" aria-label="View details for Light My Bricks">View details</button>
           <a href="https://www.lightmybricks.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
           <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwlightmybrickscom/960/540" alt="Light My Bricks — Shopify project by KNB Web Solution"></div>
@@ -447,21 +447,17 @@
     </div>
   </section>
 
-  <!-- PROCESS -->
-  <section class="process-sec">
-    <div class="wrap">
-      <div class="proc-head reveal r-left">
-        <span class="testi-kicker">How we work</span>
-        <h2>From first call to launch.</h2>
-      </div>
-      <div class="proc-steps">
-        <div class="proc-step reveal"><span class="proc-n">01</span><h3>Free consultation</h3><p>We learn your goals, audience, and scope — then send a clear written proposal.</p></div>
-        <div class="proc-step reveal"><span class="proc-n">02</span><h3>Design</h3><p>We design the pages around your brand and the actions you want visitors to take.</p></div>
-        <div class="proc-step reveal"><span class="proc-n">03</span><h3>Build</h3><p>We build it responsive and fast on Shopify, Webflow, or WordPress — with a CMS you can edit.</p></div>
-        <div class="proc-step reveal"><span class="proc-n">04</span><h3>Launch &amp; support</h3><p>We QA, launch, and hand off with guidance — plus optional ongoing care.</p></div>
-      </div>
-    </div>
-  </section>
+  <!-- PROCESS (conveyor band + scroll-fill line — shared with platform pages) -->
+  <section class="process" id="process" style="--pcol:#e83fa0;"><div class="proc-wm" aria-hidden="true">PROCESS</div><div class="wrap">
+    <div class="proc-head reveal r-left"><span class="eyebrow">How we work</span><h2>From first call to launch.</h2></div>
+    <div class="proc-arrows" id="procArrows" aria-hidden="true"></div>
+    <ol class="proc-steps">
+      <li class="reveal"><span class="proc-n">01</span><h3>Free consultation</h3><p>We learn your goals, audience, and scope — then send a clear written proposal.</p></li>
+      <li class="reveal"><span class="proc-n">02</span><h3>Design</h3><p>We design the pages around your brand and the actions you want visitors to take.</p></li>
+      <li class="reveal"><span class="proc-n">03</span><h3>Build</h3><p>We build it responsive and fast on Shopify, Webflow, or WordPress — with a CMS you can edit.</p></li>
+      <li class="reveal"><span class="proc-n">04</span><h3>Launch &amp; support</h3><p>We QA, launch, and hand off with guidance — plus optional ongoing care.</p></li>
+    </ol>
+  </div></section>
 
   <!-- TESTIMONIALS (shared marquee — testimonials.css / testimonials.js) -->
   <section class="talt testi-wall" id="testiWall">
