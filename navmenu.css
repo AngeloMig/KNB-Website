@@ -171,6 +171,17 @@
 /* responsive: collapse the desktop nav to the burger wherever the full-width mega-menu can't fit (kills the 861–1080px dead-zone) */
 @media (max-width: 1080px) { .nav-right { display: none; } .burger { display: flex; } }
 
+/* smaller, edge-aligned nav pill on mobile — trims the tall bar and lines the
+   pill up with the 15px page gutter (loads last, so it wins over the base nav). */
+@media (max-width: 1080px) {
+  .nav { padding: 12px 15px; }
+  .nav.scrolled { padding: 8px 15px; }
+  .nav-inner { height: 50px; padding: 0 14px; }
+  .logo .lw { font-size: 20px; }
+  .burger { height: 40px; }
+  .burger span { width: 22px; }
+}
+
 /* ==========================================================================
    Shared footer CTA band — the homepage design on every page.
    navmenu.css loads last on every page, and #footer id-specificity wins over
@@ -190,3 +201,90 @@
 #footer .foot-cta-trust { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); margin: 0; }
 #footer .foot-cta-trust::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #6cf09a; flex: none; }
 @media (max-width: 640px) { #footer .foot-cta { padding-bottom: 28px; margin-bottom: 28px; gap: 18px; } #footer .foot-cta-sub { font-size: 15px; margin-top: 8px; } }
+
+/* ==========================================================================
+   MOBILE NAVIGATION — bottom sheet (concept A). header.js + navmenu.js +
+   navmenu.css load on every page, so this is the single source for mobile nav.
+   Appears wherever the burger does (<=1080px); hidden on desktop.
+   ========================================================================== */
+/* body scroll lock — kept here (not just styles.css) so it holds on every page */
+html.menu-open, body.menu-open { overflow: hidden; }
+body.menu-open { position: fixed; width: 100%; left: 0; }
+
+.mnav-scrim { position: fixed; inset: 0; z-index: 200; background: rgba(17,17,16,0.42);
+  opacity: 0; pointer-events: none; transition: opacity .45s var(--ease); }
+body.mnav-open .mnav-scrim { opacity: 1; pointer-events: auto; }
+
+.mnav-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 210;
+  display: flex; flex-direction: column; max-height: 88vh;
+  background: var(--card); border-radius: 24px 24px 0 0;
+  box-shadow: 0 -24px 60px -22px rgba(17,17,16,0.5);
+  transform: translateY(101%); transition: transform .5s var(--ease);
+  padding-bottom: env(safe-area-inset-bottom); }
+body.mnav-open .mnav-sheet { transform: translateY(0); }
+.mnav-sheet.mnav-dragging { transition: none; }
+
+.mnav-grab { padding: 12px 0 6px; cursor: grab; touch-action: none; flex: none; }
+.mnav-grab:active { cursor: grabbing; }
+.mnav-grab span { width: 42px; height: 4.5px; border-radius: 100px; background: var(--line); display: block; margin: 0 auto; }
+.mnav-top { display: flex; align-items: center; justify-content: space-between; padding: 2px 22px 12px; flex: none; }
+.mnav-lbl { font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.mnav-x { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg);
+  font-size: 14px; line-height: 1; cursor: pointer; color: var(--ink); }
+.mnav-body { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 22px 8px; flex: 1 1 auto; }
+
+.mnav-row { display: flex; align-items: center; justify-content: space-between; width: 100%;
+  padding: 16px 2px; font-size: 18px; font-weight: 700; letter-spacing: -.02em;
+  background: none; border: 0; border-bottom: 1px solid var(--line); color: var(--ink);
+  font-family: inherit; text-align: left; cursor: pointer; text-decoration: none; }
+.mnav-row-last { border-bottom: 0; }
+.mnav-chev { width: 9px; height: 9px; border-right: 2.2px solid var(--muted); border-bottom: 2.2px solid var(--muted);
+  transform: rotate(-45deg); transition: transform .35s var(--ease); flex: none; margin-right: 4px; }
+.mnav-row[aria-expanded="true"] .mnav-chev { transform: rotate(45deg); }
+.mnav-cnt { font-size: 12px; font-weight: 700; color: var(--muted); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 100px; padding: 2px 9px; margin-left: auto; margin-right: 12px; }
+
+.mnav-acc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease); }
+.mnav-acc.open { grid-template-rows: 1fr; }
+.mnav-acc > .mnav-acc-in { min-height: 0; overflow: hidden; }
+.mnav-acc-pad { padding: 6px 2px 16px; }
+
+.mnav-sub { display: flex; flex-direction: column; }
+.mnav-sub a { display: flex; align-items: center; justify-content: space-between; padding: 11px 4px;
+  font-size: 15px; font-weight: 600; color: #3a3a36; border-bottom: 1px solid var(--line); text-decoration: none; }
+.mnav-sub a:last-child { border-bottom: 0; }
+.mnav-n { font-size: 12px; font-weight: 700; color: var(--muted); }
+
+.mnav-thumbs { display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 4px; scrollbar-width: none; margin: 0 -2px; }
+.mnav-thumbs::-webkit-scrollbar { display: none; }
+.mnav-thumb { flex: 0 0 116px; text-decoration: none; }
+.mnav-thumb img { width: 116px; height: 78px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); display: block; }
+.mnav-thumb b { display: block; font-size: 12px; font-weight: 700; margin-top: 6px; color: var(--ink); }
+.mnav-thumb small { display: block; font-size: 10.5px; color: var(--muted); }
+
+.mnav-grpk { font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: 14px 2px 4px; }
+.mnav-pkg { display: flex; align-items: center; gap: 12px; padding: 11px 4px; border-bottom: 1px solid var(--line); text-decoration: none; }
+.mnav-pkg:last-of-type { border-bottom: 0; }
+.mnav-pic { width: 34px; height: 34px; flex: none; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; }
+.mnav-pic svg { width: 18px; height: 18px; stroke: var(--ink); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.mnav-tx { flex: 1; min-width: 0; }
+.mnav-tx b { font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 7px; color: var(--ink); }
+.mnav-tx span { font-size: 12px; color: var(--muted); display: block; }
+.mnav-pop { font-style: normal; font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: var(--pink, #e83fa0); border-radius: 100px; padding: 2px 7px; }
+.mnav-hrs { font-size: 11.5px; font-weight: 700; color: var(--muted); flex: none; }
+.mnav-quizrow { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.mnav-quiz { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; background: var(--ink); color: var(--bg); border-radius: 100px; padding: 9px 15px; text-decoration: none; }
+.mnav-quiz span { width: 7px; height: 7px; border-radius: 50%; background: #6cf09a; }
+.mnav-alt { font-size: 12.5px; font-weight: 650; color: var(--muted); text-decoration: none; }
+
+.mnav-cta { padding: 14px 22px calc(18px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 12px; flex: none; background: var(--card); }
+.mnav-start { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%;
+  background: var(--ink); color: var(--bg); font-weight: 700; font-size: 14px; padding: 15px 24px;
+  border-radius: 100px; text-decoration: none; }
+.mnav-start .dot { width: 8px; height: 8px; border-radius: 50%; background: #6cf09a; }
+.mnav-email { text-align: center; font-size: 13.5px; font-weight: 650; color: var(--muted); text-decoration: none; }
+
+@media (prefers-reduced-motion: reduce) { .mnav-sheet, .mnav-scrim, .mnav-acc, .mnav-chev { transition: none; } }
+/* desktop: the burger and sheet never appear above 1080px */
+@media (min-width: 1081px) { .mnav-scrim, .mnav-sheet { display: none; } }

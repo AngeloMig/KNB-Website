@@ -23,18 +23,15 @@
 <meta name="twitter:title" content="WordPress Work — KNB Web Solution">
 <meta name="twitter:description" content="WordPress &amp; WooCommerce websites by KNB Web Solution — flexible, SEO-ready business sites and online stores your team can manage.">
 <meta name="twitter:image" content="https://knb-solutions.netlify.app/og-image.png">
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preload" href="assets/fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
 <link rel="preconnect" href="https://s.wp.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link rel="dns-prefetch" href="https://cdn.simpleicons.org">
-<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="work.css">
 <link rel="stylesheet" href="testimonials.css">
 <link rel="stylesheet" href="packline.css">
 <style>
-  :root{ --pcol: #21759b; --plogo: url("https://cdn.simpleicons.org/wordpress/21759b"); }
+  :root{ --pcol: #21759b; --plogo: url("assets/icons/wordpress-21759b.svg"); }
   .page-hero .eyebrow::before { background: #21759b; }
   .plat-pill { display:inline-flex; align-items:center; gap:8px; background:#e2eef3; color:#185872; border:1px solid #bdd9e4; font-size:13px; font-weight:700; letter-spacing:0.04em; padding:6px 12px; border-radius:100px; }
   .plat-pill img { width:15px; }
@@ -55,7 +52,7 @@
     <div class="wrap">
       <div class="hero-copy">
       <div class="crumbs reveal"><a href="portfolio.html">Portfolio</a> <span>/</span> <span>WordPress</span></div>
-      <div class="eyebrow reveal"><span class="plat-pill"><img src="https://cdn.simpleicons.org/wordpress" alt="">WordPress</span></div>
+      <div class="eyebrow reveal"><span class="plat-pill"><img src="assets/icons/wordpress.svg" alt="">WordPress</span></div>
       <h1 class="reveal">WordPress sites, built to <span class="rot" id="heroRotator" data-words="last,scale,grow,perform"><span class="rot-word">last</span></span>.</h1>
       <p class="lead reveal">Business websites and WooCommerce stores built on WordPress — flexible, SEO-ready, and easy for your team to manage.</p>
       <div class="pf-stats reveal">
@@ -67,7 +64,7 @@
       <div class="hero-mock reveal r-right" aria-hidden="true">
         <div class="bw">
           <div class="bw-bar"><span></span><span></span><span></span><b>coptrz.com</b></div>
-          <div class="bw-shot"><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=900" alt=""></div>
+          <div class="bw-shot"><img loading="lazy" decoding="async" src="assets/shots/coptrz.jpg" alt=""></div>
         </div>
       </div>
     </div>
@@ -75,6 +72,10 @@
 
   <!-- hero keyword marquee -->
   <div class="plat-mq" aria-hidden="true"><div class="plat-mq-track">
+    <span>WooCommerce</span><span>Business sites</span><span>Blogs &amp; publishing</span><span>SEO</span><span>Speed &amp; security</span><span>Care plans</span>
+    <span>WooCommerce</span><span>Business sites</span><span>Blogs &amp; publishing</span><span>SEO</span><span>Speed &amp; security</span><span>Care plans</span>
+    <span>WooCommerce</span><span>Business sites</span><span>Blogs &amp; publishing</span><span>SEO</span><span>Speed &amp; security</span><span>Care plans</span>
+    <span>WooCommerce</span><span>Business sites</span><span>Blogs &amp; publishing</span><span>SEO</span><span>Speed &amp; security</span><span>Care plans</span>
     <span>WooCommerce</span><span>Business sites</span><span>Blogs &amp; publishing</span><span>SEO</span><span>Speed &amp; security</span><span>Care plans</span>
     <span>WooCommerce</span><span>Business sites</span><span>Blogs &amp; publishing</span><span>SEO</span><span>Speed &amp; security</span><span>Care plans</span>
   </div></div>
@@ -134,7 +135,7 @@
           <span class="pj-num">04</span>
           <div class="pj-frame">
             <div class="pj-bar"><i></i><i></i><i></i><span class="pj-url">coptrz.com</span></div>
-            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Coptrz — WordPress project by KNB Web Solution" decoding="async" data-shot="https://coptrz.com/"></div>
+            <div class="pj-shot"><span class="pj-skel" aria-hidden="true"></span><img class="pj-img" alt="Coptrz — WordPress project by KNB Web Solution" decoding="async" data-fallback="assets/shots/coptrz.jpg"></div>
             <button type="button" class="pj-open" aria-label="View details for Coptrz">View details</button>
             <a href="https://coptrz.com/" target="_blank" rel="noopener" class="pj-case">Visit live site →</a>
           </div>
@@ -693,21 +694,21 @@
         <span class="pl-lamp" style="left:9%"><i></i></span>
         <span class="pl-lamp" style="left:79%"><i></i></span>
           <div class="pl-rack" style="left:1.5%">
-            <span class="pl-shelf s1"><b class="pl-wbox" style="width:56px;height:46px"><img src="https://cdn.simpleicons.org/shopify" alt=""></b><b class="pl-wbox" style="width:40px;height:34px"></b><b class="pl-wbox" style="width:48px;height:42px"><img src="https://cdn.simpleicons.org/wordpress" alt=""></b></span>
-            <span class="pl-shelf s2"><b class="pl-wbox" style="width:44px;height:38px"></b><b class="pl-wbox" style="width:58px;height:46px"><img src="https://cdn.simpleicons.org/webflow" alt=""></b><b class="pl-wbox" style="width:36px;height:30px"></b></span>
-            <span class="pl-shelf s3"><b class="pl-wbox" style="width:62px;height:50px"><img src="https://cdn.simpleicons.org/woocommerce" alt=""></b><b class="pl-wbox" style="width:44px;height:36px"></b><b class="pl-wbox" style="width:50px;height:44px"></b></span>
+            <span class="pl-shelf s1"><b class="pl-wbox" style="width:56px;height:46px"><img src="assets/icons/shopify.svg" alt=""></b><b class="pl-wbox" style="width:40px;height:34px"></b><b class="pl-wbox" style="width:48px;height:42px"><img src="assets/icons/wordpress.svg" alt=""></b></span>
+            <span class="pl-shelf s2"><b class="pl-wbox" style="width:44px;height:38px"></b><b class="pl-wbox" style="width:58px;height:46px"><img src="assets/icons/webflow.svg" alt=""></b><b class="pl-wbox" style="width:36px;height:30px"></b></span>
+            <span class="pl-shelf s3"><b class="pl-wbox" style="width:62px;height:50px"><img src="assets/icons/woocommerce.svg" alt=""></b><b class="pl-wbox" style="width:44px;height:36px"></b><b class="pl-wbox" style="width:50px;height:44px"></b></span>
           </div>
           <div class="pl-rack" style="right:1.5%">
-            <span class="pl-shelf s1"><b class="pl-wbox" style="width:46px;height:40px"><img src="https://cdn.simpleicons.org/webflow" alt=""></b><b class="pl-wbox" style="width:56px;height:44px"></b><b class="pl-wbox" style="width:38px;height:32px"><img src="https://cdn.simpleicons.org/shopify" alt=""></b></span>
-            <span class="pl-shelf s2"><b class="pl-wbox" style="width:52px;height:44px"><img src="https://cdn.simpleicons.org/wordpress" alt=""></b><b class="pl-wbox" style="width:40px;height:32px"></b><b class="pl-wbox" style="width:56px;height:46px"></b></span>
-            <span class="pl-shelf s3"><b class="pl-wbox" style="width:44px;height:38px"></b><b class="pl-wbox" style="width:60px;height:48px"><img src="https://cdn.simpleicons.org/woocommerce" alt=""></b><b class="pl-wbox" style="width:42px;height:34px"></b></span>
+            <span class="pl-shelf s1"><b class="pl-wbox" style="width:46px;height:40px"><img src="assets/icons/webflow.svg" alt=""></b><b class="pl-wbox" style="width:56px;height:44px"></b><b class="pl-wbox" style="width:38px;height:32px"><img src="assets/icons/shopify.svg" alt=""></b></span>
+            <span class="pl-shelf s2"><b class="pl-wbox" style="width:52px;height:44px"><img src="assets/icons/wordpress.svg" alt=""></b><b class="pl-wbox" style="width:40px;height:32px"></b><b class="pl-wbox" style="width:56px;height:46px"></b></span>
+            <span class="pl-shelf s3"><b class="pl-wbox" style="width:44px;height:38px"></b><b class="pl-wbox" style="width:60px;height:48px"><img src="assets/icons/woocommerce.svg" alt=""></b><b class="pl-wbox" style="width:42px;height:34px"></b></span>
           </div>
       </div>
       <div class="pl-fan">
             <div class="pl-ftag f1" style="--fx:-372px; --fy:-58px; --fr:-6deg"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span><span><em>ITEM 01 / 04 · PACKED</em><b>Site design &amp; revamp</b><small>A custom, on-brand website built to convert.</small></span><span class="bc"></span></div>
-            <div class="pl-ftag f2" style="--fx:-128px; --fy:-148px; --fr:-2deg"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg></span><span><em>ITEM 02 / 04 · PACKED</em><b>Content system</b><small>Pages, blogs, and an editor that stays sane.</small></span><span class="bc"></span></div>
+            <div class="pl-ftag f2" style="--fx:-128px; --fy:-128px; --fr:-2deg"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg></span><span><em>ITEM 02 / 04 · PACKED</em><b>Content system</b><small>Pages, blogs, and an editor that stays sane.</small></span><span class="bc"></span></div>
             <div class="pl-ftag f3" style="--fx:150px; --fy:-64px; --fr:2deg"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span><span><em>ITEM 03 / 04 · PACKED</em><b>WooCommerce &amp; plugins</b><small>Shop, forms, and integrations set up right.</small></span><span class="bc"></span></div>
-            <div class="pl-ftag f4" style="--fx:392px; --fy:-152px; --fr:6deg"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-5"/></svg></span><span><em>ITEM 04 / 04 · PACKED</em><b>Launch &amp; care</b><small>Migrated, secured, live — with care after.</small></span><span class="bc"></span></div>
+            <div class="pl-ftag f4" style="--fx:392px; --fy:-128px; --fr:6deg"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-5"/></svg></span><span><em>ITEM 04 / 04 · PACKED</em><b>Launch &amp; care</b><small>Migrated, secured, live — with care after.</small></span><span class="bc"></span></div>
       </div>
       <div class="pl-box">
         <div class="pl-core">
@@ -784,7 +785,7 @@
       <a class="pp-col" href="shopify.html" style="--c:#5e8e3e;">
         <span class="pp-rail" aria-hidden="true"></span>
         <span class="pp-ghost" aria-hidden="true">S</span><span class="pp-mark" aria-hidden="true">S</span>
-        <span class="pp-top"><img class="pp-ic" src="https://cdn.simpleicons.org/shopify/5e8e3e" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">Featured build</span></span>
+        <span class="pp-top"><img class="pp-ic" src="assets/icons/shopify-5e8e3e.svg" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">Featured build</span></span>
         <span class="pp-vname" aria-hidden="true"><b>Shopify</b><small>selling online</small></span>
         <span class="pp-body"><h3>Shopify</h3><p>Best for selling products online — secure, low-maintenance stores.</p><span class="pp-go">Explore Shopify <i>&#8594;</i></span></span>
         <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>lightmybricks.com</b></span><img loading="lazy" decoding="async" src="assets/shots/lightmybricks.jpg" alt=""></span>
@@ -792,7 +793,7 @@
       <a class="pp-col" href="webflow.html" style="--c:#4353ff;">
         <span class="pp-rail" aria-hidden="true"></span>
         <span class="pp-ghost" aria-hidden="true">W</span><span class="pp-mark" aria-hidden="true">W</span>
-        <span class="pp-top"><img class="pp-ic" src="https://cdn.simpleicons.org/webflow/4353ff" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">Featured build</span></span>
+        <span class="pp-top"><img class="pp-ic" src="assets/icons/webflow-4353ff.svg" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">Featured build</span></span>
         <span class="pp-vname" aria-hidden="true"><b>Webflow</b><small>design-led sites</small></span>
         <span class="pp-body"><h3>Webflow</h3><p>Best for design-led marketing &amp; brand sites with smooth motion.</p><span class="pp-go">Explore Webflow <i>&#8594;</i></span></span>
         <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>feedbird.com</b></span><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Ffeedbird.com%2F?w=700" alt=""></span>
@@ -800,10 +801,10 @@
       <div class="pp-col cur" style="--c:#21759b;">
         <span class="pp-rail" aria-hidden="true"></span>
         <span class="pp-ghost" aria-hidden="true">WP</span><span class="pp-mark" aria-hidden="true">WP</span>
-        <span class="pp-top"><img class="pp-ic" src="https://cdn.simpleicons.org/wordpress/21759b" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">You&#39;re here</span></span>
+        <span class="pp-top"><img class="pp-ic" src="assets/icons/wordpress-21759b.svg" alt="" width="30" height="30" loading="lazy"><span class="pp-tag">You&#39;re here</span></span>
         <span class="pp-vname" aria-hidden="true"><b>WordPress</b><small>content & woo</small></span>
         <span class="pp-body"><h3>WordPress</h3><p>Best for content-heavy sites, blogs &amp; flexible WooCommerce.</p><a class="pp-go" href="portfolio.html#work=wordpress">See all 28 WordPress builds <i>&#8594;</i></a></span>
-        <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>coptrz.com</b></span><img loading="lazy" decoding="async" src="https://s.wp.com/mshots/v1/https%3A%2F%2Fcoptrz.com%2F?w=700" alt=""></span>
+        <span class="pp-shot" aria-hidden="true"><span class="pp-shot-bar"><i></i><i></i><i></i><b>coptrz.com</b></span><img loading="lazy" decoding="async" src="assets/shots/coptrz.jpg" alt=""></span>
       </div>
     </div>
   </div></section>

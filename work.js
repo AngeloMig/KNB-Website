@@ -129,13 +129,28 @@
 
     const flip = (run) => {
       const motionOK = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const before = motionOK ? allCards.map((c) => c.getBoundingClientRect()) : null;
+      // Record positions only for cards visible BEFORE the change; hidden cards
+      // report a (0,0) rect, so FLIP-ing them would fling them in from the top-left.
+      const before = motionOK ? allCards.map((c) => c.hidden ? null : c.getBoundingClientRect()) : null;
       run();
       if (!motionOK) return;
       allCards.forEach((c, i) => {
         if (c.hidden) return;
+        const b = before[i];
+        if (!b) {
+          // Newly shown by this filter — fade in place instead of flying from a corner.
+          c.classList.add('in'); // guarantee it's revealed (some cards may never have scrolled into view)
+          c.style.transition = 'none';
+          c.style.opacity = '0';
+          requestAnimationFrame(() => {
+            c.style.transition = 'opacity 0.4s ease';
+            c.style.opacity = '1';
+            c.addEventListener('transitionend', () => { c.style.transition = ''; c.style.opacity = ''; }, { once: true });
+          });
+          return;
+        }
         const a = c.getBoundingClientRect();
-        const dx = before[i].left - a.left, dy = before[i].top - a.top;
+        const dx = b.left - a.left, dy = b.top - a.top;
         if (!dx && !dy) return;
         c.style.transition = 'none';
         c.style.transform = `translate(${dx}px, ${dy}px)`;
@@ -877,13 +892,13 @@
   });
 })();
 
-/* platform project grids — "Load more" (activates only when > INITIAL cards, e.g. WordPress) */
+/* platform project grids — responsive "Load more": mobile starts at 3, desktop at 10.
+   Re-bases when crossing the mobile breakpoint so the count matches the layout. */
 (function () {
-  var INITIAL = 10, STEP = 10;
+  var mq = matchMedia('(max-width: 640px)');
+  var initial = function () { return mq.matches ? 3 : 10; };
   document.querySelectorAll('.pj-grid').forEach(function (grid) {
     var cards = [].slice.call(grid.querySelectorAll('.pj-card'));
-    if (cards.length <= INITIAL) return;
-    var shown = INITIAL;
     var wrap = document.createElement('div');
     wrap.className = 'pj-more';
     var btn = document.createElement('button');
@@ -891,13 +906,17 @@
     btn.className = 'btn ghost';
     wrap.appendChild(btn);
     grid.parentNode.insertBefore(wrap, grid.nextSibling);
+    var shown = 0;
     function render() {
       cards.forEach(function (c, i) { c.hidden = i >= shown; if (i < shown) c.classList.add('in'); });
-      btn.textContent = 'Load more projects (' + (cards.length - shown) + ' left)';
-      btn.hidden = shown >= cards.length;
+      var left = cards.length - shown;
+      wrap.hidden = left <= 0;
+      if (left > 0) btn.textContent = 'Load more projects (' + left + ' left)';
     }
-    btn.addEventListener('click', function () { shown = Math.min(shown + STEP, cards.length); render(); });
-    render();
+    function rebase() { shown = Math.min(initial(), cards.length); render(); }
+    btn.addEventListener('click', function () { shown = Math.min(shown + initial(), cards.length); render(); });
+    if (mq.addEventListener) mq.addEventListener('change', rebase); else mq.addListener(rebase);
+    rebase();
   });
 })();
 

@@ -1,0 +1,6 @@
+/* Self-hosted Satoshi — replaces api.fontshare.com + cdn.fontshare.com (removes 2 third-party origins).
+   Weights 400/500/700/900 only; 300 was loaded before but is unused site-wide. font-display:swap keeps text visible during load. */
+@font-face { font-family: "Satoshi"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/satoshi-400.woff2") format("woff2"); }
+@font-face { font-family: "Satoshi"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/satoshi-500.woff2") format("woff2"); }
+@font-face { font-family: "Satoshi"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/satoshi-700.woff2") format("woff2"); }
+@font-face { font-family: "Satoshi"; font-style: normal; font-weight: 900; font-display: swap; src: url("assets/fonts/satoshi-900.woff2") format("woff2"); }

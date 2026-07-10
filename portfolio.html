@@ -23,12 +23,9 @@
 <meta name="twitter:title" content="Portfolio — KNB Web Solution">
 <meta name="twitter:description" content="Websites and online stores KNB Web Solution has designed and built — Shopify revamps, Webflow sites, and WordPress / WooCommerce builds for growing businesses. Filter the work by platform.">
 <meta name="twitter:image" content="https://knb-solutions.netlify.app/og-image.png">
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preload" href="assets/fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
 <link rel="preconnect" href="https://s.wp.com" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.simpleicons.org">
-<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="work.css">
 <link rel="stylesheet" href="testimonials.css">
 <style>
@@ -43,6 +40,16 @@
   .ind-chip { font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 100px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease); }
   .ind-chip:hover { color: var(--ink); border-color: var(--ink); }
   .ind-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  /* mobile: filter + industry pills swipe in a single row instead of stacking tall */
+  @media (max-width: 640px) {
+    .work-controls { flex-direction: column; align-items: stretch; }
+    .proj-filters, .ind-strip { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+    .proj-filters::-webkit-scrollbar, .ind-strip::-webkit-scrollbar { display: none; }
+    .proj-filter, .proj-fdiv, .ind-chip, .ind-label { flex: 0 0 auto; }
+    .work-tools { width: 100%; }
+    .work-search { flex: 1 1 auto; }
+    .work-search input, .work-search input:focus { width: 100%; }
+  }
   /* modal prev / next */
   .pfm-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,0.92); color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background 0.25s, transform 0.25s; }
   .pfm-prev { left: 14px; } .pfm-next { right: 14px; }
@@ -106,7 +113,8 @@
     <span>Light My Bricks</span><span>Cacao Collective</span><span>Omenz</span><span>Thirsty Squirrel</span><span>Rise Outdoor</span><span>Feedbird</span><span>Qi Platform</span><span>Maestro Labs</span><span>Teamtown</span><span>All Terrain Industries</span><span>Privvy Marketing</span><span>Narrative Hub</span>
   </div></div>
 
-  <!-- CASE-STUDY SPOTLIGHT -->
+  <!-- CASE-STUDY SPOTLIGHT — hidden for now (placeholder content; restore when a real case study is ready) -->
+  <!--
   <section class="spotlight">
     <div class="wrap">
       <div class="spot-inner">
@@ -120,7 +128,7 @@
         <div class="spot-copy reveal r-right">
           <span class="spot-eyebrow">✦ Featured project</span>
           <h2>Lumen Apparel</h2>
-          <span class="spot-chip"><img src="https://cdn.simpleicons.org/shopify" alt="">Shopify · Fashion</span>
+          <span class="spot-chip"><img src="assets/icons/shopify.svg" alt="">Shopify · Fashion</span>
           <dl class="spot-par">
             <div><dt>Problem</dt><dd>Cluttered product pages and a slow, multi-step checkout made the store hard to shop — especially on mobile.</dd></div>
             <div><dt>Approach</dt><dd>Rebuilt the theme around clear product storytelling, compressed media, and a streamlined two-step checkout.</dd></div>
@@ -131,6 +139,7 @@
       </div>
     </div>
   </section>
+  -->
 
   <!-- FILTERABLE WORK GRID -->
   <section class="work">
@@ -183,7 +192,7 @@
           <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwlightmybrickscom/960/540" alt="Light My Bricks — Shopify project by KNB Web Solution"></div>
           <div class="proj-meta"><div class="proj-top"><h3>Light My Bricks</h3><button class="cat" data-filter="shopify" data-stop>Shopify</button></div><span class="proj-scope">Shopify store for LED lighting kits</span></div>
         </article>
-        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.cacaocollective.com.au/" data-title="Cacao Collective" data-scope="Craft-chocolate Shopify store with a simple, mobile-first buying flow.">
+        <article class="proj-card reveal" data-plat="shopify" data-tags="shopify ecommerce" data-url="https://www.cacaocollective.com.au/" data-thumb="assets/shots/cacao.jpg" data-title="Cacao Collective" data-scope="Craft-chocolate Shopify store with a simple, mobile-first buying flow.">
           <button type="button" class="view-details" aria-label="View details for Cacao Collective">View details</button>
           <a href="https://www.cacaocollective.com.au/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
           <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/wwwcacaocollectivecomau/720/495" alt="Cacao Collective — Shopify project by KNB Web Solution"></div>
@@ -297,7 +306,7 @@
           <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/mdodigital/720/495" alt="MDO Digital — WordPress project by KNB Web Solution"></div>
           <div class="proj-meta"><div class="proj-top"><h3>MDO Digital</h3><button class="cat" data-filter="wordpress" data-stop>WordPress</button></div><span class="proj-scope">WordPress agency site</span></div>
         </article>
-        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://coptrz.com/" data-title="Coptrz" data-scope="WordPress business website.">
+        <article class="proj-card reveal" data-plat="wordpress" data-tags="wordpress business" data-url="https://coptrz.com/" data-thumb="assets/shots/coptrz.jpg" data-title="Coptrz" data-scope="WordPress business website.">
           <button type="button" class="view-details" aria-label="View details for Coptrz">View details</button>
           <a href="https://coptrz.com/" target="_blank" rel="noopener" class="view-tag" data-stop>Visit site →</a>
           <div class="proj-img"><span class="pf-skel" aria-hidden="true"></span><img class="pf-shot" decoding="async" data-fallback="https://picsum.photos/seed/coptrzcom/720/495" alt="Coptrz — WordPress project by KNB Web Solution"></div>

@@ -1021,12 +1021,13 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 14.5px 26px;
+    /* 6.5px + 1.5px border = 8px, so height matches the borderless filled .btn */
+    padding: 6.5px 24px;
     border-radius: var(--r-pill);
     border: 1.5px solid var(--ink);
     background: transparent;
     color: var(--ink);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     transition: background 0.35s, color 0.35s, transform 0.35s var(--ease);
   }
@@ -1259,7 +1260,9 @@
     .v3-shot-img { height: 200px; }
     /* reclaim mobile height: the decorative logo cloud is a fixed 350px block,
        and the intro carries an 80px gap before the cards */
-    .services-top { margin-bottom: 40px; }
+    /* header block is a lone child in a 2-col grid — go full-width on tablet/mobile
+       so the heading + intro stop collapsing into a cramped ~55% column */
+    .services-top { grid-template-columns: 1fr; margin-bottom: 40px; }
     .tech-cloud { height: 220px; }
   }
   @media (max-width: 520px) {
@@ -1290,10 +1293,10 @@
     gap: 10px;
     background: var(--ink);
     color: var(--bg);
-    padding: 16px 30px;
+    padding: 8px 24px;
     border-radius: var(--r-pill);
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 56px;
     transition: transform 0.35s var(--ease), background 0.35s, box-shadow 0.35s var(--ease);
     cursor: pointer;
@@ -2285,8 +2288,9 @@
       scrollbar-width: none;
       gap: 16px;
       height: auto;
-      padding: 6px 28px 16px;
-      margin-inline: -28px;
+      /* left aligns with the 15px content gutter; right bleeds to the screen edge */
+      padding: 6px 0 16px 15px;
+      margin-inline: -15px;
     }
     .hero-photos::-webkit-scrollbar { display: none; }
     .card {
@@ -2297,6 +2301,27 @@
       max-width: none;
       scroll-snap-align: center;
     }
+  }
+
+  /* ---- Mobile sizing polish: trimmer tags & buttons on phones ---- */
+  @media (max-width: 600px) {
+    /* tighter side gutter on phones */
+    .wrap { padding: 0 15px; }
+
+    /* services overlay-card content */
+    .sj .sj-inner { padding: 18px; }
+    .sj .sj-inner h3 { font-size: 20px; }
+    .sj .sj-more p { font-size: 12.5px; }
+    .sj .sj-tag { font-size: 10px; padding: 4px 9px; letter-spacing: 0.03em; }
+    /* stronger scrim so card text stays readable over the cover screenshot */
+    .sj .scrim { background: linear-gradient(180deg, rgba(17,17,16,0.18) 0%, rgba(17,17,16,0.56) 42%, rgba(17,17,16,0.97) 80%); }
+
+    /* project filter pills */
+    .proj-filters { gap: 7px; margin-top: 24px; }
+    .proj-filter { font-size: 12.5px; padding: 7px 13px; }
+
+    /* project card chips */
+    .pj-chip { font-size: 10.5px; padding: 5px 9px; }
   }
 
   /* ===== testimonial alternatives (A–D, for comparison) ===== */
@@ -2481,6 +2506,13 @@
     .talt-qc:hover .talt-stars { animation: none; }
     .tq-backdrop, .tq-dialog { transition: opacity 0.2s linear; }
     .tq-dialog { transform: none; }
+  }
+
+  /* phones: cap card widths so each testimonial fits the screen (with a peek of the next) */
+  @media (max-width: 600px) {
+    .talt-qc, .talt-qc.wide, .talt-qc.feat { width: min(80vw, 320px); padding: 18px 20px; }
+    .talt-qc blockquote { font-size: 14px; }
+    .talt-mq-track { gap: 12px; }
   }
 
 /* ---------- a11y: skip link + global keyboard focus fallback ---------- */

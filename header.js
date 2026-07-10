@@ -93,16 +93,54 @@ window.KNBDATA = {
         </div>
         <a href="contact.html" class="nav-cta"><span class="dot"></span>Start your project</a>
       </div>
-      <button class="burger" id="burger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-controls="mnavSheet" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="portfolio.html">Portfolio</a>
-    <div class="mm-plats"><a href="shopify.html">Shopify</a><a href="webflow.html">Webflow</a><a href="wordpress.html">WordPress</a></div>
-    <a href="pricing.html">Packages</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="mailto:info@knb.solutions" class="mm-foot">info@knb.solutions &#8594;</a>
+  <!-- MOBILE NAV — bottom sheet (behaviour in navmenu.js, styles in navmenu.css) -->
+  <div class="mnav-scrim" id="mnavScrim"></div>
+  <div class="mnav-sheet" id="mnavSheet" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+    <div class="mnav-grab" id="mnavGrab"><span></span></div>
+    <div class="mnav-top"><span class="mnav-lbl">Menu</span><button class="mnav-x" id="mnavX" type="button" aria-label="Close menu">&#10005;</button></div>
+    <div class="mnav-body">
+
+      <button class="mnav-row" type="button" data-mnav-acc aria-expanded="false" aria-controls="mnavWork">Work <span class="mnav-cnt">44</span><span class="mnav-chev"></span></button>
+      <div class="mnav-acc" id="mnavWork"><div class="mnav-acc-in"><div class="mnav-acc-pad">
+        <div class="mnav-sub">
+          <a href="portfolio.html">All work <span class="mnav-n">44</span></a>
+          <a href="shopify.html">Shopify <span class="mnav-n">6</span></a>
+          <a href="webflow.html">Webflow <span class="mnav-n">10</span></a>
+          <a href="wordpress.html">WordPress <span class="mnav-n">28</span></a>
+        </div>
+        <div class="mnav-thumbs">
+          <a class="mnav-thumb" href="shopify.html"><img src="assets/shots/nav-lightmybricks.jpg" alt="" loading="lazy"><b>Light My Bricks</b><small>Shopify &#183; Retail</small></a>
+          <a class="mnav-thumb" href="webflow.html"><img src="assets/shots/nav-feedbird.jpg" alt="" loading="lazy"><b>Feedbird</b><small>Webflow &#183; Software</small></a>
+          <a class="mnav-thumb" href="shopify.html"><img src="assets/shots/nav-cacao.jpg" alt="" loading="lazy"><b>Cacao Collective</b><small>Shopify &#183; Food</small></a>
+          <a class="mnav-thumb" href="wordpress.html"><img src="assets/shots/nav-coptrz.jpg" alt="" loading="lazy"><b>Coptrz</b><small>WordPress &#183; Tech</small></a>
+        </div>
+      </div></div></div>
+
+      <button class="mnav-row" type="button" data-mnav-acc aria-expanded="false" aria-controls="mnavPkg">Packages <span class="mnav-chev"></span></button>
+      <div class="mnav-acc" id="mnavPkg"><div class="mnav-acc-in"><div class="mnav-acc-pad">
+        <div class="mnav-grpk">Build &#183; website packages</div>
+        <a class="mnav-pkg" href="pricing.html#build-starter"><span class="mnav-pic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><span class="mnav-tx"><b>Starter Website</b><span>Small businesses &amp; service sites</span></span></a>
+        <a class="mnav-pkg" href="pricing.html#build-business"><span class="mnav-pic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></span><span class="mnav-tx"><b>Business Website <i class="mnav-pop">Popular</i></b><span>Growing companies, B2B, clinics</span></span></a>
+        <a class="mnav-pkg" href="pricing.html#build-ecom"><span class="mnav-pic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span><span class="mnav-tx"><b>Ecommerce Website</b><span>Shopify &amp; WooCommerce brands</span></span></a>
+        <a class="mnav-pkg" href="pricing.html#build-app"><span class="mnav-pic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span><span class="mnav-tx"><b>Custom Web App</b><span>Dashboards, portals, booking, POS</span></span></a>
+        <div class="mnav-grpk">Keep &#183; care plans &#183; monthly</div>
+        ${window.KNBDATA.care.map(function (c) { return '<a class="mnav-pkg" href="pricing.html#care-' + c.id + '"><span class="mnav-tx"><b>' + c.name + (c.popular ? '<i class="mnav-pop">Popular</i>' : '') + '</b><span>' + c.who + '</span></span><span class="mnav-hrs">' + c.hours + ' hrs/mo</span></a>'; }).join('')}
+        <div class="mnav-quizrow">
+          <a class="mnav-quiz" href="pricing.html#quiz"><span></span>Take the 30-second quiz</a>
+          <a class="mnav-alt" href="contact.html">or get an exact quote &#8594;</a>
+        </div>
+      </div></div></div>
+
+      <a class="mnav-row" href="about.html">About</a>
+      <a class="mnav-row mnav-row-last" href="contact.html">Contact</a>
+    </div>
+    <div class="mnav-cta">
+      <a class="mnav-start" href="contact.html"><span class="dot"></span>Start your project</a>
+      <a class="mnav-email" href="mailto:info@knb.solutions">info@knb.solutions &#8594;</a>
+    </div>
   </div>`;
 
   var sc = document.currentScript;

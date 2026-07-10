@@ -49,22 +49,7 @@
       });
     });
 
-    /* #10 mobile work strip — clone a few thumbnails into the fullscreen menu */
-    const mob = document.getElementById('mobileMenu');
-    const src = document.querySelector('.nm-thumbs');
-    if (mob && src && !mob.querySelector('.mm-work')) {
-      const strip = document.createElement('div');
-      strip.className = 'mm-work';
-      [...src.querySelectorAll('.nm-item')].slice(0, 5).forEach((t) => {
-        const c = t.cloneNode(true);
-        const th = c.querySelector('.nm-th'); if (th) th.classList.remove('is-loaded');
-        strip.appendChild(c);
-      });
-      const anchor = mob.querySelector('.mm-plats') || mob.firstElementChild;
-      if (anchor) anchor.insertAdjacentElement('afterend', strip);
-    }
-
-    /* #7 loading shimmer — reveal each screenshot once it loads (covers clones too) */
+    /* #7 loading shimmer — reveal each screenshot once it loads */
     document.querySelectorAll('.nm-th img').forEach((img) => {
       const th = img.closest('.nm-th');
       if (!th) return;
@@ -73,24 +58,27 @@
       else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
     });
 
-    /* ---- Mobile menu: single source of truth (navmenu.js loads on every page) ----
-       Full-screen overlay toggle with complete a11y state + body scroll lock.
-       Runs after the mm-work strip is injected above, so the cloned work links
-       also close the menu on tap. (The old duplicates in main.js and work.js
-       were removed — work.js lacked scroll-lock/ARIA and contact.html had none.) */
+    /* ---- Mobile nav: bottom sheet (single source of truth; loads on every page) ----
+       Burger opens a bottom sheet with Work/Packages accordions + CTA. Includes
+       a11y state, robust body scroll lock (holds on iOS Safari), and drag-to-dismiss.
+       (Replaces the old full-screen .mobile-menu; duplicates in main.js/work.js
+       were already removed.) */
     const burger = document.getElementById('burger');
-    const menu = document.getElementById('mobileMenu');
-    if (burger && menu && !burger.dataset.mmBound) {
+    const sheet = document.getElementById('mnavSheet');
+    const scrim = document.getElementById('mnavScrim');
+    if (burger && sheet && scrim && !burger.dataset.mmBound) {
       burger.dataset.mmBound = '1';
+      const grab = document.getElementById('mnavGrab');
+      const closeBtn = document.getElementById('mnavX');
       let savedY = 0;
-      const setMenu = (open) => {
+      const isOpen = () => document.body.classList.contains('mnav-open');
+      const setOpen = (open) => {
         burger.classList.toggle('open', open);
-        menu.classList.toggle('open', open);
+        document.body.classList.toggle('mnav-open', open);
         burger.setAttribute('aria-expanded', String(open));
         burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-        // Robust scroll lock: pin the body at its current scroll offset while
-        // open (position:fixed via .menu-open), then restore on close — this
-        // holds on iOS Safari where overflow:hidden alone does not.
+        sheet.setAttribute('aria-hidden', String(!open));
+        sheet.style.transform = ''; // clear any drag offset
         if (open) {
           savedY = window.scrollY || window.pageYOffset || 0;
           document.documentElement.classList.add('menu-open');
@@ -103,9 +91,44 @@
           window.scrollTo(0, savedY);
         }
       };
-      burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
-      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
+      burger.addEventListener('click', () => setOpen(!isOpen()));
+      scrim.addEventListener('click', () => setOpen(false));
+      if (closeBtn) closeBtn.addEventListener('click', () => setOpen(false));
+      sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+
+      /* Work / Packages accordions */
+      sheet.querySelectorAll('[data-mnav-acc]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const acc = document.getElementById(btn.getAttribute('aria-controls'));
+          if (!acc) return;
+          const open = acc.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
+      });
+
+      /* drag the grab handle down to dismiss */
+      if (grab && window.PointerEvent) {
+        let startY = 0, dy = 0, dragging = false;
+        grab.addEventListener('pointerdown', (e) => {
+          dragging = true; startY = e.clientY; dy = 0;
+          sheet.classList.add('mnav-dragging');
+          try { grab.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        grab.addEventListener('pointermove', (e) => {
+          if (!dragging) return;
+          dy = Math.max(0, e.clientY - startY);
+          sheet.style.transform = 'translateY(' + dy + 'px)';
+        });
+        const end = () => {
+          if (!dragging) return;
+          dragging = false; sheet.classList.remove('mnav-dragging');
+          if (dy > 110) setOpen(false); else sheet.style.transform = '';
+          dy = 0;
+        };
+        grab.addEventListener('pointerup', end);
+        grab.addEventListener('pointercancel', end);
+      }
     }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KNB — Mobile Nav Preview (A · Bottom Sheet)</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f3ef; --ink:#111110; --muted:#6d6c66; --line:#dedcd4; --card:#fff;
+    --pink:#e83fa0; --r-pill:100px; --ease:cubic-bezier(.22,1,.36,1);
+    --sheet-max:460px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Satoshi",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+  body.sheet-open{overflow:hidden}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2.5px solid var(--pink);outline-offset:2px}
+  .wrap{width:100%;max-width:520px;margin:0 auto;padding:0 20px}
+
+  /* ---------- top nav (floating pill) ---------- */
+  .nav{position:fixed;top:14px;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:0 16px}
+  .nav-inner{width:100%;max-width:490px;display:flex;align-items:center;justify-content:space-between;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r-pill);
+    padding:10px 12px 10px 20px;box-shadow:0 10px 30px -16px rgba(17,17,16,.4)}
+  .brand{font-weight:900;font-size:21px;letter-spacing:-.03em;display:inline-flex;align-items:flex-end}
+  .brand i{width:6px;height:6px;border-radius:50%;background:var(--pink);margin:0 0 5px 3px}
+  .burg{width:44px;height:44px;border-radius:50%;background:var(--ink);border:0;cursor:pointer;
+    display:grid;place-content:center;gap:4.5px;padding:0}
+  .burg span{width:18px;height:2px;background:var(--bg);border-radius:2px;display:block;transition:.3s var(--ease)}
+
+  /* ---------- faux page content ---------- */
+  main{padding-top:104px}
+  .hero{padding:22px 0 46px}
+  .ey{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(34px,10vw,46px);line-height:1.02;letter-spacing:-.04em;font-weight:800;margin:16px 0 16px;text-wrap:balance}
+  .lead{font-size:16px;color:var(--muted);margin:0 0 26px;max-width:30ch}
+  .cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:var(--ink);
+    color:var(--bg);font-weight:700;font-size:14px;padding:13px 24px;border-radius:var(--r-pill);border:0;cursor:pointer}
+  .cta .dot{width:8px;height:8px;border-radius:50%;background:#6cf09a}
+  .btns{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .ghost{display:inline-flex;align-items:center;gap:7px;padding:11.5px 22px;border-radius:var(--r-pill);
+    border:1.5px solid var(--ink);font-weight:700;font-size:14px}
+  .mail{font-size:14px;font-weight:650;color:var(--muted)}
+  .minis{display:flex;gap:12px;margin-top:34px}
+  .mini{flex:1;aspect-ratio:3/4;border-radius:18px;position:relative;overflow:hidden;color:#fff;
+    padding:16px;display:flex;flex-direction:column;justify-content:flex-end;font-weight:800;letter-spacing:-.01em}
+  .mini small{display:block;font-weight:600;font-size:11.5px;opacity:.82;margin-top:3px}
+  .mini.w{background:linear-gradient(155deg,#5b6cff,#3b49d6)}
+  .mini.s{background:linear-gradient(155deg,#6ba13f,#4e7d2c)}
+  .mini.p{background:linear-gradient(155deg,#2f8fb3,#1d6884)}
+  .strip{margin:44px 0 60px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;
+    display:flex;gap:26px;flex-wrap:wrap;font-size:13px;font-weight:650;color:var(--muted)}
+  .strip b{color:var(--ink)}
+  .note{font-size:12.5px;color:var(--muted);padding:0 0 60px}
+  .note b{color:var(--ink)}
+
+  /* ---------- BOTTOM SHEET (concept A) ---------- */
+  .scrim{position:fixed;inset:0;z-index:40;background:rgba(17,17,16,.42);
+    opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+  body.sheet-open .scrim{opacity:1;pointer-events:auto}
+
+  .sheet{position:fixed;left:50%;bottom:0;z-index:50;width:min(var(--sheet-max),100%);
+    transform:translate(-50%,101%);transition:transform .5s var(--ease);
+    background:var(--card);border-radius:26px 26px 0 0;
+    box-shadow:0 -24px 60px -22px rgba(17,17,16,.5);
+    max-height:90vh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+  body.sheet-open .sheet{transform:translate(-50%,0)}
+  .sheet.dragging{transition:none}
+
+  .sheet-grab{padding:12px 0 6px;cursor:grab;touch-action:none;flex:none}
+  .sheet-grab:active{cursor:grabbing}
+  .sheet-grab span{width:42px;height:4.5px;border-radius:100px;background:var(--line);display:block;margin:0 auto}
+  .sheet-top{display:flex;align-items:center;justify-content:space-between;padding:2px 22px 12px;flex:none}
+  .sheet-top .lbl{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .sheet-x{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);
+    font-size:15px;line-height:1;cursor:pointer;color:var(--ink)}
+  .sheet-body{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 22px 22px}
+
+  .nrow{display:flex;align-items:center;justify-content:space-between;width:100%;
+    padding:16px 2px;font-size:18px;font-weight:700;letter-spacing:-.02em;
+    background:none;border:0;border-bottom:1px solid var(--line);color:var(--ink);
+    font-family:inherit;text-align:left;cursor:pointer}
+  .nrow .chev{width:9px;height:9px;border-right:2.2px solid var(--muted);border-bottom:2.2px solid var(--muted);
+    transform:rotate(-45deg);transition:transform .35s var(--ease);flex:none;margin-right:4px}
+  .nrow[aria-expanded="true"] .chev{transform:rotate(45deg)}
+  .nrow .cnt{font-size:12px;font-weight:700;color:var(--muted);background:var(--bg);
+    border:1px solid var(--line);border-radius:100px;padding:2px 9px;margin-left:auto;margin-right:12px}
+
+  .acc{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+  .acc.open{grid-template-rows:1fr}
+  .acc>.acc-in{min-height:0;overflow:hidden}
+  .acc-pad{padding:6px 2px 16px}
+
+  .sublinks{display:flex;flex-direction:column}
+  .sublinks a{display:flex;align-items:center;justify-content:space-between;padding:11px 4px;
+    font-size:15px;font-weight:600;color:#3a3a36;border-bottom:1px solid var(--line)}
+  .sublinks a .n{font-size:12px;font-weight:700;color:var(--muted)}
+  .sublinks a:last-child{border-bottom:0}
+
+  .thumbs{display:flex;gap:10px;overflow-x:auto;padding:12px 2px 4px;scrollbar-width:none;margin:0 -2px}
+  .thumbs::-webkit-scrollbar{display:none}
+  .thumb{flex:0 0 116px}
+  .thumb img{width:116px;height:78px;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block}
+  .thumb b{display:block;font-size:12px;font-weight:700;margin-top:6px}
+  .thumb small{display:block;font-size:10.5px;color:var(--muted)}
+
+  .grpk{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    padding:12px 2px 4px}
+  .pkg{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line)}
+  .pkg:last-of-type{border-bottom:0}
+  .pkg .pic{width:34px;height:34px;flex:none;border-radius:10px;background:var(--bg);border:1px solid var(--line);
+    display:grid;place-items:center}
+  .pkg .pic svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .pkg .tx{flex:1;min-width:0}
+  .pkg .tx b{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:7px}
+  .pkg .tx span{font-size:12px;color:var(--muted);display:block}
+  .pop{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;
+    background:var(--pink);border-radius:100px;padding:2px 7px}
+  .hrs{font-size:11.5px;font-weight:700;color:var(--muted);flex:none}
+  .quizrow{display:flex;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .quiz{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
+    background:var(--ink);color:var(--bg);border-radius:100px;padding:9px 15px}
+  .quiz span{width:7px;height:7px;border-radius:50%;background:#6cf09a}
+  .quizrow .alt{font-size:12.5px;font-weight:650;color:var(--muted)}
+
+  .sheet-cta{padding:16px 22px calc(20px + env(safe-area-inset-bottom));border-top:1px solid var(--line);
+    display:flex;flex-direction:column;gap:12px;flex:none;background:var(--card)}
+  .sheet-cta .cta{width:100%;padding:15px}
+  .sheet-cta .email{text-align:center;font-size:13.5px;font-weight:650;color:var(--muted)}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* desktop framing so the mobile pattern reads intentionally */
+  @media (min-width:640px){
+    body{background:#2a2925}
+    body::before{content:"";position:fixed;inset:0;background:
+      radial-gradient(80% 60% at 50% 0%,rgba(255,255,255,.06),transparent 70%);pointer-events:none}
+    .frame{max-width:490px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;
+      box-shadow:0 40px 100px -40px rgba(0,0,0,.7)}
+    .nav{max-width:490px;left:50%;transform:translateX(-50%);padding:0;padding-top:0}
+    .nav .nav-inner{margin:0 16px}
+    .previewtag{position:fixed;top:16px;left:16px;z-index:60;font-size:11px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+  }
+  .previewtag{display:none}
+  @media (min-width:640px){.previewtag{display:block}}
+</style>
+</head>
+<body>
+  <span class="previewtag">KNB · Nav preview A — bottom sheet</span>
+  <div class="frame">
+
+    <!-- top nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="#" class="brand" aria-label="KNB — home">KNB<i></i></a>
+        <button class="burg" id="burg" aria-label="Open menu" aria-controls="sheet" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- faux homepage behind the sheet -->
+    <main>
+      <div class="wrap hero">
+        <span class="ey">KNB Web Solution</span>
+        <h1>Shopify, Webflow &amp; WordPress, built to last.</h1>
+        <p class="lead">We design, rebuild &amp; support websites — clean, fast &amp; easy to manage.</p>
+        <div class="btns">
+          <button class="cta" id="ctaOpen"><span class="dot"></span>Get a free website review</button>
+          <a class="ghost" href="#">View our work →</a>
+        </div>
+        <a class="mail" href="mailto:info@knb.solutions">info@knb.solutions →</a>
+        <div class="minis">
+          <span class="mini w">Webflow<small>Custom design</small></span>
+          <span class="mini s">Shopify<small>Ecommerce</small></span>
+          <span class="mini p">WordPress<small>WooCommerce</small></span>
+        </div>
+      </div>
+      <div class="wrap"><div class="strip">
+        <span><b>40+</b> projects delivered</span><span><b>3</b> platforms</span><span><b>12+</b> industries</span>
+      </div></div>
+      <div class="wrap note">
+        <b>Preview page.</b> Tap the menu button (top-right) to open the bottom sheet. Inside it, tap
+        <b>Work</b> or <b>Packages</b> to expand the global dropdown menus. Drag the grab handle down (or tap the
+        scrim / ✕) to dismiss. This is a standalone prototype — nothing on the live site is affected.
+      </div>
+    </main>
+
+    <!-- ===== BOTTOM SHEET ===== -->
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="sheet-grab" id="grab"><span></span></div>
+      <div class="sheet-top">
+        <span class="lbl">Menu</span>
+        <button class="sheet-x" id="sheetX" aria-label="Close menu">✕</button>
+      </div>
+      <div class="sheet-body">
+
+        <!-- WORK (global dropdown) -->
+        <button class="nrow" data-acc aria-expanded="false" aria-controls="acc-work">
+          Work <span class="cnt">44</span><span class="chev"></span>
+        </button>
+        <div class="acc" id="acc-work"><div class="acc-in"><div class="acc-pad">
+          <div class="sublinks">
+            <a href="portfolio.html">All work <span class="n">44</span></a>
+            <a href="shopify.html">Shopify <span class="n">6</span></a>
+            <a href="webflow.html">Webflow <span class="n">10</span></a>
+            <a href="wordpress.html">WordPress <span class="n">28</span></a>
+          </div>
+          <div class="thumbs">
+            <a class="thumb" href="shopify.html"><img src="assets/shots/nav-lightmybricks.jpg" alt="Light My Bricks"><b>Light My Bricks</b><small>Shopify · Retail</small></a>
+            <a class="thumb" href="webflow.html"><img src="assets/shots/nav-feedbird.jpg" alt="Feedbird"><b>Feedbird</b><small>Webflow · Software</small></a>
+            <a class="thumb" href="shopify.html"><img src="assets/shots/nav-cacao.jpg" alt="Cacao Collective"><b>Cacao Collective</b><small>Shopify · Food</small></a>
+            <a class="thumb" href="wordpress.html"><img src="assets/shots/nav-coptrz.jpg" alt="Coptrz"><b>Coptrz</b><small>WordPress · Tech</small></a>
+          </div>
+        </div></div></div>
+
+        <!-- PACKAGES (global dropdown) -->
+        <button class="nrow" data-acc aria-expanded="false" aria-controls="acc-pkg">
+          Packages <span class="chev"></span>
+        </button>
+        <div class="acc" id="acc-pkg"><div class="acc-in"><div class="acc-pad">
+          <div class="grpk">Build · website packages</div>
+          <a class="pkg" href="pricing.html#build-starter">
+            <span class="pic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+            <span class="tx"><b>Starter Website</b><span>Small businesses &amp; service sites</span></span></a>
+          <a class="pkg" href="pricing.html#build-business">
+            <span class="pic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></span>
+            <span class="tx"><b>Business Website <i class="pop">Popular</i></b><span>Growing companies, B2B, clinics</span></span></a>
+          <a class="pkg" href="pricing.html#build-ecom">
+            <span class="pic"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/><path d="M2 3h3l2.4 12.3a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L23 7H6"/></svg></span>
+            <span class="tx"><b>Ecommerce Website</b><span>Shopify &amp; WooCommerce brands</span></span></a>
+          <a class="pkg" href="pricing.html#build-app">
+            <span class="pic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>
+            <span class="tx"><b>Custom Web App</b><span>Dashboards, portals, booking, POS</span></span></a>
+
+          <div class="grpk">Keep · care plans · monthly</div>
+          <a class="pkg" href="pricing.html#care-basic"><span class="tx"><b>Basic</b><span>Light support</span></span><span class="hrs">5 hrs/mo</span></a>
+          <a class="pkg" href="pricing.html#care-standard"><span class="tx"><b>Standard</b><span>Regular updates</span></span><span class="hrs">12 hrs/mo</span></a>
+          <a class="pkg" href="pricing.html#care-growth"><span class="tx"><b>Growth <i class="pop">Popular</i></b><span>Active stores</span></span><span class="hrs">20 hrs/mo</span></a>
+          <a class="pkg" href="pricing.html#care-premium"><span class="tx"><b>Premium</b><span>Busy ecommerce</span></span><span class="hrs">35 hrs/mo</span></a>
+          <a class="pkg" href="pricing.html#care-custom"><span class="tx"><b>Custom System</b><span>Custom apps</span></span><span class="hrs">20–40 hrs/mo</span></a>
+
+          <div class="quizrow">
+            <a class="quiz" href="pricing.html#quiz"><span></span>Take the 30-second quiz</a>
+            <a class="alt" href="contact.html">or get an exact quote →</a>
+          </div>
+        </div></div></div>
+
+        <!-- simple links -->
+        <a class="nrow" href="about.html">About</a>
+        <a class="nrow" href="contact.html" style="border-bottom:0">Contact</a>
+      </div>
+
+      <div class="sheet-cta">
+        <a class="cta" href="contact.html"><span class="dot"></span>Start your project</a>
+        <a class="email" href="mailto:info@knb.solutions">info@knb.solutions →</a>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+(function(){
+  var body=document.body, burg=document.getElementById('burg'),
+      sheet=document.getElementById('sheet'), scrim=document.getElementById('scrim'),
+      grab=document.getElementById('grab'), x=document.getElementById('sheetX'),
+      ctaOpen=document.getElementById('ctaOpen');
+
+  function open(){ body.classList.add('sheet-open'); burg.setAttribute('aria-expanded','true'); }
+  function close(){
+    body.classList.remove('sheet-open'); burg.setAttribute('aria-expanded','false');
+    sheet.style.transform=''; // clear any drag offset
+  }
+  burg.addEventListener('click',function(){ body.classList.contains('sheet-open')?close():open(); });
+  scrim.addEventListener('click',close);
+  x.addEventListener('click',close);
+  if(ctaOpen) ctaOpen.addEventListener('click',open);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+
+  /* accordions */
+  document.querySelectorAll('[data-acc]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var acc=document.getElementById(this.getAttribute('aria-controls'));
+      var isOpen=acc.classList.toggle('open');
+      this.setAttribute('aria-expanded',isOpen?'true':'false');
+    });
+  });
+
+  /* drag-to-dismiss on the grab handle */
+  var startY=0, dy=0, dragging=false;
+  grab.addEventListener('pointerdown',function(e){
+    dragging=true; startY=e.clientY; dy=0; sheet.classList.add('dragging');
+    grab.setPointerCapture(e.pointerId);
+  });
+  grab.addEventListener('pointermove',function(e){
+    if(!dragging) return;
+    dy=Math.max(0,e.clientY-startY);
+    sheet.style.transform='translate(-50%,'+dy+'px)';
+  });
+  function endDrag(){
+    if(!dragging) return; dragging=false; sheet.classList.remove('dragging');
+    if(dy>110){ close(); } else { sheet.style.transform='translate(-50%,0)'; }
+    dy=0;
+  }
+  grab.addEventListener('pointerup',endDrag);
+  grab.addEventListener('pointercancel',endDrag);
+})();
+</script>
+</body>
+</html>
