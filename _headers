@@ -12,11 +12,14 @@
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
-# Stylesheets & scripts — short cache (no fingerprinting in filenames)
+# Stylesheets & scripts — revalidate like HTML.
+# Filenames aren't fingerprinted, so any max-age here lets a browser pair NEW html
+# with OLD css/js after a deploy (unstyled sections until the cache expires).
+# ETags make revalidation cheap: unchanged files come back as an empty 304.
 /*.css
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 /*.js
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 # Static brand assets that rarely change — cache hard
 /*.svg
